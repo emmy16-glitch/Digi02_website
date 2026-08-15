@@ -25,3 +25,19 @@
 .capability-field__items a span {
   color: var(--gold-700);
 }
+
+@media (max-width: 47.9375rem) {
+  .payroll-cycle__step {
+    left: calc(50% + cos(var(--angle)) * 33%);
+    top: calc(50% + sin(var(--angle)) * 33%);
+    width: 5.5rem;
+  }
+
+  .payroll-cycle__step strong {
+    font-size: 0.8rem;
+  }
+
+  .payroll-cycle__center {
+    inset: 30%;
+  }
+}
