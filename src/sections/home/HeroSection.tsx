@@ -1,6 +1,5 @@
 import { Container } from '../../components/Container'
 import { PrimaryButton } from '../../components/PrimaryButton'
-import { SecondaryButton } from '../../components/SecondaryButton'
 import { ProductEvidenceViewer } from './ProductEvidenceViewer'
 import '../../styles/home-hero.css'
 
@@ -10,7 +9,6 @@ export function HeroSection() {
       <Container className="home-hero__inner">
         <div className="home-hero__main">
           <div className="home-hero__content">
-            <p className="home-hero__label type-tech">Digi02 / Technology for real operations</p>
             <h1 id="home-hero-title">
               <span>Smarter solutions.</span>
               <span>Stronger organizations.</span>
@@ -23,18 +21,13 @@ export function HeroSection() {
               <PrimaryButton href="/solutions">
                 Explore our solutions <span aria-hidden="true">→</span>
               </PrimaryButton>
-              <SecondaryButton href="/work">
-                View our work <span aria-hidden="true">→</span>
-              </SecondaryButton>
+              <a className="home-hero__text-link" href="/work">
+                View selected work <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </div>
-
           <ProductEvidenceViewer />
         </div>
-
-        <p className="home-hero__transition">
-          Built across field operations, mobility and connected business systems.
-        </p>
       </Container>
     </section>
   )
