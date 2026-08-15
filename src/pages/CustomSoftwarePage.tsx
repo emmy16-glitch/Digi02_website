@@ -18,7 +18,7 @@ export function CustomSoftwarePage() {
             <h1>Build the system the operation actually needs.</h1>
             <p>
               When an off-the-shelf product cannot represent the workflow properly, Digi02 designs
-              and engineers purpose-built software around the operation itself.
+              and engineers software around the operation itself.
             </p>
             <PrimaryButton href="/contact">Discuss custom software <span aria-hidden="true">→</span></PrimaryButton>
           </div>
@@ -26,7 +26,7 @@ export function CustomSoftwarePage() {
           <div className="software-architecture" aria-label="Illustrative custom software architecture">
             <div className="software-architecture__core">
               <span>Operational system</span>
-              <strong>Purpose-built around the workflow</strong>
+              <strong>Built around the workflow</strong>
             </div>
             <div className="software-architecture__layer software-architecture__layer--interface">
               <span>Interface</span><strong>People interact</strong>
@@ -52,9 +52,8 @@ export function CustomSoftwarePage() {
             <p>Custom software is useful when the system reflects the real operation closely enough to reduce work rather than create another workaround.</p>
           </header>
           <div className="software-build__stages">
-            {buildStages.map(([title, description], index) => (
+            {buildStages.map(([title, description]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <div><h3>{title}</h3><p>{description}</p></div>
               </article>
             ))}
