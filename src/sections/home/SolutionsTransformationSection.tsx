@@ -7,7 +7,6 @@ type StageId = 'connect' | 'automate' | 'transact'
 
 type Stage = {
   id: StageId
-  number: string
   title: string
   description: string
   outcome: string
@@ -16,44 +15,36 @@ type Stage = {
 const stages: readonly Stage[] = [
   {
     id: 'connect',
-    number: '01',
     title: 'Connect',
-    description:
-      'Bring the systems and information behind the operation into one working context.',
-    outcome: 'The same request is now visible across the operation.',
+    description: 'Bring the systems and information behind the work into one shared context.',
+    outcome: 'The systems involved in the work can see the same operational context.',
   },
   {
     id: 'automate',
-    number: '02',
     title: 'Automate',
-    description:
-      'Remove repeatable handoffs so routine work can move without unnecessary delay.',
-    outcome: 'Routine updates move through the same operational thread.',
+    description: 'Move repeatable work between systems without entering the same information again.',
+    outcome: 'Routine handoffs can move forward without another manual update at every step.',
   },
   {
     id: 'transact',
-    number: '03',
     title: 'Transact',
-    description:
-      'Carry activity through to the records and financial events that complete the work.',
-    outcome: 'The transaction and the records behind it resolve together.',
+    description: 'Keep approvals, financial events and reporting connected to the work that produced them.',
+    outcome: 'The activity, transaction and reporting record finish in the same operational thread.',
   },
 ]
 
-const systems = ['Sales', 'Inventory', 'Operations', 'Finance', 'Reporting'] as const
+const systems = ['Requests', 'Inventory', 'Operations', 'Finance', 'Reporting'] as const
 
-const threadRows = [
-  { label: 'Request received', system: 'Sales' },
-  { label: 'Approval recorded', system: 'Operations' },
-  { label: 'Inventory updated', system: 'Inventory' },
+const flowSteps = [
+  { label: 'Request received', system: 'Requests' },
+  { label: 'Availability checked', system: 'Inventory' },
+  { label: 'Work approved', system: 'Operations' },
   { label: 'Transaction recorded', system: 'Finance' },
   { label: 'Reporting updated', system: 'Reporting' },
 ] as const
 
 function getRowState(stage: StageId, index: number) {
-  if (stage === 'connect') {
-    return index === 0 ? 'active' : 'waiting'
-  }
+  if (stage === 'connect') return index === 0 ? 'active' : 'waiting'
 
   if (stage === 'automate') {
     if (index <= 2) return 'complete'
@@ -104,13 +95,11 @@ export function SolutionsTransformationSection() {
     >
       <Container className="operations-system__inner">
         <header className="operations-system__intro">
-          <p>Operating philosophy</p>
-          <h2 id="operations-system-title">
-            Work breaks down when its parts stop working together.
-          </h2>
+          <p>What Digi02 actually does</p>
+          <h2 id="operations-system-title">Make the operation work as one system.</h2>
           <p>
-            Digi02 connects software, workflows and transactions so the operation can move as one
-            system instead of a collection of disconnected tools.
+            We connect the software, workflows and transactions behind everyday work so teams are
+            not forced to manage the same operation across disconnected tools.
           </p>
         </header>
 
@@ -126,7 +115,7 @@ export function SolutionsTransformationSection() {
 
               return (
                 <button
-                  aria-controls="operations-system-thread"
+                  aria-controls="operations-system-flow"
                   aria-selected={isActive}
                   className="operations-system__stage-button"
                   data-active={isActive}
@@ -140,7 +129,6 @@ export function SolutionsTransformationSection() {
                   tabIndex={isActive ? 0 : -1}
                   type="button"
                 >
-                  <span>{stage.number}</span>
                   <strong>{stage.title}</strong>
                   <span className="operations-system__stage-description">{stage.description}</span>
                 </button>
@@ -151,31 +139,26 @@ export function SolutionsTransformationSection() {
           <article
             aria-labelledby={`operations-system-tab-${activeStage.id}`}
             className="operations-thread"
-            id="operations-system-thread"
+            id="operations-system-flow"
             role="tabpanel"
           >
             <header className="operations-thread__header">
-              <div>
-                <span>Illustrative workflow</span>
-                <strong>REQ-1048</strong>
-              </div>
-
               <p aria-live="polite">{activeStage.outcome}</p>
             </header>
 
             <div className="operations-thread__record">
               <div className="operations-thread__record-copy">
-                <span>Shared operational record</span>
-                <h3>Field equipment order</h3>
+                <h3>One operation. Shared context.</h3>
                 <p>
-                  One sample request moving through the systems that need to respond to it.
+                  A simple example of how one piece of work can move through the systems that need
+                  to respond to it. No customer or live operational data is represented here.
                 </p>
               </div>
 
-              <div className="operations-thread__systems" aria-label="Connected systems">
-                {systems.map((system, index) => (
+              <div className="operations-thread__systems" aria-label="Illustrative connected systems">
+                {systems.map((system) => (
                   <div className="operations-thread__system" key={system}>
-                    <span aria-hidden="true" data-index={index} />
+                    <span aria-hidden="true" />
                     <strong>{system}</strong>
                   </div>
                 ))}
@@ -183,7 +166,7 @@ export function SolutionsTransformationSection() {
             </div>
 
             <div className="operations-thread__steps" aria-label="Illustrative workflow progress">
-              {threadRows.map((row, index) => {
+              {flowSteps.map((row, index) => {
                 const rowState = getRowState(activeStage.id, index)
 
                 return (
@@ -206,8 +189,7 @@ export function SolutionsTransformationSection() {
             </div>
 
             <footer className="operations-thread__footer">
-              <span>Sample operational sequence only — not live customer data.</span>
-              <strong>{String(activeIndex + 1).padStart(2, '0')} / 03</strong>
+              <span>Illustrative operating sequence only.</span>
             </footer>
           </article>
         </div>
