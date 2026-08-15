@@ -180,8 +180,8 @@ export function SkyGridSection() {
               SkyGrid brings mission planning, flight operations and field intelligence into one
               operational story — before, during and after the aircraft moves.
             </p>
-            <a href="/solutions">
-              Explore UAV systems <span aria-hidden="true">→</span>
+            <a href="/solutions/skygrid">
+              Explore SkyGrid <span aria-hidden="true">→</span>
             </a>
           </div>
         </header>
@@ -248,7 +248,6 @@ export function SkyGridSection() {
             role="tabpanel"
           >
             <div className="skygrid-stage-panel__copy" key={activeStage.id}>
-              <span>{activeStage.label}</span>
               <h4>{activeStage.title}</h4>
               <p>{activeStage.description}</p>
             </div>
