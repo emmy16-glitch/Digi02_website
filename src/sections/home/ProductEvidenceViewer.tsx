@@ -146,12 +146,7 @@ export function ProductEvidenceViewer() {
     const dx = event.clientX - start.x
     const dy = event.clientY - start.y
 
-    if (
-      Math.abs(dx) < SWIPE_THRESHOLD ||
-      Math.abs(dx) <= Math.abs(dy) * 1.2
-    ) {
-      return
-    }
+    if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dx) <= Math.abs(dy) * 1.2) return
 
     if (dx < 0) next()
     else previous()
@@ -243,13 +238,6 @@ export function ProductEvidenceViewer() {
           <span className="product-evidence__identity-divider">/</span>
           <span>{activeProduct.context}</span>
         </div>
-
-        <span className="product-evidence__counter type-tech">
-          <span className="visually-hidden">
-            Product {activeIndex + 1} of {count}.{' '}
-          </span>
-          0{activeIndex + 1} / 0{count}
-        </span>
       </figcaption>
 
       <div className="product-evidence__touch-controls">
