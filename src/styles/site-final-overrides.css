@@ -1,0 +1,83 @@
+/* Final route-level corrections found during full-page visual QA. */
+
+/* Light surfaces own their heading colors explicitly. */
+.interior-hero--light h1,
+.product-hero--digivolt h1,
+.product-hero--digivolt .product-hero__identity > strong,
+.product-lifecycle--light h2,
+.product-lifecycle--light h3,
+.product-outcome--light h2,
+.product-outcome--light h3,
+.enterprise-system-map h2,
+.enterprise-system-map h3,
+.capability-hero--light h1,
+.capability-hero--light h2,
+.capability-hero--light h3,
+.capability-narrative--light h2,
+.capability-narrative--light h3,
+.capability-outcomes--light h2,
+.capability-outcomes--light h3,
+.company-identity h1,
+.company-systems h2,
+.company-systems h3,
+.company-base h2,
+.contact-body h2,
+.contact-body h3 {
+  color: var(--bg-950);
+}
+
+.interior-hero--light .interior-hero__kicker,
+.product-hero--digivolt .product-hero__identity p,
+.product-lifecycle--light .section-heading > p,
+.product-outcome--light .product-outcome__grid > div:first-child > p,
+.enterprise-system-map .section-heading > p,
+.capability-hero--light .capability-hero__copy > p:first-child,
+.company-systems__heading > p,
+.company-base__statement > p:first-child {
+  color: #73716c;
+}
+
+/* The circular payroll diagram is a desktop composition. On tablet and phone,
+   use a readable sequence instead of forcing the circle into a narrow column. */
+@media (max-width: 64rem) {
+  .capability-page--payroll .payroll-cycle {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    min-height: 0;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .capability-page--payroll .payroll-cycle__track,
+  .capability-page--payroll .payroll-cycle__center {
+    display: none;
+  }
+
+  .capability-page--payroll .payroll-cycle__step {
+    position: static;
+    display: grid;
+    width: auto;
+    min-height: 6.5rem;
+    place-items: center;
+    padding: 1rem;
+    transform: none;
+    border: 1px solid var(--line-subtle);
+    text-align: center;
+  }
+
+  .capability-page--payroll .payroll-cycle__step:last-of-type {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .capability-page--payroll .payroll-cycle {
+    grid-template-columns: 1fr;
+  }
+
+  .capability-page--payroll .payroll-cycle__step:last-of-type {
+    grid-column: 1;
+  }
+}
