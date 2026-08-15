@@ -78,10 +78,11 @@ jobs:
             assert.equal(await desktop.locator(`.company-systems__list a[href="${path}"]`).count(), 1, `Missing Company system link ${path}`)
           }
 
-          assert.equal(await desktop.locator('a[href="tel:+2348169404088"]').count(), 1, 'Primary public phone should be present')
-          assert.equal(await desktop.locator('a[href="tel:+2349067879766"]').count(), 1, 'Secondary public phone should be present')
-          assert.equal(await desktop.locator('a[href="mailto:info@digi02.org"]').count(), 1, 'Public info email should be present')
-          assert.equal(await desktop.locator('a[href="mailto:support@digi02.org"]').count(), 1, 'Public support email should be present')
+          const companyBase = desktop.locator('.company-base')
+          assert.equal(await companyBase.locator('a[href="tel:+2348169404088"]').count(), 1, 'Primary public phone should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="tel:+2349067879766"]').count(), 1, 'Secondary public phone should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="mailto:info@digi02.org"]').count(), 1, 'Public info email should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="mailto:support@digi02.org"]').count(), 1, 'Public support email should be present in Company base section')
 
           let overflow = await desktop.evaluate(() => ({
             clientWidth: document.documentElement.clientWidth,
