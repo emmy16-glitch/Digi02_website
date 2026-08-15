@@ -5,7 +5,7 @@ const workItems = [
     area: 'Autonomous systems',
     title: 'SkyGrid',
     statement: 'Mission planning and field-operation storytelling for UAV workflows.',
-    detail: 'A product direction built around mission context, aircraft readiness, route progression and review — without depending on exposed application screenshots.',
+    detail: 'Mission context, aircraft readiness, route progression and review are presented as one connected operational sequence.',
     href: '/#skygrid',
   },
   {
@@ -34,7 +34,7 @@ export function WorkPage() {
             <h1>Systems are easier to trust when you can understand how they work.</h1>
             <p>
               Selected Digi02 work shown through the operational problem, the system logic and the
-              experience built around it — without invented customer stories or vanity metrics.
+              experience built around it.
             </p>
           </div>
         </Container>
