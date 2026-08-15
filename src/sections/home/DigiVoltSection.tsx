@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 
 import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
 import { Container } from '../../components/Container'
@@ -67,31 +67,34 @@ const journeyStages: readonly JourneyStage[] = [
 
 export function DigiVoltSection() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const stageButtonRefs = useRef<Array<HTMLButtonElement | null>>([])
   const activeStage = journeyStages[activeIndex]
 
+  function selectStage(index: number, moveFocus = false) {
+    setActiveIndex(index)
+
+    if (moveFocus) {
+      window.requestAnimationFrame(() => stageButtonRefs.current[index]?.focus())
+    }
+  }
+
   function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    let nextIndex = activeIndex
+
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      event.preventDefault()
-      setActiveIndex((current) => (current + 1) % journeyStages.length)
+      nextIndex = (activeIndex + 1) % journeyStages.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (activeIndex - 1 + journeyStages.length) % journeyStages.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = journeyStages.length - 1
+    } else {
       return
     }
 
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      setActiveIndex((current) => (current - 1 + journeyStages.length) % journeyStages.length)
-      return
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault()
-      setActiveIndex(0)
-      return
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault()
-      setActiveIndex(journeyStages.length - 1)
-    }
+    event.preventDefault()
+    selectStage(nextIndex, true)
   }
 
   return (
@@ -134,7 +137,12 @@ export function DigiVoltSection() {
             </p>
           </header>
 
-          <div className="digivolt-journey__interaction">
+          <div
+            aria-labelledby={`digivolt-stage-tab-${activeStage.id}`}
+            className="digivolt-journey__interaction"
+            id="digivolt-stage-panel"
+            role="tabpanel"
+          >
             <div className="digivolt-journey__stage-copy" aria-live="polite">
               <span>{activeStage.number} / {activeStage.title}</span>
               <h3>{activeStage.heading}</h3>
@@ -202,11 +210,15 @@ export function DigiVoltSection() {
 
               return (
                 <button
-                  aria-controls="digivolt-journey-title"
+                  aria-controls="digivolt-stage-panel"
                   aria-selected={isActive}
                   data-active={isActive}
+                  id={`digivolt-stage-tab-${stage.id}`}
                   key={stage.id}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => selectStage(index)}
+                  ref={(element) => {
+                    stageButtonRefs.current[index] = element
+                  }}
                   role="tab"
                   tabIndex={isActive ? 0 : -1}
                   type="button"
