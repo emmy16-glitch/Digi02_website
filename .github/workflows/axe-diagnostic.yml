@@ -1,0 +1,83 @@
+name: Axe diagnostic
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright@1.55.0 @axe-core/playwright@4.10.2
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/digi02-preview.log; exit 1
+      - name: Print exact serious accessibility nodes
+        run: |
+          mkdir -p axe-diagnostic
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { chromium } from 'playwright'
+          import AxeBuilder from '@axe-core/playwright'
+
+          const origin='http://127.0.0.1:4173'
+          const routes=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/solutions/e-management','/solutions/payroll-automation','/solutions/payment-systems','/solutions/custom-software','/industries','/work','/company','/insights','/contact']
+          const browser=await chromium.launch({headless:true})
+          const report={}
+          for(const [vp,width,height] of [['mobile',390,844],['desktop',1440,1000]]){
+            const context=await browser.newContext({viewport:{width,height}})
+            for(const route of routes){
+              const page=await context.newPage()
+              await page.goto(origin+route,{waitUntil:'networkidle'})
+              await page.locator('main#main-content').waitFor()
+              const result=await new AxeBuilder({page}).analyze()
+              const severe=result.violations.filter(v=>['serious','critical'].includes(v.impact||''))
+              const key=`${route} @ ${vp}`
+              report[key]=severe.map(v=>({
+                id:v.id,
+                impact:v.impact,
+                help:v.help,
+                nodes:v.nodes.map(n=>({
+                  target:n.target,
+                  html:n.html,
+                  failureSummary:n.failureSummary,
+                  any:n.any?.map(x=>x.message),
+                  all:n.all?.map(x=>x.message),
+                  none:n.none?.map(x=>x.message),
+                }))
+              }))
+              if(severe.length){
+                console.log(`\n=== ${key} ===`)
+                for(const v of severe){
+                  console.log(`RULE ${v.id} [${v.impact}] ${v.help}`)
+                  for(const n of v.nodes){
+                    console.log(`TARGET ${JSON.stringify(n.target)}`)
+                    console.log(`HTML ${n.html}`)
+                    console.log(`WHY ${(n.failureSummary||'').replace(/\n/g,' | ')}`)
+                  }
+                }
+              }
+              await page.close()
+            }
+            await context.close()
+          }
+          fs.writeFileSync('axe-diagnostic/report.json',JSON.stringify(report,null,2))
+          await browser.close()
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: axe-diagnostic
+          path: axe-diagnostic/report.json
+          retention-days: 1
