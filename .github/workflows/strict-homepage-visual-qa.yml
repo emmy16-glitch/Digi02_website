@@ -108,26 +108,20 @@ jobs:
               deviceScaleFactor: 1,
             })
 
-            await page.goto('http://127.0.0.1:4173/', {
-              waitUntil: 'networkidle',
-            })
-
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle' })
             await paintWholePage(page, target.height)
-
-            await page.screenshot({
-              path: `visual-qa/${target.name}`,
-              fullPage: true,
-            })
-
+            await page.screenshot({ path: `visual-qa/${target.name}`, fullPage: true })
             await page.close()
           }
 
           await browser.close()
           NODE
 
-      - name: Upload screenshots
+      - name: Upload screenshots and source logo
         uses: actions/upload-artifact@v4
         with:
           name: strict-homepage-visual-qa
-          path: visual-qa/
+          path: |
+            visual-qa/
+            src/assets/brand/digi02-logo-light.png
           retention-days: 1
