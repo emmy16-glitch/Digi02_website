@@ -1,0 +1,216 @@
+/* Visual QA corrections after desktop review.
+   This file intentionally contains only scoped corrections for the current homepage pass. */
+
+/* ==========================================================
+   HERO / PRODUCT EVIDENCE
+   Keep the whole product cover visible and restore hover-first navigation.
+   ========================================================== */
+
+@media (min-width: 64.0625rem) {
+  .product-evidence {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .product-evidence__viewport {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-media);
+  }
+
+  .product-evidence__current img,
+  .product-evidence__adjacent img {
+    object-fit: contain;
+    object-position: center;
+    background: var(--bg-950);
+  }
+
+  .product-evidence__touch-controls {
+    display: none !important;
+  }
+}
+
+@media (min-width: 64.0625rem) and (hover: hover) {
+  .product-evidence__hover-zone {
+    display: block !important;
+  }
+
+  .product-evidence__adjacent {
+    display: block !important;
+  }
+}
+
+/* ==========================================================
+   ERP / POS
+   Keep the working demo comfortably inside the page composition.
+   ========================================================== */
+
+.erp-pos-workspace,
+.erp-pos-activity {
+  width: min(100%, 82rem);
+  margin-inline: auto;
+}
+
+.erp-pos-workspace {
+  grid-template-columns: minmax(0, 1.65fr) minmax(18rem, 0.65fr);
+}
+
+.erp-pos-catalog {
+  padding-left: clamp(1rem, 2vw, 2rem);
+}
+
+.erp-pos-order {
+  padding-right: clamp(1rem, 2vw, 2rem);
+}
+
+.erp-pos-order__total strong {
+  flex: 0 0 auto;
+  font-size: clamp(1.65rem, 2vw, 2.15rem);
+  white-space: nowrap;
+}
+
+@media (max-width: 64rem) {
+  .erp-pos-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .erp-pos-catalog,
+  .erp-pos-order {
+    padding-inline: var(--space-3);
+  }
+}
+
+/* ==========================================================
+   DIGINORTH
+   Remove the oversized poster treatment and tighten the editorial chapter.
+   ========================================================== */
+
+.diginorth-chapter__inner {
+  padding-block: var(--space-15) var(--space-12);
+}
+
+.diginorth-chapter__statement h2 {
+  max-width: 18ch;
+  font-size: clamp(2.8rem, 4.35vw, 4.35rem);
+  line-height: 0.98;
+}
+
+.diginorth-editorial {
+  min-height: 25rem;
+  margin-top: var(--space-10);
+  grid-template-columns: minmax(0, 0.95fr) minmax(20rem, 1.05fr);
+}
+
+.diginorth-editorial__place {
+  display: flex;
+  align-items: flex-end;
+  min-height: 25rem;
+  padding: var(--space-5) var(--space-5) var(--space-5) 0;
+}
+
+.diginorth-editorial__place > strong {
+  display: none;
+}
+
+.diginorth-editorial__place > p.type-tech {
+  max-width: 9ch;
+  margin: 0;
+  color: var(--diginorth-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 550;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-transform: none;
+}
+
+.diginorth-editorial__directory {
+  justify-content: flex-start;
+  padding: var(--space-5) 0 var(--space-8) var(--space-5);
+}
+
+.diginorth-editorial__directory > p {
+  margin-bottom: var(--space-3);
+}
+
+.diginorth-editorial__directory li {
+  min-height: 3.9rem;
+}
+
+.diginorth-editorial__active {
+  right: 0;
+  bottom: var(--space-4);
+  left: calc(47.5% + var(--space-5));
+}
+
+.diginorth-editorial__active > strong {
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.diginorth-path button {
+  min-height: 4.25rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .diginorth-chapter__inner {
+    padding-block: var(--space-10);
+  }
+
+  .diginorth-editorial__place {
+    min-height: 12rem;
+  }
+
+  .diginorth-editorial__place > p.type-tech {
+    max-width: 10ch;
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
+}
+
+/* ==========================================================
+   ACADEMY
+   Keep the builder progression but remove the oversized showcase feeling.
+   ========================================================== */
+
+.academy-chapter__inner {
+  padding-block: var(--space-15) var(--space-12);
+}
+
+.academy-chapter__statement h2 {
+  max-width: 15ch;
+  font-size: clamp(2.8rem, 4.35vw, 4.35rem);
+  line-height: 0.98;
+}
+
+.academy-builder {
+  margin-top: var(--space-10);
+  grid-template-columns: minmax(15rem, 0.62fr) minmax(0, 1.38fr);
+  gap: var(--space-6);
+}
+
+.academy-builder__current {
+  min-height: 24rem;
+  justify-content: center;
+  padding-block: var(--space-5);
+}
+
+.academy-builder__current > strong {
+  font-size: clamp(3.7rem, 7vw, 6rem);
+  line-height: 0.88;
+}
+
+.academy-builder__current > p:last-child {
+  margin-top: var(--space-4);
+}
+
+.academy-builder__steps button {
+  min-height: 6.25rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .academy-chapter__inner {
+    padding-block: var(--space-10);
+  }
+
+  .academy-builder__current {
+    min-height: 15rem;
+  }
+}
