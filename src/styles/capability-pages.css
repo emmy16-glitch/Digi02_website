@@ -1,0 +1,620 @@
+.capability-page {
+  background: var(--bg-950);
+  color: var(--text-primary);
+}
+
+.capability-hero {
+  padding-block: clamp(7rem, 12vw, 11rem) clamp(6rem, 9vw, 9rem);
+  background: var(--bg-950);
+}
+
+.capability-hero--warm {
+  background: var(--bg-900);
+}
+
+.capability-hero--light {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.capability-hero__grid,
+.capability-narrative__grid,
+.capability-outcomes__grid,
+.payment-sequence__grid,
+.software-build__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.capability-hero__copy {
+  grid-column: 1 / span 5;
+  align-self: center;
+}
+
+.capability-hero__copy > p:first-child,
+.capability-narrative__grid > div:first-child > p,
+.payment-sequence header > p,
+.payroll-ledger header > p,
+.software-build header > p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--type-ui);
+}
+
+.capability-hero--light .capability-hero__copy > p:first-child {
+  color: #73716c;
+}
+
+.capability-hero h1 {
+  max-width: 10ch;
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.8rem, 6.7vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.capability-hero__copy > p:nth-of-type(2) {
+  max-width: 34rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.capability-hero--light .capability-hero__copy > p:nth-of-type(2) {
+  color: #5f5d58;
+}
+
+.capability-hero__copy .button {
+  margin-top: var(--space-5);
+}
+
+.emanagement-visual,
+.payment-path,
+.software-architecture,
+.payroll-cycle {
+  grid-column: 7 / -1;
+  align-self: center;
+  min-height: 34rem;
+}
+
+.emanagement-visual {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: var(--space-5);
+  background: var(--surface-800);
+}
+
+.emanagement-visual__context {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.emanagement-visual__flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: var(--space-2);
+  position: relative;
+}
+
+.emanagement-visual__flow::before {
+  content: '';
+  position: absolute;
+  right: 4%;
+  left: 4%;
+  top: 50%;
+  height: 1px;
+  background: rgba(255,255,255,.16);
+}
+
+.emanagement-visual__node {
+  position: relative;
+  z-index: 1;
+  min-height: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-2);
+  background: var(--bg-900);
+  border: 1px solid var(--line-subtle);
+}
+
+.emanagement-visual__node[data-active='true'] {
+  border-color: var(--gold-500);
+}
+
+.emanagement-visual__node span,
+.emanagement-visual > p,
+.payment-path > p {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.emanagement-visual__node strong {
+  font-size: 1.05rem;
+}
+
+.emanagement-visual > p,
+.payment-path > p {
+  margin: 0;
+}
+
+.capability-narrative,
+.capability-outcomes,
+.payment-sequence,
+.payroll-ledger,
+.software-build {
+  padding-block: var(--section-space-desktop);
+}
+
+.capability-narrative--light,
+.capability-outcomes--light {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.capability-narrative__grid > div:first-child,
+.payment-sequence header,
+.software-build header {
+  grid-column: 1 / span 5;
+}
+
+.capability-narrative h2,
+.capability-outcomes h2,
+.payment-sequence h2,
+.payroll-ledger h2,
+.software-build h2 {
+  max-width: 11ch;
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+
+.capability-sequence {
+  grid-column: 7 / -1;
+}
+
+.capability-sequence article,
+.software-build__stages article {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+}
+
+.capability-sequence article + article,
+.software-build__stages article + article {
+  border-top: 1px solid rgba(17,17,18,.14);
+}
+
+.capability-sequence article > span,
+.software-build__stages article > span,
+.payroll-ledger__rows article > span,
+.payment-sequence article > span {
+  color: var(--gold-700);
+  font-size: 0.75rem;
+}
+
+.capability-sequence h3,
+.software-build__stages h3,
+.payroll-ledger__rows h3,
+.payment-sequence h3 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+}
+
+.capability-sequence p,
+.software-build__stages p,
+.payroll-ledger__rows p,
+.payment-sequence article p {
+  max-width: 34rem;
+  margin: var(--space-2) 0 0;
+  line-height: 1.6;
+}
+
+.capability-narrative--light .capability-sequence p,
+.capability-outcomes--light p {
+  color: #5f5d58;
+}
+
+.capability-outcomes {
+  background: var(--bg-900);
+}
+
+.capability-outcomes--light {
+  background: var(--text-primary);
+}
+
+.capability-outcomes h2 {
+  grid-column: 1 / span 5;
+}
+
+.capability-outcomes__grid > div {
+  grid-column: 7 / -1;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.capability-outcomes article h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+}
+
+.capability-outcomes article p {
+  max-width: 34rem;
+  margin: var(--space-2) 0 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.payroll-cycle {
+  position: relative;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  aspect-ratio: 1;
+  min-height: 0;
+}
+
+.payroll-cycle__track {
+  position: absolute;
+  inset: 10%;
+  border: 1px solid rgba(201,163,74,.35);
+  border-radius: 50%;
+}
+
+.payroll-cycle__step {
+  --angle: calc(var(--step) * 72deg - 90deg);
+  position: absolute;
+  left: calc(50% + cos(var(--angle)) * 42%);
+  top: calc(50% + sin(var(--angle)) * 42%);
+  width: 7.5rem;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.payroll-cycle__step span,
+.payroll-cycle__step strong {
+  display: block;
+}
+
+.payroll-cycle__step span {
+  color: var(--gold-400);
+  font-size: 0.72rem;
+}
+
+.payroll-cycle__step strong {
+  margin-top: .35rem;
+  font-size: .9rem;
+}
+
+.payroll-cycle__center {
+  position: absolute;
+  inset: 34%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.payroll-cycle__center span {
+  color: var(--text-muted);
+  font-size: .75rem;
+}
+
+.payroll-cycle__center strong {
+  margin-top: var(--space-1);
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.payroll-ledger {
+  background: var(--bg-950);
+}
+
+.payroll-ledger header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: clamp(4rem, 7vw, 7rem);
+}
+
+.payroll-ledger header > p {
+  grid-column: 1 / span 3;
+}
+
+.payroll-ledger h2 {
+  grid-column: 4 / span 7;
+  margin-top: 0;
+}
+
+.payroll-ledger__rows {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: var(--space-3);
+}
+
+.payroll-ledger__rows article {
+  min-height: 18rem;
+  padding: var(--space-3) var(--space-2) 0;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.payroll-ledger__rows h3 {
+  margin-top: var(--space-6);
+}
+
+.payroll-ledger__rows p {
+  color: var(--text-secondary);
+}
+
+.payment-path {
+  display: grid;
+  grid-template-columns: 1fr auto 1.4fr auto 1fr;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-5);
+  border: 1px solid var(--line-subtle);
+}
+
+.payment-path__source,
+.payment-path__destination {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.payment-path__source span,
+.payment-path__destination span,
+.payment-path__states span {
+  color: var(--text-muted);
+  font-size: .75rem;
+}
+
+.payment-path__line {
+  display: flex;
+  gap: .35rem;
+}
+
+.payment-path__line span {
+  width: .45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: var(--gold-500);
+}
+
+.payment-path__states {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.payment-path__states > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.payment-path > p {
+  grid-column: 1 / -1;
+  align-self: end;
+}
+
+.payment-sequence {
+  background: var(--bg-900);
+}
+
+.payment-sequence__grid > div {
+  grid-column: 7 / -1;
+}
+
+.payment-sequence article {
+  display: grid;
+  grid-template-columns: 3rem 8rem 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--line-subtle);
+}
+
+.payment-sequence article p {
+  margin-top: 0;
+  color: var(--text-secondary);
+}
+
+.software-architecture {
+  position: relative;
+  min-height: 36rem;
+  color: var(--bg-950);
+}
+
+.software-architecture__core,
+.software-architecture__layer {
+  position: absolute;
+  display: grid;
+  gap: .35rem;
+  padding: var(--space-3);
+  border: 1px solid rgba(17,17,18,.16);
+  background: #eceae4;
+}
+
+.software-architecture__core {
+  inset: 31% 27%;
+  place-content: center;
+  text-align: center;
+  background: var(--bg-950);
+  color: var(--text-primary);
+}
+
+.software-architecture__core span,
+.software-architecture__layer span {
+  color: #77736c;
+  font-size: .75rem;
+}
+
+.software-architecture__core span {
+  color: var(--text-muted);
+}
+
+.software-architecture__layer--interface { top: 5%; left: 5%; width: 34%; }
+.software-architecture__layer--workflow { top: 8%; right: 3%; width: 34%; }
+.software-architecture__layer--data { bottom: 7%; left: 4%; width: 34%; }
+.software-architecture__layer--integration { right: 5%; bottom: 4%; width: 34%; }
+
+.software-build {
+  background: var(--bg-950);
+}
+
+.software-build header > p:last-child {
+  max-width: 30rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.software-build__stages {
+  grid-column: 7 / -1;
+}
+
+.software-build__stages article + article {
+  border-color: var(--line-subtle);
+}
+
+.software-build__stages p {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 64rem) {
+  .capability-hero__copy { grid-column: 1 / span 6; }
+  .emanagement-visual,
+  .payment-path,
+  .software-architecture,
+  .payroll-cycle { grid-column: 7 / -1; }
+  .payroll-ledger__rows { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .payroll-ledger__rows article:nth-child(n+4) { min-height: 14rem; }
+}
+
+@media (max-width: 47.9375rem) {
+  .capability-hero,
+  .capability-narrative,
+  .capability-outcomes,
+  .payment-sequence,
+  .payroll-ledger,
+  .software-build {
+    padding-block: var(--section-space-mobile);
+  }
+
+  .capability-hero__grid,
+  .capability-narrative__grid,
+  .capability-outcomes__grid,
+  .payment-sequence__grid,
+  .software-build__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .capability-hero__copy,
+  .emanagement-visual,
+  .payment-path,
+  .software-architecture,
+  .payroll-cycle,
+  .capability-narrative__grid > div:first-child,
+  .capability-sequence,
+  .capability-outcomes h2,
+  .capability-outcomes__grid > div,
+  .payment-sequence header,
+  .payment-sequence__grid > div,
+  .software-build header,
+  .software-build__stages {
+    grid-column: 1;
+  }
+
+  .capability-hero h1 {
+    font-size: clamp(3rem, 14vw, 4.7rem);
+  }
+
+  .emanagement-visual,
+  .payment-path,
+  .software-architecture,
+  .payroll-cycle {
+    min-height: 0;
+  }
+
+  .emanagement-visual__flow {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    margin-block: var(--space-5);
+  }
+
+  .emanagement-visual__flow::before { display: none; }
+  .emanagement-visual__node { min-height: 6.5rem; }
+
+  .payroll-cycle {
+    width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .payroll-ledger header {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .payroll-ledger header > p,
+  .payroll-ledger h2 { grid-column: 1; }
+
+  .payroll-ledger__rows {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .payroll-ledger__rows article,
+  .payroll-ledger__rows article:nth-child(n+4) {
+    min-height: 0;
+    padding-block: var(--space-4);
+  }
+
+  .payroll-ledger__rows h3 { margin-top: var(--space-3); }
+
+  .payment-path {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .payment-path__line {
+    flex-direction: column;
+    padding-left: .2rem;
+  }
+
+  .payment-path__states > div { padding-block: var(--space-3); }
+  .payment-path > p { grid-column: 1; }
+
+  .payment-sequence article {
+    grid-template-columns: 2.2rem 1fr;
+  }
+
+  .payment-sequence article p {
+    grid-column: 2;
+  }
+
+  .software-architecture {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .software-architecture__core,
+  .software-architecture__layer {
+    position: static;
+  }
+
+  .software-architecture__core {
+    min-height: 12rem;
+    order: -1;
+  }
+}
