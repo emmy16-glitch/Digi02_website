@@ -1,4 +1,5 @@
 import { Container } from '../components/Container'
+import { PrimaryButton } from '../components/PrimaryButton'
 
 const workItems = [
   {
@@ -57,6 +58,16 @@ export function WorkPage() {
               </div>
             </article>
           ))}
+        </Container>
+      </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Have a similar challenge?</p>
+            <h2>Show us the workflow, system or field problem.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss a project <span aria-hidden="true">→</span></PrimaryButton>
         </Container>
       </section>
     </div>
