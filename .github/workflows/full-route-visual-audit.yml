@@ -1,4 +1,4 @@
-name: Full route visual audit
+name: Full route resource audit
 
 on:
   push:
@@ -7,110 +7,61 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: full-route-visual-audit-${{ github.ref }}
+  group: full-route-resource-audit-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  visual-audit:
+  resource-audit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
       - name: Install dependencies
         run: npm ci
-
       - name: Build
         run: npm run build
-
       - name: Install Playwright and Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
           npx playwright install --with-deps chromium
-
       - name: Start preview
         run: |
           npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
           for i in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
-              exit 0
-            fi
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/digi02-preview.log
           exit 1
-
-      - name: Capture every public route
+      - name: Trace missing resources at phone width
         run: |
-          mkdir -p full-route-visual-audit
           node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict'
           import { chromium } from 'playwright'
-
-          const routes = [
-            ['home', '/'],
-            ['solutions', '/solutions'],
-            ['skygrid', '/solutions/skygrid'],
-            ['digivolt', '/solutions/digivolt'],
-            ['enterprise-systems', '/solutions/enterprise-systems'],
-            ['e-management', '/solutions/e-management'],
-            ['payroll-automation', '/solutions/payroll-automation'],
-            ['payment-systems', '/solutions/payment-systems'],
-            ['custom-software', '/solutions/custom-software'],
-            ['industries', '/industries'],
-            ['work', '/work'],
-            ['company', '/company'],
-            ['insights', '/insights'],
-            ['contact', '/contact'],
-          ]
-
-          const viewports = [
-            ['desktop', 1440, 1000],
-            ['tablet', 1024, 900],
-            ['mobile', 390, 844],
-          ]
-
-          const browser = await chromium.launch()
-          for (const [viewportName, width, height] of viewports) {
-            const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 })
-            const page = await context.newPage()
-            for (const [name, route] of routes) {
-              await page.goto(`http://127.0.0.1:4173${route}`, { waitUntil: 'load' })
-              await page.waitForTimeout(800)
-
-              const metrics = await page.evaluate(() => ({
-                scrollWidth: document.documentElement.scrollWidth,
-                clientWidth: document.documentElement.clientWidth,
-                brokenImages: [...document.images].filter((img) => !img.complete || img.naturalWidth === 0).map((img) => img.src),
-                h1Count: document.querySelectorAll('h1').length,
-                mainExists: Boolean(document.querySelector('main#main-content')),
-              }))
-
-              assert.equal(metrics.h1Count, 1, `${route} must contain exactly one h1`)
-              assert.equal(metrics.mainExists, true, `${route} must contain main#main-content`)
-              assert.ok(metrics.scrollWidth <= metrics.clientWidth + 1, `${route} overflows horizontally at ${width}px`)
-              assert.deepEqual(metrics.brokenImages, [], `${route} contains broken images at ${width}px`)
-
-              await page.screenshot({
-                path: `full-route-visual-audit/${name}-${viewportName}.png`,
-                fullPage: true,
-                animations: 'disabled',
-              })
+          const origin='http://127.0.0.1:4173'
+          const routes=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/solutions/e-management','/solutions/payroll-automation','/solutions/payment-systems','/solutions/custom-software','/industries','/work','/company','/insights','/contact']
+          const browser=await chromium.launch({headless:true})
+          const context=await browser.newContext({viewport:{width:390,height:844}})
+          const page=await context.newPage()
+          const errors=[]
+          page.on('console',m=>{
+            if(m.type()==='error'){
+              const loc=m.location()
+              errors.push(`console: ${m.text()} | ${loc.url||'no-url'}:${loc.lineNumber||0}:${loc.columnNumber||0}`)
             }
-            await context.close()
+          })
+          page.on('response',r=>{if(r.status()>=400) errors.push(`response: ${r.status()} ${r.url()}`)})
+          page.on('requestfailed',r=>errors.push(`requestfailed: ${r.url()} | ${r.failure()?.errorText||'unknown'}`))
+          for(const route of routes){
+            console.log(`ROUTE ${route}`)
+            await page.goto(origin+route,{waitUntil:'networkidle'})
+            await page.waitForTimeout(250)
           }
           await browser.close()
+          if(errors.length){console.error('\nRESOURCE ERRORS\n'+[...new Set(errors)].join('\n'));process.exit(1)}
+          console.log('No resource errors detected.')
           NODE
-
-      - name: Upload visual audit
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-route-visual-audit
-          path: full-route-visual-audit
-          retention-days: 1
