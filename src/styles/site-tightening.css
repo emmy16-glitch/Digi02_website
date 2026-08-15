@@ -1,0 +1,849 @@
+/* Final public-site tightening layer.
+   Keeps one Digi02 design system while preserving distinct page compositions. */
+
+/* ---------- Shared editorial rhythm ---------- */
+.interior-hero,
+.product-hero,
+.capability-hero,
+.company-identity,
+.contact-intro {
+  padding-top: clamp(5.75rem, 8vw, 8rem);
+}
+
+.interior-hero {
+  padding-bottom: clamp(4.75rem, 7vw, 6.5rem);
+}
+
+.interior-hero h1,
+.contact-intro h1,
+.not-found h1 {
+  max-width: 10ch;
+  font-size: clamp(3.25rem, 6vw, 6.2rem);
+  line-height: 0.94;
+}
+
+.interior-hero__kicker,
+.section-heading > p,
+.capability-field__statement > p:first-child,
+.work-index__meta span,
+.insights-editorial__index,
+.contact-intro__grid > div > p {
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.interior-hero__statement > p,
+.contact-intro__grid > p,
+.product-hero__statement > p,
+.capability-hero__copy > p:nth-of-type(2) {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+}
+
+.section-heading {
+  margin-bottom: clamp(3.25rem, 5vw, 5rem);
+}
+
+.section-heading h2,
+.capability-field__statement h2,
+.page-cta h2,
+.company-direction h2 {
+  font-size: clamp(2.5rem, 4.5vw, 4.7rem);
+}
+
+.solution-ledger,
+.industry-index,
+.work-index,
+.insights-editorial,
+.capability-field {
+  padding-block: clamp(5rem, 7vw, 7rem);
+}
+
+/* ---------- Solutions ---------- */
+.solution-ledger__list {
+  gap: 1rem;
+}
+
+.solution-ledger__item {
+  min-height: 21rem;
+  padding: clamp(1.5rem, 2.5vw, 2.2rem);
+}
+
+.solution-ledger__item:first-child {
+  grid-column: 1 / span 6;
+}
+
+.solution-ledger__item:nth-child(2),
+.solution-ledger__item:nth-child(3) {
+  grid-column: span 3;
+}
+
+.solution-ledger__item h3 {
+  font-size: clamp(2rem, 3vw, 3.3rem);
+}
+
+.solution-ledger__item p,
+.capability-field__items p,
+.industry-index__grid p,
+.work-index__detail > p,
+.insights-editorial__featured > div:last-child > p:last-of-type,
+.insights-editorial__secondary article > p:last-of-type {
+  font-size: 1rem;
+}
+
+.capability-field__items {
+  display: grid;
+  gap: 0;
+}
+
+.capability-field__items article {
+  padding-block: 1.6rem;
+}
+
+.capability-field__items article:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.capability-field__items h3 {
+  font-size: clamp(1.4rem, 1.8vw, 1.8rem);
+}
+
+/* ---------- Industries ---------- */
+.industry-index__grid {
+  gap: clamp(2.5rem, 5vw, 5rem) var(--space-3);
+}
+
+.industry-index__grid article {
+  min-height: 0;
+  padding-right: clamp(1rem, 2vw, 2rem);
+}
+
+.industry-index__grid h3 {
+  margin-top: 0;
+  font-size: clamp(1.65rem, 2.3vw, 2.35rem);
+}
+
+.page-cta {
+  padding-block: clamp(4.5rem, 7vw, 6.5rem);
+}
+
+/* ---------- Our Work ---------- */
+.work-index__item {
+  padding-block: clamp(3.5rem, 5vw, 5rem);
+}
+
+.work-index__item:first-child {
+  border-top: 0;
+}
+
+.work-index__title h2 {
+  font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+}
+
+.work-index__title p {
+  font-size: 1.05rem;
+}
+
+/* ---------- Insights ---------- */
+.insights-editorial__featured {
+  min-height: 26rem;
+  padding-block: clamp(3rem, 5vw, 5rem);
+}
+
+.insights-editorial__featured h2 {
+  font-size: clamp(2.8rem, 4.7vw, 4.9rem);
+}
+
+.insights-editorial__secondary {
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding-top: clamp(3rem, 5vw, 5rem);
+}
+
+.insights-editorial__secondary article {
+  min-height: 18rem;
+}
+
+.insights-editorial__secondary h3 {
+  font-size: clamp(1.5rem, 2vw, 2.15rem);
+}
+
+/* ---------- Product detail pages ---------- */
+.product-hero {
+  padding-bottom: clamp(4.75rem, 7vw, 7rem);
+}
+
+.product-hero__statement h1 {
+  max-width: 10.5ch;
+  font-size: clamp(3.5rem, 6vw, 6.35rem);
+  line-height: 0.93;
+}
+
+.product-hero__identity > strong {
+  font-size: clamp(1.8rem, 2.5vw, 2.7rem);
+}
+
+.product-cinematic {
+  aspect-ratio: 16 / 8.8;
+  margin-top: clamp(3.75rem, 6vw, 6rem);
+}
+
+.skygrid-capability-story,
+.product-lifecycle,
+.mobility-route-story,
+.enterprise-system-map,
+.enterprise-demo-intro,
+.product-outcome {
+  padding-block: clamp(4.75rem, 7vw, 7rem);
+}
+
+.skygrid-capability-story__intro h2,
+.mobility-route-story h2,
+.product-outcome h2,
+.enterprise-demo-intro h2 {
+  font-size: clamp(2.5rem, 4.3vw, 4.4rem);
+}
+
+.skygrid-capability-story__visual {
+  min-height: 28rem;
+}
+
+.mobility-route-story__route {
+  min-height: 26rem;
+}
+
+.product-lifecycle__list,
+.enterprise-system-map__flow {
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.product-lifecycle__list article,
+.enterprise-system-map__flow article {
+  min-height: 14rem;
+  padding-block: 1.2rem;
+}
+
+.product-lifecycle__list h3,
+.enterprise-system-map__flow h3 {
+  margin-top: 0;
+  font-size: clamp(1.55rem, 2.2vw, 2.25rem);
+}
+
+.enterprise-demo-intro__grid > div > p {
+  font-size: 1rem;
+}
+
+/* ---------- Capability pages ---------- */
+.capability-hero {
+  padding-bottom: clamp(4.75rem, 7vw, 6.5rem);
+}
+
+.capability-hero h1 {
+  max-width: 10.5ch;
+  font-size: clamp(3.4rem, 5.8vw, 6.1rem);
+  line-height: 0.94;
+}
+
+.emanagement-visual,
+.payment-path,
+.software-architecture,
+.payroll-cycle {
+  min-height: 28rem;
+}
+
+.capability-narrative,
+.capability-outcomes,
+.payment-sequence,
+.payroll-ledger,
+.software-build {
+  padding-block: clamp(4.75rem, 7vw, 7rem);
+}
+
+.capability-narrative h2,
+.capability-outcomes h2,
+.payment-sequence h2,
+.payroll-ledger h2,
+.software-build h2 {
+  font-size: clamp(2.45rem, 4.25vw, 4.35rem);
+}
+
+.capability-sequence article,
+.software-build__stages article,
+.payment-sequence article {
+  padding-block: 1.45rem;
+}
+
+.capability-outcomes__grid > div {
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.payroll-ledger__rows article {
+  min-height: 14rem;
+  padding-top: 1.25rem;
+}
+
+.payroll-ledger__rows h3 {
+  margin-top: 1.5rem;
+}
+
+/* ---------- Company ---------- */
+.company-identity {
+  padding-bottom: clamp(4.75rem, 7vw, 6.5rem);
+}
+
+.company-identity h1 {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 6.2vw, 6.4rem);
+  line-height: 0.93;
+}
+
+.company-definition,
+.company-disciplines,
+.company-systems,
+.company-method,
+.company-base {
+  padding-block: clamp(4.75rem, 7vw, 7rem);
+}
+
+.company-definition h2,
+.company-disciplines__heading h2,
+.company-systems__heading h2,
+.company-method__statement h2,
+.company-base__statement h2,
+.company-project-cta h2 {
+  font-size: clamp(2.5rem, 4.5vw, 4.7rem);
+}
+
+.company-disciplines__heading,
+.company-systems__heading {
+  margin-bottom: clamp(3.25rem, 5vw, 5rem);
+}
+
+.company-disciplines__list article {
+  min-height: 16rem;
+  justify-content: flex-start;
+  padding-top: 0;
+}
+
+.company-disciplines__list h3 {
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+}
+
+.company-systems__list > a {
+  min-height: 6rem;
+  padding-block: 1.2rem;
+}
+
+.company-systems__list strong {
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+}
+
+.company-method__sequence article {
+  padding-block: 1.4rem;
+}
+
+.company-direction__grid--deep > div {
+  min-height: 17rem;
+}
+
+.company-project-cta {
+  padding-block: clamp(4.75rem, 7vw, 7rem);
+}
+
+/* ---------- Contact ---------- */
+.contact-intro {
+  padding-bottom: clamp(4rem, 6vw, 5.5rem);
+}
+
+.contact-body {
+  padding-block: clamp(4.5rem, 7vw, 6.5rem);
+}
+
+.contact-details > div {
+  margin-bottom: 2rem;
+}
+
+.contact-form label {
+  margin-bottom: 1.6rem;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  font-size: 1rem;
+}
+
+/* ---------- Footer ---------- */
+.site-footer__brand p,
+.site-footer__contact,
+.site-footer__nav {
+  font-size: 0.95rem;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 64rem) {
+  .interior-hero__statement,
+  .product-hero__statement {
+    grid-column: 3 / -1;
+  }
+
+  .interior-hero__kicker,
+  .product-hero__identity {
+    grid-column: 1 / span 2;
+  }
+
+  .solution-ledger__item:first-child {
+    grid-column: 1 / span 6;
+  }
+
+  .solution-ledger__item:nth-child(2),
+  .solution-ledger__item:nth-child(3) {
+    grid-column: span 3;
+  }
+
+  .industry-index__grid article {
+    grid-column: span 6;
+  }
+
+  .work-index__meta {
+    grid-column: 1 / span 2;
+  }
+
+  .work-index__title {
+    grid-column: 3 / span 5;
+  }
+
+  .work-index__detail {
+    grid-column: 9 / -1;
+  }
+
+  .company-disciplines__list article {
+    min-height: 14rem;
+  }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 47.9375rem) {
+  .interior-hero,
+  .product-hero,
+  .capability-hero,
+  .company-identity,
+  .contact-intro {
+    padding-top: 4.25rem;
+  }
+
+  .interior-hero,
+  .product-hero,
+  .capability-hero,
+  .company-identity,
+  .contact-intro,
+  .solution-ledger,
+  .industry-index,
+  .work-index,
+  .insights-editorial,
+  .capability-field,
+  .skygrid-capability-story,
+  .product-lifecycle,
+  .mobility-route-story,
+  .enterprise-system-map,
+  .enterprise-demo-intro,
+  .product-outcome,
+  .capability-narrative,
+  .capability-outcomes,
+  .payment-sequence,
+  .payroll-ledger,
+  .software-build,
+  .company-definition,
+  .company-disciplines,
+  .company-systems,
+  .company-method,
+  .company-base,
+  .company-project-cta,
+  .contact-body {
+    padding-block: 4.25rem;
+  }
+
+  .interior-hero__grid,
+  .section-heading--split,
+  .capability-field__grid,
+  .contact-intro__grid,
+  .contact-body__grid {
+    display: block;
+  }
+
+  .interior-hero__kicker,
+  .product-hero__identity,
+  .capability-hero__copy > p:first-child,
+  .company-identity__kicker {
+    margin-bottom: 1rem;
+  }
+
+  .interior-hero h1,
+  .contact-intro h1,
+  .not-found h1,
+  .product-hero__statement h1,
+  .capability-hero h1,
+  .company-identity h1 {
+    max-width: 11ch;
+    font-size: clamp(2.85rem, 12.8vw, 4rem);
+    line-height: 0.95;
+  }
+
+  .interior-hero__statement > p,
+  .contact-intro__grid > p,
+  .product-hero__statement > p,
+  .capability-hero__copy > p:nth-of-type(2),
+  .company-identity__statement > p {
+    margin-top: 1.35rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .interior-hero__statement > .button,
+  .product-hero__statement .button,
+  .capability-hero__copy .button {
+    margin-top: 1.75rem;
+  }
+
+  .section-heading {
+    margin-bottom: 2.75rem;
+  }
+
+  .section-heading--split > p {
+    margin-bottom: 0.85rem;
+  }
+
+  .section-heading h2,
+  .capability-field__statement h2,
+  .page-cta h2,
+  .company-direction h2,
+  .skygrid-capability-story__intro h2,
+  .mobility-route-story h2,
+  .product-outcome h2,
+  .enterprise-demo-intro h2,
+  .capability-narrative h2,
+  .capability-outcomes h2,
+  .payment-sequence h2,
+  .payroll-ledger h2,
+  .software-build h2,
+  .company-definition h2,
+  .company-disciplines__heading h2,
+  .company-systems__heading h2,
+  .company-method__statement h2,
+  .company-base__statement h2,
+  .company-project-cta h2 {
+    max-width: 12ch;
+    font-size: clamp(2.25rem, 10.5vw, 3.25rem);
+    line-height: 0.98;
+  }
+
+  .solution-ledger__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .solution-ledger__item,
+  .solution-ledger__item:first-child,
+  .solution-ledger__item:nth-child(2),
+  .solution-ledger__item:nth-child(3) {
+    grid-column: 1;
+    min-height: 15rem;
+  }
+
+  .solution-ledger__item h3 {
+    font-size: 2.25rem;
+  }
+
+  .capability-field__statement > p:last-child {
+    margin-bottom: 2.75rem;
+  }
+
+  .capability-field__items article {
+    padding-block: 1.35rem;
+  }
+
+  .industry-index__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+
+  .industry-index__grid article {
+    grid-column: 1;
+    padding: 0;
+  }
+
+  .industry-index__grid h3 {
+    font-size: 1.9rem;
+  }
+
+  .page-cta__inner {
+    gap: 2rem;
+  }
+
+  .work-index__item {
+    display: block;
+    padding-block: 3rem;
+  }
+
+  .work-index__meta {
+    margin-bottom: 1rem;
+  }
+
+  .work-index__title h2 {
+    font-size: 3rem;
+  }
+
+  .work-index__detail {
+    margin-top: 1.5rem;
+  }
+
+  .insights-editorial__featured {
+    display: block;
+    min-height: 0;
+    padding-block: 2.5rem 3.5rem;
+  }
+
+  .insights-editorial__index {
+    margin-bottom: 1.2rem;
+  }
+
+  .insights-editorial__featured h2 {
+    font-size: clamp(2.4rem, 10vw, 3.2rem);
+  }
+
+  .insights-editorial__secondary {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .insights-editorial__secondary article {
+    min-height: 0;
+    padding-block: 2.5rem;
+  }
+
+  .insights-editorial__secondary article + article {
+    border-top: 1px solid var(--line-subtle);
+  }
+
+  .product-hero__identity {
+    margin-bottom: 2rem;
+  }
+
+  .product-cinematic,
+  .product-cinematic--digivolt,
+  .product-cinematic--enterprise {
+    aspect-ratio: 16 / 10;
+    margin-top: 3rem;
+  }
+
+  .product-cinematic figcaption {
+    position: static;
+    max-width: none;
+    padding: 0.65rem 0 0;
+    background: transparent;
+  }
+
+  .skygrid-capability-story__visual,
+  .mobility-route-story__route {
+    min-height: 20rem;
+    margin-top: 2.75rem;
+  }
+
+  .product-lifecycle__list,
+  .enterprise-system-map__flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1rem;
+  }
+
+  .product-lifecycle__list article,
+  .enterprise-system-map__flow article {
+    min-height: 0;
+    padding-block: 1.35rem;
+  }
+
+  .product-lifecycle__list h3,
+  .enterprise-system-map__flow h3 {
+    font-size: 1.55rem;
+  }
+
+  .enterprise-demo-intro__grid > div,
+  .product-outcome__grid > div:last-child {
+    margin-top: 1.75rem;
+  }
+
+  .capability-hero__grid,
+  .capability-narrative__grid,
+  .capability-outcomes__grid,
+  .payment-sequence__grid,
+  .software-build__grid {
+    gap: 2.75rem;
+  }
+
+  .emanagement-visual {
+    padding: 1rem;
+  }
+
+  .emanagement-visual__context {
+    font-size: 0.75rem;
+  }
+
+  .emanagement-visual__flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .emanagement-visual__flow::before {
+    display: none;
+  }
+
+  .emanagement-visual__node {
+    min-height: 5.5rem;
+    justify-content: center;
+  }
+
+  .payroll-cycle {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .payroll-cycle__track,
+  .payroll-cycle__center {
+    display: none;
+  }
+
+  .payroll-cycle__step {
+    position: static;
+    width: auto;
+    min-height: 5.5rem;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    transform: none;
+    border: 1px solid var(--line-subtle);
+    text-align: center;
+  }
+
+  .payroll-cycle__step:last-of-type {
+    grid-column: 1 / -1;
+  }
+
+  .payroll-ledger__rows {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .payroll-ledger__rows article,
+  .payroll-ledger__rows article:nth-child(n+4) {
+    min-height: 0;
+    padding-block: 1.4rem;
+  }
+
+  .payroll-ledger__rows h3 {
+    margin-top: 0;
+  }
+
+  .payment-path {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .payment-path__line {
+    display: none;
+  }
+
+  .payment-path__states {
+    gap: 0;
+  }
+
+  .payment-path__states > div {
+    padding-block: 0.9rem;
+  }
+
+  .software-architecture {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    min-height: 0;
+  }
+
+  .software-architecture__core,
+  .software-architecture__layer,
+  .software-architecture__layer--interface,
+  .software-architecture__layer--workflow,
+  .software-architecture__layer--data,
+  .software-architecture__layer--integration {
+    position: static;
+    width: auto;
+    min-height: 6.5rem;
+    padding: 1rem;
+  }
+
+  .software-architecture__core {
+    grid-column: 1 / -1;
+  }
+
+  .capability-outcomes__grid > div {
+    gap: 2rem;
+  }
+
+  .company-identity__actions {
+    gap: 1.25rem;
+  }
+
+  .company-disciplines__heading,
+  .company-systems__heading {
+    margin-bottom: 2.75rem;
+  }
+
+  .company-disciplines__list {
+    gap: 2.5rem;
+  }
+
+  .company-disciplines__list article {
+    min-height: 0;
+  }
+
+  .company-systems__list > a {
+    min-height: 0;
+    padding-block: 1.2rem;
+  }
+
+  .company-direction__grid--deep > div {
+    min-height: 0;
+  }
+
+  .contact-intro__grid > p {
+    margin-top: 1.5rem;
+  }
+
+  .contact-details {
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-form__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .product-lifecycle__list,
+  .enterprise-system-map__flow,
+  .software-architecture,
+  .payroll-cycle {
+    grid-template-columns: 1fr;
+  }
+
+  .payroll-cycle__step:last-of-type,
+  .software-architecture__core {
+    grid-column: 1;
+  }
+}
