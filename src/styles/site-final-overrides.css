@@ -5,6 +5,11 @@
   pointer-events: auto;
 }
 
+/* The ERP demo owns a local muted token, so keep it aligned with the accessible dark-theme value. */
+.erp-pos-chapter {
+  --erp-muted: #85827c;
+}
+
 /* A closed receipt drawer must be visually and focusably absent, not only aria-hidden. */
 .erp-pos-receipt-drawer[aria-hidden='true'] {
   visibility: hidden;
@@ -45,10 +50,15 @@
 .product-outcome--light .product-outcome__grid > div:first-child > p,
 .enterprise-system-map .section-heading > p,
 .capability-hero--light .capability-hero__copy > p:first-child,
+.capability-narrative--light .capability-narrative__grid > div:first-child > p,
 .company-systems__heading > p,
 .company-base__statement > p:first-child,
 .capability-outcomes--light .capability-outcomes__grid article p,
-.software-architecture__layer span {
+.software-architecture__layer span,
+.technology-proof__mobility .technology-proof__copy > span,
+.technology-proof__mobility .technology-proof__copy > p,
+.erp-pos-receipt-drawer__header span,
+.erp-pos-receipt__brand span {
   color: #5f5b55;
 }
 
