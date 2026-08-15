@@ -73,6 +73,16 @@ export function PaymentSystemsPage() {
           </div>
         </Container>
       </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Connect the transaction</p>
+            <h2>Tell us what happens before and after the payment today.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss payments <span aria-hidden="true">→</span></PrimaryButton>
+        </Container>
+      </section>
     </div>
   )
 }
