@@ -23,10 +23,26 @@ const solutionGroups = [
 ] as const
 
 const supportingCapabilities = [
-  ['E-management', 'Centralize operational records, approvals and reporting around the way the organization actually works.'],
-  ['Payroll automation', 'Reduce repeated payroll work and keep calculations, records and approvals in one controlled flow.'],
-  ['Payment systems', 'Build transaction experiences that connect payment activity to the records and workflows behind it.'],
-  ['Custom software', 'Engineer purpose-built applications where an off-the-shelf product cannot represent the operation properly.'],
+  {
+    title: 'E-management',
+    body: 'Centralize operational records, approvals and reporting around the way the organization actually works.',
+    href: '/solutions/e-management',
+  },
+  {
+    title: 'Payroll automation',
+    body: 'Reduce repeated payroll work and keep calculations, records and approvals in one controlled flow.',
+    href: '/solutions/payroll-automation',
+  },
+  {
+    title: 'Payment systems',
+    body: 'Build transaction experiences that connect payment activity to the records and workflows behind it.',
+    href: '/solutions/payment-systems',
+  },
+  {
+    title: 'Custom software',
+    body: 'Engineer purpose-built applications where an off-the-shelf product cannot represent the operation properly.',
+    href: '/solutions/custom-software',
+  },
 ] as const
 
 export function SolutionsPage() {
@@ -78,10 +94,13 @@ export function SolutionsPage() {
           </div>
 
           <div className="capability-field__items">
-            {supportingCapabilities.map(([title, body]) => (
-              <article key={title}>
-                <h3>{title}</h3>
-                <p>{body}</p>
+            {supportingCapabilities.map((capability) => (
+              <article key={capability.title}>
+                <h3>{capability.title}</h3>
+                <p>{capability.body}</p>
+                <a href={capability.href}>
+                  Explore capability <span aria-hidden="true">↗</span>
+                </a>
               </article>
             ))}
           </div>
