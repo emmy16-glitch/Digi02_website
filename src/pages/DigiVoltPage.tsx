@@ -22,7 +22,7 @@ export function DigiVoltPage() {
             <h1>A connected journey from request to arrival.</h1>
             <p>
               DigiVolt is designed around the complete mobility experience: request, assignment,
-              route progress and arrival in one continuous operational flow.
+              route progress and arrival in one continuous flow.
             </p>
             <PrimaryButton href="/contact">Discuss mobility technology <span aria-hidden="true">→</span></PrimaryButton>
           </div>
@@ -30,8 +30,8 @@ export function DigiVoltPage() {
 
         <Container>
           <figure className="product-cinematic product-cinematic--digivolt">
-            <img src={digiVoltShowcase} alt="DigiVolt electric mobility product visualization" />
-            <figcaption>Product visualization / in development.</figcaption>
+            <img loading="lazy" decoding="async" src={digiVoltShowcase} alt="DigiVolt electric mobility product visualization" />
+            <figcaption>DigiVolt product visualization / in development.</figcaption>
           </figure>
         </Container>
       </section>
@@ -62,12 +62,11 @@ export function DigiVoltPage() {
         <Container>
           <header className="section-heading section-heading--split">
             <p>Mobility flow</p>
-            <h2 id="digivolt-lifecycle-title">Four stages. One journey.</h2>
+            <h2 id="digivolt-lifecycle-title">Request. Match. Ride. Arrive.</h2>
           </header>
           <div className="product-lifecycle__list">
-            {journey.map(([title, body], index) => (
+            {journey.map(([title, body]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
