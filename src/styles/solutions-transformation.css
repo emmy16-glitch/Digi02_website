@@ -79,7 +79,7 @@
   transition: width 360ms var(--ease-emphasized);
 }
 
-.operations-system__stage-button > span {
+.operations-system__stage-button > span:first-child {
   grid-column: 1;
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -97,10 +97,10 @@
   line-height: 1;
 }
 
-.operations-system__stage-button p {
+.operations-system__stage-description {
   grid-column: 2;
   max-width: 24rem;
-  margin: var(--space-1) 0 0;
+  margin-top: var(--space-1);
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
@@ -110,7 +110,7 @@
   width: 100%;
 }
 
-.operations-system__stage-button[data-active='true'] > span,
+.operations-system__stage-button[data-active='true'] > span:first-child,
 .operations-system__stage-button[data-active='true'] strong {
   color: var(--text-primary);
 }
@@ -419,7 +419,7 @@
     grid-template-columns: 2rem 1fr;
   }
 
-  .operations-system__stage-button p {
+  .operations-system__stage-description {
     font-size: 0.9rem;
   }
 
@@ -479,7 +479,7 @@
     letter-spacing: -0.01em;
   }
 
-  .operations-system__stage-button p {
+  .operations-system__stage-description {
     display: none;
   }
 
