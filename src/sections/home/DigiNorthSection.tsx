@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { CSSProperties } from 'react'
 
 import { Container } from '../../components/Container'
 import '../../styles/diginorth-section.css'
@@ -16,7 +17,6 @@ type CommunityStage = (typeof communityPath)[number]['id']
 export function DigiNorthSection() {
   const [activeStage, setActiveStage] = useState<CommunityStage>('meet')
   const activeIndex = communityPath.findIndex((stage) => stage.id === activeStage)
-  const activePath = communityPath[activeIndex]
 
   return (
     <section className="diginorth-chapter" id="diginorth" aria-labelledby="diginorth-title">
@@ -38,13 +38,14 @@ export function DigiNorthSection() {
           </div>
         </header>
 
-        <div className="diginorth-editorial" data-stage={activeStage}>
-          <div className="diginorth-editorial__place">
+        <div className="diginorth-field">
+          <div className="diginorth-field__anchor">
             <p className="type-tech">Kaduna / Northern Nigeria</p>
-            <strong aria-hidden="true">NORTH</strong>
+            <strong>DigiNorth</strong>
+            <span>People building technology.</span>
           </div>
 
-          <div className="diginorth-editorial__directory">
+          <div className="diginorth-field__directory">
             <p className="type-tech">Community disciplines</p>
             <ul>
               {communityRoles.map((role, index) => (
@@ -55,14 +56,16 @@ export function DigiNorthSection() {
               ))}
             </ul>
           </div>
-
-          <div className="diginorth-editorial__active" aria-live="polite">
-            <span className="type-tech">Community pathway / {activePath.number}</span>
-            <strong>{activePath.label}</strong>
-          </div>
         </div>
 
-        <div className="diginorth-path" aria-label="DigiNorth community pathway">
+        <div
+          aria-label="DigiNorth community pathway"
+          className="diginorth-path"
+          style={{ '--path-index': activeIndex } as CSSProperties}
+        >
+          <span aria-hidden="true" className="diginorth-path__track" />
+          <span aria-hidden="true" className="diginorth-path__marker" />
+
           {communityPath.map((stage) => {
             const isActive = stage.id === activeStage
 
@@ -84,6 +87,10 @@ export function DigiNorthSection() {
             )
           })}
         </div>
+
+        <p className="visually-hidden" aria-live="polite">
+          Community pathway stage {activeIndex + 1}: {communityPath[activeIndex].label}
+        </p>
       </Container>
     </section>
   )
