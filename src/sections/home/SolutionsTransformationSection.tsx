@@ -1,21 +1,21 @@
 import { Container } from '../../components/Container'
 import '../../styles/solutions-transformation.css'
 
-const principles = [
+const ecosystem = [
   {
-    number: '01',
-    title: 'Connect',
-    description: 'Bring systems into one working context.',
+    title: 'Systems',
+    action: 'Connect',
+    description: 'Bring the information behind everyday work into one usable context.',
   },
   {
-    number: '02',
-    title: 'Automate',
-    description: 'Remove repeated manual handoffs.',
+    title: 'Workflows',
+    action: 'Automate',
+    description: 'Remove repeated handoffs where software can carry the operation forward.',
   },
   {
-    number: '03',
-    title: 'Transact',
-    description: 'Keep activity connected to records and reporting.',
+    title: 'Transactions',
+    action: 'Transact',
+    description: 'Keep business activity connected to the records and reporting behind it.',
   },
 ] as const
 
@@ -23,34 +23,28 @@ export function SolutionsTransformationSection() {
   return (
     <section className="operations-bridge" aria-labelledby="operations-bridge-title">
       <Container className="operations-bridge__inner">
-        <div className="operations-bridge__intro">
-          <p className="operations-bridge__eyebrow type-tech">
-            Digi02 / Operational challenges
-          </p>
-
-          <h2 id="operations-bridge-title">
-            Work breaks down when its parts stop working together.
-          </h2>
-
+        <header className="operations-bridge__intro">
+          <p className="operations-bridge__eyebrow">What Digi02 actually does</p>
+          <h2 id="operations-bridge-title">Make the operation work as one system.</h2>
           <p className="operations-bridge__summary">
-            Digi02 connects the systems, workflows and transactions behind everyday operations.
+            Digi02 connects the software, workflows and transactions behind the way an organization
+            actually runs.
           </p>
-        </div>
+        </header>
 
-        <div
-          className="operations-bridge__principles"
-          aria-label="How Digi02 approaches connected operations"
-        >
-          {principles.map((principle) => (
-            <div className="operations-bridge__principle" key={principle.title}>
-              <div className="operations-bridge__principle-heading">
-                <span className="operations-bridge__number type-tech">
-                  {principle.number}
-                </span>
-                <h3>{principle.title}</h3>
-              </div>
-              <p>{principle.description}</p>
-            </div>
+        <div className="operations-ecosystem" aria-label="Digi02 operational ecosystem">
+          <div className="operations-ecosystem__path" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+
+          {ecosystem.map((item) => (
+            <article className="operations-ecosystem__stage" key={item.title}>
+              <p className="operations-ecosystem__action">{item.action}</p>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
           ))}
         </div>
       </Container>
