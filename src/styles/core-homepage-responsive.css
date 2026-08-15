@@ -1,64 +1,33 @@
 /*
-  Core homepage responsive corrections after full-page review.
-  Scope is intentionally limited to SkyGrid and ERP/POS layout behavior.
+  Core homepage responsive corrections.
+  SkyGrid and DigiVolt now own their responsive behavior in their section styles.
+  This file only protects the ERP/POS working demo and removes template-like metadata styling.
 */
 
-/* ==========================================================
-   SKYGRID
-   Preserve real product evidence and avoid a cramped mobile rail.
-   ========================================================== */
-
-@media (max-width: 47.9375rem) {
-  .skygrid-chapter__sticky {
-    padding-block: var(--space-8);
-  }
-
-  .skygrid-stage-rail {
-    overflow: visible;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: var(--border-thin) solid var(--line-subtle);
-  }
-
-  .skygrid-stage-rail__item,
-  .skygrid-stage-rail__item:first-of-type {
-    min-width: 0;
-    min-height: 3.5rem;
-    padding: var(--space-2);
-    border-bottom: var(--border-thin) solid var(--line-subtle);
-  }
-
-  .skygrid-stage-rail__item:nth-of-type(odd) {
-    border-right: var(--border-thin) solid var(--line-subtle);
-  }
-
-  .skygrid-stage-rail__item::after {
-    right: var(--space-2);
-    left: var(--space-2);
-  }
-
-  .skygrid-stage__copy-state .type-tech {
-    margin-bottom: var(--space-1);
-  }
-
-  .skygrid-stage__copy-state h3 {
-    margin-bottom: var(--space-1);
-  }
-
-  .skygrid-product-canvas {
-    height: clamp(22rem, 108vw, 28rem);
-  }
-
-  .skygrid-product-canvas__screen img {
-    background: #f7f6f2;
-    object-fit: contain;
-    object-position: top center;
-  }
+.erp-pos-chapter__eyebrow {
+  color: var(--erp-secondary) !important;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-/* ==========================================================
-   ERP / POS
-   Keep the working demo inside the composition at every width.
-   ========================================================== */
+.erp-pos-workspace__kicker {
+  color: var(--erp-muted);
+  font-family: var(--font-body);
+  font-size: var(--type-caption);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.erp-pos-activity__label {
+  flex: 0 0 auto;
+  color: var(--erp-secondary);
+  font-size: var(--type-caption);
+  font-weight: 650;
+}
 
 @media (min-width: 64.0625rem) {
   .erp-pos-workspace {
@@ -101,6 +70,11 @@
     padding-block: var(--space-8);
   }
 
+  .erp-pos-chapter__statement p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
   .erp-pos-workspace {
     margin-top: var(--space-6);
   }
@@ -123,10 +97,7 @@
     min-height: 7rem;
   }
 
-  .erp-pos-payment {
-    margin-top: var(--space-3);
-  }
-
+  .erp-pos-payment,
   .erp-pos-order__total {
     margin-top: var(--space-3);
   }
