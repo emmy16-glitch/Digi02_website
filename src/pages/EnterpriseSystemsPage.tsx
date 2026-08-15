@@ -31,7 +31,7 @@ export function EnterpriseSystemsPage() {
 
         <Container>
           <figure className="product-cinematic product-cinematic--enterprise">
-            <img src={erpPosShowcase} alt="Digi02 ERP and POS multi-device system visualization" />
+            <img loading="lazy" decoding="async" src={erpPosShowcase} alt="Digi02 ERP and POS multi-device system visualization" />
             <figcaption>ERP/POS system visualization. Demo values shown on this site are illustrative.</figcaption>
           </figure>
         </Container>
@@ -45,9 +45,8 @@ export function EnterpriseSystemsPage() {
           </header>
 
           <div className="enterprise-system-map__flow">
-            {systemLayers.map(([title, body], index) => (
+            {systemLayers.map(([title, body]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
@@ -62,9 +61,8 @@ export function EnterpriseSystemsPage() {
           <div>
             <h2>Follow a sale through the system.</h2>
             <p>
-              The demo below is intentionally small: add an item, choose payment, complete the
-              sale, and watch inventory and receipt state respond. Product names, prices and stock
-              values are sample data only.
+              Add an item, choose payment, complete the sale, and watch inventory and receipt state
+              respond. Product names, prices and stock values are sample data only.
             </p>
           </div>
         </Container>
