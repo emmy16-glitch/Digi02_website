@@ -71,6 +71,16 @@ export function CustomSoftwarePage() {
           </div>
         </Container>
       </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>When packaged software does not fit</p>
+            <h2>Show us the workflow your current tools cannot represent.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss custom software <span aria-hidden="true">→</span></PrimaryButton>
+        </Container>
+      </section>
     </div>
   )
 }
