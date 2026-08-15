@@ -1,0 +1,559 @@
+.product-page {
+  background: var(--bg-950);
+  color: var(--text-primary);
+}
+
+.product-hero {
+  padding-block: clamp(7rem, 12vw, 11rem) var(--section-space-desktop);
+  overflow: clip;
+}
+
+.product-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.product-hero__identity {
+  grid-column: 1 / span 3;
+}
+
+.product-hero__identity p {
+  margin: var(--space-2) 0 0;
+  color: var(--text-muted);
+  font-size: var(--type-ui);
+}
+
+.product-hero__identity > strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  letter-spacing: -0.04em;
+}
+
+.product-hero__product-logo {
+  display: block;
+  width: min(12rem, 100%);
+  height: auto;
+}
+
+.product-hero__statement {
+  grid-column: 4 / span 8;
+}
+
+.product-hero__statement h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(4rem, 7vw, 7.4rem);
+  font-weight: 600;
+  letter-spacing: -0.058em;
+  line-height: 0.91;
+}
+
+.product-hero__statement > p {
+  max-width: 42rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.product-hero__statement .button {
+  margin-top: var(--space-5);
+}
+
+.product-cinematic {
+  position: relative;
+  width: calc(100% + var(--page-margin));
+  aspect-ratio: 16 / 8;
+  margin: clamp(5rem, 8vw, 8rem) calc(var(--page-margin) * -1) 0 0;
+  overflow: hidden;
+  background: var(--surface-800);
+}
+
+.product-cinematic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-cinematic figcaption {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  max-width: 30rem;
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  background: rgba(5, 5, 5, 0.84);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.product-hero--skygrid {
+  --skygrid-purple: #6b35c5;
+  background: var(--bg-950);
+}
+
+.product-hero--skygrid .product-hero__product-logo {
+  width: min(13rem, 100%);
+}
+
+.product-hero--digivolt {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.product-hero--digivolt .product-hero__identity p,
+.product-hero--digivolt .product-hero__statement > p {
+  color: #64615b;
+}
+
+.product-cinematic--digivolt {
+  background: #090909;
+}
+
+.product-cinematic--digivolt img {
+  object-fit: contain;
+  background: #090909;
+}
+
+.product-hero--enterprise {
+  background: var(--bg-900);
+}
+
+.product-cinematic--enterprise {
+  aspect-ratio: 16 / 8.5;
+}
+
+.product-cinematic--enterprise img {
+  object-fit: contain;
+  background: #090909;
+}
+
+.skygrid-capability-story,
+.product-lifecycle,
+.enterprise-system-map,
+.enterprise-demo-intro {
+  padding-block: var(--section-space-desktop);
+}
+
+.skygrid-capability-story {
+  background: var(--bg-900);
+}
+
+.skygrid-capability-story__grid,
+.mobility-route-story__grid,
+.product-outcome__grid,
+.enterprise-demo-intro__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.skygrid-capability-story__intro {
+  grid-column: 1 / span 4;
+}
+
+.skygrid-capability-story__intro > p,
+.mobility-route-story__grid > div:first-child > p:first-child,
+.product-outcome__grid > div:first-child > p,
+.enterprise-demo-intro__grid > p {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--type-ui);
+}
+
+.skygrid-capability-story__intro h2,
+.mobility-route-story h2,
+.product-outcome h2,
+.enterprise-demo-intro h2 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+
+.skygrid-capability-story__visual {
+  position: relative;
+  grid-column: 6 / -1;
+  min-height: 34rem;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+    #080809;
+  background-size: 4rem 4rem;
+}
+
+.skygrid-capability-story__visual svg,
+.mobility-route-story__route svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product-route {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.product-route--base {
+  stroke: rgba(247,246,242,.18);
+  stroke-width: 8;
+}
+
+.product-route--active {
+  stroke: var(--skygrid-purple, var(--gold-400));
+}
+
+.product-route--light {
+  stroke: var(--gold-700);
+  stroke-width: 3;
+}
+
+.mission-point,
+.mobility-point {
+  position: absolute;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.mission-point::before,
+.mobility-point::before {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-right: 0.5rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: '';
+}
+
+.mission-point--one {
+  bottom: 18%;
+  left: 8%;
+}
+
+.mission-point--two {
+  top: 37%;
+  left: 39%;
+  color: #ad91de;
+}
+
+.mission-point--three {
+  top: 20%;
+  right: 7%;
+}
+
+.mission-aircraft {
+  position: absolute;
+  top: 40%;
+  left: 56%;
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  border: 1px solid rgba(173,145,222,.5);
+  border-radius: 50%;
+  background: #0a0a0c;
+  color: #c3aae9;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.product-lifecycle {
+  background: var(--bg-950);
+}
+
+.product-lifecycle--light {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.product-lifecycle--light .section-heading > p {
+  color: #73716c;
+}
+
+.product-lifecycle__list,
+.enterprise-system-map__flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.product-lifecycle__list article,
+.enterprise-system-map__flow article {
+  min-height: 19rem;
+  padding-top: var(--space-3);
+}
+
+.product-lifecycle__list article > span,
+.enterprise-system-map__flow article > span {
+  color: var(--gold-400);
+  font-size: 0.75rem;
+}
+
+.product-lifecycle--light .product-lifecycle__list article > span {
+  color: var(--gold-700);
+}
+
+.product-lifecycle__list h3,
+.enterprise-system-map__flow h3 {
+  margin: var(--space-4) 0 0;
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  letter-spacing: -0.04em;
+}
+
+.product-lifecycle__list p,
+.enterprise-system-map__flow p {
+  margin: var(--space-3) 0 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.product-lifecycle--light .product-lifecycle__list p {
+  color: #5f5d58;
+}
+
+.mobility-route-story {
+  padding-block: var(--section-space-desktop);
+  background: var(--bg-950);
+}
+
+.mobility-route-story__grid > div:first-child {
+  grid-column: 1 / span 4;
+}
+
+.mobility-route-story__grid > div:first-child > p:last-child {
+  max-width: 30rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.mobility-route-story__route {
+  position: relative;
+  grid-column: 6 / -1;
+  min-height: 30rem;
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.mobility-point--pickup {
+  bottom: 16%;
+  left: 6%;
+}
+
+.mobility-point--destination {
+  top: 14%;
+  right: 5%;
+}
+
+.mobility-vehicle {
+  position: absolute;
+  top: 44%;
+  left: 59%;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-950);
+  color: var(--text-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.product-outcome {
+  padding-block: var(--section-space-desktop);
+  background: var(--bg-900);
+}
+
+.product-outcome--light {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.product-outcome__grid > div:first-child {
+  grid-column: 1 / span 6;
+}
+
+.product-outcome__grid > div:last-child {
+  grid-column: 8 / -1;
+}
+
+.product-outcome__grid > div:last-child > p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.product-outcome--light .product-outcome__grid > div:first-child > p,
+.product-outcome--light .product-outcome__grid > div:last-child > p {
+  color: #62605b;
+}
+
+.product-outcome a {
+  display: inline-flex;
+  gap: .55rem;
+  margin-top: var(--space-4);
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.product-outcome a span {
+  color: var(--gold-400);
+}
+
+.product-outcome--light a span {
+  color: var(--gold-700);
+}
+
+.enterprise-system-map {
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.enterprise-system-map .section-heading > p {
+  color: #73716c;
+}
+
+.enterprise-system-map__flow article {
+  border-top: 1px solid rgba(17,17,18,.16);
+}
+
+.enterprise-system-map__flow article > span {
+  color: var(--gold-700);
+}
+
+.enterprise-system-map__flow p {
+  color: #5f5d58;
+}
+
+.enterprise-demo-intro {
+  background: var(--bg-950);
+}
+
+.enterprise-demo-intro__grid > p {
+  grid-column: 1 / span 3;
+}
+
+.enterprise-demo-intro__grid > div {
+  grid-column: 4 / span 7;
+}
+
+.enterprise-demo-intro__grid > div > p {
+  max-width: 38rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+@media (max-width: 64rem) {
+  .product-hero,
+  .skygrid-capability-story,
+  .product-lifecycle,
+  .mobility-route-story,
+  .enterprise-system-map,
+  .enterprise-demo-intro,
+  .product-outcome {
+    padding-block: var(--section-space-tablet);
+  }
+
+  .product-hero__identity {
+    grid-column: 1 / span 3;
+  }
+
+  .product-hero__statement {
+    grid-column: 4 / -1;
+  }
+
+  .product-cinematic {
+    aspect-ratio: 16 / 9;
+  }
+
+  .product-lifecycle__list,
+  .enterprise-system-map__flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-lifecycle__list article,
+  .enterprise-system-map__flow article {
+    min-height: 16rem;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .product-hero,
+  .skygrid-capability-story,
+  .product-lifecycle,
+  .mobility-route-story,
+  .enterprise-system-map,
+  .enterprise-demo-intro,
+  .product-outcome {
+    padding-block: var(--section-space-mobile);
+  }
+
+  .product-hero__grid,
+  .skygrid-capability-story__grid,
+  .mobility-route-story__grid,
+  .product-outcome__grid,
+  .enterprise-demo-intro__grid {
+    display: block;
+  }
+
+  .product-hero__identity {
+    margin-bottom: var(--space-6);
+  }
+
+  .product-hero__statement h1 {
+    font-size: clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .product-cinematic {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin: var(--space-8) 0 0;
+  }
+
+  .product-cinematic img {
+    object-position: center;
+  }
+
+  .product-cinematic--digivolt,
+  .product-cinematic--enterprise {
+    aspect-ratio: 4 / 3;
+  }
+
+  .skygrid-capability-story__visual,
+  .mobility-route-story__route {
+    min-height: 25rem;
+    margin-top: var(--space-8);
+  }
+
+  .product-lifecycle__list,
+  .enterprise-system-map__flow {
+    grid-template-columns: 1fr;
+  }
+
+  .product-lifecycle__list article,
+  .enterprise-system-map__flow article {
+    min-height: auto;
+    padding-block: var(--space-5);
+  }
+
+  .product-outcome__grid > div:last-child,
+  .enterprise-demo-intro__grid > div {
+    margin-top: var(--space-6);
+  }
+}
