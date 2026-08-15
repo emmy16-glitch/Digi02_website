@@ -6,8 +6,8 @@ export function NotFoundPage() {
     <section className="not-found">
       <Container className="not-found__inner">
         <p>404</p>
-        <h1>This route is not part of the system.</h1>
-        <p>Return to the Digi02 homepage or continue through the solutions index.</p>
+        <h1>Page not found.</h1>
+        <p>The page may have moved, or the address may be incorrect.</p>
         <div>
           <PrimaryButton href="/">Return home <span aria-hidden="true">→</span></PrimaryButton>
           <a href="/solutions">Explore solutions <span aria-hidden="true">↗</span></a>
