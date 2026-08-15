@@ -1,3 +1,24 @@
 .skygrid-story__statement a {
   min-height: 3rem;
 }
+
+.payment-path > * {
+  min-width: 0;
+}
+
+.payment-path strong {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 64rem) and (min-width: 48rem) {
+  .capability-page--payments .capability-hero__copy {
+    grid-column: 1 / -1;
+    max-width: 48rem;
+  }
+
+  .capability-page--payments .payment-path {
+    grid-column: 1 / -1;
+    margin-top: var(--space-7);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr) auto minmax(0, 1fr);
+  }
+}
