@@ -350,6 +350,11 @@
   pointer-events: none;
 }
 
+.digivolt-route__vehicle-image {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .digivolt-route__vehicle-shadow {
   fill: rgba(0, 0, 0, 0.55);
 }
@@ -558,74 +563,187 @@
     padding-block: var(--space-10);
   }
 
+  /* Mobile is intentionally recomposed, not a stacked desktop canvas. */
+  .digivolt-chapter__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .digivolt-chapter__copy {
+    display: contents;
+  }
+
   .digivolt-chapter__identity {
+    order: 1;
     align-items: flex-start;
     flex-direction: column;
     gap: var(--space-1);
+    margin-bottom: var(--space-3);
   }
 
   .digivolt-chapter__copy > h2 {
-    max-width: 10ch;
-    font-size: clamp(2.75rem, 13vw, 4rem);
+    order: 2;
+    max-width: 11ch;
+    font-size: clamp(2.4rem, 11vw, 3.2rem);
+    line-height: 0.98;
   }
 
   .digivolt-chapter__summary {
+    order: 3;
+    width: 100%;
     margin-top: var(--space-3);
     font-size: 1rem;
   }
 
-  .digivolt-journey__copy h3 {
-    font-size: clamp(1.8rem, 8vw, 2.5rem);
-  }
-
   .digivolt-route {
+    order: 4;
     display: grid;
+    width: 100%;
+    margin-top: var(--space-5);
+    isolation: isolate;
   }
 
   .digivolt-route__telemetry {
-    position: relative;
-    top: auto;
-    right: auto;
+    position: static;
+    z-index: auto;
     order: 1;
     width: 100%;
-    margin-bottom: var(--space-3);
+    margin: 0 0 var(--space-2);
+    padding-block: var(--space-2);
+    background: transparent;
+  }
+
+  .digivolt-route__telemetry-head {
+    margin-bottom: var(--space-2);
+  }
+
+  .digivolt-route__telemetry dl {
+    gap: var(--space-1);
+  }
+
+  .digivolt-route__telemetry dl > div {
+    padding-left: var(--space-1);
+  }
+
+  .digivolt-route__telemetry dd {
+    font-size: 1rem;
   }
 
   .digivolt-route__canvas {
+    position: relative;
     order: 2;
-    min-height: 20rem;
+    width: 100%;
+    min-height: clamp(17rem, 82vw, 20rem);
+    margin-top: var(--space-1);
+  }
+
+  .digivolt-route__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .digivolt-route__vehicle-image {
+    transform: scale(1.28);
+  }
+
+  .digivolt-route__vehicle-shadow {
+    transform: scale(1.18);
+    transform-origin: center;
   }
 
   .digivolt-route__hint {
     order: 3;
+    margin-top: var(--space-1);
     text-align: left;
   }
 
+  .digivolt-journey__copy {
+    order: 5;
+    width: 100%;
+    max-width: none;
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+  }
+
+  .digivolt-journey__copy h3 {
+    max-width: 14ch;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
   .digivolt-stage-rail {
-    grid-template-columns: 1fr;
-    margin-top: var(--space-6);
+    grid-template-columns: repeat(5, minmax(4rem, 1fr));
+    min-width: 20rem;
+    margin-top: var(--space-5);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .digivolt-stage-rail::-webkit-scrollbar {
+    display: none;
   }
 
   .digivolt-stage-rail__item {
-    min-height: 3.5rem;
+    min-height: 4.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-1);
+    border-left: 1px solid var(--digivolt-line);
+    border-bottom: 0;
+    padding: var(--space-1);
+  }
+
+  .digivolt-stage-rail__item:first-child {
     border-left: 0;
-    border-bottom: 1px solid var(--digivolt-line);
-    padding-inline: 0;
   }
 
   .digivolt-stage-rail__item::before {
-    top: auto;
-    bottom: -1px;
+    top: -1px;
+    bottom: auto;
+  }
+
+  .digivolt-stage-rail__state {
+    width: 0.45rem;
+    height: 0.45rem;
   }
 
   .digivolt-stage-rail__text {
-    grid-template-columns: 2.5rem 1fr;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
     width: 100%;
   }
 
+  .digivolt-stage-rail__text .type-tech {
+    font-size: 0.58rem;
+  }
+
   .digivolt-stage-rail__text strong {
+    overflow: visible;
+    font-size: 0.72rem;
+    line-height: 1.1;
+    text-overflow: clip;
     white-space: normal;
+  }
+}
+
+@media (max-width: 30rem) {
+  .digivolt-route__waypoint-label {
+    display: none;
+  }
+
+  .digivolt-route__waypoint-number {
+    font-size: 9px;
+  }
+
+  .digivolt-route__terrain {
+    opacity: 0.7;
   }
 }
 
