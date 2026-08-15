@@ -34,8 +34,8 @@ export function WorkPage() {
           <div className="interior-hero__statement">
             <h1>Selected systems, shown in context.</h1>
             <p>
-              Three Digi02 product directions, each shaped around a different kind of work rather
-              than one repeated interface pattern.
+              A view into autonomous systems, electric mobility and enterprise software—and the
+              operational problems each system is designed to support.
             </p>
           </div>
         </Container>
