@@ -5,19 +5,19 @@ const solutionGroups = [
   {
     eyebrow: 'Autonomous systems',
     title: 'SkyGrid',
-    body: 'UAV mission planning, operational coordination and field-data workflows designed around demanding flight operations.',
+    body: 'Mission planning, flight operations and field-intelligence workflows for UAV work.',
     href: '/solutions/skygrid',
   },
   {
     eyebrow: 'Mobility',
     title: 'DigiVolt',
-    body: 'Connected mobility experiences that carry a journey from request and assignment through route progress and arrival.',
+    body: 'Electric-mobility technology connecting trip requests, vehicle assignment, route progress and arrival.',
     href: '/solutions/digivolt',
   },
   {
-    eyebrow: 'Enterprise operations',
+    eyebrow: 'Enterprise systems',
     title: 'ERP + POS',
-    body: 'Business systems that connect sales, inventory, transactions, reporting and day-to-day operational records.',
+    body: 'Sales, inventory, payments and reporting kept in one working business system.',
     href: '/solutions/enterprise-systems',
   },
 ] as const
@@ -25,22 +25,22 @@ const solutionGroups = [
 const supportingCapabilities = [
   {
     title: 'E-management',
-    body: 'Centralize operational records, approvals and reporting around the way the organization actually works.',
+    body: 'Requests, approvals, records and reporting built around the organization’s workflow.',
     href: '/solutions/e-management',
   },
   {
     title: 'Payroll automation',
-    body: 'Reduce repeated payroll work and keep calculations, records and approvals in one controlled flow.',
+    body: 'A controlled payroll cycle from inputs and calculation through review, approval and record.',
     href: '/solutions/payroll-automation',
   },
   {
     title: 'Payment systems',
-    body: 'Build transaction experiences that connect payment activity to the records and workflows behind it.',
+    body: 'Transaction flows that remain connected to the service, account or business event behind them.',
     href: '/solutions/payment-systems',
   },
   {
     title: 'Custom software',
-    body: 'Engineer purpose-built applications where an off-the-shelf product cannot represent the operation properly.',
+    body: 'Purpose-built applications for workflows that cannot be represented properly by an off-the-shelf product.',
     href: '/solutions/custom-software',
   },
 ] as const
@@ -52,10 +52,10 @@ export function SolutionsPage() {
         <Container className="interior-hero__grid">
           <p className="interior-hero__kicker">Solutions</p>
           <div className="interior-hero__statement">
-            <h1>Technology built around the operation.</h1>
+            <h1>Systems that fit the work.</h1>
             <p>
-              Digi02 designs systems for field operations, mobility, enterprise workflows and
-              transactions — then connects them to the way people actually work.
+              Digi02 builds technology for UAV operations, electric mobility, enterprise workflows
+              and transactions—then connects it to the way the organization actually works.
             </p>
             <PrimaryButton href="/contact">Discuss your system <span aria-hidden="true">→</span></PrimaryButton>
           </div>
@@ -65,8 +65,8 @@ export function SolutionsPage() {
       <section className="solution-ledger" aria-labelledby="solution-ledger-title">
         <Container>
           <header className="section-heading section-heading--split">
-            <p>Core systems</p>
-            <h2 id="solution-ledger-title">From field operations to mobility and enterprise systems.</h2>
+            <p>Core products</p>
+            <h2 id="solution-ledger-title">Three different problems. Three different product languages.</h2>
           </header>
 
           <div className="solution-ledger__list">
@@ -85,11 +85,11 @@ export function SolutionsPage() {
       <section className="capability-field" aria-labelledby="capability-field-title">
         <Container className="capability-field__grid">
           <div className="capability-field__statement">
-            <p>Supporting capabilities</p>
-            <h2 id="capability-field-title">The wider system matters too.</h2>
+            <p>Enterprise capability</p>
+            <h2 id="capability-field-title">The software around the product matters too.</h2>
             <p>
-              Digi02 also engineers the software, automation and transaction layers that keep
-              organizations coordinated behind the visible interface.
+              E-management, payroll, payments and custom software cover the systems organizations
+              use to run the work behind the customer-facing experience.
             </p>
           </div>
 
@@ -99,7 +99,7 @@ export function SolutionsPage() {
                 <h3>{capability.title}</h3>
                 <p>{capability.body}</p>
                 <a href={capability.href}>
-                  Explore capability <span aria-hidden="true">↗</span>
+                  Explore {capability.title} <span aria-hidden="true">↗</span>
                 </a>
               </article>
             ))}
