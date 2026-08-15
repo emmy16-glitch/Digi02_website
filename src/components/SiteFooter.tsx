@@ -18,7 +18,7 @@ export function SiteFooter() {
           <a href="/" aria-label="Digi02 home">
             <img src={digi02LogoLight} alt="Digi02" />
           </a>
-          <p>Technology engineered around the operation.</p>
+          <p>Software, mobility and autonomous systems from Kaduna, Nigeria.</p>
         </div>
 
         <nav className="site-footer__nav" aria-label="Footer navigation">
@@ -37,7 +37,6 @@ export function SiteFooter() {
 
         <div className="site-footer__legal">
           <span>© {new Date().getFullYear()} Digi02</span>
-          <span>Engineering serious technology.</span>
         </div>
       </Container>
     </footer>
