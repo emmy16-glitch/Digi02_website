@@ -5,29 +5,23 @@ const principles = [
   {
     number: '01',
     title: 'Connect',
-    description:
-      'Bring the systems and information behind everyday work into the same context.',
+    description: 'Bring systems and information into the same working context.',
   },
   {
     number: '02',
     title: 'Automate',
-    description:
-      'Remove repeated handoffs and manual steps that slow operations down.',
+    description: 'Remove repeated manual steps where the workflow does not need them.',
   },
   {
     number: '03',
     title: 'Transact',
-    description:
-      'Keep business activity connected to the records, approvals and reporting behind it.',
+    description: 'Keep business activity connected to the records and reporting behind it.',
   },
 ] as const
 
 export function SolutionsTransformationSection() {
   return (
-    <section
-      className="operations-bridge"
-      aria-labelledby="operations-bridge-title"
-    >
+    <section className="operations-bridge" aria-labelledby="operations-bridge-title">
       <Container className="operations-bridge__inner">
         <div className="operations-bridge__intro">
           <p className="operations-bridge__eyebrow type-tech">
@@ -39,8 +33,7 @@ export function SolutionsTransformationSection() {
           </h2>
 
           <p className="operations-bridge__summary">
-            Digi02 connects the systems, workflows and transactions behind
-            everyday operations.
+            Digi02 connects the systems, workflows and transactions behind everyday operations.
           </p>
         </div>
 
@@ -49,25 +42,16 @@ export function SolutionsTransformationSection() {
           aria-label="How Digi02 approaches connected operations"
         >
           {principles.map((principle) => (
-            <article
-              className="operations-bridge__principle"
-              key={principle.title}
-            >
+            <div className="operations-bridge__principle" key={principle.title}>
               <div className="operations-bridge__principle-heading">
                 <span className="operations-bridge__number type-tech">
                   {principle.number}
                 </span>
-
                 <h3>{principle.title}</h3>
               </div>
-
               <p>{principle.description}</p>
-            </article>
+            </div>
           ))}
-        </div>
-
-        <div className="operations-bridge__exit" aria-hidden="true">
-          <span />
         </div>
       </Container>
     </section>
