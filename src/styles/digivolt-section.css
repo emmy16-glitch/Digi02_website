@@ -326,7 +326,7 @@
   transition: width 420ms var(--ease-emphasized);
 }
 
-.digivolt-journey__stages button > span {
+.digivolt-journey__stages button > span:first-child {
   display: block;
   color: var(--digivolt-gold-dark);
   font-family: var(--font-mono);
@@ -344,9 +344,10 @@
   letter-spacing: -0.03em;
 }
 
-.digivolt-journey__stages button p {
+.digivolt-journey__stage-description {
+  display: block;
   max-width: 18rem;
-  margin: var(--space-1) 0 0;
+  margin-top: var(--space-1);
   color: var(--digivolt-muted);
   font-size: 0.9rem;
   line-height: 1.55;
@@ -556,7 +557,7 @@
     display: none;
   }
 
-  .digivolt-journey__stages button p {
+  .digivolt-journey__stage-description {
     display: none;
   }
 
