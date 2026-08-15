@@ -1,4 +1,9 @@
 .skygrid-story {
+  --skygrid-purple: #5b2bb4;
+  --skygrid-purple-soft: rgba(91, 43, 180, 0.24);
+  --skygrid-purple-line: rgba(126, 82, 206, 0.74);
+
+  overflow: clip;
   background: var(--bg-950);
   color: var(--text-primary);
 }
@@ -14,47 +19,48 @@
   align-items: start;
 }
 
-.skygrid-story__heading > p {
+.skygrid-story__brand {
   grid-column: 1 / span 3;
-  margin: 0;
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2vw, 2rem);
-  font-weight: 600;
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
 }
 
-.skygrid-story__heading > div {
+.skygrid-story__brand img {
+  width: min(11rem, 100%);
+  height: auto;
+}
+
+.skygrid-story__brand span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.skygrid-story__statement {
   grid-column: 4 / span 7;
 }
 
-.skygrid-story__heading > div > span {
-  display: block;
-  margin-bottom: var(--space-2);
-  color: var(--text-muted);
-  font-size: var(--type-ui);
-}
-
-.skygrid-story__heading h2 {
+.skygrid-story__statement h2 {
   max-width: 11ch;
   margin: 0;
-  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-size: clamp(3.7rem, 6.2vw, 6.8rem);
   font-weight: 600;
-  letter-spacing: -0.055em;
-  line-height: 0.92;
+  letter-spacing: -0.058em;
+  line-height: 0.91;
 }
 
-.skygrid-story__heading > div > p {
-  max-width: 40rem;
+.skygrid-story__statement > p {
+  max-width: 42rem;
   margin: var(--space-4) 0 0;
   color: var(--text-secondary);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   line-height: 1.65;
 }
 
-.skygrid-story__heading a {
+.skygrid-story__statement a {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   margin-top: var(--space-4);
   color: var(--text-primary);
   font-size: var(--type-ui);
@@ -62,17 +68,25 @@
   text-decoration: none;
 }
 
-.skygrid-story__heading a span {
+.skygrid-story__statement a span {
   color: var(--gold-400);
 }
 
 .skygrid-story__cinematic {
   position: relative;
   width: calc(100% + var(--page-margin));
-  aspect-ratio: 16 / 8.8;
+  aspect-ratio: 16 / 8.6;
   margin: clamp(5rem, 8vw, 8rem) calc(var(--page-margin) * -1) 0 0;
   overflow: hidden;
-  background: var(--surface-800);
+  background: #0a0d13;
+}
+
+.skygrid-story__cinematic::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 54%, rgba(5, 5, 5, 0.7));
+  content: '';
+  pointer-events: none;
 }
 
 .skygrid-story__cinematic img {
@@ -85,113 +99,115 @@
 
 .skygrid-story__cinematic figcaption {
   position: absolute;
-  right: var(--space-2);
-  bottom: var(--space-2);
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  max-width: 36rem;
   margin: 0;
-  padding: 0.5rem 0.7rem;
-  background: rgba(5, 5, 5, 0.82);
+  color: rgba(247, 246, 242, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.skygrid-story__capabilities {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(3rem, 5vw, 5rem);
+}
+
+.skygrid-story__capabilities p {
+  max-width: 26rem;
+  margin: 0;
+}
+
+.skygrid-story__capabilities strong,
+.skygrid-story__capabilities span {
+  display: block;
+}
+
+.skygrid-story__capabilities strong {
+  color: var(--text-primary);
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  font-weight: 600;
+}
+
+.skygrid-story__capabilities span {
+  margin-top: var(--space-1);
   color: var(--text-secondary);
-  font-size: 0.72rem;
-  line-height: 1.3;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
-.skygrid-dashboard {
-  background: var(--bg-900);
+.skygrid-mission-sequence {
+  background: #09090b;
 }
 
-.skygrid-dashboard__inner {
+.skygrid-mission-sequence__inner {
   padding-block: var(--section-space-desktop);
 }
 
-.skygrid-dashboard__heading {
+.skygrid-mission-sequence__heading {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--space-3);
   align-items: end;
 }
 
-.skygrid-dashboard__heading > p:first-child {
+.skygrid-mission-sequence__heading p {
   grid-column: 1 / span 3;
   margin: 0;
   color: var(--text-muted);
-  font-size: var(--type-ui);
+  font-size: 0.95rem;
 }
 
-.skygrid-dashboard__heading h3 {
-  grid-column: 4 / span 5;
-  max-width: 11ch;
+.skygrid-mission-sequence__heading h3 {
+  grid-column: 4 / span 7;
+  max-width: 10ch;
   margin: 0;
-  font-size: clamp(3rem, 4.5vw, 5rem);
+  font-size: clamp(3rem, 5vw, 5.5rem);
   font-weight: 600;
-  letter-spacing: -0.05em;
-  line-height: 0.95;
-}
-
-.skygrid-dashboard__heading > p:last-child {
-  grid-column: 9 / -1;
-  max-width: 32rem;
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.65;
+  letter-spacing: -0.052em;
+  line-height: 0.94;
 }
 
 .skygrid-stage-rail {
-  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
   margin-top: clamp(4rem, 7vw, 7rem);
-  border-bottom: 1px solid var(--line-subtle);
 }
 
 .skygrid-stage-rail__item {
   position: relative;
-  display: flex;
-  min-height: 4.2rem;
-  align-items: flex-end;
-  gap: var(--space-1);
+  min-height: 4.5rem;
   border: 0;
-  padding: 0 var(--space-2) var(--space-2);
+  padding: 0 var(--space-2) var(--space-2) 0;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
   font: inherit;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 600;
   text-align: left;
-}
-
-.skygrid-stage-rail__item:first-child {
-  padding-left: 0;
+  transition: color 220ms var(--ease-standard);
 }
 
 .skygrid-stage-rail__item::after {
   position: absolute;
-  right: 0;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
-  height: 2px;
-  background: var(--gold-400);
+  width: 3.25rem;
+  height: 3px;
+  background: var(--skygrid-purple);
   content: '';
   opacity: 0;
   transform: scaleX(0.35);
   transform-origin: left;
   transition:
-    opacity 260ms var(--ease-standard),
-    transform 420ms var(--ease-emphasized);
-}
-
-.skygrid-stage-rail__item > span {
-  color: inherit;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-}
-
-.skygrid-stage-rail__item strong {
-  color: inherit;
-  font-size: var(--type-ui);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+    opacity 220ms var(--ease-standard),
+    transform 360ms var(--ease-emphasized);
 }
 
 .skygrid-stage-rail__item:hover,
@@ -211,7 +227,7 @@
 
 .skygrid-stage-panel {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.34fr) minmax(0, 1fr);
+  grid-template-columns: minmax(16rem, 0.34fr) minmax(0, 1fr);
   gap: clamp(3rem, 6vw, 7rem);
   align-items: center;
   margin-top: clamp(3rem, 5vw, 5rem);
@@ -219,185 +235,291 @@
 
 .skygrid-stage-panel__copy {
   min-width: 0;
-  animation: skygrid-stage-copy-enter 440ms var(--ease-emphasized) both;
+  animation: skygrid-copy-enter 420ms var(--ease-emphasized) both;
 }
 
 .skygrid-stage-panel__copy > span {
   display: block;
   margin-bottom: var(--space-2);
-  color: var(--gold-400);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: #9e7ddd;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .skygrid-stage-panel__copy h4 {
   max-width: 11ch;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.35rem, 3.6vw, 4rem);
+  font-size: clamp(2.55rem, 3.9vw, 4.25rem);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
+  letter-spacing: -0.048em;
+  line-height: 0.97;
 }
 
-.skygrid-stage-panel__copy > p {
-  max-width: 28rem;
+.skygrid-stage-panel__copy p {
+  max-width: 30rem;
   margin: var(--space-3) 0 0;
   color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.62;
+  font-size: 1.03rem;
+  line-height: 1.65;
 }
 
-.skygrid-stage-panel__copy small {
-  display: block;
-  max-width: 24rem;
-  margin-top: var(--space-4);
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  line-height: 1.45;
-}
-
-.skygrid-stage-panel__evidence {
-  min-width: 0;
-  height: clamp(30rem, 50vw, 46rem);
-  overflow: hidden;
-  background: var(--surface-800);
-}
-
-.skygrid-stage-panel__screen {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-  background: #f7f6f2;
-  animation: skygrid-stage-evidence-enter 520ms var(--ease-emphasized) both;
-}
-
-.skygrid-stage-panel__screen img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-
-.skygrid-dashboard[data-stage='plan'] .skygrid-stage-panel__screen img {
-  object-position: 52% top;
-}
-
-.skygrid-dashboard[data-stage='prepare'] .skygrid-stage-panel__screen img {
-  object-position: 57% top;
-}
-
-.skygrid-dashboard[data-stage='review'] .skygrid-stage-panel__screen img {
-  object-position: 62% top;
-}
-
-.skygrid-mission {
+.skygrid-stage-panel__visual {
   position: relative;
-  width: 100%;
-  height: 100%;
+  min-width: 0;
+  min-height: clamp(31rem, 48vw, 44rem);
   overflow: hidden;
-  background: var(--bg-950);
-  isolation: isolate;
+  background: #060609;
+  animation: skygrid-visual-enter 500ms var(--ease-emphasized) both;
 }
 
-.skygrid-mission__fallback,
-.skygrid-mission__map {
+.skygrid-stage-panel__note {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 5;
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  background: rgba(5, 5, 5, 0.8);
+  color: rgba(247, 246, 242, 0.58);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.skygrid-mission-visual {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 68% 30%, rgba(91, 43, 180, 0.22), transparent 35%),
+    #060609;
 }
 
-.skygrid-mission__fallback {
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.025);
-  transition:
-    opacity 620ms var(--ease-standard),
-    transform 760ms var(--ease-emphasized);
-}
-
-.skygrid-mission__map {
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 620ms var(--ease-standard);
-}
-
-.skygrid-mission[data-map-state='ready'] .skygrid-mission__fallback {
-  opacity: 0;
-  transform: scale(1);
-}
-
-.skygrid-mission[data-map-state='ready'] .skygrid-mission__map {
-  opacity: 1;
-}
-
-.skygrid-mission__label {
+.skygrid-mission-visual::before {
   position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
-  z-index: 2;
-  margin: 0;
-  padding: var(--space-1) var(--space-2);
-  background: rgba(5, 5, 5, 0.82);
-  color: var(--text-primary);
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(247, 246, 242, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 246, 242, 0.024) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  content: '';
   pointer-events: none;
 }
 
-.skygrid-mission .maplibregl-ctrl-attrib {
-  background: rgba(5, 5, 5, 0.78);
-  color: var(--text-secondary);
+.skygrid-mission-map {
+  position: absolute;
+  inset: 5% 3% 8%;
+  z-index: 1;
+  width: 94%;
+  height: 87%;
+  overflow: visible;
 }
 
-.skygrid-mission .maplibregl-ctrl-attrib a {
+.skygrid-map__contour {
+  fill: none;
+  stroke: rgba(247, 246, 242, 0.11);
+  stroke-width: 1.2;
+}
+
+.skygrid-map__zone {
+  fill: rgba(91, 43, 180, 0.08);
+  stroke: rgba(126, 82, 206, 0.42);
+  stroke-dasharray: 8 9;
+  stroke-width: 2;
+}
+
+.skygrid-map__route {
+  fill: none;
+  stroke: var(--skygrid-purple-line);
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.skygrid-map__route--complete {
+  stroke: var(--gold-400);
+}
+
+.skygrid-map__waypoint {
+  fill: #060609;
+  stroke: rgba(247, 246, 242, 0.76);
+  stroke-width: 3;
+}
+
+.skygrid-map__waypoint--active,
+.skygrid-map__event {
+  fill: var(--gold-400);
+  stroke: var(--gold-400);
+}
+
+.skygrid-map__event {
+  fill: #060609;
+  stroke-width: 4;
+}
+
+.skygrid-map__aircraft path {
+  fill: var(--text-primary);
+}
+
+.skygrid-map__aircraft--active path {
+  fill: var(--gold-400);
+}
+
+.skygrid-map__labels {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.skygrid-map__label {
+  position: absolute;
+  padding: 0.4rem 0.55rem;
+  background: rgba(5, 5, 5, 0.8);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+}
+
+.skygrid-map__label--start {
+  bottom: 13%;
+  left: 7%;
+}
+
+.skygrid-map__label--zone {
+  top: 42%;
+  left: 47%;
+}
+
+.skygrid-map__label--return {
+  top: 15%;
+  right: 7%;
+}
+
+.skygrid-map__label--active {
+  top: 55%;
+  left: 58%;
   color: var(--text-primary);
 }
 
-.skygrid-dashboard__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-  border-top: 1px solid var(--line-subtle);
-  padding-top: var(--space-3);
+.skygrid-mission-visual--operate .skygrid-map__route {
+  stroke: var(--gold-400);
 }
 
-.skygrid-dashboard__footer span {
+.skygrid-readiness__aircraft {
+  position: absolute;
+  top: 8%;
+  right: 7%;
+  left: 7%;
+  height: 48%;
+}
+
+.skygrid-readiness__aircraft svg {
+  width: 100%;
+  height: 100%;
+}
+
+.skygrid-drone-mark line,
+.skygrid-drone-mark circle {
+  fill: none;
+  stroke: rgba(247, 246, 242, 0.7);
+  stroke-width: 5;
+}
+
+.skygrid-drone-mark circle:first-of-type {
+  fill: rgba(91, 43, 180, 0.18);
+  stroke: #8c66d0;
+}
+
+.skygrid-readiness {
+  position: absolute;
+  right: 7%;
+  bottom: 9%;
+  left: 7%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.skygrid-readiness > div {
+  display: flex;
+  min-width: 0;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.skygrid-readiness > div > span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--skygrid-purple-soft);
+  color: #b99ee8;
+  font-size: 0.8rem;
+}
+
+.skygrid-readiness p {
+  margin: 0;
+}
+
+.skygrid-readiness strong,
+.skygrid-readiness small {
+  display: block;
+}
+
+.skygrid-readiness strong {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.skygrid-readiness small {
+  margin-top: 0.25rem;
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.skygrid-review-strip {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  left: 6%;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.skygrid-review-strip span {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.skygrid-mission-sequence__hint {
+  margin: var(--space-4) 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
-.skygrid-dashboard__footer strong {
-  color: var(--gold-400);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-
-@keyframes skygrid-stage-copy-enter {
+@keyframes skygrid-copy-enter {
   from {
     opacity: 0;
     transform: translateY(0.65rem);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes skygrid-stage-evidence-enter {
+@keyframes skygrid-visual-enter {
   from {
     opacity: 0;
-    transform: scale(0.99);
+    transform: scale(0.992);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -406,29 +528,24 @@
 
 @media (max-width: 64rem) {
   .skygrid-story__intro,
-  .skygrid-dashboard__inner {
+  .skygrid-mission-sequence__inner {
     padding-block: var(--section-space-tablet);
   }
 
-  .skygrid-story__heading > p {
+  .skygrid-story__brand {
     grid-column: 1 / span 3;
   }
 
-  .skygrid-story__heading > div {
+  .skygrid-story__statement {
     grid-column: 4 / -1;
   }
 
-  .skygrid-dashboard__heading > p:first-child {
+  .skygrid-mission-sequence__heading p {
     grid-column: 1 / span 3;
   }
 
-  .skygrid-dashboard__heading h3 {
-    grid-column: 4 / span 6;
-  }
-
-  .skygrid-dashboard__heading > p:last-child {
+  .skygrid-mission-sequence__heading h3 {
     grid-column: 4 / span 7;
-    margin-top: var(--space-3);
   }
 
   .skygrid-stage-panel {
@@ -438,9 +555,8 @@
 
   .skygrid-stage-panel__copy {
     display: grid;
-    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1fr);
+    grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1fr);
     gap: var(--space-2) var(--space-6);
-    align-items: start;
   }
 
   .skygrid-stage-panel__copy > span,
@@ -448,69 +564,85 @@
     grid-column: 1;
   }
 
-  .skygrid-stage-panel__copy > p {
+  .skygrid-stage-panel__copy p {
     grid-column: 2;
     grid-row: 1 / span 2;
     margin-top: 0;
   }
 
-  .skygrid-stage-panel__copy small {
-    grid-column: 2;
-    margin-top: 0;
-  }
-
-  .skygrid-stage-panel__evidence {
-    height: clamp(30rem, 61vw, 40rem);
+  .skygrid-stage-panel__visual {
+    min-height: clamp(29rem, 61vw, 39rem);
   }
 }
 
 @media (max-width: 47.9375rem) {
   .skygrid-story__intro,
-  .skygrid-dashboard__inner {
+  .skygrid-mission-sequence__inner {
     padding-block: var(--section-space-mobile);
   }
 
   .skygrid-story__heading,
-  .skygrid-dashboard__heading {
+  .skygrid-mission-sequence__heading {
     display: block;
   }
 
-  .skygrid-story__heading > p,
-  .skygrid-dashboard__heading > p:first-child {
-    margin-bottom: var(--space-3);
+  .skygrid-story__brand {
+    margin-bottom: var(--space-6);
   }
 
-  .skygrid-story__heading h2 {
+  .skygrid-story__brand img {
+    width: 9.5rem;
+  }
+
+  .skygrid-story__statement h2 {
     font-size: clamp(3rem, 13vw, 4.2rem);
   }
 
-  .skygrid-dashboard__heading h3 {
-    font-size: clamp(2.8rem, 12vw, 4rem);
-  }
-
-  .skygrid-dashboard__heading > p:last-child {
-    margin-top: var(--space-3);
+  .skygrid-story__statement > p {
+    font-size: 1rem;
   }
 
   .skygrid-story__cinematic {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     margin: var(--space-8) 0 0;
   }
 
-  .skygrid-stage-rail {
-    grid-template-columns: repeat(4, minmax(7.4rem, 1fr));
-    overflow-x: auto;
-    margin-top: var(--space-8);
-    scrollbar-width: none;
+  .skygrid-story__cinematic img {
+    object-position: 57% center;
   }
 
-  .skygrid-stage-rail::-webkit-scrollbar {
-    display: none;
+  .skygrid-story__cinematic figcaption {
+    right: var(--space-2);
+    bottom: var(--space-2);
+    left: var(--space-2);
+    text-align: left;
+  }
+
+  .skygrid-story__capabilities {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .skygrid-mission-sequence__heading p {
+    margin-bottom: var(--space-3);
+  }
+
+  .skygrid-mission-sequence__heading h3 {
+    max-width: 9ch;
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .skygrid-stage-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-4);
+    margin-top: var(--space-8);
   }
 
   .skygrid-stage-rail__item {
-    min-height: 3.6rem;
+    min-height: 3.4rem;
+    font-size: 1rem;
   }
 
   .skygrid-stage-panel {
@@ -521,11 +653,7 @@
     display: block;
   }
 
-  .skygrid-stage-panel__copy > p {
-    margin-top: var(--space-3);
-  }
-
-  .skygrid-stage-panel__copy small {
+  .skygrid-stage-panel__copy p {
     margin-top: var(--space-3);
   }
 
@@ -534,46 +662,60 @@
     font-size: clamp(2.35rem, 10.5vw, 3.3rem);
   }
 
-  .skygrid-stage-panel__evidence {
-    width: calc(100% + var(--page-margin));
-    height: clamp(21rem, 90vw, 29rem);
-    margin-right: calc(var(--page-margin) * -1);
+  .skygrid-stage-panel__visual {
+    min-height: 24rem;
   }
 
-  .skygrid-dashboard[data-stage='plan'] .skygrid-stage-panel__screen img {
-    object-position: 55% top;
+  .skygrid-mission-map {
+    inset: 4% -10% 7%;
+    width: 120%;
   }
 
-  .skygrid-dashboard[data-stage='prepare'] .skygrid-stage-panel__screen img {
-    object-position: 64% top;
+  .skygrid-map__label--zone {
+    left: 39%;
   }
 
-  .skygrid-dashboard[data-stage='review'] .skygrid-stage-panel__screen img {
-    object-position: 67% top;
+  .skygrid-map__label--active {
+    left: 48%;
   }
 
-  .skygrid-dashboard__footer {
-    align-items: flex-start;
+  .skygrid-readiness__aircraft {
+    top: 4%;
+    right: 1%;
+    left: 1%;
+    height: 42%;
   }
 
-  .skygrid-dashboard__footer span {
-    max-width: 17rem;
+  .skygrid-readiness {
+    right: var(--space-3);
+    bottom: var(--space-5);
+    left: var(--space-3);
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .skygrid-review-strip {
+    right: var(--space-3);
+    bottom: var(--space-5);
+    left: var(--space-3);
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .skygrid-stage-panel__note {
+    right: var(--space-1);
+    bottom: var(--space-1);
+    max-width: 14rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skygrid-stage-rail__item::after,
-  .skygrid-mission__fallback,
-  .skygrid-mission__map {
-    transition: none;
-  }
-
   .skygrid-stage-panel__copy,
-  .skygrid-stage-panel__screen {
+  .skygrid-stage-panel__visual {
     animation: none;
   }
 
-  .skygrid-mission__fallback {
-    transform: none;
+  .skygrid-stage-rail__item::after {
+    transition: none;
   }
 }
