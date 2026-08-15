@@ -20,17 +20,19 @@
 .digivolt-chapter__inner {
   position: relative;
   z-index: 1;
-  padding-block: clamp(var(--space-10), 8vw, var(--space-15));
+  width: 100%;
+  padding-block: clamp(var(--space-8), 6vw, var(--space-12));
 }
 
 .digivolt-chapter__layout {
   display: grid;
-  grid-template-columns: minmax(17rem, 0.76fr) minmax(0, 1.24fr);
-  gap: clamp(var(--space-6), 6vw, var(--space-12));
+  grid-template-columns: minmax(18rem, 0.62fr) minmax(0, 1.38fr);
+  gap: clamp(var(--space-5), 5vw, var(--space-10));
   align-items: center;
 }
 
-.digivolt-chapter__copy {
+.digivolt-chapter__copy,
+.digivolt-route {
   min-width: 0;
 }
 
@@ -38,7 +40,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .digivolt-chapter__identity p,
@@ -58,62 +60,62 @@
 }
 
 .digivolt-chapter__copy > h2 {
-  max-width: 10ch;
+  max-width: 11ch;
   margin: 0;
   color: var(--digivolt-ink);
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 5.7vw, 5.8rem);
+  font-size: clamp(2.9rem, 4.15vw, 4.55rem);
   font-weight: 600;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.05em;
   line-height: 0.96;
 }
 
 .digivolt-chapter__summary {
-  max-width: 36rem;
-  margin: var(--space-4) 0 0;
+  max-width: 34rem;
+  margin: var(--space-3) 0 0;
   color: var(--digivolt-muted);
   font-size: var(--type-body);
-  line-height: 1.6;
+  line-height: 1.58;
 }
 
 .digivolt-journey__copy {
-  max-width: 32rem;
-  margin-top: clamp(var(--space-6), 5vw, var(--space-10));
+  max-width: 30rem;
+  margin-top: clamp(var(--space-4), 3vw, var(--space-6));
   padding-top: var(--space-3);
   border-top: 1px solid var(--digivolt-line);
 }
 
 .digivolt-journey__stage-number {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-1);
   color: var(--digivolt-gold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .digivolt-journey__copy h3 {
-  max-width: 12ch;
+  max-width: 14ch;
   margin: 0;
   color: var(--digivolt-ink);
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  font-size: clamp(1.7rem, 2.1vw, 2.45rem);
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   line-height: 1.02;
 }
 
 .digivolt-journey__copy > p:not(.type-tech) {
-  max-width: 31rem;
-  margin: var(--space-3) 0 0;
+  max-width: 29rem;
+  margin: var(--space-2) 0 0;
   color: var(--digivolt-muted);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .digivolt-journey__status {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   color: var(--digivolt-ink);
   font-size: var(--type-caption);
   font-weight: 600;
@@ -128,7 +130,6 @@
 
 .digivolt-route {
   position: relative;
-  min-width: 0;
 }
 
 .digivolt-route__telemetry {
@@ -136,11 +137,11 @@
   z-index: 5;
   top: 0;
   right: 0;
-  width: min(21rem, 44%);
-  border-top: 1px solid var(--digivolt-line);
+  width: min(20rem, 42%);
+  border-top: 1px solid var(--line-gold);
   border-bottom: 1px solid var(--digivolt-line);
   padding-block: var(--space-2);
-  background: rgba(5, 5, 5, 0.76);
+  background: rgba(5, 5, 5, 0.9);
 }
 
 .digivolt-route__telemetry-head {
@@ -198,7 +199,7 @@
   margin-top: var(--space-0-5);
   color: var(--digivolt-ink);
   font-family: var(--font-display);
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -217,22 +218,29 @@
   transition: width var(--motion-component) var(--ease-emphasized);
 }
 
+/* A definite aspect ratio is intentional: the SVG used to be absolutely
+   positioned inside a min-height-only parent, which could collapse its
+   percentage height to zero. The scene now always has measurable height. */
 .digivolt-route__canvas {
   position: relative;
-  min-height: clamp(27rem, 39vw, 35rem);
+  width: 100%;
+  aspect-ratio: 1000 / 430;
+  min-height: 0;
+  overflow: visible;
 }
 
 .digivolt-route__svg {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 1000 / 430;
   overflow: visible;
 }
 
 .digivolt-route__terrain {
   fill: none;
-  stroke: rgba(247, 246, 242, 0.055);
+  stroke: rgba(247, 246, 242, 0.09);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -247,7 +255,7 @@
 }
 
 .digivolt-route__road-edge {
-  stroke: rgba(247, 246, 242, 0.12);
+  stroke: rgba(247, 246, 242, 0.18);
   stroke-linecap: round;
   stroke-width: 34;
 }
@@ -259,16 +267,16 @@
 }
 
 .digivolt-route__lane {
-  stroke: rgba(247, 246, 242, 0.16);
+  stroke: rgba(247, 246, 242, 0.28);
   stroke-dasharray: 4 10;
   stroke-linecap: round;
-  stroke-width: 1;
+  stroke-width: 1.25;
 }
 
 .digivolt-route__progress {
   stroke: var(--digivolt-gold);
   stroke-linecap: round;
-  stroke-width: 2.5;
+  stroke-width: 4;
 }
 
 .digivolt-route__measure {
@@ -333,11 +341,11 @@
 }
 
 .digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-ring {
-  stroke: rgba(170, 168, 162, 0.38);
+  stroke: rgba(170, 168, 162, 0.4);
 }
 
 .digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-dot {
-  fill: rgba(170, 168, 162, 0.38);
+  fill: rgba(170, 168, 162, 0.4);
 }
 
 .digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-number,
@@ -351,17 +359,16 @@
 }
 
 .digivolt-route__vehicle-image {
-  transform-box: fill-box;
-  transform-origin: center;
+  opacity: 1;
 }
 
 .digivolt-route__vehicle-shadow {
-  fill: rgba(0, 0, 0, 0.55);
+  fill: rgba(0, 0, 0, 0.62);
 }
 
 .digivolt-route__charger rect:first-child {
   fill: var(--surface-700);
-  stroke: rgba(247, 246, 242, 0.2);
+  stroke: rgba(247, 246, 242, 0.28);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -378,13 +385,13 @@
 }
 
 .digivolt-route__charger line {
-  stroke: rgba(247, 246, 242, 0.2);
+  stroke: rgba(247, 246, 242, 0.28);
   stroke-width: 1.5;
   vector-effect: non-scaling-stroke;
 }
 
 .digivolt-route__hint {
-  margin: var(--space-2) 0 0;
+  margin: var(--space-1) 0 0;
   color: var(--digivolt-quiet);
   letter-spacing: 0.1em;
   text-align: right;
@@ -394,7 +401,7 @@
 .digivolt-stage-rail {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-top: clamp(var(--space-5), 5vw, var(--space-8));
+  margin-top: var(--space-4);
   border-top: 1px solid var(--digivolt-line);
 }
 
@@ -402,9 +409,9 @@
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 5rem;
+  min-height: 4.25rem;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   border: 0;
   border-left: 1px solid var(--digivolt-line);
   padding: var(--space-2);
@@ -413,9 +420,7 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
-  transition:
-    color var(--motion-fast) var(--ease-standard),
-    background-color var(--motion-fast) var(--ease-standard);
+  transition: color var(--motion-fast) var(--ease-standard);
 }
 
 .digivolt-stage-rail__item:first-child {
@@ -433,13 +438,9 @@
   transition: width var(--motion-ui) var(--ease-emphasized);
 }
 
-.digivolt-stage-rail__item:hover {
-  color: var(--digivolt-ink);
-}
-
+.digivolt-stage-rail__item:hover,
 .digivolt-stage-rail__item[data-active='true'] {
   color: var(--digivolt-ink);
-  background: rgba(247, 246, 242, 0.025);
 }
 
 .digivolt-stage-rail__item[data-active='true']::before {
@@ -451,8 +452,8 @@
 }
 
 .digivolt-stage-rail__state {
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.5rem;
+  height: 0.5rem;
   flex: 0 0 auto;
   border: 1px solid currentColor;
   border-radius: 50%;
@@ -476,7 +477,7 @@
 
 .digivolt-stage-rail__text .type-tech {
   color: currentColor;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
 }
 
@@ -507,13 +508,9 @@
   font: 500 var(--type-ui) / 1 var(--font-body);
 }
 
-.digivolt-replay:hover {
-  border-color: var(--line-gold);
-}
-
 @media (min-width: 64.0625rem) {
   .digivolt-chapter__scroll-area {
-    height: 260svh;
+    height: 230svh;
   }
 
   .digivolt-chapter__sticky {
@@ -525,19 +522,28 @@
   }
 
   .digivolt-chapter__inner {
-    width: 100%;
-    padding-block: clamp(var(--space-6), 7vh, var(--space-10));
+    padding-block: clamp(2.5rem, 4.5vh, 4rem);
   }
 }
 
 @media (max-width: 64rem) {
+  .digivolt-chapter__scroll-area {
+    height: auto;
+  }
+
+  .digivolt-chapter__sticky {
+    position: relative;
+    min-height: 0;
+  }
+
   .digivolt-chapter__layout {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
 
   .digivolt-chapter__copy > h2 {
     max-width: 12ch;
+    font-size: clamp(2.8rem, 7vw, 4.25rem);
   }
 
   .digivolt-chapter__summary,
@@ -545,16 +551,16 @@
     max-width: 42rem;
   }
 
-  .digivolt-journey__copy {
-    margin-top: var(--space-6);
-  }
-
-  .digivolt-route__canvas {
-    min-height: clamp(24rem, 62vw, 32rem);
-  }
-
   .digivolt-route__telemetry {
-    width: min(21rem, 48%);
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(100%, 38rem);
+    margin: 0 0 var(--space-2) auto;
+  }
+
+  .digivolt-stage-rail {
+    margin-top: var(--space-5);
   }
 }
 
@@ -563,12 +569,10 @@
     padding-block: var(--space-10);
   }
 
-  /* Mobile is intentionally recomposed, not a stacked desktop canvas. */
   .digivolt-chapter__layout {
     display: flex;
     flex-direction: column;
     gap: 0;
-    align-items: stretch;
   }
 
   .digivolt-chapter__copy {
@@ -580,13 +584,15 @@
     align-items: flex-start;
     flex-direction: column;
     gap: var(--space-1);
+    width: 100%;
     margin-bottom: var(--space-3);
   }
 
   .digivolt-chapter__copy > h2 {
     order: 2;
-    max-width: 11ch;
-    font-size: clamp(2.4rem, 11vw, 3.2rem);
+    width: 100%;
+    max-width: 12ch;
+    font-size: clamp(2.35rem, 10vw, 3.25rem);
     line-height: 0.98;
   }
 
@@ -599,85 +605,42 @@
 
   .digivolt-route {
     order: 4;
-    display: grid;
     width: 100%;
-    margin-top: var(--space-5);
-    isolation: isolate;
-  }
-
-  .digivolt-route__telemetry {
-    position: static;
-    z-index: auto;
-    order: 1;
-    width: 100%;
-    margin: 0 0 var(--space-2);
-    padding-block: var(--space-2);
-    background: transparent;
-  }
-
-  .digivolt-route__telemetry-head {
-    margin-bottom: var(--space-2);
-  }
-
-  .digivolt-route__telemetry dl {
-    gap: var(--space-1);
-  }
-
-  .digivolt-route__telemetry dl > div {
-    padding-left: var(--space-1);
-  }
-
-  .digivolt-route__telemetry dd {
-    font-size: 1rem;
-  }
-
-  .digivolt-route__canvas {
-    position: relative;
-    order: 2;
-    width: 100%;
-    min-height: clamp(17rem, 82vw, 20rem);
-    margin-top: var(--space-1);
-  }
-
-  .digivolt-route__svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  .digivolt-route__vehicle-image {
-    transform: scale(1.28);
-  }
-
-  .digivolt-route__vehicle-shadow {
-    transform: scale(1.18);
-    transform-origin: center;
-  }
-
-  .digivolt-route__hint {
-    order: 3;
-    margin-top: var(--space-1);
-    text-align: left;
+    margin-top: var(--space-6);
   }
 
   .digivolt-journey__copy {
     order: 5;
     width: 100%;
-    max-width: none;
     margin-top: var(--space-5);
-    padding-top: var(--space-3);
   }
 
-  .digivolt-journey__copy h3 {
-    max-width: 14ch;
-    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  .digivolt-route__telemetry {
+    width: 100%;
+    margin: 0 0 var(--space-2);
+  }
+
+  .digivolt-route__canvas,
+  .digivolt-route__svg {
+    aspect-ratio: 1000 / 430;
+  }
+
+  .digivolt-route__waypoint-label {
+    display: none;
+  }
+
+  .digivolt-route__waypoint-number {
+    font-size: 13px;
+  }
+
+  .digivolt-route__hint {
+    margin-top: var(--space-2);
+    text-align: left;
   }
 
   .digivolt-stage-rail {
-    grid-template-columns: repeat(5, minmax(4rem, 1fr));
-    min-width: 20rem;
+    grid-template-columns: repeat(5, minmax(4.5rem, 1fr));
+    gap: 0;
     margin-top: var(--space-5);
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -689,61 +652,15 @@
   }
 
   .digivolt-stage-rail__item {
-    min-height: 4.25rem;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: var(--space-1);
-    border-left: 1px solid var(--digivolt-line);
-    border-bottom: 0;
+    min-height: 4rem;
+    border-left: 0;
+    border-right: 1px solid var(--digivolt-line);
     padding: var(--space-1);
   }
 
-  .digivolt-stage-rail__item:first-child {
-    border-left: 0;
-  }
-
-  .digivolt-stage-rail__item::before {
-    top: -1px;
-    bottom: auto;
-  }
-
-  .digivolt-stage-rail__state {
-    width: 0.45rem;
-    height: 0.45rem;
-  }
-
-  .digivolt-stage-rail__text {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2px;
-    width: 100%;
-  }
-
-  .digivolt-stage-rail__text .type-tech {
-    font-size: 0.58rem;
-  }
-
   .digivolt-stage-rail__text strong {
-    overflow: visible;
-    font-size: 0.72rem;
-    line-height: 1.1;
-    text-overflow: clip;
+    font-size: 0.78rem;
     white-space: normal;
-  }
-}
-
-@media (max-width: 30rem) {
-  .digivolt-route__waypoint-label {
-    display: none;
-  }
-
-  .digivolt-route__waypoint-number {
-    font-size: 9px;
-  }
-
-  .digivolt-route__terrain {
-    opacity: 0.7;
   }
 }
 
