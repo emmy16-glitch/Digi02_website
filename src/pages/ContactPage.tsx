@@ -1,24 +1,55 @@
 import { useState, type FormEvent } from 'react'
 import { Container } from '../components/Container'
+import '../styles/contact-production.css'
+
+function buildEnquiry(form: FormData) {
+  const name = String(form.get('name') ?? '').trim()
+  const email = String(form.get('email') ?? '').trim()
+  const organization = String(form.get('organization') ?? '').trim()
+  const phone = String(form.get('phone') ?? '').trim()
+  const area = String(form.get('area') ?? '').trim()
+  const project = String(form.get('project') ?? '').trim()
+
+  return {
+    name,
+    subject: `Project enquiry from ${name || 'Digi02 website visitor'}`,
+    body: [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Organization: ${organization || 'Not provided'}`,
+      `Phone: ${phone || 'Not provided'}`,
+      `Area of interest: ${area}`,
+      '',
+      'Project / operational challenge:',
+      project,
+    ].join('\n'),
+  }
+}
 
 export function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const [preparedBrief, setPreparedBrief] = useState('')
+  const [status, setStatus] = useState('')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const form = new FormData(event.currentTarget)
-    const name = String(form.get('name') ?? '').trim()
-    const email = String(form.get('email') ?? '').trim()
-    const organization = String(form.get('organization') ?? '').trim()
-    const project = String(form.get('project') ?? '').trim()
 
-    const subject = encodeURIComponent(`Project enquiry from ${name || 'Digi02 website visitor'}`)
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\n\nProject / operational challenge:\n${project}`,
-    )
+    const enquiry = buildEnquiry(new FormData(event.currentTarget))
+    const mailto = `mailto:info@digi02.org?subject=${encodeURIComponent(enquiry.subject)}&body=${encodeURIComponent(enquiry.body)}`
 
-    setSubmitted(true)
-    window.location.href = `mailto:info@digi02.org?subject=${subject}&body=${body}`
+    setPreparedBrief(`${enquiry.subject}\n\n${enquiry.body}`)
+    setStatus('Your enquiry is prepared. Your email application should open next; nothing has been sent automatically.')
+    window.location.href = mailto
+  }
+
+  async function handleCopy() {
+    if (!preparedBrief) return
+
+    try {
+      await navigator.clipboard.writeText(preparedBrief)
+      setStatus('The prepared enquiry has been copied to your clipboard.')
+    } catch {
+      setStatus('Copying was blocked by the browser. You can still use the email links beside the form.')
+    }
   }
 
   return (
@@ -71,26 +102,60 @@ export function ContactPage() {
               </label>
             </div>
 
+            <div className="contact-form__row">
+              <label>
+                <span>Organization</span>
+                <input name="organization" autoComplete="organization" />
+              </label>
+              <label>
+                <span>Phone</span>
+                <input name="phone" type="tel" autoComplete="tel" inputMode="tel" />
+              </label>
+            </div>
+
             <label>
-              <span>Organization</span>
-              <input name="organization" autoComplete="organization" />
+              <span>What does this relate to?</span>
+              <select name="area" defaultValue="" required>
+                <option value="" disabled>Select an area</option>
+                <option>SkyGrid / UAV systems</option>
+                <option>DigiVolt / electric mobility</option>
+                <option>ERP, POS or e-management</option>
+                <option>Payroll automation</option>
+                <option>Payment systems</option>
+                <option>Custom software or integration</option>
+                <option>Other / not sure yet</option>
+              </select>
             </label>
 
             <label>
               <span>What are you trying to improve?</span>
-              <textarea name="project" rows={7} required />
+              <textarea
+                name="project"
+                rows={7}
+                required
+                placeholder="Describe the operation, workflow, constraint or existing system."
+              />
             </label>
 
             <div className="contact-form__submit">
               <button className="button button--primary" type="submit">
-                Prepare email <span aria-hidden="true">→</span>
+                Prepare enquiry <span aria-hidden="true">→</span>
               </button>
               <p>
-                {submitted
-                  ? 'Your email application should open with the project brief prepared.'
-                  : 'Submitting prepares the enquiry in your email application; nothing is sent automatically.'}
+                This form prepares an email to Digi02. It does not transmit or store your information on this website.
               </p>
             </div>
+
+            {preparedBrief ? (
+              <div className="contact-form__prepared">
+                <p aria-live="polite">{status}</p>
+                <button className="contact-form__copy" type="button" onClick={handleCopy}>
+                  Copy prepared enquiry
+                </button>
+              </div>
+            ) : (
+              <p className="contact-form__status" aria-live="polite">{status}</p>
+            )}
           </form>
         </Container>
       </section>
