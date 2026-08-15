@@ -39,13 +39,14 @@ a {
 
 a {
   color: var(--text-primary);
-  text-decoration-color: var(--gold-500);
+  text-decoration-color: rgba(201, 163, 74, 0.65);
   text-decoration-thickness: var(--border-thin);
   text-underline-offset: var(--space-0-5);
 }
 
 a:hover {
-  color: var(--gold-400);
+  color: var(--text-primary);
+  text-decoration-color: var(--gold-500);
 }
 
 button {
@@ -99,32 +100,32 @@ p {
   font-family: var(--font-display);
   font-size: var(--type-hero);
   font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 0.95;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
 }
 
 .type-h1 {
   font-family: var(--font-display);
   font-size: var(--type-h1);
   font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
 }
 
 .type-h2 {
   font-family: var(--font-display);
   font-size: var(--type-h2);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  letter-spacing: -0.025em;
+  line-height: 1;
 }
 
 .type-h3 {
   font-family: var(--font-display);
   font-size: var(--type-h3);
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
 }
 
 .type-lead {
@@ -146,7 +147,7 @@ p {
   font-family: var(--font-mono);
   font-size: var(--type-tech);
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -222,7 +223,13 @@ p {
 }
 
 .development-canvas {
-  min-height: calc(100vh - var(--space-10));
+  min-height: calc(100vh - 4.5rem);
+}
+
+@media (max-width: 47.9375rem) {
+  body {
+    line-height: 1.58;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
