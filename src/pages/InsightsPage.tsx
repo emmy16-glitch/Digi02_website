@@ -1,4 +1,5 @@
 import { Container } from '../components/Container'
+import { PrimaryButton } from '../components/PrimaryButton'
 
 const insights = [
   {
@@ -75,6 +76,16 @@ export function InsightsPage() {
               </article>
             ))}
           </div>
+        </Container>
+      </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Need to apply this to your organization?</p>
+            <h2>Bring us the real workflow and constraints.</h2>
+          </div>
+          <PrimaryButton href="/contact">Start a conversation <span aria-hidden="true">→</span></PrimaryButton>
         </Container>
       </section>
     </div>
