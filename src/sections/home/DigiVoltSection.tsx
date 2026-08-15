@@ -8,7 +8,6 @@ type JourneyStageId = 'request' | 'match' | 'ride' | 'arrive'
 
 type JourneyStage = {
   id: JourneyStageId
-  number: string
   title: string
   heading: string
   description: string
@@ -21,7 +20,6 @@ type JourneyStage = {
 const journeyStages: readonly JourneyStage[] = [
   {
     id: 'request',
-    number: '01',
     title: 'Request',
     heading: 'Choose where the journey begins and ends.',
     description: 'Set a pickup point and destination to create the trip request.',
@@ -32,7 +30,6 @@ const journeyStages: readonly JourneyStage[] = [
   },
   {
     id: 'match',
-    number: '02',
     title: 'Match',
     heading: 'Connect the request with an available EV.',
     description: 'The trip moves from a request into an assigned electric vehicle.',
@@ -43,7 +40,6 @@ const journeyStages: readonly JourneyStage[] = [
   },
   {
     id: 'ride',
-    number: '03',
     title: 'Ride',
     heading: 'Keep route and trip progress visible.',
     description: 'The same journey stays legible while the vehicle is moving.',
@@ -54,7 +50,6 @@ const journeyStages: readonly JourneyStage[] = [
   },
   {
     id: 'arrive',
-    number: '04',
     title: 'Arrive',
     heading: 'Complete the journey without losing its context.',
     description: 'Arrival closes the trip with the journey details still connected.',
@@ -114,10 +109,10 @@ export function DigiVoltSection() {
             <img
               alt="DigiVolt electric mobility product visualization"
               decoding="async"
-              loading="eager"
+              loading="lazy"
               src={digiVoltShowcase}
             />
-            <figcaption>Product visualization / in development</figcaption>
+            <figcaption>DigiVolt product visualization / in development</figcaption>
           </figure>
         </Container>
       </section>
@@ -144,7 +139,7 @@ export function DigiVoltSection() {
             role="tabpanel"
           >
             <div className="digivolt-journey__stage-copy" aria-live="polite">
-              <span>{activeStage.number} / {activeStage.title}</span>
+              <span>{activeStage.title}</span>
               <h3>{activeStage.heading}</h3>
               <p>{activeStage.description}</p>
               <strong>{activeStage.status}</strong>
@@ -223,7 +218,6 @@ export function DigiVoltSection() {
                   tabIndex={isActive ? 0 : -1}
                   type="button"
                 >
-                  <span>{stage.number}</span>
                   <strong>{stage.title}</strong>
                   <span className="digivolt-journey__stage-description">{stage.description}</span>
                 </button>
@@ -233,7 +227,6 @@ export function DigiVoltSection() {
 
           <footer className="digivolt-journey__footer">
             <span>Illustrative journey state — not live trip data.</span>
-            <strong>{String(activeIndex + 1).padStart(2, '0')} / 04</strong>
           </footer>
         </Container>
       </section>
