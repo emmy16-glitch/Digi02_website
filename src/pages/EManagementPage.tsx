@@ -18,7 +18,7 @@ export function EManagementPage() {
             <h1>Make operational records easier to act on.</h1>
             <p>
               Digi02 designs e-management systems that bring requests, approvals, records and
-              reporting into one controlled operational flow.
+              reporting into one controlled flow.
             </p>
             <PrimaryButton href="/contact">Discuss your workflow <span aria-hidden="true">→</span></PrimaryButton>
           </div>
@@ -32,7 +32,6 @@ export function EManagementPage() {
             <div className="emanagement-visual__flow">
               {workflow.map(([title], index) => (
                 <div className="emanagement-visual__node" key={title} data-active={index === 2}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
                   <strong>{title}</strong>
                 </div>
               ))}
@@ -49,9 +48,8 @@ export function EManagementPage() {
             <h2>One record should not become four disconnected handoffs.</h2>
           </div>
           <div className="capability-sequence capability-sequence--emanagement">
-            {workflow.map(([title, description], index) => (
+            {workflow.map(([title, description]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <h3>{title}</h3>
                   <p>{description}</p>
