@@ -1,73 +1,84 @@
 import { Container } from '../../components/Container'
 import '../../styles/solutions-transformation.css'
 
-const principles = [
+const stages = [
   {
-    number: '01',
     title: 'Connect',
-    description:
-      'Bring the systems and information behind everyday work into the same context.',
+    description: 'Bring the systems and information behind the operation into one working context.',
   },
   {
-    number: '02',
     title: 'Automate',
-    description:
-      'Remove repeated handoffs and manual steps that slow operations down.',
+    description: 'Remove repeatable handoffs so routine work can move without unnecessary delay.',
   },
   {
-    number: '03',
     title: 'Transact',
-    description:
-      'Keep business activity connected to the records, approvals and reporting behind it.',
+    description: 'Carry activity through to the records and financial events that complete the work.',
   },
 ] as const
 
 export function SolutionsTransformationSection() {
   return (
-    <section
-      className="operations-bridge"
-      aria-labelledby="operations-bridge-title"
-    >
-      <Container className="operations-bridge__inner">
-        <div className="operations-bridge__intro">
-          <p className="operations-bridge__eyebrow type-tech">
-            Digi02 / Operational challenges
-          </p>
-
-          <h2 id="operations-bridge-title">
+    <section className="operations-system" aria-labelledby="operations-system-title">
+      <Container className="operations-system__inner">
+        <header className="operations-system__intro">
+          <p>Operating philosophy</p>
+          <h2 id="operations-system-title">
             Work breaks down when its parts stop working together.
           </h2>
-
-          <p className="operations-bridge__summary">
-            Digi02 connects the systems, workflows and transactions behind
-            everyday operations.
+          <p>
+            Digi02 connects software, workflows and transactions so the operation can move as one
+            system instead of a collection of disconnected tools.
           </p>
-        </div>
+        </header>
 
-        <div
-          className="operations-bridge__principles"
-          aria-label="How Digi02 approaches connected operations"
-        >
-          {principles.map((principle) => (
-            <article
-              className="operations-bridge__principle"
-              key={principle.title}
-            >
-              <div className="operations-bridge__principle-heading">
-                <span className="operations-bridge__number type-tech">
-                  {principle.number}
-                </span>
+        <div className="operations-system__body">
+          <div
+            className="operations-system__visual"
+            role="img"
+            aria-label="Sales, inventory, finance and reporting connected through the operation"
+          >
+            <svg aria-hidden="true" viewBox="0 0 760 500">
+              <path className="operations-system__connection" d="M150 105 C270 105 275 215 380 250" />
+              <path className="operations-system__connection" d="M610 105 C490 105 485 215 380 250" />
+              <path className="operations-system__connection" d="M150 395 C270 395 275 285 380 250" />
+              <path className="operations-system__connection" d="M610 395 C490 395 485 285 380 250" />
+              <path className="operations-system__connection operations-system__connection--through" d="M150 105 C310 180 450 320 610 395" />
 
-                <h3>{principle.title}</h3>
-              </div>
+              <g className="operations-system__node" transform="translate(150 105)">
+                <circle r="8" />
+                <text y="-24" textAnchor="middle">Sales</text>
+              </g>
 
-              <p>{principle.description}</p>
-            </article>
-          ))}
-        </div>
+              <g className="operations-system__node" transform="translate(610 105)">
+                <circle r="8" />
+                <text y="-24" textAnchor="middle">Inventory</text>
+              </g>
 
-        <div className="operations-bridge__exit" aria-hidden="true">
-          <span />
+              <g className="operations-system__node operations-system__node--core" transform="translate(380 250)">
+                <circle r="12" />
+                <text y="-30" textAnchor="middle">Operations</text>
+              </g>
+
+              <g className="operations-system__node" transform="translate(150 395)">
+                <circle r="8" />
+                <text y="34" textAnchor="middle">Finance</text>
+              </g>
+
+              <g className="operations-system__node" transform="translate(610 395)">
+                <circle r="8" />
+                <text y="34" textAnchor="middle">Reporting</text>
+              </g>
+            </svg>
+          </div>
+
+          <div className="operations-system__stages" aria-label="Digi02 operating approach">
+            {stages.map((stage) => (
+              <article key={stage.title}>
+                <h3>{stage.title}</h3>
+                <p>{stage.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </Container>
     </section>
