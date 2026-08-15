@@ -21,7 +21,7 @@ export function TechnologyProofSection() {
               <img
                 alt="SkyGrid operations interface"
                 decoding="async"
-                loading="lazy"
+                loading="eager"
                 src={skyGridOperationsCenter}
               />
             </div>
