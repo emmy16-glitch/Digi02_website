@@ -190,6 +190,7 @@ export function SolutionsPage() {
           <div
             className="digivolt-preview"
             aria-label="Illustrative DigiVolt journey from request through charging to arrival"
+            role="group"
           >
             <div className="digivolt-preview__surface" aria-hidden="true">
               <svg className="digivolt-preview__map" viewBox="0 0 1120 410" preserveAspectRatio="none">
@@ -212,10 +213,18 @@ export function SolutionsPage() {
                 />
               </svg>
 
-              <img className="digivolt-preview__car" src={digivoltCar} alt="" />
+              <img
+                className="digivolt-preview__car"
+                src={digivoltCar}
+                alt=""
+                style={{
+                  filter:
+                    'brightness(1.65) drop-shadow(0 0 1px rgba(247, 246, 242, 0.65)) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.72))',
+                }}
+              />
 
               <div className="digivolt-preview__charger">
-                <span aria-hidden="true">⚡</span>
+                <span aria-hidden="true">04</span>
                 <strong>Charge</strong>
               </div>
             </div>
@@ -248,7 +257,10 @@ export function SolutionsPage() {
                 ERP + POS connects sales, inventory, transactions and reporting so day-to-day
                 activity stays part of one operational record.
               </p>
-              <a className="solutions-product__link solutions-product__link--dark" href="/solutions/enterprise-systems">
+              <a
+                className="solutions-product__link solutions-product__link--dark"
+                href="/solutions/enterprise-systems"
+              >
                 Explore ERP + POS <span aria-hidden="true">↗</span>
               </a>
             </div>
