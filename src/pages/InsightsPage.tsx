@@ -23,7 +23,7 @@ const insights = [
     topic: 'Autonomous systems',
     title: 'UAV AutoPilot software and field operations',
     summary: 'How mission planning, autonomous control and data collection fit into operational UAV workflows.',
-    href: 'https://www.digi02.org/blog/uav-solutions-nigeria.html',
+    href: 'https://www.digi02.org/blog/uav-autopilot-nigeria.html',
   },
 ] as const
 
