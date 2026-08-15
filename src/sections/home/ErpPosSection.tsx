@@ -78,21 +78,16 @@ export function ErpPosSection() {
   )
   const [cart, setCart] = useState<Cart>({})
   const [query, setQuery] = useState('')
-  const [paymentMethod, setPaymentMethod] =
-    useState<PaymentMethod>('Card')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Card')
   const [saleNumber, setSaleNumber] = useState(1042)
   const [lastSale, setLastSale] = useState<CompletedSale | null>(null)
   const [receiptOpen, setReceiptOpen] = useState(false)
-  const [statusMessage, setStatusMessage] = useState(
-    'Demo ready. Add an item to begin.',
-  )
+  const [statusMessage, setStatusMessage] = useState('Demo ready. Add an item to begin.')
 
   const filteredProducts = useMemo(() => {
     const normalized = query.trim().toLowerCase()
 
-    if (!normalized) {
-      return products
-    }
+    if (!normalized) return products
 
     return products.filter((product) =>
       [product.name, product.sku, product.category]
@@ -107,13 +102,8 @@ export function ErpPosSection() {
       Object.entries(cart)
         .filter(([, quantity]) => quantity > 0)
         .map(([productId, quantity]) => {
-          const product = products.find(
-            (item) => item.id === productId,
-          )
-
-          if (!product) {
-            return null
-          }
+          const product = products.find((item) => item.id === productId)
+          if (!product) return null
 
           return {
             product,
@@ -133,53 +123,32 @@ export function ErpPosSection() {
     [cart, products],
   )
 
-  const itemCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  )
-
-  const orderTotal = cartItems.reduce(
-    (total, item) => total + item.lineTotal,
-    0,
-  )
+  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0)
+  const orderTotal = cartItems.reduce((total, item) => total + item.lineTotal, 0)
 
   function addProduct(productId: string) {
     const product = products.find((item) => item.id === productId)
-
-    if (!product) {
-      return
-    }
+    if (!product) return
 
     const quantity = cart[productId] ?? 0
 
     if (quantity >= product.stock) {
-      setStatusMessage(
-        `${product.name} has reached the available demo stock.`,
-      )
+      setStatusMessage(`${product.name} has reached the available demo stock.`)
       return
     }
 
-    setCart((current) => ({
-      ...current,
-      [productId]: quantity + 1,
-    }))
-
+    setCart((current) => ({ ...current, [productId]: quantity + 1 }))
     setStatusMessage(`${product.name} added to the current sale.`)
   }
 
   function changeQuantity(productId: string, difference: number) {
     const product = products.find((item) => item.id === productId)
-
-    if (!product) {
-      return
-    }
+    if (!product) return
 
     const currentQuantity = cart[productId] ?? 0
     const nextQuantity = currentQuantity + difference
 
-    if (nextQuantity > product.stock) {
-      return
-    }
+    if (nextQuantity > product.stock) return
 
     if (nextQuantity <= 0) {
       setCart((current) => {
@@ -187,40 +156,27 @@ export function ErpPosSection() {
         delete next[productId]
         return next
       })
-
       return
     }
 
-    setCart((current) => ({
-      ...current,
-      [productId]: nextQuantity,
-    }))
+    setCart((current) => ({ ...current, [productId]: nextQuantity }))
   }
 
   function completeSale() {
-    if (cartItems.length === 0) {
-      return
-    }
+    if (cartItems.length === 0) return
 
     const nextSaleNumber = saleNumber + 1
-
-    const completedItems = cartItems.map(
-      ({ product, quantity, lineTotal }) => ({
-        name: product.name,
-        quantity,
-        total: lineTotal,
-      }),
-    )
+    const completedItems = cartItems.map(({ product, quantity, lineTotal }) => ({
+      name: product.name,
+      quantity,
+      total: lineTotal,
+    }))
 
     setProducts((current) =>
-      current.map((product) => {
-        const soldQuantity = cart[product.id] ?? 0
-
-        return {
-          ...product,
-          stock: Math.max(0, product.stock - soldQuantity),
-        }
-      }),
+      current.map((product) => ({
+        ...product,
+        stock: Math.max(0, product.stock - (cart[product.id] ?? 0)),
+      })),
     )
 
     setLastSale({
@@ -233,16 +189,11 @@ export function ErpPosSection() {
     setSaleNumber(nextSaleNumber)
     setCart({})
     setReceiptOpen(true)
-
-    setStatusMessage(
-      `Sale #${nextSaleNumber} completed. Inventory and activity updated.`,
-    )
+    setStatusMessage(`Sale #${nextSaleNumber} completed. Inventory and activity updated.`)
   }
 
   function resetDemo() {
-    setProducts(
-      initialProducts.map((product) => ({ ...product })),
-    )
+    setProducts(initialProducts.map((product) => ({ ...product })))
     setCart({})
     setQuery('')
     setPaymentMethod('Card')
@@ -253,54 +204,43 @@ export function ErpPosSection() {
   }
 
   return (
-    <section
-      className="erp-pos-chapter"
-      aria-labelledby="erp-pos-title"
-    >
+    <section className="erp-pos-chapter" aria-labelledby="erp-pos-title" id="erp-pos">
       <Container className="erp-pos-chapter__inner">
         <header className="erp-pos-chapter__intro">
           <div className="erp-pos-chapter__identity">
-            <p className="type-tech">03 / Custom ERP + POS</p>
-            <span>Business operations</span>
+            <p>ERP + POS</p>
+            <span>Enterprise operations</span>
           </div>
 
           <div className="erp-pos-chapter__statement">
-            <h2 id="erp-pos-title">
-              One sale. One connected system.
-            </h2>
-
+            <h2 id="erp-pos-title">One sale. One connected system.</h2>
             <p>
-              Sales, stock and transaction records should not need
-              separate stories. Try the demo and watch one sale update
-              the operation behind it.
+              Sales, stock and transaction records should not need separate stories. Use the demo
+              to see one sale update the operation behind it.
             </p>
           </div>
         </header>
 
+        <p className="erp-pos-chapter__demo-note">
+          Interactive sample. Product names, stock levels and prices are illustrative demo data.
+        </p>
+
         <div className="erp-pos-workspace">
-          <section
-            aria-labelledby="erp-pos-products-title"
-            className="erp-pos-catalog"
-          >
+          <section aria-labelledby="erp-pos-products-title" className="erp-pos-catalog">
             <div className="erp-pos-workspace__topbar">
               <div>
-                <span className="erp-pos-workspace__kicker">
-                  Digi02 Retail / Demo
-                </span>
+                <span className="erp-pos-workspace__kicker">Digi02 retail demo</span>
                 <h3 id="erp-pos-products-title">Point of sale</h3>
               </div>
 
               <div className="erp-pos-workspace__online">
                 <span aria-hidden="true" />
-                Counter 02
+                Interactive sample
               </div>
             </div>
 
             <div className="erp-pos-search">
-              <label htmlFor="erp-pos-search-input">
-                Find a product
-              </label>
-
+              <label htmlFor="erp-pos-search-input">Find a product</label>
               <input
                 autoComplete="off"
                 id="erp-pos-search-input"
@@ -312,10 +252,7 @@ export function ErpPosSection() {
             </div>
 
             <div className="erp-pos-product-list">
-              <div
-                aria-hidden="true"
-                className="erp-pos-product-list__head"
-              >
+              <div aria-hidden="true" className="erp-pos-product-list__head">
                 <span>Product</span>
                 <span>Stock</span>
                 <span>Price</span>
@@ -323,29 +260,18 @@ export function ErpPosSection() {
               </div>
 
               {filteredProducts.map((product) => (
-                <div
-                  className="erp-pos-product-row"
-                  key={product.id}
-                >
+                <div className="erp-pos-product-row" key={product.id}>
                   <div className="erp-pos-product-row__identity">
                     <strong>{product.name}</strong>
-
-                    <span>
-                      {product.sku} · {product.category}
-                    </span>
+                    <span>{product.sku} · {product.category}</span>
                   </div>
 
-                  <div
-                    className="erp-pos-product-row__stock"
-                    data-low={product.stock <= 5}
-                  >
+                  <div className="erp-pos-product-row__stock" data-low={product.stock <= 5}>
                     <strong>{product.stock}</strong>
                     <span>available</span>
                   </div>
 
-                  <strong className="erp-pos-product-row__price">
-                    {formatMoney(product.price)}
-                  </strong>
+                  <strong className="erp-pos-product-row__price">{formatMoney(product.price)}</strong>
 
                   <button
                     disabled={product.stock === 0}
@@ -358,26 +284,17 @@ export function ErpPosSection() {
               ))}
 
               {filteredProducts.length === 0 ? (
-                <p className="erp-pos-empty">
-                  No sample products match that search.
-                </p>
+                <p className="erp-pos-empty">No sample products match that search.</p>
               ) : null}
             </div>
           </section>
 
-          <aside
-            aria-labelledby="erp-pos-order-title"
-            className="erp-pos-order"
-          >
+          <aside aria-labelledby="erp-pos-order-title" className="erp-pos-order">
             <div className="erp-pos-order__header">
               <div>
                 <span>Current sale</span>
                 <h3 id="erp-pos-order-title">
-                  {itemCount === 0
-                    ? 'No items yet'
-                    : `${itemCount} ${
-                        itemCount === 1 ? 'item' : 'items'
-                      }`}
+                  {itemCount === 0 ? 'No items yet' : `${itemCount} ${itemCount === 1 ? 'item' : 'items'}`}
                 </h3>
               </div>
 
@@ -395,70 +312,44 @@ export function ErpPosSection() {
               {cartItems.length === 0 ? (
                 <div className="erp-pos-order__empty">
                   <p>Add a product from the list.</p>
-                  <span>
-                    The order, inventory and receipt will respond here.
-                  </span>
+                  <span>The order, inventory and receipt will respond here.</span>
                 </div>
               ) : (
-                cartItems.map(
-                  ({ product, quantity, lineTotal }) => (
-                    <div
-                      className="erp-pos-order-row"
-                      key={product.id}
-                    >
-                      <div>
-                        <strong>{product.name}</strong>
-                        <span>{formatMoney(lineTotal)}</span>
-                      </div>
-
-                      <div
-                        aria-label={`Quantity for ${product.name}`}
-                        className="erp-pos-quantity"
-                      >
-                        <button
-                          aria-label={`Remove one ${product.name}`}
-                          onClick={() =>
-                            changeQuantity(product.id, -1)
-                          }
-                          type="button"
-                        >
-                          −
-                        </button>
-
-                        <span>{quantity}</span>
-
-                        <button
-                          aria-label={`Add one ${product.name}`}
-                          disabled={quantity >= product.stock}
-                          onClick={() =>
-                            changeQuantity(product.id, 1)
-                          }
-                          type="button"
-                        >
-                          +
-                        </button>
-                      </div>
+                cartItems.map(({ product, quantity, lineTotal }) => (
+                  <div className="erp-pos-order-row" key={product.id}>
+                    <div>
+                      <strong>{product.name}</strong>
+                      <span>{formatMoney(lineTotal)}</span>
                     </div>
-                  ),
-                )
+
+                    <div aria-label={`Quantity for ${product.name}`} className="erp-pos-quantity">
+                      <button
+                        aria-label={`Remove one ${product.name}`}
+                        onClick={() => changeQuantity(product.id, -1)}
+                        type="button"
+                      >
+                        −
+                      </button>
+                      <span>{quantity}</span>
+                      <button
+                        aria-label={`Add one ${product.name}`}
+                        disabled={quantity >= product.stock}
+                        onClick={() => changeQuantity(product.id, 1)}
+                        type="button"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))
               )}
             </div>
 
             <fieldset className="erp-pos-payment">
               <legend>Payment</legend>
-
               <div>
-                {(
-                  [
-                    'Card',
-                    'Transfer',
-                    'Cash',
-                  ] as const
-                ).map((method) => (
-                  <label
-                    data-active={paymentMethod === method}
-                    key={method}
-                  >
+                {(['Card', 'Transfer', 'Cash'] as const).map((method) => (
+                  <label data-active={paymentMethod === method} key={method}>
                     <input
                       checked={paymentMethod === method}
                       name="erp-pos-payment"
@@ -466,7 +357,6 @@ export function ErpPosSection() {
                       type="radio"
                       value={method}
                     />
-
                     <span>{method}</span>
                   </label>
                 ))}
@@ -497,18 +387,10 @@ export function ErpPosSection() {
             <div className="erp-pos-receipt-drawer__header">
               <div>
                 <span>Transaction complete</span>
-                <strong>
-                  {lastSale
-                    ? `Sale #${lastSale.id}`
-                    : 'Receipt'}
-                </strong>
+                <strong>{lastSale ? `Sale #${lastSale.id}` : 'Receipt'}</strong>
               </div>
 
-              <button
-                aria-label="Close receipt"
-                onClick={() => setReceiptOpen(false)}
-                type="button"
-              >
+              <button aria-label="Close receipt" onClick={() => setReceiptOpen(false)} type="button">
                 ×
               </button>
             </div>
@@ -516,17 +398,14 @@ export function ErpPosSection() {
             {lastSale ? (
               <div className="erp-pos-receipt">
                 <div className="erp-pos-receipt__brand">
-                  <strong>Digi02 Retail</strong>
+                  <strong>Digi02 retail</strong>
                   <span>Sample transaction</span>
                 </div>
 
                 <div className="erp-pos-receipt__items">
                   {lastSale.items.map((item) => (
                     <div key={item.name}>
-                      <span>
-                        {item.quantity} × {item.name}
-                      </span>
-
+                      <span>{item.quantity} × {item.name}</span>
                       <strong>{formatMoney(item.total)}</strong>
                     </div>
                   ))}
@@ -537,9 +416,7 @@ export function ErpPosSection() {
                   <strong>{formatMoney(lastSale.total)}</strong>
                 </div>
 
-                <p>
-                  Inventory updated with the same transaction.
-                </p>
+                <p>Inventory updated with the same sample transaction.</p>
               </div>
             ) : null}
           </aside>
@@ -547,24 +424,17 @@ export function ErpPosSection() {
 
         <div className="erp-pos-activity">
           <div className="erp-pos-activity__status">
-            <span className="type-tech">System activity</span>
-
+            <span>System activity</span>
             <p aria-live="polite">{statusMessage}</p>
           </div>
 
           <div className="erp-pos-activity__actions">
             {lastSale ? (
-              <button
-                onClick={() => setReceiptOpen(true)}
-                type="button"
-              >
+              <button onClick={() => setReceiptOpen(true)} type="button">
                 View last receipt
               </button>
             ) : null}
-
-            <button onClick={resetDemo} type="button">
-              Reset demo
-            </button>
+            <button onClick={resetDemo} type="button">Reset demo</button>
           </div>
         </div>
       </Container>

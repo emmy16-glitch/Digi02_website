@@ -1,0 +1,117 @@
+name: Company depth QA
+
+on:
+  push:
+    branches:
+      - chatgpt/company-depth
+  workflow_dispatch:
+
+jobs:
+  company-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run Company route and visual QA
+        run: |
+          mkdir -p company-depth-qa
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { chromium } from 'playwright'
+
+          const expectedSystemRoutes = [
+            '/solutions/enterprise-systems',
+            '/solutions/payroll-automation',
+            '/solutions/payment-systems',
+            '/solutions/skygrid',
+            '/solutions/custom-software',
+          ]
+
+          const browser = await chromium.launch({ headless: true })
+          const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } })
+          await desktop.goto('http://127.0.0.1:4173/company', { waitUntil: 'networkidle' })
+
+          await desktop.getByRole('heading', { level: 1, name: 'Built around the operation, not around the template.' }).waitFor({ state: 'visible' })
+
+          const active = desktop.locator('.desktop-navigation__link[aria-current="page"]')
+          assert.equal(await active.count(), 1, 'Company route should have one active desktop navigation item')
+          assert.equal((await active.textContent())?.trim(), 'Company', 'Company route should keep Company active')
+
+          for (const path of expectedSystemRoutes) {
+            assert.equal(await desktop.locator(`.company-systems__list a[href="${path}"]`).count(), 1, `Missing Company system link ${path}`)
+          }
+
+          const companyBase = desktop.locator('.company-base')
+          assert.equal(await companyBase.locator('a[href="tel:+2348169404088"]').count(), 1, 'Primary public phone should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="tel:+2349067879766"]').count(), 1, 'Secondary public phone should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="mailto:info@digi02.org"]').count(), 1, 'Public info email should be present in Company base section')
+          assert.equal(await companyBase.locator('a[href="mailto:support@digi02.org"]').count(), 1, 'Public support email should be present in Company base section')
+
+          let overflow = await desktop.evaluate(() => ({
+            clientWidth: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+          }))
+          assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, 'Company page overflows on desktop')
+
+          await desktop.screenshot({ path: 'company-depth-qa/company-desktop.png', fullPage: true })
+
+          const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } })
+          await mobile.goto('http://127.0.0.1:4173/company', { waitUntil: 'networkidle' })
+          await mobile.getByRole('heading', { level: 1, name: 'Built around the operation, not around the template.' }).waitFor({ state: 'visible' })
+
+          overflow = await mobile.evaluate(() => ({
+            clientWidth: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+          }))
+          assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, 'Company page overflows on mobile')
+
+          await mobile.screenshot({ path: 'company-depth-qa/company-mobile.png', fullPage: true })
+
+          await desktop.close()
+          await mobile.close()
+          await browser.close()
+          NODE
+
+      - name: Upload Company QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: company-depth-qa
+          path: company-depth-qa
+          retention-days: 2

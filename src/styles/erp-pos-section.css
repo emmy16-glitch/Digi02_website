@@ -1,7 +1,6 @@
 .erp-pos-chapter {
   --erp-bg: #050505;
   --erp-surface: #0b0b0c;
-  --erp-surface-raised: #111112;
   --erp-text: #f7f6f2;
   --erp-secondary: #aaa8a2;
   --erp-muted: #73716c;
@@ -17,109 +16,88 @@
 }
 
 .erp-pos-chapter__inner {
-  padding-block:
-    clamp(6rem, 9vw, 9rem)
-    clamp(5rem, 8vw, 8rem);
+  padding-block: var(--section-space-desktop);
 }
-
-/* ==========================================================
-   CHAPTER INTRO
-   ========================================================== */
 
 .erp-pos-chapter__intro {
   display: grid;
-  grid-template-columns:
-    minmax(12rem, 0.35fr)
-    minmax(0, 1fr);
-  gap: clamp(2rem, 7vw, 7rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
   align-items: start;
 }
 
 .erp-pos-chapter__identity {
-  padding-top: 0.35rem;
+  grid-column: 1 / span 3;
 }
 
 .erp-pos-chapter__identity p {
   margin: 0;
-  color: var(--erp-gold);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  color: var(--erp-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
 .erp-pos-chapter__identity span {
   display: block;
-  margin-top: var(--space-2);
+  margin-top: var(--space-1);
   color: var(--erp-muted);
   font-size: var(--type-ui);
 }
 
 .erp-pos-chapter__statement {
-  max-width: 56rem;
+  grid-column: 4 / span 7;
+  max-width: 58rem;
 }
 
 .erp-pos-chapter__statement h2 {
-  max-width: 14ch;
+  max-width: 12ch;
   margin: 0;
   color: var(--erp-text);
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5vw, 5rem);
-  font-weight: 550;
-  letter-spacing: -0.05em;
-  line-height: 0.97;
+  font-size: clamp(3.5rem, 5.5vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
 }
 
 .erp-pos-chapter__statement p {
-  max-width: 42rem;
+  max-width: 40rem;
   margin: var(--space-4) 0 0;
   color: var(--erp-secondary);
-  font-size: var(--type-body);
+  font-size: 1.05rem;
   line-height: 1.65;
 }
 
-/* ==========================================================
-   POS WORKSPACE
-   ========================================================== */
+.erp-pos-chapter__demo-note {
+  max-width: 34rem;
+  margin: var(--space-5) 0 0 25%;
+  color: var(--erp-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
 
 .erp-pos-workspace {
   position: relative;
   display: grid;
-  grid-template-columns:
-    minmax(0, 1.55fr)
-    minmax(20rem, 0.65fr);
-  margin-top: clamp(5rem, 8vw, 8rem);
-  border-top: 1px solid var(--erp-line-strong);
-  border-bottom: 1px solid var(--erp-line);
+  width: min(100%, 84rem);
+  grid-template-columns: minmax(0, 1.5fr) minmax(22rem, 0.7fr);
+  margin: clamp(5rem, 8vw, 8rem) auto 0;
+  border: 1px solid var(--erp-line);
   background: var(--erp-surface);
   isolation: isolate;
 }
 
-/*
-  Important:
-  This is one workspace, not a collection of floating cards.
-*/
-
-.erp-pos-catalog {
+.erp-pos-catalog,
+.erp-pos-order {
   min-width: 0;
-  padding:
-    clamp(1.5rem, 3vw, 2.5rem)
-    clamp(1.5rem, 3vw, 3rem)
-    clamp(2rem, 4vw, 3.5rem)
-    0;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
 }
 
 .erp-pos-order {
-  min-width: 0;
   border-left: 1px solid var(--erp-line);
-  padding:
-    clamp(1.5rem, 3vw, 2.5rem)
-    0
-    clamp(2rem, 4vw, 3.5rem)
-    clamp(1.5rem, 3vw, 2.5rem);
 }
-
-/* ==========================================================
-   WORKSPACE TOP
-   ========================================================== */
 
 .erp-pos-workspace__topbar {
   display: flex;
@@ -133,10 +111,8 @@
   display: block;
   margin-bottom: 0.45rem;
   color: var(--erp-muted);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .erp-pos-workspace__topbar h3,
@@ -144,7 +120,7 @@
   margin: 0;
   color: var(--erp-text);
   font-family: var(--font-display);
-  font-weight: 550;
+  font-weight: 600;
 }
 
 .erp-pos-workspace__topbar h3 {
@@ -157,6 +133,7 @@
   gap: 0.55rem;
   color: var(--erp-secondary);
   font-size: var(--type-caption);
+  white-space: nowrap;
 }
 
 .erp-pos-workspace__online span {
@@ -165,10 +142,6 @@
   border-radius: 50%;
   background: var(--erp-gold);
 }
-
-/* ==========================================================
-   SEARCH
-   ========================================================== */
 
 .erp-pos-search {
   margin-bottom: var(--space-4);
@@ -204,10 +177,6 @@
   border-bottom-color: var(--erp-gold);
 }
 
-/* ==========================================================
-   PRODUCT LIST
-   ========================================================== */
-
 .erp-pos-product-list {
   min-width: 0;
 }
@@ -215,30 +184,26 @@
 .erp-pos-product-list__head,
 .erp-pos-product-row {
   display: grid;
-  grid-template-columns:
-    minmax(13rem, 1fr)
-    minmax(5rem, 0.35fr)
-    minmax(7rem, 0.4fr)
-    auto;
+  grid-template-columns: minmax(12rem, 1fr) minmax(4rem, 0.28fr) minmax(6.5rem, 0.34fr) auto;
   gap: var(--space-2);
   align-items: center;
 }
 
 .erp-pos-product-list__head {
-  padding: 0 0 var(--space-2);
+  padding-bottom: var(--space-2);
   color: var(--erp-muted);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.72rem;
 }
 
 .erp-pos-product-row {
-  min-height: 5.75rem;
+  min-height: 5.5rem;
   border-top: 1px solid var(--erp-line);
 }
 
 .erp-pos-product-row__identity strong,
-.erp-pos-product-row__identity span {
+.erp-pos-product-row__identity span,
+.erp-pos-product-row__stock strong,
+.erp-pos-product-row__stock span {
   display: block;
 }
 
@@ -248,27 +213,17 @@
   font-weight: 600;
 }
 
-.erp-pos-product-row__identity span {
-  margin-top: 0.35rem;
+.erp-pos-product-row__identity span,
+.erp-pos-product-row__stock span {
+  margin-top: 0.3rem;
   color: var(--erp-muted);
   font-size: var(--type-caption);
-}
-
-.erp-pos-product-row__stock strong,
-.erp-pos-product-row__stock span {
-  display: block;
 }
 
 .erp-pos-product-row__stock strong {
   color: var(--erp-text);
   font-size: 1rem;
   font-weight: 600;
-}
-
-.erp-pos-product-row__stock span {
-  margin-top: 0.25rem;
-  color: var(--erp-muted);
-  font-size: 0.68rem;
 }
 
 .erp-pos-product-row__stock[data-low='true'] strong {
@@ -292,16 +247,11 @@
   font: inherit;
   font-size: var(--type-caption);
   font-weight: 600;
-  transition:
-    border-color var(--motion-fast) var(--ease-standard),
-    background var(--motion-fast) var(--ease-standard),
-    color var(--motion-fast) var(--ease-standard);
 }
 
 .erp-pos-product-row > button:hover:not(:disabled) {
   border-color: var(--erp-gold);
-  background: var(--erp-gold);
-  color: #050505;
+  color: var(--erp-gold-light);
 }
 
 .erp-pos-product-row > button:disabled {
@@ -313,10 +263,6 @@
   margin: var(--space-5) 0;
   color: var(--erp-muted);
 }
-
-/* ==========================================================
-   CURRENT ORDER
-   ========================================================== */
 
 .erp-pos-order__header {
   display: flex;
@@ -338,7 +284,6 @@
 }
 
 .erp-pos-order__clear {
-  border: 0;
   padding: 0;
   background: transparent;
   color: var(--erp-muted);
@@ -357,7 +302,7 @@
 }
 
 .erp-pos-order__items {
-  min-height: 13rem;
+  min-height: 12rem;
   border-top: 1px solid var(--erp-line);
 }
 
@@ -402,10 +347,6 @@
   font-size: var(--type-caption);
 }
 
-/* ==========================================================
-   QUANTITY
-   ========================================================== */
-
 .erp-pos-quantity {
   display: flex;
   align-items: center;
@@ -439,10 +380,6 @@
   font-size: 0.85rem;
   text-align: center;
 }
-
-/* ==========================================================
-   PAYMENT
-   ========================================================== */
 
 .erp-pos-payment {
   margin: var(--space-4) 0 0;
@@ -481,20 +418,10 @@
   border-radius: var(--radius-control);
   color: var(--erp-secondary);
   font-size: var(--type-caption);
-  transition:
-    border-color var(--motion-fast) var(--ease-standard),
-    background var(--motion-fast) var(--ease-standard),
-    color var(--motion-fast) var(--ease-standard);
-}
-
-.erp-pos-payment label:hover span {
-  border-color: var(--erp-line-strong);
-  color: var(--erp-text);
 }
 
 .erp-pos-payment label[data-active='true'] span {
   border-color: var(--erp-gold);
-  background: rgba(201, 163, 74, 0.1);
   color: var(--erp-text);
 }
 
@@ -502,10 +429,6 @@
   outline: var(--focus-ring-width) solid var(--erp-gold-light);
   outline-offset: var(--focus-ring-offset);
 }
-
-/* ==========================================================
-   TOTAL / CHECKOUT
-   ========================================================== */
 
 .erp-pos-order__total {
   display: flex;
@@ -525,9 +448,10 @@
 .erp-pos-order__total strong {
   color: var(--erp-text);
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
-  font-weight: 550;
+  font-size: clamp(1.75rem, 2vw, 2.25rem);
+  font-weight: 600;
   letter-spacing: -0.035em;
+  white-space: nowrap;
 }
 
 .erp-pos-complete {
@@ -545,9 +469,6 @@
   cursor: pointer;
   font: inherit;
   font-weight: 650;
-  transition:
-    background var(--motion-fast) var(--ease-standard),
-    opacity var(--motion-fast) var(--ease-standard);
 }
 
 .erp-pos-complete:hover:not(:disabled) {
@@ -558,10 +479,6 @@
   cursor: not-allowed;
   opacity: 0.35;
 }
-
-/* ==========================================================
-   RECEIPT DRAWER
-   ========================================================== */
 
 .erp-pos-receipt-drawer {
   position: absolute;
@@ -577,9 +494,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translateX(100%);
-  transition:
-    opacity var(--motion-ui) var(--ease-standard),
-    transform var(--motion-component) var(--ease-emphasized);
+  transition: opacity var(--motion-ui) var(--ease-standard), transform var(--motion-component) var(--ease-emphasized);
 }
 
 .erp-pos-receipt-drawer[data-open='true'] {
@@ -598,11 +513,14 @@
 }
 
 .erp-pos-receipt-drawer__header span,
-.erp-pos-receipt-drawer__header strong {
+.erp-pos-receipt-drawer__header strong,
+.erp-pos-receipt__brand strong,
+.erp-pos-receipt__brand span {
   display: block;
 }
 
-.erp-pos-receipt-drawer__header span {
+.erp-pos-receipt-drawer__header span,
+.erp-pos-receipt__brand span {
   margin-bottom: 0.25rem;
   color: #73716c;
   font-size: var(--type-caption);
@@ -614,7 +532,6 @@
 }
 
 .erp-pos-receipt-drawer__header button {
-  border: 0;
   background: transparent;
   color: #111112;
   cursor: pointer;
@@ -630,20 +547,9 @@
   margin-bottom: var(--space-5);
 }
 
-.erp-pos-receipt__brand strong,
-.erp-pos-receipt__brand span {
-  display: block;
-}
-
 .erp-pos-receipt__brand strong {
   font-family: var(--font-display);
   font-size: 1.2rem;
-}
-
-.erp-pos-receipt__brand span {
-  margin-top: 0.25rem;
-  color: #73716c;
-  font-size: var(--type-caption);
 }
 
 .erp-pos-receipt__items {
@@ -659,7 +565,8 @@
   font-size: 0.82rem;
 }
 
-.erp-pos-receipt__items span {
+.erp-pos-receipt__items span,
+.erp-pos-receipt > p {
   color: #73716c;
 }
 
@@ -687,22 +594,18 @@
 
 .erp-pos-receipt > p {
   margin: var(--space-5) 0 0;
-  color: #73716c;
   font-size: var(--type-caption);
   line-height: 1.55;
 }
 
-/* ==========================================================
-   ACTIVITY STRIP
-   ========================================================== */
-
 .erp-pos-activity {
   display: flex;
+  width: min(100%, 84rem);
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  border-bottom: 1px solid var(--erp-line);
-  padding-block: var(--space-3);
+  margin-inline: auto;
+  padding-top: var(--space-3);
 }
 
 .erp-pos-activity__status {
@@ -712,16 +615,16 @@
   gap: var(--space-3);
 }
 
-.erp-pos-activity__status .type-tech {
+.erp-pos-activity__status > span {
   flex: 0 0 auto;
-  color: var(--erp-gold);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  color: var(--erp-secondary);
+  font-size: var(--type-caption);
+  font-weight: 600;
 }
 
 .erp-pos-activity__status p {
   margin: 0;
-  color: var(--erp-secondary);
+  color: var(--erp-muted);
   font-size: var(--type-caption);
 }
 
@@ -732,29 +635,13 @@
 }
 
 .erp-pos-activity__actions button {
-  border: 0;
   padding: 0;
   background: transparent;
   color: var(--erp-secondary);
   cursor: pointer;
   font: inherit;
   font-size: var(--type-caption);
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 0.25rem;
-  transition:
-    color var(--motion-fast) var(--ease-standard),
-    text-decoration-color var(--motion-fast) var(--ease-standard);
 }
-
-.erp-pos-activity__actions button:hover {
-  color: var(--erp-text);
-  text-decoration-color: var(--erp-gold);
-}
-
-/* ==========================================================
-   FOCUS
-   ========================================================== */
 
 .erp-pos-product-row > button:focus-visible,
 .erp-pos-order__clear:focus-visible,
@@ -766,37 +653,30 @@
   outline-offset: var(--focus-ring-offset);
 }
 
-/* ==========================================================
-   TABLET
-   ========================================================== */
-
 @media (max-width: 64rem) {
-  .erp-pos-chapter__intro {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
+  .erp-pos-chapter__inner {
+    padding-block: var(--section-space-tablet);
+  }
+
+  .erp-pos-chapter__identity {
+    grid-column: 1 / span 3;
+  }
+
+  .erp-pos-chapter__statement {
+    grid-column: 4 / -1;
+  }
+
+  .erp-pos-chapter__demo-note {
+    margin-left: 25%;
   }
 
   .erp-pos-workspace {
     grid-template-columns: 1fr;
   }
 
-  .erp-pos-catalog {
-    padding-right: 0;
-  }
-
   .erp-pos-order {
     border-top: 1px solid var(--erp-line);
     border-left: 0;
-    padding-left: 0;
-  }
-
-  .erp-pos-product-list__head,
-  .erp-pos-product-row {
-    grid-template-columns:
-      minmax(12rem, 1fr)
-      minmax(5rem, 0.3fr)
-      minmax(7rem, 0.35fr)
-      auto;
   }
 
   .erp-pos-receipt-drawer {
@@ -804,18 +684,21 @@
   }
 }
 
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-
 @media (max-width: 47.9375rem) {
   .erp-pos-chapter__inner {
-    padding-block: var(--space-10);
+    padding-block: var(--section-space-mobile);
+  }
+
+  .erp-pos-chapter__intro {
+    display: block;
+  }
+
+  .erp-pos-chapter__statement {
+    margin-top: var(--space-5);
   }
 
   .erp-pos-chapter__statement h2 {
-    max-width: 12ch;
-    font-size: clamp(2.6rem, 12vw, 3.5rem);
+    font-size: clamp(3rem, 13vw, 4.2rem);
   }
 
   .erp-pos-chapter__statement p {
@@ -823,13 +706,23 @@
     font-size: 1rem;
   }
 
+  .erp-pos-chapter__demo-note {
+    margin: var(--space-4) 0 0;
+  }
+
   .erp-pos-workspace {
-    margin-top: var(--space-10);
+    margin-top: var(--space-8);
   }
 
   .erp-pos-catalog,
   .erp-pos-order {
-    padding-block: var(--space-4);
+    padding: var(--space-3) var(--space-2);
+  }
+
+  .erp-pos-workspace__topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
   .erp-pos-product-list__head {
@@ -837,10 +730,8 @@
   }
 
   .erp-pos-product-row {
-    grid-template-columns:
-      minmax(0, 1fr)
-      auto;
-    gap: var(--space-2);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-1) var(--space-2);
     min-height: auto;
     padding-block: var(--space-3);
   }
@@ -866,7 +757,11 @@
   }
 
   .erp-pos-order__items {
-    min-height: 9rem;
+    min-height: 8rem;
+  }
+
+  .erp-pos-order__total strong {
+    font-size: 1.8rem;
   }
 
   .erp-pos-receipt-drawer {
@@ -900,16 +795,8 @@
   }
 }
 
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
-
 @media (prefers-reduced-motion: reduce) {
-  .erp-pos-receipt-drawer,
-  .erp-pos-product-row > button,
-  .erp-pos-payment label span,
-  .erp-pos-complete,
-  .erp-pos-activity__actions button {
+  .erp-pos-receipt-drawer {
     transition: none;
   }
 }

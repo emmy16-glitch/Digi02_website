@@ -1,93 +1,213 @@
-.skygrid-chapter {
-  --skygrid-purple: #3b0a78;
-  border-bottom: var(--border-thin) solid var(--line-subtle);
+.skygrid-story {
+  --skygrid-purple: #5b2bb4;
+  --skygrid-purple-soft: rgba(91, 43, 180, 0.24);
+  --skygrid-purple-line: rgba(126, 82, 206, 0.74);
+
+  overflow: clip;
   background: var(--bg-950);
+  color: var(--text-primary);
 }
 
-.skygrid-chapter__scroll {
-  height: 400svh;
+.skygrid-story__intro {
+  padding-block: var(--section-space-desktop);
 }
 
-.skygrid-chapter__sticky {
-  position: sticky;
-  top: 0;
+.skygrid-story__heading {
   display: grid;
-  min-height: 100vh;
-  min-height: 100svh;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.skygrid-story__brand {
+  grid-column: 1 / span 3;
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.skygrid-story__brand img {
+  width: min(11rem, 100%);
+  height: auto;
+}
+
+.skygrid-story__brand span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.skygrid-story__statement {
+  grid-column: 4 / span 7;
+}
+
+.skygrid-story__statement h2 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3.7rem, 6.2vw, 6.8rem);
+  font-weight: 600;
+  letter-spacing: -0.058em;
+  line-height: 0.91;
+}
+
+.skygrid-story__statement > p {
+  max-width: 42rem;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.skygrid-story__statement a {
+  display: inline-flex;
   align-items: center;
-  padding-block: clamp(var(--space-3), 4vh, var(--space-6));
+  gap: 0.65rem;
+  margin-top: var(--space-4);
+  color: var(--text-primary);
+  font-size: var(--type-ui);
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.skygrid-chapter__presentation {
+.skygrid-story__statement a span {
+  color: var(--gold-400);
+}
+
+.skygrid-story__cinematic {
+  position: relative;
+  width: calc(100% + var(--page-margin));
+  aspect-ratio: 16 / 8.6;
+  margin: clamp(5rem, 8vw, 8rem) calc(var(--page-margin) * -1) 0 0;
+  overflow: hidden;
+  background: #0a0d13;
+}
+
+.skygrid-story__cinematic::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 54%, rgba(5, 5, 5, 0.7));
+  content: '';
+  pointer-events: none;
+}
+
+.skygrid-story__cinematic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.skygrid-story__cinematic figcaption {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  max-width: 36rem;
+  margin: 0;
+  color: rgba(247, 246, 242, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.skygrid-story__capabilities {
   display: grid;
-  gap: clamp(var(--space-2), 2.8vh, var(--space-4));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(3rem, 5vw, 5rem);
 }
 
-.skygrid-chapter__masthead {
+.skygrid-story__capabilities p {
+  max-width: 26rem;
+  margin: 0;
+}
+
+.skygrid-story__capabilities strong,
+.skygrid-story__capabilities span {
+  display: block;
+}
+
+.skygrid-story__capabilities strong {
+  color: var(--text-primary);
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  font-weight: 600;
+}
+
+.skygrid-story__capabilities span {
+  margin-top: var(--space-1);
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.skygrid-mission-sequence {
+  background: #09090b;
+}
+
+.skygrid-mission-sequence__inner {
+  padding-block: var(--section-space-desktop);
+}
+
+.skygrid-mission-sequence__heading {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--space-3);
   align-items: end;
 }
 
-.skygrid-chapter__masthead .type-tech {
+.skygrid-mission-sequence__heading p {
   grid-column: 1 / span 3;
   margin: 0;
-  color: var(--gold-400);
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
-.skygrid-chapter__masthead h2 {
-  grid-column: 4 / -1;
+.skygrid-mission-sequence__heading h3 {
+  grid-column: 4 / span 7;
+  max-width: 10ch;
   margin: 0;
-  font-size: var(--type-h3);
-  letter-spacing: -0.025em;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 600;
+  letter-spacing: -0.052em;
+  line-height: 0.94;
 }
 
 .skygrid-stage-rail {
-  position: relative;
   display: grid;
-  overflow: hidden;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.skygrid-stage-rail__track,
-.skygrid-stage-rail__marker {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: var(--border-thin);
-  pointer-events: none;
-}
-
-.skygrid-stage-rail__track {
-  width: 100%;
-  background: var(--line-subtle);
-}
-
-.skygrid-stage-rail__marker {
-  z-index: 2;
-  width: 25%;
-  background: var(--gold-400);
-  transform: translateX(calc(var(--stage-index) * 100%));
-  transition: transform var(--motion-component) var(--ease-standard);
+  gap: var(--space-2);
+  margin-top: clamp(4rem, 7vw, 7rem);
 }
 
 .skygrid-stage-rail__item {
-  display: flex;
-  min-height: 3.5rem;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0 var(--space-2) var(--space-2);
+  position: relative;
+  min-height: 4.5rem;
+  border: 0;
+  padding: 0 var(--space-2) var(--space-2) 0;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
+  font: inherit;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 600;
   text-align: left;
-  text-transform: uppercase;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 220ms var(--ease-standard);
 }
 
-.skygrid-stage-rail__item:first-of-type {
-  padding-left: 0;
+.skygrid-stage-rail__item::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3.25rem;
+  height: 3px;
+  background: var(--skygrid-purple);
+  content: '';
+  opacity: 0;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition:
+    opacity 220ms var(--ease-standard),
+    transform 360ms var(--ease-emphasized);
 }
 
 .skygrid-stage-rail__item:hover,
@@ -95,373 +215,507 @@
   color: var(--text-primary);
 }
 
-.skygrid-stage-rail__item[data-active='true'] .type-tech {
-  color: var(--gold-400);
+.skygrid-stage-rail__item[data-active='true']::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
-.skygrid-stage-rail__item strong {
-  font-family: var(--font-display);
-  font-size: var(--type-ui);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+.skygrid-stage-rail__item:focus-visible {
+  outline: var(--focus-ring-width) solid var(--gold-400);
+  outline-offset: var(--focus-ring-offset);
 }
 
-.skygrid-stage {
+.skygrid-stage-panel {
   display: grid;
-  min-height: 0;
-  grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr);
-  gap: var(--space-3);
-  align-items: stretch;
+  grid-template-columns: minmax(16rem, 0.34fr) minmax(0, 1fr);
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+  margin-top: clamp(3rem, 5vw, 5rem);
 }
 
-.skygrid-stage__copy {
+.skygrid-stage-panel__copy {
+  min-width: 0;
+  animation: skygrid-copy-enter 420ms var(--ease-emphasized) both;
+}
+
+.skygrid-stage-panel__copy > span {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: #9e7ddd;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.skygrid-stage-panel__copy h4 {
+  max-width: 11ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.55rem, 3.9vw, 4.25rem);
+  font-weight: 600;
+  letter-spacing: -0.048em;
+  line-height: 0.97;
+}
+
+.skygrid-stage-panel__copy p {
+  max-width: 30rem;
+  margin: var(--space-3) 0 0;
+  color: var(--text-secondary);
+  font-size: 1.03rem;
+  line-height: 1.65;
+}
+
+.skygrid-stage-panel__visual {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(31rem, 48vw, 44rem);
+  overflow: hidden;
+  background: #060609;
+  animation: skygrid-visual-enter 500ms var(--ease-emphasized) both;
+}
+
+.skygrid-stage-panel__note {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 5;
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  background: rgba(5, 5, 5, 0.8);
+  color: rgba(247, 246, 242, 0.58);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.skygrid-mission-visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 68% 30%, rgba(91, 43, 180, 0.22), transparent 35%),
+    #060609;
+}
+
+.skygrid-mission-visual::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(247, 246, 242, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 246, 242, 0.024) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  content: '';
+  pointer-events: none;
+}
+
+.skygrid-mission-map {
+  position: absolute;
+  inset: 5% 3% 8%;
+  z-index: 1;
+  width: 94%;
+  height: 87%;
+  overflow: visible;
+}
+
+.skygrid-map__contour {
+  fill: none;
+  stroke: rgba(247, 246, 242, 0.11);
+  stroke-width: 1.2;
+}
+
+.skygrid-map__zone {
+  fill: rgba(91, 43, 180, 0.08);
+  stroke: rgba(126, 82, 206, 0.42);
+  stroke-dasharray: 8 9;
+  stroke-width: 2;
+}
+
+.skygrid-map__route {
+  fill: none;
+  stroke: var(--skygrid-purple-line);
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.skygrid-map__route--complete {
+  stroke: var(--gold-400);
+}
+
+.skygrid-map__waypoint {
+  fill: #060609;
+  stroke: rgba(247, 246, 242, 0.76);
+  stroke-width: 3;
+}
+
+.skygrid-map__waypoint--active,
+.skygrid-map__event {
+  fill: var(--gold-400);
+  stroke: var(--gold-400);
+}
+
+.skygrid-map__event {
+  fill: #060609;
+  stroke-width: 4;
+}
+
+.skygrid-map__aircraft path {
+  fill: var(--text-primary);
+}
+
+.skygrid-map__aircraft--active path {
+  fill: var(--gold-400);
+}
+
+.skygrid-map__labels {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.skygrid-map__label {
+  position: absolute;
+  padding: 0.4rem 0.55rem;
+  background: rgba(5, 5, 5, 0.8);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+}
+
+.skygrid-map__label--start {
+  bottom: 13%;
+  left: 7%;
+}
+
+.skygrid-map__label--zone {
+  top: 42%;
+  left: 47%;
+}
+
+.skygrid-map__label--return {
+  top: 15%;
+  right: 7%;
+}
+
+.skygrid-map__label--active {
+  top: 55%;
+  left: 58%;
+  color: var(--text-primary);
+}
+
+.skygrid-mission-visual--operate .skygrid-map__route {
+  stroke: var(--gold-400);
+}
+
+.skygrid-readiness__aircraft {
+  position: absolute;
+  top: 8%;
+  right: 7%;
+  left: 7%;
+  height: 48%;
+}
+
+.skygrid-readiness__aircraft svg {
+  width: 100%;
+  height: 100%;
+}
+
+.skygrid-drone-mark line,
+.skygrid-drone-mark circle {
+  fill: none;
+  stroke: rgba(247, 246, 242, 0.7);
+  stroke-width: 5;
+}
+
+.skygrid-drone-mark circle:first-of-type {
+  fill: rgba(91, 43, 180, 0.18);
+  stroke: #8c66d0;
+}
+
+.skygrid-readiness {
+  position: absolute;
+  right: 7%;
+  bottom: 9%;
+  left: 7%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.skygrid-readiness > div {
   display: flex;
   min-width: 0;
-  align-items: center;
-  padding-right: var(--space-4);
+  gap: var(--space-2);
+  align-items: flex-start;
 }
 
-.skygrid-stage__copy-state {
-  max-width: 20rem;
-  animation: skygrid-copy-change var(--motion-component) var(--ease-standard) both;
+.skygrid-readiness > div > span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--skygrid-purple-soft);
+  color: #b99ee8;
+  font-size: 0.8rem;
 }
 
-.skygrid-stage__copy-state .type-tech {
-  margin-bottom: var(--space-3);
-  color: var(--gold-400);
-}
-
-.skygrid-stage__copy-state h3 {
-  max-width: 12ch;
-  margin-bottom: var(--space-2);
-  font-size: var(--type-h3);
-  letter-spacing: -0.03em;
-}
-
-.skygrid-stage__copy-state > p:not(.type-tech) {
+.skygrid-readiness p {
   margin: 0;
-  color: var(--text-secondary);
-  font-size: var(--type-body);
-  line-height: 1.55;
 }
 
-.skygrid-product-canvas {
-  position: relative;
-  height: clamp(28rem, 62vh, 44rem);
-  min-width: 0;
-  overflow: hidden;
-  border-radius: var(--radius-media);
-  background: var(--surface-800);
-  isolation: isolate;
-}
-
-.skygrid-product-canvas__layer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.985);
-  transition:
-    opacity 560ms var(--ease-standard),
-    transform 680ms var(--ease-emphasized);
-}
-
-.skygrid-product-canvas__layer[data-active='true'] {
-  z-index: 2;
-  opacity: 1;
-  transform: scale(1);
-}
-
-.skygrid-product-canvas__screen img {
+.skygrid-readiness strong,
+.skygrid-readiness small {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
 }
 
-.skygrid-product-canvas[data-stage='prepare']
-  .skygrid-product-canvas__screen[data-view='plan'] {
-  transform: scale(1.025);
-}
-
-.skygrid-product-canvas[data-stage='operate']
-  .skygrid-product-canvas__screen[data-view='prepare'] {
-  transform: scale(1.02);
-}
-
-.skygrid-product-canvas__operate {
-  z-index: 1;
-}
-
-.skygrid-mission {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--bg-950);
-  isolation: isolate;
-}
-
-.skygrid-mission__fallback,
-.skygrid-mission__map {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.skygrid-mission__fallback {
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.035);
-  transition:
-    opacity 680ms var(--ease-standard),
-    transform var(--motion-cinematic) var(--ease-emphasized);
-}
-
-.skygrid-mission__map {
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 680ms var(--ease-standard);
-}
-
-.skygrid-mission[data-map-state='ready'] .skygrid-mission__fallback {
-  opacity: 0;
-  transform: scale(1);
-}
-
-.skygrid-mission[data-map-state='ready'] .skygrid-mission__map {
-  opacity: 1;
-}
-
-.skygrid-mission__label {
-  position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
-  z-index: 2;
-  margin: 0;
-  padding: var(--space-1) var(--space-2);
-  background: rgba(5, 5, 5, 0.8);
+.skygrid-readiness strong {
   color: var(--text-primary);
-  pointer-events: none;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.skygrid-mission .maplibregl-ctrl-attrib {
-  background: rgba(5, 5, 5, 0.78);
+.skygrid-readiness small {
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.skygrid-review-strip {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  left: 6%;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.skygrid-review-strip span {
   color: var(--text-secondary);
+  font-size: 0.88rem;
 }
 
-.skygrid-mission .maplibregl-ctrl-attrib a {
-  color: var(--text-primary);
+.skygrid-mission-sequence__hint {
+  margin: var(--space-4) 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
-@keyframes skygrid-copy-change {
+@keyframes skygrid-copy-enter {
   from {
     opacity: 0;
-    transform: translateY(0.75rem);
+    transform: translateY(0.65rem);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@media (max-width: 64rem) {
-  .skygrid-chapter__scroll {
-    height: auto;
+@keyframes skygrid-visual-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.992);
   }
-
-  .skygrid-chapter__sticky {
-    position: relative;
-    min-height: 0;
-    padding-block: var(--space-12);
-  }
-
-  .skygrid-chapter__presentation {
-    gap: var(--space-4);
-  }
-
-  .skygrid-chapter__masthead .type-tech {
-    grid-column: 1 / span 4;
-  }
-
-  .skygrid-chapter__masthead h2 {
-    grid-column: 5 / -1;
-  }
-
-  .skygrid-stage {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-
-  .skygrid-stage__copy {
-    padding-right: 0;
-  }
-
-  .skygrid-stage__copy-state {
-    display: grid;
-    max-width: none;
-    grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.2fr);
-    gap: var(--space-2) var(--space-6);
-    align-items: start;
-  }
-
-  .skygrid-stage__copy-state .type-tech,
-  .skygrid-stage__copy-state h3 {
-    grid-column: 1;
-  }
-
-  .skygrid-stage__copy-state .type-tech {
-    margin-bottom: 0;
-  }
-
-  .skygrid-stage__copy-state h3 {
-    margin-bottom: 0;
-  }
-
-  .skygrid-stage__copy-state > p:not(.type-tech) {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-  }
-
-  .skygrid-product-canvas {
-    height: clamp(30rem, 58vw, 38rem);
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@media (max-width: 48rem) {
-  .skygrid-chapter__sticky {
-    padding-block: var(--space-10);
+@media (max-width: 64rem) {
+  .skygrid-story__intro,
+  .skygrid-mission-sequence__inner {
+    padding-block: var(--section-space-tablet);
   }
 
-  .skygrid-chapter__presentation {
-    gap: var(--space-3);
+  .skygrid-story__brand {
+    grid-column: 1 / span 3;
   }
 
-  .skygrid-chapter__masthead {
+  .skygrid-story__statement {
+    grid-column: 4 / -1;
+  }
+
+  .skygrid-mission-sequence__heading p {
+    grid-column: 1 / span 3;
+  }
+
+  .skygrid-mission-sequence__heading h3 {
+    grid-column: 4 / span 7;
+  }
+
+  .skygrid-stage-panel {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .skygrid-stage-panel__copy {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-6);
+  }
+
+  .skygrid-stage-panel__copy > span,
+  .skygrid-stage-panel__copy h4 {
+    grid-column: 1;
+  }
+
+  .skygrid-stage-panel__copy p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
+
+  .skygrid-stage-panel__visual {
+    min-height: clamp(29rem, 61vw, 39rem);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .skygrid-story__intro,
+  .skygrid-mission-sequence__inner {
+    padding-block: var(--section-space-mobile);
+  }
+
+  .skygrid-story__heading,
+  .skygrid-mission-sequence__heading {
     display: block;
   }
 
-  .skygrid-chapter__masthead .type-tech {
-    margin-bottom: var(--space-2);
+  .skygrid-story__brand {
+    margin-bottom: var(--space-6);
   }
 
-  .skygrid-chapter__masthead h2 {
-    font-size: var(--type-h3);
+  .skygrid-story__brand img {
+    width: 9.5rem;
   }
 
-  .skygrid-stage-rail {
-    overflow-x: auto;
-    grid-template-columns: repeat(4, minmax(7.5rem, 1fr));
-    scrollbar-width: none;
+  .skygrid-story__statement h2 {
+    font-size: clamp(3rem, 13vw, 4.2rem);
   }
 
-  .skygrid-stage-rail::-webkit-scrollbar {
-    display: none;
-  }
-
-  .skygrid-stage-rail__track,
-  .skygrid-stage-rail__marker {
-    display: none;
-  }
-
-  .skygrid-stage-rail__item {
-    position: relative;
-    min-height: 3.5rem;
-    padding: 0 var(--space-2) var(--space-2);
-    border-bottom: var(--border-thin) solid var(--line-subtle);
-  }
-
-  .skygrid-stage-rail__item:first-of-type {
-    padding-left: 0;
-  }
-
-  .skygrid-stage-rail__item::after {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: var(--border-thin);
-    background: var(--gold-400);
-    content: '';
-    opacity: 0;
-  }
-
-  .skygrid-stage-rail__item[data-active='true']::after {
-    opacity: 1;
-  }
-
-  .skygrid-stage {
-    gap: var(--space-3);
-  }
-
-  .skygrid-stage__copy-state {
-    display: block;
-  }
-
-  .skygrid-stage__copy-state .type-tech {
-    margin-bottom: var(--space-2);
-  }
-
-  .skygrid-stage__copy-state h3 {
-    max-width: none;
-    margin-bottom: var(--space-2);
-  }
-
-  .skygrid-stage__copy-state > p:not(.type-tech) {
+  .skygrid-story__statement > p {
     font-size: 1rem;
   }
 
-  .skygrid-product-canvas {
-    height: clamp(20rem, 92vw, 27rem);
+  .skygrid-story__cinematic {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin: var(--space-8) 0 0;
   }
 
-  .skygrid-product-canvas__screen[data-view='plan'] img {
-    object-position: 54% top;
+  .skygrid-story__cinematic img {
+    object-position: 57% center;
   }
 
-  .skygrid-product-canvas__screen[data-view='prepare'] img {
-    object-position: 65% top;
+  .skygrid-story__cinematic figcaption {
+    right: var(--space-2);
+    bottom: var(--space-2);
+    left: var(--space-2);
+    text-align: left;
   }
 
-  .skygrid-product-canvas__screen[data-view='review'] img {
-    object-position: 68% top;
+  .skygrid-story__capabilities {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .skygrid-mission-sequence__heading p {
+    margin-bottom: var(--space-3);
+  }
+
+  .skygrid-mission-sequence__heading h3 {
+    max-width: 9ch;
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  .skygrid-stage-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .skygrid-stage-rail__item {
+    min-height: 3.4rem;
+    font-size: 1rem;
+  }
+
+  .skygrid-stage-panel {
+    margin-top: var(--space-6);
+  }
+
+  .skygrid-stage-panel__copy {
+    display: block;
+  }
+
+  .skygrid-stage-panel__copy p {
+    margin-top: var(--space-3);
+  }
+
+  .skygrid-stage-panel__copy h4 {
+    max-width: 12ch;
+    font-size: clamp(2.35rem, 10.5vw, 3.3rem);
+  }
+
+  .skygrid-stage-panel__visual {
+    min-height: 24rem;
+  }
+
+  .skygrid-mission-map {
+    inset: 4% -10% 7%;
+    width: 120%;
+  }
+
+  .skygrid-map__label--zone {
+    left: 39%;
+  }
+
+  .skygrid-map__label--active {
+    left: 48%;
+  }
+
+  .skygrid-readiness__aircraft {
+    top: 4%;
+    right: 1%;
+    left: 1%;
+    height: 42%;
+  }
+
+  .skygrid-readiness {
+    right: var(--space-3);
+    bottom: var(--space-5);
+    left: var(--space-3);
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .skygrid-review-strip {
+    right: var(--space-3);
+    bottom: var(--space-5);
+    left: var(--space-3);
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .skygrid-stage-panel__note {
+    right: var(--space-1);
+    bottom: var(--space-1);
+    max-width: 14rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skygrid-chapter__scroll {
-    height: auto;
-  }
-
-  .skygrid-chapter__sticky {
-    position: relative;
-    min-height: 0;
-    padding-block: var(--space-12);
-  }
-
-  .skygrid-stage-rail__marker,
-  .skygrid-product-canvas__layer,
-  .skygrid-mission__fallback,
-  .skygrid-mission__map {
-    transition-duration: 0.01ms;
-  }
-
-  .skygrid-stage__copy-state {
+  .skygrid-stage-panel__copy,
+  .skygrid-stage-panel__visual {
     animation: none;
   }
 
-  .skygrid-product-canvas__layer,
-  .skygrid-product-canvas[data-stage='prepare']
-    .skygrid-product-canvas__screen[data-view='plan'],
-  .skygrid-product-canvas[data-stage='operate']
-    .skygrid-product-canvas__screen[data-view='prepare'],
-  .skygrid-mission__fallback {
-    transform: none;
+  .skygrid-stage-rail__item::after {
+    transition: none;
   }
 }

@@ -1,246 +1,267 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type KeyboardEvent,
-} from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
+
+import skyGridCinematic from '../../assets/skygrid/skygrid-cinematic-control-room.webp'
+import skyGridLogo from '../../assets/skygrid/skygrid-logo.png'
 import { Container } from '../../components/Container'
-import routePlanner from '../../assets/skygrid/skygrid-route-planner.webp'
-import operationsCenter from '../../assets/skygrid/skygrid-operations-center.webp'
-import missionAnalytics from '../../assets/skygrid/skygrid-mission-analytics.webp'
-import { SkyGridMissionView } from './SkyGridMissionView'
 import '../../styles/skygrid-section.css'
 
-const stages = [
+type MissionStageId = 'plan' | 'prepare' | 'operate' | 'review'
+
+type MissionStage = {
+  id: MissionStageId
+  label: string
+  title: string
+  description: string
+}
+
+const missionStages: readonly MissionStage[] = [
   {
     id: 'plan',
-    number: '01',
     label: 'Plan',
-    title: 'Define the route.',
-    description: 'Set the mission area, route and flight parameters before takeoff.',
-    image: routePlanner,
-    alt: 'SkyGrid route planner showing a River Corridor Inspection mission over Kaduna with waypoint and altitude controls',
+    title: 'Shape the mission before launch.',
+    description:
+      'Define the operating area, route, waypoints and return path before the aircraft moves.',
   },
   {
     id: 'prepare',
-    number: '02',
     label: 'Prepare',
-    title: "Know what's ready.",
-    description: 'Check aircraft readiness, pilot assignment and operating conditions before launch.',
-    image: operationsCenter,
-    alt: 'SkyGrid Mission Operation Center showing aircraft, pilot assignment, readiness and weather checks',
+    title: 'Confirm the mission is ready to move.',
+    description:
+      'Bring aircraft readiness, operator responsibility and operating conditions into the same pre-flight picture.',
   },
   {
     id: 'operate',
-    number: '03',
     label: 'Operate',
-    title: 'See the mission in space.',
-    description: 'Follow the route, terrain and mission position as the operation moves into the field.',
+    title: 'Follow the mission in its field context.',
+    description:
+      'Keep the planned route, active sector and aircraft position connected while the mission is underway.',
   },
   {
     id: 'review',
-    number: '04',
     label: 'Review',
-    title: 'Review what happened.',
-    description: 'Return to flight activity, mission history and operational events after the mission.',
-    image: missionAnalytics,
-    alt: 'SkyGrid Mission Overview showing post-flight analytics, flight summary, activity and incident logs',
+    title: 'Turn the flight into a usable operational record.',
+    description:
+      'Return to the route, mission events and field observations after the aircraft is back on the ground.',
   },
-] as const
+]
 
-type StageId = (typeof stages)[number]['id']
+function MissionStageVisual({ stage }: { stage: MissionStageId }) {
+  if (stage === 'prepare') {
+    return (
+      <div className="skygrid-mission-visual skygrid-mission-visual--prepare">
+        <div className="skygrid-readiness__aircraft" aria-hidden="true">
+          <svg viewBox="0 0 420 220">
+            <g className="skygrid-drone-mark">
+              <line x1="125" x2="295" y1="110" y2="110" />
+              <line x1="210" x2="210" y1="72" y2="148" />
+              <circle cx="210" cy="110" r="30" />
+              <circle cx="110" cy="110" r="30" />
+              <circle cx="310" cy="110" r="30" />
+              <circle cx="210" cy="54" r="25" />
+              <circle cx="210" cy="166" r="25" />
+            </g>
+          </svg>
+        </div>
 
-const DESKTOP_STORY_QUERY = '(min-width: 64.0625rem) and (prefers-reduced-motion: no-preference)'
+        <div className="skygrid-readiness" aria-label="Illustrative mission readiness">
+          <div>
+            <span aria-hidden="true">✓</span>
+            <p><strong>Aircraft</strong><small>Ready for mission</small></p>
+          </div>
+          <div>
+            <span aria-hidden="true">✓</span>
+            <p><strong>Operator</strong><small>Responsibility confirmed</small></p>
+          </div>
+          <div>
+            <span aria-hidden="true">✓</span>
+            <p><strong>Conditions</strong><small>Operating context reviewed</small></p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (stage === 'review') {
+    return (
+      <div className="skygrid-mission-visual skygrid-mission-visual--review">
+        <svg aria-hidden="true" className="skygrid-mission-map" viewBox="0 0 1000 560">
+          <path className="skygrid-map__contour" d="M5 140 C180 55 270 98 420 156 S720 264 990 132" />
+          <path className="skygrid-map__contour" d="M-20 298 C160 214 302 225 442 290 S730 414 1020 292" />
+          <path className="skygrid-map__contour" d="M10 445 C175 372 310 382 455 438 S735 518 1005 430" />
+          <path className="skygrid-map__route skygrid-map__route--complete" d="M92 445 C202 390 213 250 336 237 C470 223 512 351 632 314 C760 275 790 164 902 116" pathLength="100" />
+          <circle className="skygrid-map__waypoint" cx="92" cy="445" r="10" />
+          <circle className="skygrid-map__event" cx="336" cy="237" r="13" />
+          <circle className="skygrid-map__event" cx="632" cy="314" r="13" />
+          <circle className="skygrid-map__waypoint skygrid-map__waypoint--active" cx="902" cy="116" r="12" />
+        </svg>
+
+        <div className="skygrid-review-strip">
+          <span>Route trace</span>
+          <span>Field events</span>
+          <span>Review notes</span>
+        </div>
+      </div>
+    )
+  }
+
+  const isOperate = stage === 'operate'
+
+  return (
+    <div className={`skygrid-mission-visual skygrid-mission-visual--${stage}`}>
+      <svg aria-hidden="true" className="skygrid-mission-map" viewBox="0 0 1000 560">
+        <path className="skygrid-map__contour" d="M5 140 C180 55 270 98 420 156 S720 264 990 132" />
+        <path className="skygrid-map__contour" d="M-20 298 C160 214 302 225 442 290 S730 414 1020 292" />
+        <path className="skygrid-map__contour" d="M10 445 C175 372 310 382 455 438 S735 518 1005 430" />
+        <ellipse className="skygrid-map__zone" cx="535" cy="282" rx="178" ry="112" />
+        <path className="skygrid-map__route" d="M92 445 C202 390 213 250 336 237 C470 223 512 351 632 314 C760 275 790 164 902 116" pathLength="100" />
+        <circle className="skygrid-map__waypoint" cx="92" cy="445" r="10" />
+        <circle className="skygrid-map__waypoint" cx="336" cy="237" r="10" />
+        <circle className="skygrid-map__waypoint" cx="632" cy="314" r="10" />
+        <circle className="skygrid-map__waypoint skygrid-map__waypoint--active" cx="902" cy="116" r="12" />
+        <g className={`skygrid-map__aircraft ${isOperate ? 'skygrid-map__aircraft--active' : ''}`} transform={isOperate ? 'translate(600 286)' : 'translate(300 216)'}>
+          <path d="M-30 0 L2 -13 L12 -8 L-8 2 L10 15 L1 19 L-30 7 L-52 15 L-58 9 L-44 2 L-58 -6 L-52 -12 Z" />
+        </g>
+      </svg>
+
+      <div className="skygrid-map__labels" aria-hidden="true">
+        <span className="skygrid-map__label skygrid-map__label--start">Launch</span>
+        <span className="skygrid-map__label skygrid-map__label--zone">Mission area</span>
+        <span className="skygrid-map__label skygrid-map__label--return">Return</span>
+        {isOperate ? <span className="skygrid-map__label skygrid-map__label--active">Aircraft in mission area</span> : null}
+      </div>
+    </div>
+  )
+}
 
 export function SkyGridSection() {
-  const [activeStageId, setActiveStageId] = useState<StageId>('plan')
-  const [hasActivatedOperate, setHasActivatedOperate] = useState(false)
-  const scrollChapterRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
   const stageButtonRefs = useRef<Array<HTMLButtonElement | null>>([])
-  const hasMountedStageRailRef = useRef(false)
-  const activeIndex = stages.findIndex((stage) => stage.id === activeStageId)
-  const activeStage = stages[activeIndex]
+  const activeStage = missionStages[activeIndex]
 
-  useEffect(() => {
-    const desktopStory = window.matchMedia(DESKTOP_STORY_QUERY)
-    let frameId = 0
+  function selectStage(index: number, moveFocus = false) {
+    setActiveIndex(index)
 
-    function updateStageFromScroll() {
-      const chapter = scrollChapterRef.current
-      if (!chapter || !desktopStory.matches) return
-
-      const rect = chapter.getBoundingClientRect()
-      const travel = Math.max(chapter.offsetHeight - window.innerHeight, 1)
-      const progress = Math.min(Math.max(-rect.top / travel, 0), 1)
-      const nextIndex = Math.min(Math.floor(progress * stages.length), stages.length - 1)
-      const nextStageId = stages[nextIndex].id
-
-      setActiveStageId((currentStageId) =>
-        currentStageId === nextStageId ? currentStageId : nextStageId,
-      )
+    if (moveFocus) {
+      window.requestAnimationFrame(() => stageButtonRefs.current[index]?.focus())
     }
+  }
 
-    function requestStageUpdate() {
-      window.cancelAnimationFrame(frameId)
-      frameId = window.requestAnimationFrame(updateStageFromScroll)
-    }
+  function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    let nextIndex = activeIndex
 
-    updateStageFromScroll()
-    window.addEventListener('scroll', requestStageUpdate, { passive: true })
-    window.addEventListener('resize', requestStageUpdate)
-    desktopStory.addEventListener('change', requestStageUpdate)
-
-    return () => {
-      window.cancelAnimationFrame(frameId)
-      window.removeEventListener('scroll', requestStageUpdate)
-      window.removeEventListener('resize', requestStageUpdate)
-      desktopStory.removeEventListener('change', requestStageUpdate)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (activeStageId === 'operate') setHasActivatedOperate(true)
-  }, [activeStageId])
-
-  useEffect(() => {
-    if (!hasMountedStageRailRef.current) {
-      hasMountedStageRailRef.current = true
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = (activeIndex + 1) % missionStages.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (activeIndex - 1 + missionStages.length) % missionStages.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = missionStages.length - 1
+    } else {
       return
     }
 
-    if (window.matchMedia(DESKTOP_STORY_QUERY).matches) return
-    stageButtonRefs.current[activeIndex]?.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      block: 'nearest',
-      inline: 'center',
-    })
-  }, [activeIndex])
-
-  function activateStage(index: number) {
-    const stage = stages[index]
-    const chapter = scrollChapterRef.current
-    const desktopStory = window.matchMedia(DESKTOP_STORY_QUERY)
-
-    setActiveStageId(stage.id)
-
-    if (!chapter || !desktopStory.matches) return
-
-    const chapterTop = window.scrollY + chapter.getBoundingClientRect().top
-    const travel = Math.max(chapter.offsetHeight - window.innerHeight, 0)
-    const stageCenter = (index + 0.5) / stages.length
-
-    window.scrollTo({
-      top: chapterTop + travel * stageCenter,
-      behavior: 'smooth',
-    })
-  }
-
-  function handleStageKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    let nextIndex = index
-    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % stages.length
-    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + stages.length) % stages.length
-    else if (event.key === 'Home') nextIndex = 0
-    else if (event.key === 'End') nextIndex = stages.length - 1
-    else return
-
     event.preventDefault()
-    activateStage(nextIndex)
-    stageButtonRefs.current[nextIndex]?.focus()
+    selectStage(nextIndex, true)
   }
 
   return (
-    <section className="skygrid-chapter" id="skygrid" aria-labelledby="skygrid-title">
-      <div className="skygrid-chapter__scroll" ref={scrollChapterRef}>
-        <div className="skygrid-chapter__sticky">
-          <Container className="skygrid-chapter__presentation">
-            <header className="skygrid-chapter__masthead">
-              <p className="type-tech">01 / SkyGrid</p>
-              <h2 id="skygrid-title">UAV operations</h2>
-            </header>
+    <section className="skygrid-story" id="skygrid" aria-labelledby="skygrid-title">
+      <Container className="skygrid-story__intro">
+        <header className="skygrid-story__heading">
+          <div className="skygrid-story__brand">
+            <img alt="SkyGrid" src={skyGridLogo} />
+            <span>UAV operations by Digi02</span>
+          </div>
 
-            <div
-              className="skygrid-stage-rail"
-              role="tablist"
-              aria-label="SkyGrid mission stages"
-              style={{ '--stage-index': activeIndex } as CSSProperties}
-            >
-              <span className="skygrid-stage-rail__track" aria-hidden="true" />
-              <span className="skygrid-stage-rail__marker" aria-hidden="true" />
-              {stages.map((stage, index) => {
-                const isActive = stage.id === activeStageId
-                return (
-                  <button
-                    aria-controls="skygrid-stage-panel"
-                    aria-selected={isActive}
-                    className="skygrid-stage-rail__item"
-                    data-active={isActive}
-                    id={`skygrid-tab-${stage.id}`}
-                    key={stage.id}
-                    onClick={() => activateStage(index)}
-                    onKeyDown={(event) => handleStageKeyDown(event, index)}
-                    ref={(element) => { stageButtonRefs.current[index] = element }}
-                    role="tab"
-                    tabIndex={isActive ? 0 : -1}
-                    type="button"
-                  >
-                    <span className="type-tech">{stage.number}</span>
-                    <strong>{stage.label}</strong>
-                  </button>
-                )
-              })}
+          <div className="skygrid-story__statement">
+            <h2 id="skygrid-title">See more. React earlier. Operate smarter.</h2>
+            <p>
+              SkyGrid brings mission planning, flight operations and field intelligence into one
+              operational story — before, during and after the aircraft moves.
+            </p>
+            <a href="/solutions/skygrid">
+              Explore SkyGrid <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </header>
+
+        <figure className="skygrid-story__cinematic">
+          <img
+            alt="Illustrative SkyGrid UAV operations environment with drones and an operations control room"
+            decoding="async"
+            loading="eager"
+            src={skyGridCinematic}
+          />
+          <figcaption>SkyGrid concept visualization — illustrative scene, not a photographed Digi02 deployment.</figcaption>
+        </figure>
+
+        <div className="skygrid-story__capabilities" aria-label="SkyGrid capabilities">
+          <p><strong>Mission planning</strong><span>Shape routes, mission areas and waypoints before launch.</span></p>
+          <p><strong>Flight operations</strong><span>Keep the aircraft, route and operating context connected during the mission.</span></p>
+          <p><strong>Field intelligence</strong><span>Bring mission events and observations back into the operational record.</span></p>
+        </div>
+      </Container>
+
+      <div className="skygrid-mission-sequence" data-stage={activeStage.id}>
+        <Container className="skygrid-mission-sequence__inner">
+          <header className="skygrid-mission-sequence__heading">
+            <p>From mission idea to operational review.</p>
+            <h3>Plan. Prepare. Operate. Review.</h3>
+          </header>
+
+          <div
+            aria-label="SkyGrid mission stages"
+            className="skygrid-stage-rail"
+            onKeyDown={handleStageKeyDown}
+            role="tablist"
+          >
+            {missionStages.map((stage, index) => {
+              const isActive = index === activeIndex
+
+              return (
+                <button
+                  aria-controls="skygrid-stage-panel"
+                  aria-selected={isActive}
+                  className="skygrid-stage-rail__item"
+                  data-active={isActive}
+                  id={`skygrid-stage-tab-${stage.id}`}
+                  key={stage.id}
+                  onClick={() => selectStage(index)}
+                  ref={(element) => {
+                    stageButtonRefs.current[index] = element
+                  }}
+                  role="tab"
+                  tabIndex={isActive ? 0 : -1}
+                  type="button"
+                >
+                  {stage.label}
+                </button>
+              )
+            })}
+          </div>
+
+          <article
+            aria-labelledby={`skygrid-stage-tab-${activeStage.id}`}
+            className="skygrid-stage-panel"
+            id="skygrid-stage-panel"
+            role="tabpanel"
+          >
+            <div className="skygrid-stage-panel__copy" key={activeStage.id}>
+              <h4>{activeStage.title}</h4>
+              <p>{activeStage.description}</p>
             </div>
 
-            <article
-              aria-labelledby={`skygrid-tab-${activeStage.id}`}
-              className="skygrid-stage"
-              data-stage={activeStage.id}
-              id="skygrid-stage-panel"
-              role="tabpanel"
-            >
-              <div className="skygrid-stage__copy">
-                <div className="skygrid-stage__copy-state" key={activeStage.id}>
-                  <p className="type-tech">{activeStage.number} / {activeStage.label}</p>
-                  <h3>{activeStage.title}</h3>
-                  <p>{activeStage.description}</p>
-                </div>
-              </div>
+            <div className="skygrid-stage-panel__visual" key={`visual-${activeStage.id}`}>
+              <MissionStageVisual stage={activeStage.id} />
+              <p className="skygrid-stage-panel__note">Capability visualization — not live operational data.</p>
+            </div>
+          </article>
 
-              <div className="skygrid-product-canvas" data-stage={activeStage.id}>
-                {stages.filter((stage) => 'image' in stage).map((stage, index) => {
-                  const isActive = stage.id === activeStageId
-                  return (
-                    <figure
-                      aria-hidden={!isActive}
-                      className="skygrid-product-canvas__layer skygrid-product-canvas__screen"
-                      data-active={isActive}
-                      data-view={stage.id}
-                      key={stage.id}
-                    >
-                      <img
-                        alt={isActive ? stage.alt : ''}
-                        decoding="async"
-                        loading={index === 0 ? 'eager' : 'lazy'}
-                        src={stage.image}
-                      />
-                    </figure>
-                  )
-                })}
-
-                <div
-                  aria-hidden={activeStageId !== 'operate'}
-                  className="skygrid-product-canvas__layer skygrid-product-canvas__operate"
-                  data-active={activeStageId === 'operate'}
-                >
-                  <SkyGridMissionView
-                    isActive={activeStageId === 'operate'}
-                    shouldInitialize={hasActivatedOperate}
-                  />
-                </div>
-              </div>
-            </article>
-          </Container>
-        </div>
+          <p className="skygrid-mission-sequence__hint">
+            Select a mission stage or use the keyboard arrow keys to move through the sequence.
+          </p>
+        </Container>
       </div>
     </section>
   )

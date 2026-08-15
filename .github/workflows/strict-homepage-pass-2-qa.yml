@@ -1,0 +1,272 @@
+name: Strict homepage pass two QA
+
+on:
+  push:
+    branches:
+      - chatgpt/strict-homepage-pass-2
+  workflow_dispatch:
+
+jobs:
+  interaction-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run interaction and visual QA
+        run: |
+          mkdir -p pass-two-qa
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { chromium } from 'playwright'
+
+          const browser = await chromium.launch({ headless: true })
+
+          async function openPage(width, height) {
+            const page = await browser.newPage({
+              viewport: { width, height },
+              deviceScaleFactor: 1,
+            })
+
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle' })
+            return page
+          }
+
+          async function hasFocus(locator) {
+            return locator.evaluate((element) => element === document.activeElement)
+          }
+
+          async function paintWholePage(page, viewportHeight) {
+            let y = 0
+            let previousHeight = 0
+
+            while (true) {
+              const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight)
+              if (y >= pageHeight) break
+
+              await page.evaluate((nextY) => window.scrollTo(0, nextY), y)
+              await page.waitForTimeout(120)
+              y += Math.max(Math.floor(viewportHeight * 0.72), 500)
+
+              if (pageHeight === previousHeight && y > pageHeight) break
+              previousHeight = pageHeight
+            }
+
+            await page.evaluate(async () => {
+              const images = Array.from(document.images)
+              await Promise.all(
+                images.map(async (image) => {
+                  if (!image.complete) {
+                    await new Promise((resolve) => {
+                      image.addEventListener('load', resolve, { once: true })
+                      image.addEventListener('error', resolve, { once: true })
+                    })
+                  }
+
+                  if (typeof image.decode === 'function') {
+                    await image.decode().catch(() => undefined)
+                  }
+                }),
+              )
+            })
+
+            await page.evaluate(() => window.scrollTo(0, 0))
+            await page.waitForTimeout(250)
+          }
+
+          const desktop = await openPage(1440, 1000)
+          await paintWholePage(desktop, 1000)
+          await desktop.screenshot({ path: 'pass-two-qa/desktop-initial.png', fullPage: true })
+
+          const operations = desktop.locator('.operations-system')
+          await operations.scrollIntoViewIfNeeded()
+          assert.equal(await operations.getAttribute('data-stage'), 'connect')
+
+          const connectTab = operations.getByRole('tab', { name: /Connect/ })
+          const automateTab = operations.getByRole('tab', { name: /Automate/ })
+          await connectTab.focus()
+          await connectTab.press('ArrowRight')
+          assert.equal(await operations.getAttribute('data-stage'), 'automate')
+          assert.equal(await hasFocus(automateTab), true)
+          assert.equal(
+            await operations.locator('.operations-thread__step').nth(3).getAttribute('data-state'),
+            'active',
+          )
+
+          await operations.getByRole('tab', { name: /Transact/ }).click()
+          assert.equal(await operations.getAttribute('data-stage'), 'transact')
+          assert.equal(
+            await operations.locator('.operations-thread__step[data-state="complete"]').count(),
+            5,
+          )
+          await desktop.waitForTimeout(500)
+          await operations.screenshot({ path: 'pass-two-qa/operations-transact.png' })
+
+          const skygrid = desktop.locator('.skygrid-dashboard')
+          await skygrid.scrollIntoViewIfNeeded()
+          assert.equal(await skygrid.getAttribute('data-stage'), 'plan')
+
+          const planTab = skygrid.getByRole('tab', { name: /Plan/ })
+          const prepareTab = skygrid.getByRole('tab', { name: /Prepare/ })
+          await planTab.focus()
+          await planTab.press('ArrowRight')
+          assert.equal(await skygrid.getAttribute('data-stage'), 'prepare')
+          assert.equal(await hasFocus(prepareTab), true)
+          await desktop.getByAltText(/mission operations interface/i).waitFor({ state: 'visible' })
+
+          await skygrid.getByRole('tab', { name: /Operate/ }).click()
+          assert.equal(await skygrid.getAttribute('data-stage'), 'operate')
+          await skygrid.locator('.skygrid-mission').waitFor({ state: 'visible' })
+          await desktop.waitForTimeout(900)
+          await skygrid.locator('.skygrid-stage-panel').screenshot({
+            path: 'pass-two-qa/skygrid-operate.png',
+          })
+
+          await skygrid.getByRole('tab', { name: /Review/ }).click()
+          assert.equal(await skygrid.getAttribute('data-stage'), 'review')
+          await desktop.getByAltText(/Mission Overview showing post-flight analytics/i).waitFor({
+            state: 'visible',
+          })
+          await desktop.waitForTimeout(650)
+          await skygrid.locator('.skygrid-stage-panel').screenshot({
+            path: 'pass-two-qa/skygrid-review.png',
+          })
+
+          const digivoltReveal = desktop.locator('.digivolt-reveal__visual')
+          await digivoltReveal.scrollIntoViewIfNeeded()
+          await desktop.waitForTimeout(250)
+
+          const digivolt = desktop.locator('.digivolt-journey')
+          await digivolt.scrollIntoViewIfNeeded()
+          assert.equal(await digivolt.getAttribute('data-stage'), 'request')
+
+          const requestTab = digivolt.getByRole('tab', { name: /Request/ })
+          const matchTab = digivolt.getByRole('tab', { name: /Match/ })
+          await requestTab.focus()
+          await requestTab.press('ArrowRight')
+          assert.equal(await digivolt.getAttribute('data-stage'), 'match')
+          assert.equal(await hasFocus(matchTab), true)
+          assert.equal(
+            await digivolt.locator('.digivolt-journey__route-progress').getAttribute('stroke-dashoffset'),
+            '69',
+          )
+
+          await digivolt.getByRole('tab', { name: /Ride/ }).click()
+          assert.equal(await digivolt.getAttribute('data-stage'), 'ride')
+          assert.equal(
+            await digivolt.locator('.digivolt-journey__route-progress').getAttribute('stroke-dashoffset'),
+            '30',
+          )
+
+          await digivolt.getByRole('tab', { name: /Arrive/ }).click()
+          assert.equal(await digivolt.getAttribute('data-stage'), 'arrive')
+          assert.equal(
+            await digivolt.locator('.digivolt-journey__route-progress').getAttribute('stroke-dashoffset'),
+            '0',
+          )
+          await desktop.waitForTimeout(850)
+          await digivolt.screenshot({ path: 'pass-two-qa/digivolt-arrive.png' })
+
+          const erp = desktop.locator('#erp-pos')
+          await erp.scrollIntoViewIfNeeded()
+          const headsetRow = erp.locator('.erp-pos-product-row').filter({ hasText: 'Wireless Headset' })
+          assert.equal((await headsetRow.locator('.erp-pos-product-row__stock strong').textContent())?.trim(), '24')
+
+          await headsetRow.getByRole('button', { name: 'Add' }).click()
+          await erp.getByRole('radio', { name: 'Transfer' }).check()
+          await erp.getByRole('button', { name: /Complete sale/ }).click()
+
+          const receiptDrawer = erp.locator('.erp-pos-receipt-drawer')
+          assert.equal(await receiptDrawer.getAttribute('data-open'), 'true')
+          await receiptDrawer.getByText('Sale #1043').waitFor({ state: 'visible' })
+          await receiptDrawer.getByText('Transfer').waitFor({ state: 'visible' })
+          assert.equal((await headsetRow.locator('.erp-pos-product-row__stock strong').textContent())?.trim(), '23')
+          await desktop.waitForTimeout(450)
+          await receiptDrawer.screenshot({ path: 'pass-two-qa/erp-receipt.png' })
+
+          await receiptDrawer.getByRole('button', { name: 'Close receipt' }).click()
+          await erp.getByRole('button', { name: 'Reset demo' }).click()
+          assert.equal((await headsetRow.locator('.erp-pos-product-row__stock strong').textContent())?.trim(), '24')
+          assert.equal(await receiptDrawer.getAttribute('data-open'), 'false')
+          await erp.getByText('Demo reset. Add an item to begin.').waitFor({ state: 'visible' })
+
+          const mobile = await openPage(390, 844)
+          await paintWholePage(mobile, 844)
+
+          const overflow = await mobile.evaluate(() => ({
+            clientWidth: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+          }))
+          assert.ok(
+            overflow.scrollWidth <= overflow.clientWidth + 1,
+            `Mobile page overflows horizontally: ${overflow.scrollWidth} > ${overflow.clientWidth}`,
+          )
+
+          const mobileOperations = mobile.locator('.operations-system')
+          await mobileOperations.scrollIntoViewIfNeeded()
+          await mobileOperations.getByRole('tab', { name: /Transact/ }).click()
+          assert.equal(await mobileOperations.getAttribute('data-stage'), 'transact')
+
+          const mobileSkygrid = mobile.locator('.skygrid-dashboard')
+          await mobileSkygrid.scrollIntoViewIfNeeded()
+          await mobileSkygrid.getByRole('tab', { name: /Review/ }).click()
+          assert.equal(await mobileSkygrid.getAttribute('data-stage'), 'review')
+
+          const mobileDigiVoltReveal = mobile.locator('.digivolt-reveal__visual')
+          await mobileDigiVoltReveal.scrollIntoViewIfNeeded()
+          await mobile.waitForTimeout(250)
+
+          const mobileDigiVolt = mobile.locator('.digivolt-journey')
+          await mobileDigiVolt.scrollIntoViewIfNeeded()
+          await mobileDigiVolt.getByRole('tab', { name: /Arrive/ }).click()
+          assert.equal(await mobileDigiVolt.getAttribute('data-stage'), 'arrive')
+          await mobile.waitForTimeout(900)
+
+          await mobile.screenshot({ path: 'pass-two-qa/mobile-interactions.png', fullPage: true })
+
+          await desktop.close()
+          await mobile.close()
+          await browser.close()
+          NODE
+
+      - name: Upload strict pass two evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: strict-homepage-pass-two-qa
+          path: pass-two-qa/
+          retention-days: 2

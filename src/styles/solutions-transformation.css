@@ -1,295 +1,359 @@
-.operations-bridge {
-  position: relative;
-  overflow: clip;
+.operations-system {
   background: var(--bg-950);
   color: var(--text-primary);
 }
 
-.operations-bridge__inner {
-  padding-block:
-    clamp(6rem, 9vw, 9rem)
-    clamp(5rem, 7vw, 7rem);
+.operations-system__inner {
+  padding-block: clamp(5.5rem, 8vw, 8rem);
 }
 
-/* ----------------------------------------------------------
-   INTRO
-   ---------------------------------------------------------- */
-
-.operations-bridge__intro {
+.operations-system__intro {
   display: grid;
-  grid-template-columns:
-    minmax(0, 0.9fr)
-    minmax(18rem, 0.55fr);
-  column-gap: clamp(3rem, 9vw, 9rem);
-  row-gap: var(--space-3);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
   align-items: end;
-  max-width: 76rem;
 }
 
-.operations-bridge__eyebrow {
-  grid-column: 1 / -1;
-  margin: 0 0 var(--space-2);
-  color: var(--text-muted);
-  letter-spacing: 0.16em;
-}
-
-.operations-bridge__intro h2 {
-  max-width: 15ch;
+.operations-system__intro > p:first-child {
+  grid-column: 1 / span 2;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 5vw, 4.8rem);
-  font-weight: 550;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-  text-wrap: balance;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
-.operations-bridge__summary {
-  max-width: 32rem;
-  margin: 0 0 0.3rem;
+.operations-system__intro h2 {
+  grid-column: 3 / span 6;
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3rem, 5vw, 5.15rem);
+  font-weight: 600;
+  letter-spacing: -0.052em;
+  line-height: 0.95;
+}
+
+.operations-system__intro > p:last-child {
+  grid-column: 9 / -1;
+  max-width: 29rem;
+  margin: 0;
   color: var(--text-secondary);
-  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  font-size: 1.02rem;
   line-height: 1.65;
 }
 
-/* ----------------------------------------------------------
-   CONNECT / AUTOMATE / TRANSACT
-
-   No cards.
-   No dashboard.
-   No giant bordered container.
-   ---------------------------------------------------------- */
-
-.operations-bridge__principles {
+.operations-system__body {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(2rem, 4vw, 4rem);
-  margin-top: clamp(5rem, 8vw, 8rem);
+  grid-template-columns: minmax(15rem, 0.48fr) minmax(0, 1fr);
+  gap: clamp(3.5rem, 7vw, 8rem);
+  align-items: center;
+  margin-top: clamp(4.5rem, 7vw, 7rem);
 }
 
-.operations-bridge__principle {
+.operations-system__stage-rail {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.operations-system__stage-button {
   position: relative;
-  min-width: 0;
-  padding-top: var(--space-3);
+  display: grid;
+  gap: 0.65rem;
+  min-height: 7rem;
+  border: 0;
+  padding: 1.15rem 1.25rem 1.15rem 1.4rem;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
 }
 
-/*
-  Very restrained line.
-  It gives the three ideas rhythm without turning them into cards.
-*/
-.operations-bridge__principle::before {
+.operations-system__stage-button::before {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1rem;
+  bottom: 1rem;
   left: 0;
-  height: 1px;
-  background: var(--line-subtle);
+  width: 2px;
+  background: var(--gold-400);
   content: '';
-  transform-origin: left;
-  transition:
-    background-color var(--motion-fast) var(--ease-standard),
-    transform var(--motion-ui) var(--ease-standard);
+  opacity: 0;
+  transform: scaleY(0.35);
+  transform-origin: center;
+  transition: opacity 220ms var(--ease-standard), transform 320ms var(--ease-emphasized);
 }
 
-.operations-bridge__principle:hover::before {
-  background: var(--line-gold);
-  transform: scaleX(0.82);
-}
-
-.operations-bridge__principle-heading {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-
-.operations-bridge__number {
-  flex: 0 0 auto;
-  color: var(--gold-500);
-}
-
-.operations-bridge__principle h3 {
-  margin: 0;
+.operations-system__stage-button strong {
+  color: inherit;
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 2vw, 2.25rem);
-  font-weight: 550;
+  font-size: clamp(1.55rem, 2vw, 2rem);
+  font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1;
 }
 
-.operations-bridge__principle > p {
-  max-width: 30rem;
-  margin: var(--space-3) 0 0;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.65;
+.operations-system__stage-description {
+  max-width: 24rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 
-/* ----------------------------------------------------------
-   EXIT / TRANSITION INTO PRODUCT WORK
-   ---------------------------------------------------------- */
+.operations-system__stage-button:hover,
+.operations-system__stage-button[data-active='true'] {
+  color: var(--text-primary);
+}
 
-.operations-bridge__exit {
-  display: flex;
+.operations-system__stage-button[data-active='true']::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.operations-system__stage-button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--gold-400);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.operations-thread {
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 4rem);
+  background: var(--bg-900);
+}
+
+.operations-thread__systems {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  min-height: 19rem;
   align-items: center;
-  margin-top: clamp(5rem, 7vw, 7rem);
 }
 
-.operations-bridge__exit span {
-  display: block;
-  width: clamp(3rem, 7vw, 7rem);
+.operations-thread__line {
+  position: absolute;
+  top: 50%;
+  right: 7%;
+  left: 7%;
   height: 1px;
-  background: var(--gold-500);
-  opacity: 0.65;
+  background: rgba(247, 246, 242, 0.16);
 }
 
-/* ----------------------------------------------------------
-   ENTRANCE MOTION
-   ---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: no-preference) {
-  .operations-bridge__eyebrow,
-  .operations-bridge__intro h2,
-  .operations-bridge__summary,
-  .operations-bridge__principle {
-    animation:
-      operations-bridge-enter
-      var(--motion-component)
-      var(--ease-emphasized)
-      both;
-  }
-
-  .operations-bridge__intro h2 {
-    animation-delay: 60ms;
-  }
-
-  .operations-bridge__summary {
-    animation-delay: 110ms;
-  }
-
-  .operations-bridge__principle:nth-child(1) {
-    animation-delay: 130ms;
-  }
-
-  .operations-bridge__principle:nth-child(2) {
-    animation-delay: 180ms;
-  }
-
-  .operations-bridge__principle:nth-child(3) {
-    animation-delay: 230ms;
-  }
+.operations-thread__line::after {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 32%;
+  height: 3px;
+  background: var(--gold-400);
+  content: '';
+  transition: width 420ms var(--ease-emphasized);
 }
 
-@keyframes operations-bridge-enter {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.operations-system[data-stage='automate'] .operations-thread__line::after {
+  width: 66%;
 }
 
-/* ----------------------------------------------------------
-   TABLET
-   ---------------------------------------------------------- */
+.operations-system[data-stage='transact'] .operations-thread__line::after {
+  width: 100%;
+}
+
+.operations-thread__system {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.operations-thread__system > span {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(247, 246, 242, 0.32);
+  border-radius: 50%;
+  background: var(--bg-900);
+  transition: border-color 240ms var(--ease-standard), background 240ms var(--ease-standard), transform 300ms var(--ease-emphasized);
+}
+
+.operations-thread__system strong {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 240ms var(--ease-standard);
+}
+
+.operations-system[data-stage='connect'] .operations-thread__system:nth-of-type(-n+3) > span,
+.operations-system[data-stage='automate'] .operations-thread__system > span,
+.operations-system[data-stage='transact'] .operations-thread__system > span {
+  border-color: var(--gold-400);
+}
+
+.operations-system[data-stage='automate'] .operations-thread__system:nth-of-type(-n+4) > span,
+.operations-system[data-stage='transact'] .operations-thread__system > span {
+  background: var(--gold-400);
+}
+
+.operations-system[data-stage='transact'] .operations-thread__system:last-child > span {
+  transform: scale(1.3);
+}
+
+.operations-system[data-stage='connect'] .operations-thread__system:nth-of-type(-n+3) strong,
+.operations-system[data-stage='automate'] .operations-thread__system strong,
+.operations-system[data-stage='transact'] .operations-thread__system strong {
+  color: var(--text-primary);
+}
+
+.operations-thread__message {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  padding-top: var(--space-4);
+}
+
+.operations-thread__message span {
+  color: var(--gold-400);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.operations-thread__message p {
+  max-width: 35rem;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
 
 @media (max-width: 64rem) {
-  .operations-bridge__inner {
-    padding-block: var(--space-15) var(--space-12);
+  .operations-system__intro {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 
-  .operations-bridge__intro {
+  .operations-system__intro > p:first-child {
+    grid-column: 1 / span 2;
+  }
+
+  .operations-system__intro h2 {
+    grid-column: 3 / -1;
+  }
+
+  .operations-system__intro > p:last-child {
+    grid-column: 3 / span 5;
+    margin-top: var(--space-3);
+  }
+
+  .operations-system__body {
     grid-template-columns: 1fr;
-    max-width: 48rem;
+    gap: var(--space-6);
   }
 
-  .operations-bridge__intro h2 {
-    max-width: 13ch;
+  .operations-system__stage-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
   }
 
-  .operations-bridge__summary {
-    max-width: 38rem;
-    margin-top: var(--space-2);
+  .operations-system__stage-button {
+    min-height: 8rem;
+    padding: 1rem 1rem 1.2rem;
   }
 
-  .operations-bridge__principles {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-top: var(--space-12);
+  .operations-system__stage-button::before {
+    top: auto;
+    right: 1rem;
+    bottom: 0;
+    left: 1rem;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0.35);
   }
 
-  .operations-bridge__principle {
-    display: grid;
-    grid-template-columns: minmax(12rem, 0.5fr) minmax(0, 1fr);
-    gap: var(--space-4);
-    align-items: start;
-  }
-
-  .operations-bridge__principle > p {
-    margin-top: 0;
+  .operations-system__stage-button[data-active='true']::before {
+    transform: scaleX(1);
   }
 }
 
-/* ----------------------------------------------------------
-   MOBILE
-   ---------------------------------------------------------- */
-
 @media (max-width: 47.9375rem) {
-  .operations-bridge__inner {
-    padding-block: var(--space-10) var(--space-10);
+  .operations-system__inner {
+    padding-block: 5rem;
   }
 
-  .operations-bridge__eyebrow {
-    margin-bottom: var(--space-1);
+  .operations-system__intro {
+    display: block;
   }
 
-  .operations-bridge__intro h2 {
-    max-width: 12ch;
-    font-size: clamp(2.4rem, 11vw, 3.25rem);
-    line-height: 1;
+  .operations-system__intro > p:first-child {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
   }
 
-  .operations-bridge__summary {
-    margin-top: var(--space-2);
+  .operations-system__intro h2 {
+    max-width: 10ch;
+    font-size: clamp(2.75rem, 12.5vw, 3.8rem);
+  }
+
+  .operations-system__intro > p:last-child {
+    margin-top: 1.4rem;
     font-size: 1rem;
   }
 
-  .operations-bridge__principles {
-    gap: var(--space-5);
-    margin-top: var(--space-10);
+  .operations-system__body {
+    margin-top: 3.25rem;
   }
 
-  .operations-bridge__principle {
-    display: block;
-    padding-top: var(--space-3);
+  .operations-system__stage-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
   }
 
-  .operations-bridge__principle > p {
-    margin-top: var(--space-2);
+  .operations-system__stage-button {
+    min-height: 4.5rem;
+    padding: 0.9rem 0.4rem 1rem;
+    text-align: center;
   }
 
-  .operations-bridge__exit {
-    margin-top: var(--space-8);
+  .operations-system__stage-button strong {
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+  }
+
+  .operations-system__stage-description {
+    display: none;
+  }
+
+  .operations-thread {
+    padding: 1.25rem;
+  }
+
+  .operations-thread__systems {
+    min-height: 12rem;
+    gap: 0.5rem;
+  }
+
+  .operations-thread__system {
+    gap: 0.7rem;
+  }
+
+  .operations-thread__system strong {
+    font-size: clamp(0.66rem, 3vw, 0.8rem);
+    overflow-wrap: anywhere;
+  }
+
+  .operations-thread__message {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    padding-top: 1.3rem;
+  }
+
+  .operations-thread__message p {
+    font-size: 0.98rem;
   }
 }
 
-/* ----------------------------------------------------------
-   REDUCED MOTION
-   ---------------------------------------------------------- */
-
 @media (prefers-reduced-motion: reduce) {
-  .operations-bridge__eyebrow,
-  .operations-bridge__intro h2,
-  .operations-bridge__summary,
-  .operations-bridge__principle {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
-  .operations-bridge__principle::before {
+  .operations-system__stage-button::before,
+  .operations-thread__line::after,
+  .operations-thread__system > span,
+  .operations-thread__system strong {
     transition: none;
   }
 }

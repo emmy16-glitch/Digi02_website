@@ -1,5 +1,4 @@
 import { useEffect, useRef, type KeyboardEvent } from 'react'
-import digi02LogoLight from '../../assets/brand/digi02-logo-light.png'
 import { PrimaryButton } from '../PrimaryButton'
 import type { NavigationItem } from './DesktopNavigation'
 
@@ -25,9 +24,7 @@ export function MobileNavigation({
   const toggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (!isOpen) {
-      return
-    }
+    if (!isOpen) return
 
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -69,10 +66,6 @@ export function MobileNavigation({
           aria-label="Mobile primary navigation"
         >
           <div className="mobile-navigation__panel-inner">
-            <a className="mobile-navigation__brand" href="/" onClick={onClose}>
-              <img src={digi02LogoLight} alt="Digi02" />
-            </a>
-            <p className="mobile-navigation__label type-tech">Primary navigation</p>
             <ul className="mobile-navigation__list">
               {items.map((item) => {
                 const isCurrent = isCurrentPath(currentPath, item.href)
@@ -86,15 +79,19 @@ export function MobileNavigation({
                       onClick={onClose}
                     >
                       {item.label}
+                      <span aria-hidden="true">↗</span>
                     </a>
                   </li>
                 )
               })}
             </ul>
 
-            <PrimaryButton className="mobile-navigation__cta" href="/contact" onClick={onClose}>
-              Discuss your project <span aria-hidden="true">→</span>
-            </PrimaryButton>
+            <div className="mobile-navigation__closing">
+              <p>Have a system, workflow or product that needs to work better?</p>
+              <PrimaryButton className="mobile-navigation__cta" href="/contact" onClick={onClose}>
+                Discuss your project <span aria-hidden="true">→</span>
+              </PrimaryButton>
+            </div>
           </div>
         </nav>
       ) : null}

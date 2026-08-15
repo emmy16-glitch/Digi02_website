@@ -1,0 +1,355 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
+body,
+main {
+  min-width: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  touch-action: manipulation;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 2000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  transform: translateY(-160%);
+  border-radius: var(--radius-control);
+  background: var(--text-primary);
+  color: var(--bg-950);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  color: var(--bg-950);
+}
+
+.button,
+.site-header__cta,
+.mobile-navigation__toggle {
+  min-height: 3rem;
+}
+
+/* The operating philosophy should read as one system, not three numbered feature rows. */
+.operations-system__stage-rail {
+  gap: var(--space-3);
+  border-top: 0;
+}
+
+.operations-system__stage-button {
+  grid-template-columns: 1fr;
+  min-width: 0;
+  min-height: 5.25rem;
+  border-bottom: 0;
+  padding: 0 0 var(--space-3);
+}
+
+.operations-system__stage-button::before {
+  top: auto;
+  bottom: 0;
+  width: 2.75rem;
+  opacity: 0;
+}
+
+.operations-system__stage-button[data-active='true']::before {
+  width: 2.75rem;
+  opacity: 1;
+}
+
+.operations-system__stage-button strong,
+.operations-system__stage-description {
+  grid-column: 1;
+}
+
+.operations-system__stage-description {
+  margin-top: var(--space-1);
+}
+
+.operations-thread__header {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.operations-thread__header > p {
+  margin-left: auto;
+}
+
+.operations-thread__record {
+  border-bottom: 0;
+}
+
+.operations-thread__steps {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.operations-thread__step {
+  border-bottom: 0;
+}
+
+.operations-thread__footer {
+  justify-content: flex-start;
+}
+
+/* Active state is already visible in the tab rail; do not repeat it as a micro-label. */
+.skygrid-stage-panel__copy > span,
+.digivolt-journey__stage-copy > span {
+  display: none;
+}
+
+.digivolt-journey__stages button strong {
+  margin-top: 0;
+}
+
+.digivolt-journey__stages button > .digivolt-journey__stage-description {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.digivolt-journey__footer {
+  justify-content: flex-start;
+  border-top: 0;
+}
+
+/* Removing decorative sequence numbers should also remove the empty layout columns they occupied. */
+.company-method__sequence article,
+.capability-sequence article,
+.software-build__stages article {
+  grid-template-columns: 1fr;
+  border-top: 0;
+}
+
+.company-disciplines__list article {
+  min-height: 18rem;
+}
+
+.industry-index__grid h3,
+.product-lifecycle__list h3,
+.enterprise-system-map__flow h3,
+.payroll-ledger__rows h3 {
+  margin-top: 0;
+}
+
+.product-lifecycle__list article,
+.enterprise-system-map__flow article {
+  min-height: 15rem;
+}
+
+.enterprise-system-map__flow article {
+  border-top: 0;
+}
+
+.payment-sequence article {
+  grid-template-columns: minmax(8rem, 0.45fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  border-top: 0;
+}
+
+.payment-sequence article h3 {
+  grid-column: 1;
+}
+
+.payment-sequence article p {
+  grid-column: 2;
+}
+
+.payroll-ledger__rows article {
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.emanagement-visual__node {
+  justify-content: center;
+  min-height: 7rem;
+}
+
+/* Light form surfaces should use native light control treatment in every browser. */
+.contact-body {
+  color-scheme: light;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  min-height: 3rem;
+}
+
+.contact-form textarea {
+  min-height: 10rem;
+}
+
+@media (max-width: 64rem) {
+  .page-cta__inner,
+  .company-project-cta__inner {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .button,
+  .mobile-navigation__toggle,
+  .contact-form input,
+  .contact-form select,
+  .contact-form button {
+    min-height: 3rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select {
+    font-size: 1rem;
+  }
+
+  .operations-system__stage-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1);
+    overflow: visible;
+  }
+
+  .operations-system__stage-button {
+    min-width: 0;
+    min-height: 3.5rem;
+    padding-right: 0;
+  }
+
+  .operations-system__stage-button strong {
+    font-size: clamp(0.85rem, 4vw, 1rem);
+  }
+
+  .operations-thread__header > p {
+    margin-left: 0;
+  }
+
+  .operations-thread__systems {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    min-height: 0;
+    overflow: visible;
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  .operations-thread__systems::before {
+    display: none;
+  }
+
+  .operations-thread__system {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    align-items: center;
+    transform: none !important;
+  }
+
+  .operations-thread__system strong {
+    overflow: visible;
+    font-size: 0.75rem;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .operations-thread__step {
+    min-height: 4.25rem;
+  }
+
+  .company-disciplines__list article {
+    min-height: 0;
+  }
+
+  .company-method__sequence article {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-index__grid article {
+    min-height: 0;
+  }
+
+  .product-lifecycle__list article,
+  .enterprise-system-map__flow article {
+    min-height: 0;
+    padding-block: var(--space-4);
+  }
+
+  .capability-sequence article,
+  .software-build__stages article {
+    grid-template-columns: 1fr;
+    padding-block: var(--space-3);
+  }
+
+  .payroll-ledger__rows h3 {
+    margin-top: 0;
+  }
+
+  .payment-sequence article {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+  }
+
+  .payment-sequence article h3,
+  .payment-sequence article p {
+    grid-column: 1;
+  }
+
+  .emanagement-visual {
+    padding: var(--space-3);
+  }
+
+  .emanagement-visual__node {
+    min-height: 5.5rem;
+  }
+
+  .payroll-cycle__step {
+    width: 5rem;
+  }
+
+  .page-cta__inner,
+  .company-project-cta__inner {
+    flex-direction: column;
+  }
+
+  .page-cta__inner .button,
+  .company-project-cta__inner .button {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  :root {
+    --page-margin: 1rem;
+  }
+
+  .operations-system__stage-button strong {
+    font-size: 0.8rem;
+  }
+
+  .product-hero__statement h1,
+  .capability-hero h1,
+  .company-identity h1 {
+    overflow-wrap: anywhere;
+  }
+}

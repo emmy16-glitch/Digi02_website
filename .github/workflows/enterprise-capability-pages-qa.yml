@@ -1,0 +1,118 @@
+name: Enterprise capability pages QA
+
+on:
+  push:
+    branches:
+      - chatgpt/enterprise-capability-pages
+  workflow_dispatch:
+
+jobs:
+  capability-pages-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run capability route and visual QA
+        run: |
+          mkdir -p enterprise-capability-pages-qa
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { chromium } from 'playwright'
+
+          const routes = [
+            ['/solutions/e-management', 'Make operational records easier to act on.', 'e-management'],
+            ['/solutions/payroll-automation', 'Payroll should not depend on rebuilding the same process every month.', 'payroll'],
+            ['/solutions/payment-systems', 'Transactions should stay connected to the operation behind them.', 'payments'],
+            ['/solutions/custom-software', 'Build the system the operation actually needs.', 'custom-software'],
+          ]
+
+          const browser = await chromium.launch({ headless: true })
+          const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } })
+
+          await desktop.goto('http://127.0.0.1:4173/solutions', { waitUntil: 'networkidle' })
+          for (const [path] of routes) {
+            assert.equal(
+              await desktop.locator(`.capability-field__items a[href="${path}"]`).count(),
+              1,
+              `Solutions page should link to ${path}`,
+            )
+          }
+
+          for (const [path, heading, slug] of routes) {
+            await desktop.goto(`http://127.0.0.1:4173${path}`, { waitUntil: 'networkidle' })
+            await desktop.getByRole('heading', { level: 1, name: heading }).waitFor({ state: 'visible' })
+
+            const active = desktop.locator('.desktop-navigation__link[aria-current="page"]')
+            assert.equal(await active.count(), 1, `${path} should have one active desktop navigation item`)
+            assert.equal((await active.textContent())?.trim(), 'Solutions', `${path} should keep Solutions active`)
+
+            const overflow = await desktop.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }))
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${path} overflows on desktop`)
+
+            await desktop.screenshot({ path: `enterprise-capability-pages-qa/${slug}-desktop.png`, fullPage: true })
+          }
+
+          const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } })
+          for (const [path, heading, slug] of routes) {
+            await mobile.goto(`http://127.0.0.1:4173${path}`, { waitUntil: 'networkidle' })
+            await mobile.getByRole('heading', { level: 1, name: heading }).waitFor({ state: 'visible' })
+
+            const overflow = await mobile.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }))
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${path} overflows on mobile`)
+
+            await mobile.screenshot({ path: `enterprise-capability-pages-qa/${slug}-mobile.png`, fullPage: true })
+          }
+
+          await desktop.close()
+          await mobile.close()
+          await browser.close()
+          NODE
+
+      - name: Upload capability-page QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: enterprise-capability-pages-qa
+          path: enterprise-capability-pages-qa/
+          retention-days: 2
