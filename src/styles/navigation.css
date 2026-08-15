@@ -20,6 +20,7 @@
   display: block;
   width: 7rem;
   height: 4rem;
+  overflow: hidden;
   text-decoration: none;
 }
 
@@ -30,7 +31,8 @@
   display: block;
   width: auto;
   max-width: none;
-  height: 8rem;
+  height: 22rem;
+  pointer-events: none;
   transform: translate(-50%, -50%);
 }
 
@@ -115,7 +117,7 @@
   }
 
   .site-header__wordmark img {
-    height: 7.25rem;
+    height: 18rem;
   }
 
   .desktop-navigation {
@@ -263,7 +265,7 @@
   }
 
   .site-header__wordmark img {
-    height: 6.75rem;
+    height: 16.5rem;
   }
 }
 
