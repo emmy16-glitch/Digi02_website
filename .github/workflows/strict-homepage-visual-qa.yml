@@ -117,11 +117,9 @@ jobs:
           await browser.close()
           NODE
 
-      - name: Upload screenshots and source logo
+      - name: Upload screenshots
         uses: actions/upload-artifact@v4
         with:
           name: strict-homepage-visual-qa
-          path: |
-            visual-qa/
-            src/assets/brand/digi02-logo-light.png
+          path: visual-qa/
           retention-days: 1
