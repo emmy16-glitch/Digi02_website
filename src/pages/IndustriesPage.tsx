@@ -4,27 +4,27 @@ import { PrimaryButton } from '../components/PrimaryButton'
 const environments = [
   {
     title: 'Enterprise & multi-site operations',
-    body: 'ERP, payroll, workflow and reporting systems for organizations that need a reliable operational picture across teams and locations.',
+    body: 'ERP, payroll, workflow and reporting systems for organizations that need one reliable view across teams and locations.',
   },
   {
     title: 'Retail & commerce',
-    body: 'POS, inventory and transaction systems that keep the customer-facing sale connected to stock and reporting behind it.',
+    body: 'POS, inventory and transaction systems that keep the sale connected to stock, records and reporting behind it.',
   },
   {
     title: 'Education & institutions',
-    body: 'Payment, administrative and management systems designed around structured institutional workflows.',
+    body: 'Payment, administration and management systems shaped around structured institutional processes.',
   },
   {
     title: 'Field & autonomous operations',
-    body: 'Mission planning, UAV coordination and data-collection workflows for environments where the operation extends beyond the office.',
+    body: 'Mission planning, UAV coordination and data-collection workflows for work that extends beyond the office.',
   },
   {
     title: 'Government & public-sector systems',
-    body: 'Purpose-built digital systems for complex administrative, data and service workflows where security, control and scale matter.',
+    body: 'Digital systems for administrative, data and service workflows where access, accountability and scale matter.',
   },
   {
     title: 'Industry-specific software',
-    body: 'Custom applications for operational models that cannot be represented properly by a generic software package.',
+    body: 'Custom applications for operating models that do not fit a generic software package.',
   },
 ] as const
 
@@ -35,10 +35,11 @@ export function IndustriesPage() {
         <Container className="interior-hero__grid">
           <p className="interior-hero__kicker">Industries</p>
           <div className="interior-hero__statement">
-            <h1>Different industries. Different operational realities.</h1>
+            <h1>The work changes from one industry to the next.</h1>
             <p>
-              We start with the environment, constraints and people doing the work — then design
-              the technology around those realities instead of forcing every organization into the same product.
+              We start with the environment, constraints and people responsible for the work, then
+              design the system around those conditions instead of forcing every organization into
+              the same product.
             </p>
           </div>
         </Container>
@@ -52,9 +53,8 @@ export function IndustriesPage() {
           </header>
 
           <div className="industry-index__grid">
-            {environments.map((environment, index) => (
+            {environments.map((environment) => (
               <article key={environment.title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{environment.title}</h3>
                 <p>{environment.body}</p>
               </article>
@@ -67,9 +67,9 @@ export function IndustriesPage() {
         <Container className="page-cta__inner">
           <div>
             <p>Have an unusual operating model?</p>
-            <h2>Start with the problem, not the software category.</h2>
+            <h2>Start with the work that needs to improve.</h2>
           </div>
-          <PrimaryButton href="/contact">Discuss your operation <span aria-hidden="true">→</span></PrimaryButton>
+          <PrimaryButton href="/contact">Discuss your requirements <span aria-hidden="true">→</span></PrimaryButton>
         </Container>
       </section>
     </div>
