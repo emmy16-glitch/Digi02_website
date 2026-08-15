@@ -67,6 +67,10 @@ jobs:
             return page
           }
 
+          async function hasFocus(locator) {
+            return locator.evaluate((element) => element === document.activeElement)
+          }
+
           const desktop = await openPage(1440, 1000)
           await desktop.screenshot({ path: 'pass-two-qa/desktop-initial.png', fullPage: true })
 
@@ -75,9 +79,11 @@ jobs:
           assert.equal(await operations.getAttribute('data-stage'), 'connect')
 
           const connectTab = operations.getByRole('tab', { name: /Connect/ })
+          const automateTab = operations.getByRole('tab', { name: /Automate/ })
           await connectTab.focus()
           await connectTab.press('ArrowRight')
           assert.equal(await operations.getAttribute('data-stage'), 'automate')
+          assert.equal(await hasFocus(automateTab), true)
           assert.equal(
             await operations.locator('.operations-thread__step').nth(3).getAttribute('data-state'),
             'active',
@@ -96,8 +102,12 @@ jobs:
           await skygrid.scrollIntoViewIfNeeded()
           assert.equal(await skygrid.getAttribute('data-stage'), 'plan')
 
-          await skygrid.getByRole('tab', { name: /Prepare/ }).click()
+          const planTab = skygrid.getByRole('tab', { name: /Plan/ })
+          const prepareTab = skygrid.getByRole('tab', { name: /Prepare/ })
+          await planTab.focus()
+          await planTab.press('ArrowRight')
           assert.equal(await skygrid.getAttribute('data-stage'), 'prepare')
+          assert.equal(await hasFocus(prepareTab), true)
           await desktop.getByAltText(/mission operations interface/i).waitFor({ state: 'visible' })
 
           await skygrid.getByRole('tab', { name: /Operate/ }).click()
@@ -122,8 +132,12 @@ jobs:
           await digivolt.scrollIntoViewIfNeeded()
           assert.equal(await digivolt.getAttribute('data-stage'), 'request')
 
-          await digivolt.getByRole('tab', { name: /Match/ }).click()
+          const requestTab = digivolt.getByRole('tab', { name: /Request/ })
+          const matchTab = digivolt.getByRole('tab', { name: /Match/ })
+          await requestTab.focus()
+          await requestTab.press('ArrowRight')
           assert.equal(await digivolt.getAttribute('data-stage'), 'match')
+          assert.equal(await hasFocus(matchTab), true)
           assert.equal(
             await digivolt.locator('.digivolt-journey__route-progress').getAttribute('stroke-dashoffset'),
             '69',
