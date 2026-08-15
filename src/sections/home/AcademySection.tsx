@@ -58,8 +58,9 @@ export function AcademySection() {
         <div className="academy-builder" data-stage={activeStage}>
           <div className="academy-builder__current" aria-live="polite">
             <p className="type-tech">Builder journey / {activeStep.number}</p>
-            <strong>{activeStep.label}</strong>
-            <p>{activeStep.description}</p>
+            <p className="academy-builder__current-description">
+              {activeStep.description}
+            </p>
           </div>
 
           <ol className="academy-builder__steps" aria-label="Emerging Tech Academy learning model">
@@ -79,9 +80,6 @@ export function AcademySection() {
                   >
                     <span className="type-tech">{stage.number}</span>
                     <strong>{stage.label}</strong>
-                    <span className="academy-builder__step-description">
-                      {stage.description}
-                    </span>
                     <span aria-hidden="true" className="academy-builder__step-mark">→</span>
                   </button>
                 </li>
