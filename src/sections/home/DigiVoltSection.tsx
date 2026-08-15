@@ -213,7 +213,7 @@ export function DigiVoltSection() {
                 >
                   <span>{stage.number}</span>
                   <strong>{stage.title}</strong>
-                  <p>{stage.description}</p>
+                  <span className="digivolt-journey__stage-description">{stage.description}</span>
                 </button>
               )
             })}
