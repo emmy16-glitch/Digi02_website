@@ -2,6 +2,10 @@
   min-height: 3rem;
 }
 
+.erp-pos-payment input {
+  pointer-events: none;
+}
+
 .payment-path > * {
   min-width: 0;
 }
