@@ -5,21 +5,21 @@ const workItems = [
     area: 'Autonomous systems',
     title: 'SkyGrid',
     statement: 'Mission planning and UAV field operations.',
-    detail: 'Mission context, aircraft readiness, route progression and review are presented as one connected operational sequence.',
+    detail: 'A mission moves from planning and readiness through flight activity and review without relying on disconnected views of the work.',
     href: '/solutions/skygrid',
   },
   {
     area: 'Mobility',
     title: 'DigiVolt',
     statement: 'A connected journey from request to arrival.',
-    detail: 'Mobility states are presented as a clear operational sequence: request, assignment, route progress and completed arrival.',
+    detail: 'The mobility flow keeps request, assignment, route progress and arrival in one understandable journey.',
     href: '/solutions/digivolt',
   },
   {
     area: 'Enterprise operations',
     title: 'ERP + POS',
     statement: 'The sale stays connected to the system behind it.',
-    detail: 'A transactional workspace that links products, stock, payment choice, sale completion and receipt state in one coherent operational flow.',
+    detail: 'Products, stock, payment choice, sale completion and receipt state remain part of the same transaction flow.',
     href: '/solutions/enterprise-systems',
   },
 ] as const
@@ -31,10 +31,10 @@ export function WorkPage() {
         <Container className="interior-hero__grid">
           <p className="interior-hero__kicker">Our Work</p>
           <div className="interior-hero__statement">
-            <h1>Systems are easier to trust when you can understand how they work.</h1>
+            <h1>See the system through the work it has to support.</h1>
             <p>
-              Selected Digi02 work shown through the operational problem, the system logic and the
-              experience built around it.
+              Selected Digi02 products shown through their operating context, the decisions they
+              support and the way information moves through them.
             </p>
           </div>
         </Container>
@@ -42,11 +42,10 @@ export function WorkPage() {
 
       <section className="work-index" aria-label="Selected Digi02 work">
         <Container>
-          {workItems.map((item, index) => (
+          {workItems.map((item) => (
             <article className="work-index__item" key={item.title}>
               <div className="work-index__meta">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <p>{item.area}</p>
+                <span>{item.area}</span>
               </div>
               <div className="work-index__title">
                 <h2>{item.title}</h2>
@@ -54,7 +53,7 @@ export function WorkPage() {
               </div>
               <div className="work-index__detail">
                 <p>{item.detail}</p>
-                <a href={item.href}>Explore the system <span aria-hidden="true">↗</span></a>
+                <a href={item.href}>View {item.title} <span aria-hidden="true">↗</span></a>
               </div>
             </article>
           ))}
