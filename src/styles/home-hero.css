@@ -14,7 +14,7 @@
   display: grid;
   flex: 1;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: var(--space-6);
+  gap: clamp(var(--space-4), 4vw, var(--space-8));
   align-items: center;
 }
 
@@ -75,13 +75,13 @@
 }
 
 /* ==========================================================
-   PRODUCT EVIDENCE — DISCOVERABLE EDGE NAVIGATION
+   PRODUCT EVIDENCE — EDGE DISCOVERY, NOT A VISIBLE CAROUSEL
    ========================================================== */
 
 .product-evidence {
-  width: calc(100% + var(--page-margin));
+  width: 100%;
   min-width: 0;
-  margin: 0 calc(var(--page-margin) * -1) 0 0;
+  margin: 0;
   animation:
     hero-evidence-enter
     calc(var(--motion-component) + var(--motion-fast))
@@ -96,9 +96,9 @@
 
   position: relative;
   width: 100%;
-  aspect-ratio: 1.44;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: var(--radius-media) 0 0 var(--radius-media);
+  border-radius: var(--radius-media);
   background: var(--surface-800);
   isolation: isolate;
   touch-action: pan-y;
@@ -133,11 +133,11 @@
 }
 
 .product-evidence__adjacent--previous {
-  transform: translateX(-0.75rem) scale(1.01);
+  transform: translateX(-0.75rem) scale(1.008);
 }
 
 .product-evidence__adjacent--next {
-  transform: translateX(0.75rem) scale(1.01);
+  transform: translateX(0.75rem) scale(1.008);
 }
 
 .product-evidence__viewport[data-hover='left']
@@ -157,27 +157,26 @@
 
 .product-evidence__current[data-product='skygrid'] img,
 .product-evidence__adjacent[data-product='skygrid'] img {
-  object-position: 52% center;
-}
-
-.product-evidence__current[data-product='digivolt'] img,
-.product-evidence__adjacent[data-product='digivolt'] img {
-  object-position: 60% center;
-}
-
-.product-evidence__current[data-product='erp-pos'] img,
-.product-evidence__adjacent[data-product='erp-pos'] img {
   object-position: center;
 }
 
-/* The buttons are interaction surfaces, not visible carousel controls. */
+.product-evidence__current[data-product='digivolt'] img,
+.product-evidence__adjacent[data-product='digivolt'] img,
+.product-evidence__current[data-product='erp-pos'] img,
+.product-evidence__adjacent[data-product='erp-pos'] img {
+  background: var(--bg-950);
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Invisible interaction surfaces. The pointer creates the arrow/reveal. */
 
 .product-evidence__hover-zone {
   position: absolute;
   z-index: 6;
   top: 0;
   bottom: 0;
-  width: 30%;
+  width: 20%;
   border: 0;
   padding: 0;
   background: transparent;
@@ -202,11 +201,11 @@
 }
 
 .product-evidence__hover-zone--left::before {
-  background: linear-gradient(90deg, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0));
+  background: linear-gradient(90deg, rgba(5, 5, 5, 0.38), rgba(5, 5, 5, 0));
 }
 
 .product-evidence__hover-zone--right::before {
-  background: linear-gradient(270deg, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0));
+  background: linear-gradient(270deg, rgba(5, 5, 5, 0.38), rgba(5, 5, 5, 0));
 }
 
 .product-evidence__reveal-arrow {
@@ -215,7 +214,7 @@
   z-index: 2;
   display: block;
   color: var(--text-primary);
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 300;
   line-height: 1;
   opacity: var(--edge-opacity);
@@ -228,12 +227,12 @@
 
 .product-evidence__reveal-arrow--left {
   left: var(--space-3);
-  transform: translate(-0.75rem, -50%);
+  transform: translate(-0.65rem, -50%);
 }
 
 .product-evidence__reveal-arrow--right {
   right: var(--space-3);
-  transform: translate(0.75rem, -50%);
+  transform: translate(0.65rem, -50%);
 }
 
 .product-evidence__viewport[data-hover='left']
@@ -246,8 +245,6 @@
 .product-evidence__hover-zone:focus-visible {
   outline: none;
 }
-
-/* The image transition is directional, but remains deliberately short. */
 
 .product-evidence__current[data-direction='next'] {
   animation:
@@ -297,6 +294,7 @@
   white-space: nowrap;
 }
 
+/* Never appears on desktop. It is only a small-screen touch fallback. */
 .product-evidence__touch-controls {
   display: none;
 }
@@ -313,10 +311,6 @@
     var(--motion-ui)
     both;
 }
-
-/* ==========================================================
-   MOTION
-   ========================================================== */
 
 @keyframes hero-content-enter {
   from {
@@ -366,10 +360,6 @@
   }
 }
 
-/* ==========================================================
-   TABLET / NARROW DESKTOP
-   ========================================================== */
-
 @media (max-width: 75rem) {
   .home-hero__inner {
     min-height: auto;
@@ -390,13 +380,11 @@
   }
 
   .product-evidence {
-    width: 100%;
-    margin: var(--space-8) 0 0;
+    margin-top: var(--space-8);
   }
 
   .product-evidence__viewport {
     aspect-ratio: 16 / 9;
-    border-radius: var(--radius-media);
   }
 
   .home-hero__transition {
@@ -404,11 +392,8 @@
   }
 }
 
-/* ==========================================================
-   TOUCH DEVICES
-   ========================================================== */
-
-@media (hover: none), (pointer: coarse) {
+/* A touch-only fallback. Hybrid desktop devices keep the hover interaction. */
+@media (max-width: 47.9375rem) and (hover: none) and (pointer: coarse) {
   .product-evidence__hover-zone,
   .product-evidence__adjacent {
     display: none;
@@ -446,10 +431,6 @@
   }
 }
 
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-
 @media (max-width: 47.9375rem) {
   .home-hero__inner {
     padding-block: var(--space-6) var(--space-4);
@@ -481,7 +462,7 @@
   }
 
   .product-evidence__viewport {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 3;
   }
 
   .product-evidence__footer {
@@ -512,10 +493,6 @@
     font-size: 1rem;
   }
 }
-
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .home-hero__label,
