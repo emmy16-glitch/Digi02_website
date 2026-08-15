@@ -5,25 +5,13 @@
   color: var(--text-primary);
 }
 
-.operations-bridge__inner {
-  padding-block:
-    clamp(6rem, 9vw, 9rem)
-    clamp(5rem, 7vw, 7rem);
-}
-
-/* ----------------------------------------------------------
-   INTRO
-   ---------------------------------------------------------- */
-
 .operations-bridge__intro {
   display: grid;
-  grid-template-columns:
-    minmax(0, 0.9fr)
-    minmax(18rem, 0.55fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 0.55fr);
   column-gap: clamp(3rem, 9vw, 9rem);
   row-gap: var(--space-3);
   align-items: end;
-  max-width: 76rem;
+  padding-block: clamp(6rem, 8vw, 8rem) clamp(3rem, 5vw, 5rem);
 }
 
 .operations-bridge__eyebrow {
@@ -41,7 +29,6 @@
   font-weight: 550;
   letter-spacing: -0.045em;
   line-height: 0.98;
-  text-wrap: balance;
 }
 
 .operations-bridge__summary {
@@ -52,137 +39,388 @@
   line-height: 1.65;
 }
 
-/* ----------------------------------------------------------
-   CONNECT / AUTOMATE / TRANSACT
+/* ==========================================================
+   SCROLL STORY
+   ========================================================== */
 
-   No cards.
-   No dashboard.
-   No giant bordered container.
-   ---------------------------------------------------------- */
+.operations-thread__scroll {
+  height: 285svh;
+}
 
-.operations-bridge__principles {
+.operations-thread__sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: center;
+  padding-block: clamp(var(--space-3), 4vh, var(--space-6));
+}
+
+.operations-thread__presentation {
+  display: grid;
+  gap: clamp(var(--space-3), 3vh, var(--space-5));
+}
+
+.operations-thread__rail {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(2rem, 4vw, 4rem);
-  margin-top: clamp(5rem, 8vw, 8rem);
 }
 
-.operations-bridge__principle {
-  position: relative;
-  min-width: 0;
-  padding-top: var(--space-3);
-}
-
-/*
-  Very restrained line.
-  It gives the three ideas rhythm without turning them into cards.
-*/
-.operations-bridge__principle::before {
+.operations-thread__rail-track,
+.operations-thread__rail-marker {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 0;
   left: 0;
   height: 1px;
+  pointer-events: none;
+}
+
+.operations-thread__rail-track {
+  width: 100%;
   background: var(--line-subtle);
-  content: '';
-  transform-origin: left;
+}
+
+.operations-thread__rail-marker {
+  z-index: 2;
+  width: calc(100% / 3);
+  background: var(--gold-400);
+  transform: translateX(calc(var(--stage-index) * 100%));
+  transition: transform var(--motion-component) var(--ease-emphasized);
+}
+
+.operations-thread__rail button {
+  display: flex;
+  min-height: 3.75rem;
+  align-items: center;
+  gap: var(--space-2);
+  border: 0;
+  padding: 0 var(--space-2) var(--space-2) 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: left;
+  text-transform: uppercase;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.operations-thread__rail button:hover,
+.operations-thread__rail button[data-active='true'] {
+  color: var(--text-primary);
+}
+
+.operations-thread__rail button[data-active='true'] .type-tech {
+  color: var(--gold-400);
+}
+
+.operations-thread__rail button strong {
+  font-family: var(--font-display);
+  font-size: var(--type-ui);
+  font-weight: 600;
+  letter-spacing: 0.035em;
+}
+
+.operations-thread {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+  min-height: min(38rem, 70svh);
+}
+
+.operations-thread__copy {
+  max-width: 24rem;
+  animation: operations-copy-enter var(--motion-component) var(--ease-emphasized) both;
+}
+
+.operations-thread__copy > .type-tech {
+  margin-bottom: var(--space-3);
+  color: var(--gold-400);
+}
+
+.operations-thread__copy h3 {
+  max-width: 12ch;
+  margin-bottom: var(--space-3);
+  font-size: clamp(2.2rem, 3.7vw, 3.8rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.operations-thread__copy > p:last-child {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+
+/* ==========================================================
+   ONE RECORD — open composition, no giant bordered container
+   ========================================================== */
+
+.operations-record {
+  min-width: 0;
+  border-block: 1px solid var(--line-subtle);
+}
+
+.operations-record__header {
+  display: flex;
+  min-height: 7rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.operations-record__header p {
+  margin: 0 0 0.45rem;
+  color: var(--gold-400);
+}
+
+.operations-record__header strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-weight: 550;
+  letter-spacing: -0.03em;
+}
+
+.operations-record__header > span {
+  color: var(--text-muted);
+  font-size: var(--type-caption);
+  text-align: right;
+}
+
+.operations-record__body {
+  position: relative;
+  min-height: 25rem;
+}
+
+.operations-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.75rem);
   transition:
-    background-color var(--motion-fast) var(--ease-standard),
-    transform var(--motion-ui) var(--ease-standard);
+    opacity var(--motion-component) var(--ease-standard),
+    transform var(--motion-component) var(--ease-emphasized);
 }
 
-.operations-bridge__principle:hover::before {
-  background: var(--line-gold);
-  transform: scaleX(0.82);
+.operations-thread[data-stage='connect'] .operations-state--connect,
+.operations-thread[data-stage='automate'] .operations-state--automate,
+.operations-thread[data-stage='transact'] .operations-state--transact {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
-.operations-bridge__principle-heading {
+/* CONNECT */
+
+.operations-state--connect {
+  grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.operations-connect__anchor {
+  padding-block: var(--space-5);
+}
+
+.operations-connect__anchor > span {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--gold-400);
+}
+
+.operations-connect__anchor > strong {
+  display: block;
+  max-width: 7ch;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 550;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.operations-connect__fragments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-4);
+}
+
+.operations-connect__fragment {
+  min-width: 0;
+  border-bottom: 1px solid var(--line-subtle);
+  padding-block: var(--space-3);
+  animation: operations-fragment-connect var(--motion-scene) var(--ease-emphasized) both;
+}
+
+.operations-connect__fragment:nth-child(1) {
+  --scatter-x: -2.5rem;
+  --scatter-y: -1.5rem;
+}
+
+.operations-connect__fragment:nth-child(2) {
+  --scatter-x: 2.25rem;
+  --scatter-y: -2rem;
+  animation-delay: 80ms;
+}
+
+.operations-connect__fragment:nth-child(3) {
+  --scatter-x: -1.75rem;
+  --scatter-y: 2rem;
+  animation-delay: 140ms;
+}
+
+.operations-connect__fragment:nth-child(4) {
+  --scatter-x: 2.75rem;
+  --scatter-y: 1.5rem;
+  animation-delay: 200ms;
+}
+
+.operations-connect__fragment span,
+.operations-connect__fragment strong {
+  display: block;
+}
+
+.operations-connect__fragment span {
+  margin-bottom: 0.45rem;
+  color: var(--text-muted);
+  font-size: var(--type-caption);
+}
+
+.operations-connect__fragment strong {
+  color: var(--text-primary);
+  font-size: var(--type-ui);
+  font-weight: 600;
+}
+
+/* AUTOMATE */
+
+.operations-state--automate,
+.operations-state--transact {
+  align-content: center;
+  padding-block: var(--space-4);
+}
+
+.operations-state--automate > .type-tech,
+.operations-state--transact > .type-tech {
+  margin-bottom: var(--space-3);
+  color: var(--gold-400);
+}
+
+.operations-state--automate ol,
+.operations-state--transact ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.operations-state--automate li {
+  display: grid;
+  min-height: 3.25rem;
+  grid-template-columns: var(--space-3) minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: center;
+  border-top: 1px solid var(--line-subtle);
+  color: var(--text-secondary);
+}
+
+.operations-state--automate li:last-child {
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.operations-state--automate li > span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--text-muted);
+  border-radius: 50%;
+}
+
+.operations-state--automate li[data-manual='false'] > span {
+  border-color: var(--gold-400);
+  background: var(--gold-400);
+}
+
+.operations-thread[data-stage='automate']
+  .operations-state--automate li[data-manual='true'] {
+  animation: operations-manual-collapse var(--motion-scene) var(--ease-emphasized) 180ms both;
+}
+
+.operations-state--automate li[data-manual='true'] strong {
+  color: var(--text-muted);
+  font-weight: 400;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.operations-state--automate li[data-manual='false'] strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* TRANSACT */
+
+.operations-state--transact li {
+  display: grid;
+  min-height: 3.5rem;
+  grid-template-columns: var(--space-6) minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: center;
+  border-top: 1px solid var(--line-subtle);
+  opacity: 0;
+  transform: translateX(0.75rem);
+}
+
+.operations-thread[data-stage='transact'] .operations-state--transact li {
+  animation: operations-event-resolve var(--motion-component) var(--ease-emphasized) both;
+  animation-delay: calc(var(--event-index) * 90ms);
+}
+
+.operations-state--transact li > .type-tech {
+  color: var(--text-muted);
+}
+
+.operations-state--transact li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.operations-transact__status {
+  color: var(--gold-400);
+  font-size: var(--type-ui);
+}
+
+.operations-transact__complete {
   display: flex;
   align-items: baseline;
-  gap: var(--space-2);
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-top: 1px solid var(--line-subtle);
+  padding-top: var(--space-4);
 }
 
-.operations-bridge__number {
-  flex: 0 0 auto;
-  color: var(--gold-500);
+.operations-transact__complete > span {
+  color: var(--gold-400);
 }
 
-.operations-bridge__principle h3 {
-  margin: 0;
+.operations-transact__complete > strong {
+  max-width: 18rem;
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 2vw, 2.25rem);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
   font-weight: 550;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: right;
 }
 
-.operations-bridge__principle > p {
-  max-width: 30rem;
-  margin: var(--space-3) 0 0;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.65;
-}
-
-/* ----------------------------------------------------------
-   EXIT / TRANSITION INTO PRODUCT WORK
-   ---------------------------------------------------------- */
-
-.operations-bridge__exit {
-  display: flex;
-  align-items: center;
-  margin-top: clamp(5rem, 7vw, 7rem);
-}
-
-.operations-bridge__exit span {
-  display: block;
-  width: clamp(3rem, 7vw, 7rem);
-  height: 1px;
-  background: var(--gold-500);
-  opacity: 0.65;
-}
-
-/* ----------------------------------------------------------
-   ENTRANCE MOTION
-   ---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: no-preference) {
-  .operations-bridge__eyebrow,
-  .operations-bridge__intro h2,
-  .operations-bridge__summary,
-  .operations-bridge__principle {
-    animation:
-      operations-bridge-enter
-      var(--motion-component)
-      var(--ease-emphasized)
-      both;
-  }
-
-  .operations-bridge__intro h2 {
-    animation-delay: 60ms;
-  }
-
-  .operations-bridge__summary {
-    animation-delay: 110ms;
-  }
-
-  .operations-bridge__principle:nth-child(1) {
-    animation-delay: 130ms;
-  }
-
-  .operations-bridge__principle:nth-child(2) {
-    animation-delay: 180ms;
-  }
-
-  .operations-bridge__principle:nth-child(3) {
-    animation-delay: 230ms;
-  }
-}
-
-@keyframes operations-bridge-enter {
+@keyframes operations-copy-enter {
   from {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateY(0.75rem);
   }
 
   to {
@@ -191,105 +429,202 @@
   }
 }
 
-/* ----------------------------------------------------------
-   TABLET
-   ---------------------------------------------------------- */
-
-@media (max-width: 64rem) {
-  .operations-bridge__inner {
-    padding-block: var(--space-15) var(--space-12);
+@keyframes operations-fragment-connect {
+  from {
+    opacity: 0.25;
+    transform: translate(var(--scatter-x), var(--scatter-y));
   }
 
-  .operations-bridge__intro {
-    grid-template-columns: 1fr;
-    max-width: 48rem;
-  }
-
-  .operations-bridge__intro h2 {
-    max-width: 13ch;
-  }
-
-  .operations-bridge__summary {
-    max-width: 38rem;
-    margin-top: var(--space-2);
-  }
-
-  .operations-bridge__principles {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-top: var(--space-12);
-  }
-
-  .operations-bridge__principle {
-    display: grid;
-    grid-template-columns: minmax(12rem, 0.5fr) minmax(0, 1fr);
-    gap: var(--space-4);
-    align-items: start;
-  }
-
-  .operations-bridge__principle > p {
-    margin-top: 0;
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 }
 
-/* ----------------------------------------------------------
-   MOBILE
-   ---------------------------------------------------------- */
-
-@media (max-width: 47.9375rem) {
-  .operations-bridge__inner {
-    padding-block: var(--space-10) var(--space-10);
+@keyframes operations-manual-collapse {
+  0% {
+    max-height: 3.25rem;
+    opacity: 1;
+    transform: translateX(0);
   }
 
-  .operations-bridge__eyebrow {
-    margin-bottom: var(--space-1);
+  55% {
+    opacity: 0.25;
+    transform: translateX(0.75rem);
+  }
+
+  100% {
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    border-color: transparent;
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+}
+
+@keyframes operations-event-resolve {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 64rem) {
+  .operations-bridge__intro {
+    grid-template-columns: 1fr;
+    max-width: 48rem;
+    padding-block: var(--space-15) var(--space-8);
+  }
+
+  .operations-bridge__summary {
+    margin-top: var(--space-2);
+  }
+
+  .operations-thread__scroll {
+    height: auto;
+  }
+
+  .operations-thread__sticky {
+    position: static;
+    min-height: 0;
+    padding-block: 0 var(--space-15);
+  }
+
+  .operations-thread {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    min-height: 0;
+  }
+
+  .operations-thread__copy {
+    max-width: 38rem;
+  }
+
+  .operations-record__body {
+    min-height: 27rem;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .operations-bridge__intro {
+    padding-block: var(--space-10) var(--space-6);
   }
 
   .operations-bridge__intro h2 {
     max-width: 12ch;
     font-size: clamp(2.4rem, 11vw, 3.25rem);
-    line-height: 1;
   }
 
-  .operations-bridge__summary {
-    margin-top: var(--space-2);
-    font-size: 1rem;
+  .operations-thread__sticky {
+    padding-bottom: var(--space-10);
   }
 
-  .operations-bridge__principles {
+  .operations-thread__rail {
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--line-subtle);
+  }
+
+  .operations-thread__rail-track,
+  .operations-thread__rail-marker {
+    display: none;
+  }
+
+  .operations-thread__rail button {
+    min-height: 3.5rem;
+    border-bottom: 1px solid var(--line-subtle);
+    padding: 0;
+  }
+
+  .operations-thread__rail button[data-active='true'] {
+    border-left: 2px solid var(--gold-400);
+    padding-left: var(--space-2);
+  }
+
+  .operations-thread {
     gap: var(--space-5);
-    margin-top: var(--space-10);
   }
 
-  .operations-bridge__principle {
+  .operations-thread__copy h3 {
+    font-size: clamp(2.15rem, 10vw, 3rem);
+  }
+
+  .operations-record__header {
+    min-height: 6.5rem;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-1);
+  }
+
+  .operations-record__header > span {
+    text-align: left;
+  }
+
+  .operations-record__body {
+    min-height: 30rem;
+  }
+
+  .operations-state--connect {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    align-content: center;
+  }
+
+  .operations-connect__anchor {
+    padding-block: var(--space-3);
+  }
+
+  .operations-connect__anchor > strong {
+    font-size: clamp(2.8rem, 15vw, 4.5rem);
+  }
+
+  .operations-connect__fragments {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .operations-connect__fragment {
+    padding-block: var(--space-2);
+  }
+
+  .operations-transact__complete {
     display: block;
-    padding-top: var(--space-3);
   }
 
-  .operations-bridge__principle > p {
+  .operations-transact__complete > strong {
+    display: block;
     margin-top: var(--space-2);
-  }
-
-  .operations-bridge__exit {
-    margin-top: var(--space-8);
+    text-align: left;
   }
 }
 
-/* ----------------------------------------------------------
-   REDUCED MOTION
-   ---------------------------------------------------------- */
-
 @media (prefers-reduced-motion: reduce) {
-  .operations-bridge__eyebrow,
-  .operations-bridge__intro h2,
-  .operations-bridge__summary,
-  .operations-bridge__principle {
+  .operations-thread__scroll {
+    height: auto;
+  }
+
+  .operations-thread__sticky {
+    position: static;
+    min-height: 0;
+    padding-block: 0 var(--space-15);
+  }
+
+  .operations-thread__rail-marker,
+  .operations-state {
+    transition: none;
+  }
+
+  .operations-thread__copy,
+  .operations-connect__fragment,
+  .operations-state--automate li[data-manual='true'],
+  .operations-state--transact li {
     opacity: 1;
     transform: none;
     animation: none;
   }
 
-  .operations-bridge__principle::before {
-    transition: none;
+  .operations-state--automate li[data-manual='true'] {
+    display: none;
   }
 }
