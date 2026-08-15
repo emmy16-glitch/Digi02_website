@@ -1,10 +1,11 @@
 import { FoundationPreviewPage } from './pages/FoundationPreviewPage'
 import { SiteHeader } from './components/navigation/SiteHeader'
+import { AcademySection } from './sections/home/AcademySection'
+import { DigiNorthSection } from './sections/home/DigiNorthSection'
 import { DigiVoltSection } from './sections/home/DigiVoltSection'
 import { ErpPosSection } from './sections/home/ErpPosSection'
 import { HeroSection } from './sections/home/HeroSection'
 import { HomeFinalCtaSection } from './sections/home/HomeFinalCtaSection'
-import { ProductProofSection } from './sections/home/ProductProofSection'
 import { SkyGridSection } from './sections/home/SkyGridSection'
 import { SolutionsTransformationSection } from './sections/home/SolutionsTransformationSection'
 import { WhyDigi02Section } from './sections/home/WhyDigi02Section'
@@ -28,7 +29,8 @@ function App() {
         <SkyGridSection />
         <DigiVoltSection />
         <ErpPosSection />
-        <ProductProofSection />
+        <DigiNorthSection />
+        <AcademySection />
         <WhyDigi02Section />
         <HomeFinalCtaSection />
       </main>
