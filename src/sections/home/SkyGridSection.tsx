@@ -15,7 +15,6 @@ import '../../styles/skygrid-section.css'
 const stages = [
   {
     id: 'plan',
-    number: '01',
     label: 'Plan',
     title: 'Define the route.',
     description: 'Set the mission area, route and flight parameters before takeoff.',
@@ -24,7 +23,6 @@ const stages = [
   },
   {
     id: 'prepare',
-    number: '02',
     label: 'Prepare',
     title: "Know what's ready.",
     description: 'Check aircraft readiness, pilot assignment and operating conditions before launch.',
@@ -33,14 +31,12 @@ const stages = [
   },
   {
     id: 'operate',
-    number: '03',
     label: 'Operate',
     title: 'See the mission in space.',
     description: 'Follow the route, terrain and mission position as the operation moves into the field.',
   },
   {
     id: 'review',
-    number: '04',
     label: 'Review',
     title: 'Review what happened.',
     description: 'Return to flight activity, mission history and operational events after the mission.',
@@ -155,8 +151,19 @@ export function SkyGridSection() {
         <div className="skygrid-chapter__sticky">
           <Container className="skygrid-chapter__presentation">
             <header className="skygrid-chapter__masthead">
-              <p className="type-tech">01 / SkyGrid</p>
-              <h2 id="skygrid-title">UAV operations</h2>
+              <div className="skygrid-chapter__identity">
+                <strong>SkyGrid</strong>
+                <span>UAV operations</span>
+              </div>
+
+              <div className="skygrid-chapter__statement">
+                <h2 id="skygrid-title">One operational picture from planning to review.</h2>
+                <p>
+                  Plan missions, check readiness, follow operations in the field and return to the
+                  record afterwards.
+                </p>
+                <a href="/solutions">Explore SkyGrid <span aria-hidden="true">→</span></a>
+              </div>
             </header>
 
             <div
@@ -184,7 +191,6 @@ export function SkyGridSection() {
                     tabIndex={isActive ? 0 : -1}
                     type="button"
                   >
-                    <span className="type-tech">{stage.number}</span>
                     <strong>{stage.label}</strong>
                   </button>
                 )
@@ -200,7 +206,7 @@ export function SkyGridSection() {
             >
               <div className="skygrid-stage__copy">
                 <div className="skygrid-stage__copy-state" key={activeStage.id}>
-                  <p className="type-tech">{activeStage.number} / {activeStage.label}</p>
+                  <p className="skygrid-stage__phase">{activeStage.label}</p>
                   <h3>{activeStage.title}</h3>
                   <p>{activeStage.description}</p>
                 </div>
