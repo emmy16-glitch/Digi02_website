@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 
 import { Container } from '../../components/Container'
 import '../../styles/solutions-transformation.css'
@@ -66,35 +66,34 @@ function getRowState(stage: StageId, index: number) {
 
 export function SolutionsTransformationSection() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const stageButtonRefs = useRef<Array<HTMLButtonElement | null>>([])
   const activeStage = stages[activeIndex]
 
-  function selectStage(index: number) {
+  function selectStage(index: number, moveFocus = false) {
     setActiveIndex(index)
+
+    if (moveFocus) {
+      window.requestAnimationFrame(() => stageButtonRefs.current[index]?.focus())
+    }
   }
 
   function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    let nextIndex = activeIndex
+
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      event.preventDefault()
-      setActiveIndex((current) => (current + 1) % stages.length)
+      nextIndex = (activeIndex + 1) % stages.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (activeIndex - 1 + stages.length) % stages.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = stages.length - 1
+    } else {
       return
     }
 
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      setActiveIndex((current) => (current - 1 + stages.length) % stages.length)
-      return
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault()
-      setActiveIndex(0)
-      return
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault()
-      setActiveIndex(stages.length - 1)
-    }
+    event.preventDefault()
+    selectStage(nextIndex, true)
   }
 
   return (
@@ -134,6 +133,9 @@ export function SolutionsTransformationSection() {
                   id={`operations-system-tab-${stage.id}`}
                   key={stage.id}
                   onClick={() => selectStage(index)}
+                  ref={(element) => {
+                    stageButtonRefs.current[index] = element
+                  }}
                   role="tab"
                   tabIndex={isActive ? 0 : -1}
                   type="button"
