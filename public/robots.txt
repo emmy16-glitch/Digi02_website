@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /foundation
+
+Sitemap: https://digi02.org/sitemap.xml
