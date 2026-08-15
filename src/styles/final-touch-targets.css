@@ -6,6 +6,123 @@
   pointer-events: none;
 }
 
+.digivolt-reveal__visual--route {
+  min-height: 32rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(circle at 72% 22%, rgba(201, 163, 74, 0.12), transparent 25%),
+    var(--surface-800);
+}
+
+.digivolt-reveal-route {
+  position: relative;
+  min-height: 27rem;
+  overflow: hidden;
+  border: 1px solid rgba(247, 246, 242, 0.1);
+  background: #0b0b0c;
+}
+
+.digivolt-reveal-route__header,
+.digivolt-reveal-route__status {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.digivolt-reveal-route__header {
+  top: 1.25rem;
+  left: 1.25rem;
+}
+
+.digivolt-reveal-route__status {
+  right: 1.25rem;
+  bottom: 1.25rem;
+  text-align: right;
+}
+
+.digivolt-reveal-route__header span,
+.digivolt-reveal-route__status span,
+.digivolt-reveal-route__pickup,
+.digivolt-reveal-route__destination {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.digivolt-reveal-route__header strong,
+.digivolt-reveal-route__status strong {
+  color: var(--text-primary);
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+}
+
+.digivolt-reveal-route svg {
+  position: absolute;
+  inset: 10% 4% 6%;
+  width: 92%;
+  height: 84%;
+}
+
+.digivolt-reveal-route__base,
+.digivolt-reveal-route__active {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.digivolt-reveal-route__base {
+  stroke: rgba(247, 246, 242, 0.14);
+  stroke-width: 4;
+}
+
+.digivolt-reveal-route__active {
+  stroke: var(--gold-400);
+  stroke-width: 3;
+  stroke-dasharray: 78 100;
+}
+
+.digivolt-reveal-route__point {
+  fill: #0b0b0c;
+  stroke: var(--gold-400);
+  stroke-width: 5;
+}
+
+.digivolt-reveal-route__point--end {
+  fill: var(--gold-400);
+}
+
+.digivolt-reveal-route__pickup,
+.digivolt-reveal-route__destination,
+.digivolt-reveal-route__vehicle {
+  position: absolute;
+  z-index: 3;
+}
+
+.digivolt-reveal-route__pickup {
+  bottom: 13%;
+  left: 7%;
+}
+
+.digivolt-reveal-route__destination {
+  top: 15%;
+  right: 7%;
+}
+
+.digivolt-reveal-route__vehicle {
+  top: 43%;
+  left: 57%;
+  display: grid;
+  width: 3.4rem;
+  height: 3.4rem;
+  place-items: center;
+  border: 1px solid rgba(224, 188, 103, 0.5);
+  border-radius: 50%;
+  background: var(--bg-950);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 0.65rem rgba(201, 163, 74, 0.07);
+}
+
 .payment-path > * {
   min-width: 0;
 }
@@ -24,5 +141,31 @@
     grid-column: 1 / -1;
     margin-top: var(--space-7);
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr) auto minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .digivolt-reveal__visual--route {
+    min-height: 23rem;
+    padding: 1rem;
+  }
+
+  .digivolt-reveal-route {
+    min-height: 20rem;
+  }
+
+  .digivolt-reveal-route__header strong {
+    max-width: 16rem;
+  }
+
+  .digivolt-reveal-route__status {
+    left: 1.25rem;
+    right: auto;
+    text-align: left;
+  }
+
+  .digivolt-reveal-route__vehicle {
+    width: 3rem;
+    height: 3rem;
   }
 }
