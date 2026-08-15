@@ -1,4 +1,4 @@
-import { useEffect, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 
 import missionAnalytics from '../../assets/skygrid/skygrid-mission-analytics.webp'
 import operationsCenter from '../../assets/skygrid/skygrid-operations-center.webp'
@@ -69,39 +69,38 @@ const missionStages: readonly MissionStage[] = [
 export function SkyGridSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hasActivatedOperate, setHasActivatedOperate] = useState(false)
+  const stageButtonRefs = useRef<Array<HTMLButtonElement | null>>([])
   const activeStage = missionStages[activeIndex]
 
   useEffect(() => {
     if (activeStage.id === 'operate') setHasActivatedOperate(true)
   }, [activeStage.id])
 
-  function selectStage(index: number) {
+  function selectStage(index: number, moveFocus = false) {
     setActiveIndex(index)
+
+    if (moveFocus) {
+      window.requestAnimationFrame(() => stageButtonRefs.current[index]?.focus())
+    }
   }
 
   function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    let nextIndex = activeIndex
+
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      event.preventDefault()
-      setActiveIndex((current) => (current + 1) % missionStages.length)
+      nextIndex = (activeIndex + 1) % missionStages.length
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (activeIndex - 1 + missionStages.length) % missionStages.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = missionStages.length - 1
+    } else {
       return
     }
 
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      setActiveIndex((current) => (current - 1 + missionStages.length) % missionStages.length)
-      return
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault()
-      setActiveIndex(0)
-      return
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault()
-      setActiveIndex(missionStages.length - 1)
-    }
+    event.preventDefault()
+    selectStage(nextIndex, true)
   }
 
   return (
@@ -162,6 +161,9 @@ export function SkyGridSection() {
                   id={`skygrid-stage-tab-${stage.id}`}
                   key={stage.id}
                   onClick={() => selectStage(index)}
+                  ref={(element) => {
+                    stageButtonRefs.current[index] = element
+                  }}
                   role="tab"
                   tabIndex={isActive ? 0 : -1}
                   type="button"
@@ -188,10 +190,7 @@ export function SkyGridSection() {
 
             <div className="skygrid-stage-panel__evidence">
               {activeStage.id === 'operate' ? (
-                <SkyGridMissionView
-                  isActive
-                  shouldInitialize={hasActivatedOperate}
-                />
+                <SkyGridMissionView isActive shouldInitialize={hasActivatedOperate} />
               ) : (
                 <figure className="skygrid-stage-panel__screen" key={activeStage.id}>
                   <img
