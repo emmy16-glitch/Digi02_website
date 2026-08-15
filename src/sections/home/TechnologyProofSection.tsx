@@ -3,7 +3,11 @@ import '../../styles/technology-proof.css'
 
 function SkyGridProofVisual() {
   return (
-    <div className="technology-proof__skygrid-visual" aria-label="Illustrative SkyGrid mission route">
+    <div
+      className="technology-proof__skygrid-visual"
+      role="img"
+      aria-label="Illustrative SkyGrid mission route"
+    >
       <svg aria-hidden="true" viewBox="0 0 760 520">
         <path className="technology-proof__contour" d="M40 120 C150 55 245 78 332 138 S520 235 710 128" />
         <path className="technology-proof__contour" d="M20 240 C150 165 260 180 348 235 S548 340 735 238" />
@@ -70,7 +74,11 @@ export function TechnologyProofSection() {
               <p>Sales activity stays connected to inventory, transactions and reporting.</p>
             </div>
 
-            <div className="technology-proof__enterprise-flow" aria-label="Enterprise workflow">
+            <div
+              className="technology-proof__enterprise-flow"
+              role="img"
+              aria-label="Enterprise workflow from sales through inventory and transactions to reporting"
+            >
               <span>Sales</span>
               <span>Inventory</span>
               <span>Transactions</span>

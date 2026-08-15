@@ -5,6 +5,11 @@
   pointer-events: auto;
 }
 
+/* A closed receipt drawer must be visually and focusably absent, not only aria-hidden. */
+.erp-pos-receipt-drawer[aria-hidden='true'] {
+  visibility: hidden;
+}
+
 /* Light surfaces own their heading colors explicitly. */
 .solutions-product--enterprise h2,
 .solutions-product--enterprise h3,
@@ -33,6 +38,7 @@
   color: var(--bg-950);
 }
 
+/* Muted copy on light surfaces uses a dedicated dark neutral rather than the dark-theme muted token. */
 .interior-hero--light .interior-hero__kicker,
 .product-hero--digivolt .product-hero__identity p,
 .product-lifecycle--light .section-heading > p,
@@ -40,8 +46,10 @@
 .enterprise-system-map .section-heading > p,
 .capability-hero--light .capability-hero__copy > p:first-child,
 .company-systems__heading > p,
-.company-base__statement > p:first-child {
-  color: #73716c;
+.company-base__statement > p:first-child,
+.capability-outcomes--light .capability-outcomes__grid article p,
+.software-architecture__layer span {
+  color: #5f5b55;
 }
 
 /* The circular payroll diagram is a desktop composition. On tablet and phone,

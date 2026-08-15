@@ -6,7 +6,7 @@
   --surface-700: #181818;
   --text-primary: #f7f6f2;
   --text-secondary: #aaa8a2;
-  --text-muted: #73716c;
+  --text-muted: #85827c;
   --gold-500: #c9a34a;
   --gold-400: #e0bc67;
   --gold-700: #86672b;
@@ -67,7 +67,7 @@
   --breakpoint-large: 64rem;
   --breakpoint-wide: 90rem;
 
-  /* Motion tokens exist now, but PASS ONE remains static-first. */
+  /* Motion */
   --motion-instant: 110ms;
   --motion-fast: 160ms;
   --motion-ui: 240ms;
