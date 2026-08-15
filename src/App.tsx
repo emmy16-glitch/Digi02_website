@@ -154,8 +154,9 @@ function App() {
         noIndex={route.noIndex}
       />
       <script type="application/ld+json">{JSON.stringify(organizationStructuredData)}</script>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <SiteHeader currentPath={path} />
-      <main>{route.content}</main>
+      <main id="main-content" tabIndex={-1}>{route.content}</main>
       <SiteFooter />
     </>
   )
