@@ -83,9 +83,8 @@ export function DigiVoltPage() {
           </div>
           <div>
             <p>
-              The current DigiVolt experience is presented as a product visualization while the
-              product is in development. The public site does not present illustrative journey data
-              as live operating information.
+              DigiVolt is in development. The journey shown here illustrates the intended product
+              flow; final capabilities will reflect operating requirements and deployment scope.
             </p>
             <a href="/contact">Talk to Digi02 about DigiVolt <span aria-hidden="true">→</span></a>
           </div>
