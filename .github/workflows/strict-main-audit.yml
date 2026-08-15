@@ -15,96 +15,44 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Lint
-        run: npm run lint
-      - name: Build
-        run: npm run build
-      - name: Production dependency audit
-        run: npm audit --omit=dev --audit-level=high
-      - name: Repository hygiene and stale-content guard
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Repository hygiene guard
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs'
           import path from 'node:path'
-
           const errors=[]
-          const warnings=[]
-          const exists=(p)=>fs.existsSync(p)
-
-          for (const forbidden of ['.manual-backups','artifacts','playwright-report','test-results']) {
-            if (exists(forbidden)) errors.push(`production tree contains ${forbidden}`)
-          }
-
-          const sourceRoots=['src','public']
+          for(const forbidden of ['.manual-backups','artifacts','playwright-report','test-results']) if(fs.existsSync(forbidden)) errors.push(`production tree contains ${forbidden}`)
           const files=[]
-          const walk=(dir)=>{
-            if(!exists(dir)) return
-            for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
-              const full=path.join(dir,entry.name)
-              if(entry.isDirectory()) walk(full)
-              else files.push(full)
-            }
-          }
-          sourceRoots.forEach(walk)
-
-          const banned=[
-            ['TODO',/\bTODO\b/],['FIXME',/\bFIXME\b/],['debugger',/\bdebugger\b/],
-            ['console.log',/console\.log\s*\(/],['localhost',/localhost(?::\d+)?/i],
-            ['javascript URL',/href\s*=\s*["']javascript:/i],['empty href',/href\s*=\s*["']#["']/i],
-          ]
+          const walk=(dir)=>{if(!fs.existsSync(dir))return;for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);e.isDirectory()?walk(p):files.push(p)}}
+          ;['src','public'].forEach(walk)
+          const banned=[['TODO',/\bTODO\b/],['FIXME',/\bFIXME\b/],['debugger',/\bdebugger\b/],['console.log',/console\.log\s*\(/],['localhost',/localhost(?::\d+)?/i],['javascript URL',/href\s*=\s*["']javascript:/i],['empty href',/href\s*=\s*["']#["']/i]]
           for(const file of files){
             if(!/\.(ts|tsx|js|jsx|css|html|xml|txt)$/.test(file) && !file.endsWith('_headers') && !file.endsWith('_redirects')) continue
             const text=fs.readFileSync(file,'utf8')
-            for(const [label,pattern] of banned){ if(pattern.test(text)) errors.push(`${file}: ${label}`) }
+            for(const [label,pattern] of banned) if(pattern.test(text)) errors.push(`${file}: ${label}`)
           }
-
           const app=fs.readFileSync('src/App.tsx','utf8')
-          if(app.includes("'/foundation'") || app.includes('FOUNDATION_PATH')) errors.push('internal /foundation route is still reachable in production App.tsx')
-
+          if(app.includes("'/foundation'")||app.includes('FOUNDATION_PATH')||app.includes('FoundationPreviewPage')) errors.push('internal foundation preview remains in production App.tsx')
           const readme=fs.readFileSync('README.md','utf8')
-          if(/staged implementation branches/i.test(readme)) errors.push('README still describes staged implementation branches after merge')
-          if(/\/foundation/.test(readme)) errors.push('README still advertises the internal /foundation preview')
-
-          const gitignore=fs.readFileSync('.gitignore','utf8')
-          for(const pattern of ['.manual-backups','artifacts/','playwright-report','test-results']){
-            if(!gitignore.includes(pattern)) warnings.push(`.gitignore does not include ${pattern}`)
-          }
-
-          const workflowDir='.github/workflows'
-          const workflowFiles=fs.readdirSync(workflowDir).filter(f=>/\.ya?ml$/.test(f))
-          for(const file of workflowFiles){
+          if(/staged implementation branches/i.test(readme)||/\/foundation/.test(readme)) errors.push('README contains stale staging/foundation documentation')
+          const workflows=fs.readdirSync('.github/workflows').filter(f=>/\.ya?ml$/.test(f))
+          for(const file of workflows){
             if(file==='strict-main-audit.yml') continue
-            const text=fs.readFileSync(path.join(workflowDir,file),'utf8')
-            if(/chatgpt\/|feature\//i.test(text)) errors.push(`${file}: workflow still targets a temporary feature/audit branch`)
+            const text=fs.readFileSync(path.join('.github/workflows',file),'utf8')
+            if(/chatgpt\/|feature\//i.test(text)) errors.push(`${file}: temporary branch target remains`)
           }
-
-          const pkg=JSON.parse(fs.readFileSync('package.json','utf8'))
-          for(const script of ['typecheck','lint','build']) if(!pkg.scripts?.[script]) errors.push(`package.json missing ${script} script`)
-          if(!pkg.private) errors.push('package.json should remain private for a corporate site package')
-
           const headers=fs.readFileSync('public/_headers','utf8')
-          for(const header of ['X-Content-Type-Options','Referrer-Policy','X-Frame-Options','Permissions-Policy']){
-            if(!headers.includes(header)) errors.push(`public/_headers missing ${header}`)
-          }
-          if(!/Content-Security-Policy/i.test(headers)) warnings.push('public/_headers has no Content-Security-Policy')
-          if(!/Strict-Transport-Security/i.test(headers)) warnings.push('public/_headers has no Strict-Transport-Security')
-
-          console.log(`Hygiene warnings (${warnings.length}):`)
-          warnings.forEach(w=>console.log(`WARN: ${w}`))
-          if(errors.length){
-            console.error(`Hygiene errors (${errors.length}):`)
-            errors.forEach(e=>console.error(`ERROR: ${e}`))
-            process.exit(1)
-          }
+          for(const h of ['X-Content-Type-Options','Referrer-Policy','X-Frame-Options','Permissions-Policy','Content-Security-Policy','Strict-Transport-Security']) if(!headers.includes(h)) errors.push(`public/_headers missing ${h}`)
+          if(errors.length){console.error(errors.join('\n'));process.exit(1)}
           NODE
 
   runtime-matrix:
@@ -121,282 +69,85 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0 @axe-core/playwright@4.10.2
           npx playwright install --with-deps chromium firefox webkit
-      - name: Build
-        run: npm run build
+      - run: npm run build
       - name: Start preview
         run: |
           npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
-          for i in {1..40}; do
-            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0
-            sleep 1
-          done
-          cat /tmp/digi02-preview.log
-          exit 1
-      - name: Run 112-pass responsive audit plus browser smoke
+          for i in {1..40}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/digi02-preview.log; exit 1
+      - name: Run strict responsive, accessibility and interaction matrix
         run: |
           mkdir -p strict-main-audit
           node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict'
           import fs from 'node:fs'
           import { chromium, firefox, webkit } from 'playwright'
           import AxeBuilder from '@axe-core/playwright'
 
           const origin='http://127.0.0.1:4173'
-          const routes=[
-            ['home','/'],['solutions','/solutions'],['skygrid','/solutions/skygrid'],
-            ['digivolt','/solutions/digivolt'],['enterprise','/solutions/enterprise-systems'],
-            ['e-management','/solutions/e-management'],['payroll','/solutions/payroll-automation'],
-            ['payments','/solutions/payment-systems'],['custom-software','/solutions/custom-software'],
-            ['industries','/industries'],['work','/work'],['company','/company'],
-            ['insights','/insights'],['contact','/contact'],
-          ]
+          const routes=[['home','/'],['solutions','/solutions'],['skygrid','/solutions/skygrid'],['digivolt','/solutions/digivolt'],['enterprise','/solutions/enterprise-systems'],['e-management','/solutions/e-management'],['payroll','/solutions/payroll-automation'],['payments','/solutions/payment-systems'],['custom-software','/solutions/custom-software'],['industries','/industries'],['work','/work'],['company','/company'],['insights','/insights'],['contact','/contact']]
           const publicPaths=new Set(routes.map(([,p])=>p))
-          const viewports=[
-            ['320',320,720],['360',360,800],['390',390,844],['430',430,932],
-            ['768',768,1024],['1024',1024,1366],['1280',1280,900],['1440',1440,1000],
-          ]
-          const failures=[]
-          const warnings=[]
-          const screenshots=[]
-          const fail=(s)=>failures.push(s)
-          const warn=(s)=>warnings.push(s)
-
-          function attachRuntimeGuards(page,label){
-            page.on('pageerror',e=>fail(`${label}: pageerror ${e.message}`))
-            page.on('response',r=>{
-              if(r.url().startsWith(origin) && r.status()>=400) fail(`${label}: same-origin ${r.status()} ${r.url()}`)
-              else if(!r.url().startsWith(origin) && r.status()>=400) warn(`${label}: third-party ${r.status()} ${r.url()}`)
-            })
-            page.on('requestfailed',r=>{
-              if(r.url().startsWith(origin)) fail(`${label}: same-origin request failed ${r.url()} ${r.failure()?.errorText||''}`)
-              else warn(`${label}: third-party request failed ${r.url()} ${r.failure()?.errorText||''}`)
-            })
-            page.on('console',m=>{
-              if(m.type()==='error' && !m.text().startsWith('Failed to load resource')) fail(`${label}: console ${m.text()}`)
-            })
-          }
+          const viewports=[['320',320,720],['360',360,800],['390',390,844],['430',430,932],['768',768,1024],['1024',1024,1366],['1280',1280,900],['1440',1440,1000]]
+          const failures=[]; const warnings=[]
+          const fail=s=>failures.push(s); const warn=s=>warnings.push(s)
 
           async function settle(page){
             await page.locator('main#main-content').waitFor()
-            await page.evaluate(async()=>{
-              const step=Math.max(innerHeight*.75,400)
-              for(let y=0;y<document.documentElement.scrollHeight;y+=step){scrollTo(0,y);await new Promise(r=>setTimeout(r,15))}
-              scrollTo(0,0)
-              await Promise.all([...document.images].map(img=>img.decode().catch(()=>{})))
-            })
-            await page.waitForTimeout(100)
+            await page.evaluate(async()=>{const step=Math.max(innerHeight*.75,400);for(let y=0;y<document.documentElement.scrollHeight;y+=step){scrollTo(0,y);await new Promise(r=>setTimeout(r,15))}scrollTo(0,0);await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))})
+            await page.waitForTimeout(80)
           }
 
           async function inspect(page,route,label,isPhone){
-            await page.goto(origin+route,{waitUntil:'networkidle'})
-            await settle(page)
-
-            const data=await page.evaluate(()=>{
-              const ids=[...document.querySelectorAll('[id]')].map(e=>e.id)
-              const visibleText=[...document.querySelectorAll('body *')].filter(e=>{
-                const r=e.getBoundingClientRect(); const s=getComputedStyle(e)
-                return r.width>0&&r.height>0&&s.visibility!=='hidden'&&s.display!=='none'&&e.childElementCount===0&&(e.textContent||'').trim()
-              }).map(e=>({text:(e.textContent||'').trim().slice(0,80),size:parseFloat(getComputedStyle(e).fontSize)}))
-              return {
-                title:document.title,
-                description:document.querySelector('meta[name="description"]')?.getAttribute('content')||'',
-                robots:document.querySelector('meta[name="robots"]')?.getAttribute('content')||'',
-                canonical:document.querySelector('link[rel="canonical"]')?.getAttribute('href')||'',
-                h1:document.querySelectorAll('main h1').length,
-                mains:document.querySelectorAll('main#main-content').length,
-                dups:[...new Set(ids.filter((id,i)=>ids.indexOf(id)!==i))],
-                overflow:[document.documentElement.scrollWidth,document.documentElement.clientWidth],
-                brokenImages:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.currentSrc||i.src),
-                missingAlt:[...document.images].filter(i=>!i.hasAttribute('alt')).map(i=>i.currentSrc||i.src),
-                badAnchors:[...document.querySelectorAll('a')].filter(a=>!a.getAttribute('href')||a.getAttribute('href')==='#'||/^javascript:/i.test(a.getAttribute('href')||'')).map(a=>(a.textContent||'').trim()),
-                internalHrefs:[...new Set([...document.querySelectorAll('a[href^="/"]')].map(a=>a.getAttribute('href')).filter(Boolean))],
-                unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(e=>{
-                  if(e instanceof HTMLInputElement&&e.type==='hidden') return false
-                  if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')) return false
-                  if(e instanceof HTMLButtonElement) return !(e.textContent||'').trim()
-                  return !(e.labels&&e.labels.length)
-                }).map(e=>`${e.tagName}:${e.getAttribute('name')||''}`),
-                tinyText:visibleText.filter(x=>x.size<11).slice(0,20),
-                lang:document.documentElement.lang,
-              }
-            })
-
-            if(!data.title.includes('Digi02')) fail(`${label}: title missing Digi02`)
-            if(data.description.length<50) fail(`${label}: weak/missing meta description`)
-            if(data.robots!=='index, follow') fail(`${label}: public route robots is ${data.robots}`)
-            const expectedCanonical=`https://digi02.org${route==='/'?'':route}`
-            if(data.canonical!==expectedCanonical) fail(`${label}: canonical ${data.canonical} != ${expectedCanonical}`)
-            if(data.h1!==1) fail(`${label}: expected 1 H1, found ${data.h1}`)
-            if(data.mains!==1) fail(`${label}: expected one main#main-content, found ${data.mains}`)
-            if(data.dups.length) fail(`${label}: duplicate ids ${data.dups.join(', ')}`)
-            if(data.overflow[0]>data.overflow[1]+1) fail(`${label}: horizontal overflow ${data.overflow.join('/')}`)
-            if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(', ')}`)
-            if(data.missingAlt.length) fail(`${label}: images missing alt ${data.missingAlt.join(', ')}`)
-            if(data.badAnchors.length) fail(`${label}: invalid anchors ${data.badAnchors.join(', ')}`)
-            if(data.unlabeled.length) fail(`${label}: unlabeled controls ${data.unlabeled.join(', ')}`)
-            if(data.tinyText.length) warn(`${label}: text below 11px ${JSON.stringify(data.tinyText)}`)
-            if(data.lang!=='en') fail(`${label}: html lang=${data.lang}`)
-
-            for(const href of data.internalHrefs){
-              const p=new URL(href,origin).pathname.replace(/\/$/,'')||'/'
-              if(!publicPaths.has(p)) fail(`${label}: internal link points outside public route set: ${href}`)
-            }
-
-            const axe=await new AxeBuilder({page}).analyze()
-            const severe=axe.violations.filter(v=>['serious','critical'].includes(v.impact||''))
-            if(severe.length){
-              fail(`${label}: axe serious/critical ${severe.map(v=>`${v.id}(${v.nodes.length})`).join(', ')}`)
-            }
-
-            if(isPhone){
-              const smallTargets=await page.locator('header button, header a, form button, form input, form select, form textarea').evaluateAll(es=>es.map(e=>{
-                const r=e.getBoundingClientRect(); return {name:(e.textContent||e.getAttribute('aria-label')||e.getAttribute('name')||e.tagName).trim().slice(0,40),w:r.width,h:r.height}
-              }).filter(x=>x.w>0&&x.h>0&&x.h<42))
-              if(smallTargets.length) fail(`${label}: mobile touch targets under 42px ${JSON.stringify(smallTargets)}`)
-            }
+            const localFailures=[]; const localWarnings=[]
+            page.on('pageerror',e=>localFailures.push(`pageerror ${e.message}`))
+            page.on('response',r=>{if(r.url().startsWith(origin)&&r.status()>=400)localFailures.push(`${r.status()} ${r.url()}`);else if(!r.url().startsWith(origin)&&r.status()>=400)localWarnings.push(`third-party ${r.status()} ${r.url()}`)})
+            page.on('requestfailed',r=>{if(r.url().startsWith(origin))localFailures.push(`request failed ${r.url()} ${r.failure()?.errorText||''}`);else localWarnings.push(`third-party failed ${r.url()}`)})
+            page.on('console',m=>{if(m.type()==='error'&&!m.text().startsWith('Failed to load resource'))localFailures.push(`console ${m.text()}`)})
+            await page.goto(origin+route,{waitUntil:'networkidle'}); await settle(page)
+            const data=await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return{title:document.title,description:document.querySelector('meta[name="description"]')?.getAttribute('content')||'',robots:document.querySelector('meta[name="robots"]')?.getAttribute('content')||'',canonical:document.querySelector('link[rel="canonical"]')?.getAttribute('href')||'',h1:document.querySelectorAll('main h1').length,mains:document.querySelectorAll('main#main-content').length,dups:[...new Set(ids.filter((id,i)=>ids.indexOf(id)!==i))],cw:document.documentElement.clientWidth,sw:document.documentElement.scrollWidth,broken:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.currentSrc||i.src),missingAlt:[...document.images].filter(i=>!i.hasAttribute('alt')).map(i=>i.currentSrc||i.src),badAnchors:[...document.querySelectorAll('a')].filter(a=>!a.getAttribute('href')||a.getAttribute('href')==='#'||/^javascript:/i.test(a.getAttribute('href')||'')).map(a=>(a.textContent||'').trim()),hrefs:[...new Set([...document.querySelectorAll('a[href^="/"]')].map(a=>a.getAttribute('href')).filter(Boolean))],unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(e=>{if(e instanceof HTMLInputElement&&e.type==='hidden')return false;if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby'))return false;if(e instanceof HTMLButtonElement)return !(e.textContent||'').trim();return !(e.labels&&e.labels.length)}).map(e=>`${e.tagName}:${e.getAttribute('name')||''}`),lang:document.documentElement.lang}})
+            if(!data.title.includes('Digi02')) fail(`${label}: title`)
+            if(data.description.length<50) fail(`${label}: meta description`)
+            if(data.robots!=='index, follow') fail(`${label}: robots ${data.robots}`)
+            const canonical=`https://digi02.org${route==='/'?'':route}`; if(data.canonical!==canonical) fail(`${label}: canonical ${data.canonical}`)
+            if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
+            if(data.mains!==1) fail(`${label}: main count ${data.mains}`)
+            if(data.dups.length) fail(`${label}: duplicate ids ${data.dups}`)
+            if(data.sw>data.cw+1) fail(`${label}: horizontal overflow ${data.sw}/${data.cw}`)
+            if(data.broken.length) fail(`${label}: broken images ${data.broken}`)
+            if(data.missingAlt.length) fail(`${label}: missing alt ${data.missingAlt}`)
+            if(data.badAnchors.length) fail(`${label}: invalid anchors ${data.badAnchors}`)
+            if(data.unlabeled.length) fail(`${label}: unlabeled controls ${data.unlabeled}`)
+            if(data.lang!=='en') fail(`${label}: html lang ${data.lang}`)
+            for(const href of data.hrefs){const p=new URL(href,origin).pathname.replace(/\/$/,'')||'/';if(!publicPaths.has(p))fail(`${label}: unknown internal route ${href}`)}
+            const axe=await new AxeBuilder({page}).analyze(); const severe=axe.violations.filter(v=>['serious','critical'].includes(v.impact||'')); if(severe.length) fail(`${label}: axe ${severe.map(v=>`${v.id}(${v.nodes.length})`).join(',')}`)
+            if(isPhone){const tiny=await page.locator('header button,header a,form button,form input,form select,form textarea').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return{name:(e.textContent||e.getAttribute('aria-label')||e.getAttribute('name')||e.tagName).trim().slice(0,30),w:r.width,h:r.height}}).filter(x=>x.w>0&&x.h>0&&x.h<42));if(tiny.length)fail(`${label}: touch targets ${JSON.stringify(tiny)}`)}
+            localFailures.forEach(x=>fail(`${label}: ${x}`)); localWarnings.forEach(x=>warn(`${label}: ${x}`))
           }
 
-          const chrome=await chromium.launch({headless:true})
-          let passCount=0
-          for(const [vp,w,h] of viewports){
-            const context=await chrome.newContext({viewport:{width:w,height:h},deviceScaleFactor:1})
-            const page=await context.newPage()
-            for(const [name,route] of routes){
-              const label=`chromium ${route} @ ${vp}`
-              attachRuntimeGuards(page,label)
-              await inspect(page,route,label,w<=430)
-              passCount++
-              if(vp==='390'||vp==='1440'){
-                const path=`strict-main-audit/${name}-${vp}.png`
-                await page.screenshot({path,fullPage:true,animations:'disabled'})
-                screenshots.push(path)
-              }
-            }
-            await context.close()
-          }
+          const chrome=await chromium.launch({headless:true}); let passes=0
+          for(const [vp,w,h] of viewports){const c=await chrome.newContext({viewport:{width:w,height:h}});for(const [name,route] of routes){const p=await c.newPage();await inspect(p,route,`chromium ${route} @ ${vp}`,w<=430);passes++;if(vp==='390'||vp==='1440')await p.screenshot({path:`strict-main-audit/${name}-${vp}.png`,fullPage:true,animations:'disabled'});await p.close()}await c.close()}
 
-          // Unknown and internal-preview routes must both resolve to the public 404 experience.
-          {
-            const c=await chrome.newContext({viewport:{width:390,height:844}})
-            const p=await c.newPage()
-            for(const route of ['/definitely-not-a-route','/foundation']){
-              await p.goto(origin+route,{waitUntil:'networkidle'})
-              await p.locator('main#main-content').waitFor()
-              const h1=(await p.locator('main h1').textContent())||''
-              const robots=await p.locator('meta[name="robots"]').getAttribute('content')
-              if(!/not found/i.test(h1)) fail(`${route}: should render public 404, got H1 ${h1}`)
-              if(robots!=='noindex, nofollow') fail(`${route}: 404 robots should be noindex, nofollow`)
-            }
-            await c.close()
-          }
+          // Unknown paths, including the retired design preview, must be noindex 404s.
+          {const c=await chrome.newContext({viewport:{width:390,height:844}});const p=await c.newPage();for(const route of ['/definitely-not-a-route','/foundation']){await p.goto(origin+route,{waitUntil:'networkidle'});await p.locator('main#main-content').waitFor();const h1=(await p.locator('main h1').textContent())||'';const robots=await p.locator('meta[name="robots"]').getAttribute('content');if(!/not found/i.test(h1))fail(`${route}: not a public 404`);if(robots!=='noindex, nofollow')fail(`${route}: 404 robots ${robots}`)}await c.close()}
 
-          // Reduced motion should suppress long-running page animations.
-          {
-            const c=await chrome.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'})
-            const p=await c.newPage()
-            for(const route of ['/','/solutions/digivolt','/solutions/skygrid']){
-              await p.goto(origin+route,{waitUntil:'networkidle'})
-              await p.waitForTimeout(300)
-              const active=await p.evaluate(()=>document.getAnimations().filter(a=>{
-                const timing=a.effect?.getComputedTiming(); return a.playState==='running' && Number(timing?.duration||0)>250
-              }).length)
-              if(active) fail(`${route}: reduced-motion still has ${active} long-running animations`)
-            }
-            await c.close()
-          }
+          // Reduced-motion preference must suppress long-running animation.
+          {const c=await chrome.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});const p=await c.newPage();for(const route of ['/','/solutions/digivolt','/solutions/skygrid']){await p.goto(origin+route,{waitUntil:'networkidle'});await p.waitForTimeout(300);const active=await p.evaluate(()=>document.getAnimations().filter(a=>{const t=a.effect?.getComputedTiming();return a.playState==='running'&&Number(t?.duration||0)>250}).length);if(active)fail(`${route}: reduced-motion has ${active} long animations`)}await c.close()}
 
-          // Mobile navigation accessibility/focus handling.
-          {
-            const c=await chrome.newContext({viewport:{width:390,height:844}})
-            const p=await c.newPage(); await p.goto(origin,{waitUntil:'networkidle'})
-            const toggle=p.getByRole('button',{name:/open navigation menu/i})
-            await toggle.click()
-            if(await toggle.getAttribute('aria-expanded')!=='true') fail('mobile nav: aria-expanded did not become true')
-            await p.keyboard.press('Escape'); await p.waitForTimeout(50)
-            if(await toggle.getAttribute('aria-expanded')!=='false') fail('mobile nav: Escape did not close menu')
-            if(!await toggle.evaluate(e=>document.activeElement===e)) fail('mobile nav: focus not restored to toggle')
-            await c.close()
-          }
+          // Mobile navigation: use stable class, because aria-label changes Open -> Close.
+          {const c=await chrome.newContext({viewport:{width:390,height:844}});const p=await c.newPage();await p.goto(origin,{waitUntil:'networkidle'});const toggle=p.locator('.mobile-navigation__toggle');if(await toggle.getAttribute('aria-expanded')!=='false')fail('mobile nav: initial aria-expanded');await toggle.click();if(await toggle.getAttribute('aria-expanded')!=='true')fail('mobile nav: did not open');if(await p.locator('body').evaluate(b=>b.style.overflow)!=='hidden')fail('mobile nav: body scroll not locked');await p.keyboard.press('Escape');await p.waitForTimeout(80);if(await toggle.getAttribute('aria-expanded')!=='false')fail('mobile nav: Escape did not close');if(!await toggle.evaluate(e=>document.activeElement===e))fail('mobile nav: focus not restored');await c.close()}
 
-          // Home interactive tabs.
-          {
-            const c=await chrome.newContext({viewport:{width:1280,height:900}})
-            const p=await c.newPage(); await p.goto(origin,{waitUntil:'networkidle'})
-            const first=p.getByRole('tab',{name:/Automate/i}).first(); await first.click(); await first.press('End')
-            const last=p.getByRole('tab',{name:/Transact/i}).first()
-            if(await last.getAttribute('aria-selected')!=='true') fail('home tabs: End key did not select final tab')
-            await c.close()
-          }
-
-          // DigiVolt state transition.
-          {
-            const c=await chrome.newContext({viewport:{width:1280,height:900}})
-            const p=await c.newPage(); await p.goto(origin+'/solutions/digivolt',{waitUntil:'networkidle'})
-            const arrive=p.getByRole('tab',{name:/Arrive/i}).first(); await arrive.click(); await p.waitForTimeout(700)
-            if(await arrive.getAttribute('aria-selected')!=='true') fail('DigiVolt: Arrive tab did not select')
-            const copy=(await p.locator('.digivolt-journey__stage-copy').textContent())||''
-            if(!/Trip complete/i.test(copy)) fail('DigiVolt: Arrive state copy did not update')
-            await c.close()
-          }
-
-          // ERP/POS functional transaction demo.
-          {
-            const c=await chrome.newContext({viewport:{width:1280,height:900}})
-            const p=await c.newPage(); await p.goto(origin+'/solutions/enterprise-systems',{waitUntil:'networkidle'})
-            const row=p.locator('.erp-pos-product-row').filter({hasText:'Wireless Headset'})
-            const before=(await row.textContent())||''
-            await row.getByRole('button',{name:'Add'}).click()
-            await p.locator('input[name="erp-pos-payment"][value="Transfer"]').check()
-            await p.getByRole('button',{name:/Complete sale/i}).click()
-            await p.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor()
-            const after=(await row.textContent())||''
-            if(before===after) fail('ERP/POS: stock text did not change after sale')
-            const payment=(await p.locator('.erp-pos-receipt__payment').textContent())||''
-            if(!/Transfer/i.test(payment)) fail('ERP/POS: receipt did not record Transfer payment')
-            await p.getByRole('button',{name:/Reset demo/i}).click()
-            await c.close()
-          }
-
-          // Contact validation and disclosure.
-          {
-            const c=await chrome.newContext({viewport:{width:390,height:844}})
-            const p=await c.newPage(); await p.goto(origin+'/contact',{waitUntil:'networkidle'})
-            await p.getByRole('button',{name:/Prepare enquiry/i}).click()
-            if(await p.locator('input[name="name"]:invalid').count()!==1) fail('contact: name required validation missing')
-            if(await p.locator('select[name="area"]:invalid').count()!==1) fail('contact: area required validation missing')
-            const disclosure=(await p.locator('.contact-form__privacy').textContent())||''
-            if(!/does not send or store/i.test(disclosure)) fail('contact: non-storage disclosure missing')
-            await c.close()
-          }
-
+          {const c=await chrome.newContext({viewport:{width:1280,height:900}});const p=await c.newPage();await p.goto(origin,{waitUntil:'networkidle'});const tab=p.getByRole('tab',{name:/Automate/i}).first();await tab.click();await tab.press('End');if(await p.getByRole('tab',{name:/Transact/i}).first().getAttribute('aria-selected')!=='true')fail('home tabs: End key');await c.close()}
+          {const c=await chrome.newContext({viewport:{width:1280,height:900}});const p=await c.newPage();await p.goto(origin+'/solutions/digivolt',{waitUntil:'networkidle'});const arrive=p.getByRole('tab',{name:/Arrive/i}).first();await arrive.click();await p.waitForTimeout(700);if(await arrive.getAttribute('aria-selected')!=='true')fail('DigiVolt: Arrive not selected');if(!/Trip complete/i.test((await p.locator('.digivolt-journey__stage-copy').textContent())||''))fail('DigiVolt: Arrive copy');await c.close()}
+          {const c=await chrome.newContext({viewport:{width:1280,height:900}});const p=await c.newPage();await p.goto(origin+'/solutions/enterprise-systems',{waitUntil:'networkidle'});const row=p.locator('.erp-pos-product-row').filter({hasText:'Wireless Headset'});const before=(await row.textContent())||'';await row.getByRole('button',{name:'Add'}).click();await p.locator('input[name="erp-pos-payment"][value="Transfer"]').check();await p.getByRole('button',{name:/Complete sale/i}).click();await p.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor();if((await row.textContent())===before)fail('ERP/POS: stock unchanged');if(!/Transfer/i.test((await p.locator('.erp-pos-receipt__payment').textContent())||''))fail('ERP/POS: receipt payment');await p.getByRole('button',{name:/Reset demo/i}).click();await c.close()}
+          {const c=await chrome.newContext({viewport:{width:390,height:844}});const p=await c.newPage();await p.goto(origin+'/contact',{waitUntil:'networkidle'});await p.getByRole('button',{name:/Prepare enquiry/i}).click();if(await p.locator('input[name="name"]:invalid').count()!==1)fail('contact: name validation');if(await p.locator('select[name="area"]:invalid').count()!==1)fail('contact: area validation');if(!/does not send or store/i.test((await p.locator('.contact-form__privacy').textContent())||''))fail('contact: privacy disclosure');await c.close()}
           await chrome.close()
 
-          // Firefox and WebKit smoke on six critical routes, phone + desktop.
           const smoke=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/contact']
-          for(const [engineName,launcher] of [['firefox',firefox],['webkit',webkit]]){
-            const browser=await launcher.launch({headless:true})
-            for(const [vp,w,h] of [['phone',390,844],['desktop',1440,1000]]){
-              const c=await browser.newContext({viewport:{width:w,height:h}})
-              const p=await c.newPage()
-              for(const route of smoke){
-                const label=`${engineName} ${route} @ ${vp}`
-                attachRuntimeGuards(p,label)
-                await inspect(p,route,label,w<=430)
-              }
-              await c.close()
-            }
-            await browser.close()
-          }
+          for(const [engine,launcher] of [['firefox',firefox],['webkit',webkit]]){const b=await launcher.launch({headless:true});for(const [vp,w,h] of [['phone',390,844],['desktop',1440,1000]]){const c=await b.newContext({viewport:{width:w,height:h}});for(const route of smoke){const p=await c.newPage();await inspect(p,route,`${engine} ${route} @ ${vp}`,w<=430);await p.close()}await c.close()}await b.close()}
 
-          console.log(`Chromium responsive route passes: ${passCount}`)
-          console.log(`Warnings: ${warnings.length}`)
-          warnings.forEach(w=>console.log(`WARN: ${w}`))
-          fs.writeFileSync('strict-main-audit/summary.txt',`Chromium route passes: ${passCount}\nWarnings: ${warnings.length}\nFailures: ${failures.length}\n${failures.join('\n')}\n`)
-          if(failures.length){
-            console.error(`Strict audit failures (${failures.length}):`)
-            failures.forEach(f=>console.error(`FAIL: ${f}`))
-            process.exit(1)
-          }
+          fs.writeFileSync('strict-main-audit/summary.txt',`Chromium route passes: ${passes}\nWarnings: ${warnings.length}\nFailures: ${failures.length}\n${warnings.map(x=>'WARN '+x).join('\n')}\n${failures.map(x=>'FAIL '+x).join('\n')}\n`)
+          console.log(`Chromium route passes: ${passes}; warnings: ${warnings.length}; failures: ${failures.length}`)
+          warnings.forEach(x=>console.log(`WARN: ${x}`))
+          if(failures.length){failures.forEach(x=>console.error(`FAIL: ${x}`));process.exit(1)}
           NODE
       - name: Upload strict audit evidence
         if: always()
