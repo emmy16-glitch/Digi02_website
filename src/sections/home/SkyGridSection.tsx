@@ -1,11 +1,109 @@
-import showcaseConcept from '../../assets/skygrid/skygrid-showcase-concept.png'
+import { useEffect, useState, type KeyboardEvent } from 'react'
+
 import missionAnalytics from '../../assets/skygrid/skygrid-mission-analytics.webp'
+import operationsCenter from '../../assets/skygrid/skygrid-operations-center.webp'
+import routePlanner from '../../assets/skygrid/skygrid-route-planner.webp'
+import showcaseConcept from '../../assets/skygrid/skygrid-showcase-concept.png'
 import { Container } from '../../components/Container'
+import { SkyGridMissionView } from './SkyGridMissionView'
 import '../../styles/skygrid-section.css'
 
-const missionStages = ['Plan', 'Prepare', 'Operate', 'Review'] as const
+type MissionStageId = 'plan' | 'prepare' | 'operate' | 'review'
+
+type MissionStage = {
+  id: MissionStageId
+  number: string
+  label: string
+  title: string
+  description: string
+  evidence: string
+  image?: string
+  alt?: string
+}
+
+const missionStages: readonly MissionStage[] = [
+  {
+    id: 'plan',
+    number: '01',
+    label: 'Plan',
+    title: 'Define the mission before the aircraft moves.',
+    description:
+      'Set the operating area, route and flight parameters in the same environment used to prepare the mission.',
+    evidence: 'Real SkyGrid route-planning interface',
+    image: routePlanner,
+    alt: 'SkyGrid route planner showing a UAV mission route with waypoint and flight controls',
+  },
+  {
+    id: 'prepare',
+    number: '02',
+    label: 'Prepare',
+    title: 'Know what is ready before launch.',
+    description:
+      'Bring aircraft readiness, pilot assignment and operating conditions into the pre-flight check.',
+    evidence: 'Real SkyGrid mission operations interface',
+    image: operationsCenter,
+    alt: 'SkyGrid mission operations interface showing aircraft and operational readiness information',
+  },
+  {
+    id: 'operate',
+    number: '03',
+    label: 'Operate',
+    title: 'See the mission in its field context.',
+    description:
+      'Move from planning into a spatial view of the route, terrain and mission position while the operation is active.',
+    evidence: 'Illustrative mission terrain view with real SkyGrid fallback',
+  },
+  {
+    id: 'review',
+    number: '04',
+    label: 'Review',
+    title: 'Return to what happened after the flight.',
+    description:
+      'Review mission history, flight activity and recorded operational events once the aircraft is back on the ground.',
+    evidence: 'Real SkyGrid Mission Overview interface',
+    image: missionAnalytics,
+    alt: 'SkyGrid Mission Overview showing post-flight analytics, flight summary, mission map and incident navigation',
+  },
+]
 
 export function SkyGridSection() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [hasActivatedOperate, setHasActivatedOperate] = useState(false)
+  const activeStage = missionStages[activeIndex]
+
+  useEffect(() => {
+    if (activeStage.id === 'operate') setHasActivatedOperate(true)
+  }, [activeStage.id])
+
+  function selectStage(index: number) {
+    setActiveIndex(index)
+  }
+
+  function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      event.preventDefault()
+      setActiveIndex((current) => (current + 1) % missionStages.length)
+      return
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault()
+      setActiveIndex((current) => (current - 1 + missionStages.length) % missionStages.length)
+      return
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault()
+      setActiveIndex(0)
+      return
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault()
+      setActiveIndex(missionStages.length - 1)
+    }
+  }
+
   return (
     <section className="skygrid-story" id="skygrid" aria-labelledby="skygrid-title">
       <Container className="skygrid-story__intro">
@@ -33,54 +131,84 @@ export function SkyGridSection() {
           />
           <figcaption>Mission simulation / product visualization</figcaption>
         </figure>
-
-        <ol className="skygrid-story__timeline" aria-label="SkyGrid mission workflow">
-          {missionStages.map((stage) => (
-            <li key={stage}>{stage}</li>
-          ))}
-        </ol>
       </Container>
 
-      <div className="skygrid-dashboard">
+      <div className="skygrid-dashboard" data-stage={activeStage.id}>
         <Container className="skygrid-dashboard__inner">
           <header className="skygrid-dashboard__heading">
             <p>Mission software</p>
-            <h3>Review the operation, not just the flight.</h3>
+            <h3>One mission. Four operational states.</h3>
             <p>
-              Return to mission history, field context and recorded operational events after the
-              aircraft is back on the ground.
+              Move through the mission sequence to see how planning, readiness, field context and
+              after-action review stay connected.
             </p>
           </header>
 
-          <div className="skygrid-dashboard__visual">
-            <figure className="skygrid-dashboard__screen">
-              <img
-                alt="SkyGrid Mission Overview showing post-flight analytics, flight summary, mission map and incident navigation"
-                decoding="async"
-                loading="eager"
-                src={missionAnalytics}
-              />
-            </figure>
+          <div
+            aria-label="SkyGrid mission stages"
+            className="skygrid-stage-rail"
+            onKeyDown={handleStageKeyDown}
+            role="tablist"
+          >
+            {missionStages.map((stage, index) => {
+              const isActive = index === activeIndex
 
-            <figure className="skygrid-dashboard__detail" aria-hidden="true">
-              <img alt="" decoding="async" src={missionAnalytics} />
-            </figure>
+              return (
+                <button
+                  aria-controls="skygrid-stage-panel"
+                  aria-selected={isActive}
+                  className="skygrid-stage-rail__item"
+                  data-active={isActive}
+                  id={`skygrid-stage-tab-${stage.id}`}
+                  key={stage.id}
+                  onClick={() => selectStage(index)}
+                  role="tab"
+                  tabIndex={isActive ? 0 : -1}
+                  type="button"
+                >
+                  <span>{stage.number}</span>
+                  <strong>{stage.label}</strong>
+                </button>
+              )
+            })}
           </div>
 
-          <div className="skygrid-dashboard__explanations">
-            <article>
-              <h4>Mission overview</h4>
-              <p>Return to the recorded flight and its operational summary.</p>
-            </article>
-            <article>
-              <h4>Field context</h4>
-              <p>Inspect the mission location and the activity captured around it.</p>
-            </article>
-            <article>
-              <h4>After-action review</h4>
-              <p>Use activity and incident records to understand what happened.</p>
-            </article>
-          </div>
+          <article
+            aria-labelledby={`skygrid-stage-tab-${activeStage.id}`}
+            className="skygrid-stage-panel"
+            id="skygrid-stage-panel"
+            role="tabpanel"
+          >
+            <div className="skygrid-stage-panel__copy" key={activeStage.id}>
+              <span>{activeStage.number} / {activeStage.label}</span>
+              <h4>{activeStage.title}</h4>
+              <p>{activeStage.description}</p>
+              <small>{activeStage.evidence}</small>
+            </div>
+
+            <div className="skygrid-stage-panel__evidence">
+              {activeStage.id === 'operate' ? (
+                <SkyGridMissionView
+                  isActive
+                  shouldInitialize={hasActivatedOperate}
+                />
+              ) : (
+                <figure className="skygrid-stage-panel__screen" key={activeStage.id}>
+                  <img
+                    alt={activeStage.alt ?? ''}
+                    decoding="async"
+                    loading="eager"
+                    src={activeStage.image}
+                  />
+                </figure>
+              )}
+            </div>
+          </article>
+
+          <footer className="skygrid-dashboard__footer">
+            <span>Use the stage controls or keyboard arrow keys to move through the mission.</span>
+            <strong>{String(activeIndex + 1).padStart(2, '0')} / 04</strong>
+          </footer>
         </Container>
       </div>
     </section>
