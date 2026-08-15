@@ -106,6 +106,16 @@ export function SolutionsPage() {
           </div>
         </Container>
       </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Start with the work</p>
+            <h2>Tell us what your current system is making difficult.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss your requirements <span aria-hidden="true">→</span></PrimaryButton>
+        </Container>
+      </section>
     </div>
   )
 }
