@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
-import type { KeyboardEvent, PointerEvent } from 'react'
+import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 
 import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
 import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import skyGridOperationsCenter from '../../assets/skygrid/skygrid-operations-center.webp'
+import skyGridMissionPlanner from '../../assets/skygrid/skygrid-gcs-mission-planner.webp'
 
 type ProductId = 'skygrid' | 'digivolt' | 'erp-pos'
 type HoverSide = 'left' | 'right' | null
@@ -22,8 +22,8 @@ const products: readonly ProductEvidence[] = [
     id: 'skygrid',
     label: 'SkyGrid',
     context: 'UAV operations',
-    alt: 'SkyGrid UAV operations interface',
-    src: skyGridOperationsCenter,
+    alt: 'SkyGrid ground control mission planning interface',
+    src: skyGridMissionPlanner,
   },
   {
     id: 'digivolt',
@@ -42,6 +42,8 @@ const products: readonly ProductEvidence[] = [
 ]
 
 const SWIPE_THRESHOLD = 55
+const EDGE_ZONE_RATIO = 0.3
+const MAX_EDGE_REVEAL = 28
 
 export function ProductEvidenceViewer() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -49,19 +51,35 @@ export function ProductEvidenceViewer() {
   const [direction, setDirection] = useState<Direction>('next')
 
   const pointerStartRef = useRef<{ x: number; y: number } | null>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
 
   const count = products.length
-
   const activeProduct = products[activeIndex]
   const previousIndex = (activeIndex - 1 + count) % count
   const nextIndex = (activeIndex + 1) % count
-
   const previousProduct = products[previousIndex]
   const nextProduct = products[nextIndex]
 
+  function applyReveal(side: HoverSide, strength: number) {
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const safeStrength = Math.min(Math.max(strength, 0), 1)
+    const shift = safeStrength * MAX_EDGE_REVEAL
+    const signedShift = side === 'left' ? shift : side === 'right' ? -shift : 0
+
+    viewport.style.setProperty('--edge-opacity', safeStrength.toFixed(3))
+    viewport.style.setProperty('--current-shift', `${signedShift.toFixed(2)}px`)
+    setHoverSide(side)
+  }
+
+  function resetReveal() {
+    applyReveal(null, 0)
+  }
+
   function changeProduct(index: number, nextDirection: Direction) {
     setDirection(nextDirection)
-    setHoverSide(null)
+    resetReveal()
     setActiveIndex((index + count) % count)
   }
 
@@ -83,6 +101,29 @@ export function ProductEvidenceViewer() {
       event.preventDefault()
       next()
     }
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== 'mouse') return
+
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const rect = viewport.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const edgeZone = rect.width * EDGE_ZONE_RATIO
+
+    if (x <= edgeZone) {
+      applyReveal('left', 1 - x / edgeZone)
+      return
+    }
+
+    if (x >= rect.width - edgeZone) {
+      applyReveal('right', (x - (rect.width - edgeZone)) / edgeZone)
+      return
+    }
+
+    resetReveal()
   }
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
@@ -116,39 +157,44 @@ export function ProductEvidenceViewer() {
     else previous()
   }
 
+  const viewportStyle = {
+    '--edge-opacity': 0,
+    '--current-shift': '0px',
+  } as CSSProperties
+
   return (
     <figure className="product-evidence">
       <div
-        aria-label="Digi02 product gallery. Use left and right arrow keys to browse."
+        aria-label="Digi02 product gallery. Move toward either image edge or use the left and right arrow keys to browse."
         className="product-evidence__viewport"
         data-direction={direction}
         data-hover={hoverSide ?? 'none'}
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
+        onPointerLeave={resetReveal}
+        onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerLeave={() => setHoverSide(null)}
+        ref={viewportRef}
         role="group"
+        style={viewportStyle}
         tabIndex={0}
       >
-        {/* PREVIOUS IMAGE — hidden until left-edge interaction */}
         <div
           aria-hidden="true"
           className="product-evidence__adjacent product-evidence__adjacent--previous"
           data-product={previousProduct.id}
         >
-          <img alt="" src={previousProduct.src} />
+          <img alt="" decoding="async" loading="eager" src={previousProduct.src} />
         </div>
 
-        {/* NEXT IMAGE — hidden until right-edge interaction */}
         <div
           aria-hidden="true"
           className="product-evidence__adjacent product-evidence__adjacent--next"
           data-product={nextProduct.id}
         >
-          <img alt="" src={nextProduct.src} />
+          <img alt="" decoding="async" loading="eager" src={nextProduct.src} />
         </div>
 
-        {/* CURRENT PRODUCT */}
         <div
           className="product-evidence__current"
           data-direction={direction}
@@ -164,14 +210,12 @@ export function ProductEvidenceViewer() {
           />
         </div>
 
-        {/* INVISIBLE LEFT INTERACTION AREA */}
         <button
           aria-label={`Previous product: ${previousProduct.label}`}
           className="product-evidence__hover-zone product-evidence__hover-zone--left"
+          onBlur={resetReveal}
           onClick={previous}
-          onFocus={() => setHoverSide('left')}
-          onBlur={() => setHoverSide(null)}
-          onPointerEnter={() => setHoverSide('left')}
+          onFocus={() => applyReveal('left', 1)}
           type="button"
         >
           <span
@@ -182,14 +226,12 @@ export function ProductEvidenceViewer() {
           </span>
         </button>
 
-        {/* INVISIBLE RIGHT INTERACTION AREA */}
         <button
           aria-label={`Next product: ${nextProduct.label}`}
           className="product-evidence__hover-zone product-evidence__hover-zone--right"
+          onBlur={resetReveal}
           onClick={next}
-          onFocus={() => setHoverSide('right')}
-          onBlur={() => setHoverSide(null)}
-          onPointerEnter={() => setHoverSide('right')}
+          onFocus={() => applyReveal('right', 1)}
           type="button"
         >
           <span
@@ -208,10 +250,10 @@ export function ProductEvidenceViewer() {
           <span>{activeProduct.context}</span>
         </div>
 
-        <span
-          aria-label={`Product ${activeIndex + 1} of ${count}`}
-          className="product-evidence__counter type-tech"
-        >
+        <span className="product-evidence__counter type-tech">
+          <span className="visually-hidden">
+            Product {activeIndex + 1} of {count}.{' '}
+          </span>
           0{activeIndex + 1} / 0{count}
         </span>
       </figcaption>
