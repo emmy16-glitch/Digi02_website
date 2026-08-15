@@ -24,9 +24,7 @@ export function MobileNavigation({
   const toggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (!isOpen) {
-      return
-    }
+    if (!isOpen) return
 
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -89,7 +87,7 @@ export function MobileNavigation({
             </ul>
 
             <div className="mobile-navigation__closing">
-              <p>Technology should make the operation work better.</p>
+              <p>Have a system, workflow or product that needs to work better?</p>
               <PrimaryButton className="mobile-navigation__cta" href="/contact" onClick={onClose}>
                 Discuss your project <span aria-hidden="true">→</span>
               </PrimaryButton>
