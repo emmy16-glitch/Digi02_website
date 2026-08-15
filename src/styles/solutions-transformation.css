@@ -1,0 +1,295 @@
+.operations-bridge {
+  position: relative;
+  overflow: clip;
+  background: var(--bg-950);
+  color: var(--text-primary);
+}
+
+.operations-bridge__inner {
+  padding-block:
+    clamp(6rem, 9vw, 9rem)
+    clamp(5rem, 7vw, 7rem);
+}
+
+/* ----------------------------------------------------------
+   INTRO
+   ---------------------------------------------------------- */
+
+.operations-bridge__intro {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(18rem, 0.55fr);
+  column-gap: clamp(3rem, 9vw, 9rem);
+  row-gap: var(--space-3);
+  align-items: end;
+  max-width: 76rem;
+}
+
+.operations-bridge__eyebrow {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  letter-spacing: 0.16em;
+}
+
+.operations-bridge__intro h2 {
+  max-width: 15ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.operations-bridge__summary {
+  max-width: 32rem;
+  margin: 0 0 0.3rem;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  line-height: 1.65;
+}
+
+/* ----------------------------------------------------------
+   CONNECT / AUTOMATE / TRANSACT
+
+   No cards.
+   No dashboard.
+   No giant bordered container.
+   ---------------------------------------------------------- */
+
+.operations-bridge__principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-top: clamp(5rem, 8vw, 8rem);
+}
+
+.operations-bridge__principle {
+  position: relative;
+  min-width: 0;
+  padding-top: var(--space-3);
+}
+
+/*
+  Very restrained line.
+  It gives the three ideas rhythm without turning them into cards.
+*/
+.operations-bridge__principle::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--line-subtle);
+  content: '';
+  transform-origin: left;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-ui) var(--ease-standard);
+}
+
+.operations-bridge__principle:hover::before {
+  background: var(--line-gold);
+  transform: scaleX(0.82);
+}
+
+.operations-bridge__principle-heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.operations-bridge__number {
+  flex: 0 0 auto;
+  color: var(--gold-500);
+}
+
+.operations-bridge__principle h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2vw, 2.25rem);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.operations-bridge__principle > p {
+  max-width: 30rem;
+  margin: var(--space-3) 0 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ----------------------------------------------------------
+   EXIT / TRANSITION INTO PRODUCT WORK
+   ---------------------------------------------------------- */
+
+.operations-bridge__exit {
+  display: flex;
+  align-items: center;
+  margin-top: clamp(5rem, 7vw, 7rem);
+}
+
+.operations-bridge__exit span {
+  display: block;
+  width: clamp(3rem, 7vw, 7rem);
+  height: 1px;
+  background: var(--gold-500);
+  opacity: 0.65;
+}
+
+/* ----------------------------------------------------------
+   ENTRANCE MOTION
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .operations-bridge__eyebrow,
+  .operations-bridge__intro h2,
+  .operations-bridge__summary,
+  .operations-bridge__principle {
+    animation:
+      operations-bridge-enter
+      var(--motion-component)
+      var(--ease-emphasized)
+      both;
+  }
+
+  .operations-bridge__intro h2 {
+    animation-delay: 60ms;
+  }
+
+  .operations-bridge__summary {
+    animation-delay: 110ms;
+  }
+
+  .operations-bridge__principle:nth-child(1) {
+    animation-delay: 130ms;
+  }
+
+  .operations-bridge__principle:nth-child(2) {
+    animation-delay: 180ms;
+  }
+
+  .operations-bridge__principle:nth-child(3) {
+    animation-delay: 230ms;
+  }
+}
+
+@keyframes operations-bridge-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   TABLET
+   ---------------------------------------------------------- */
+
+@media (max-width: 64rem) {
+  .operations-bridge__inner {
+    padding-block: var(--space-15) var(--space-12);
+  }
+
+  .operations-bridge__intro {
+    grid-template-columns: 1fr;
+    max-width: 48rem;
+  }
+
+  .operations-bridge__intro h2 {
+    max-width: 13ch;
+  }
+
+  .operations-bridge__summary {
+    max-width: 38rem;
+    margin-top: var(--space-2);
+  }
+
+  .operations-bridge__principles {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-12);
+  }
+
+  .operations-bridge__principle {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.5fr) minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .operations-bridge__principle > p {
+    margin-top: 0;
+  }
+}
+
+/* ----------------------------------------------------------
+   MOBILE
+   ---------------------------------------------------------- */
+
+@media (max-width: 47.9375rem) {
+  .operations-bridge__inner {
+    padding-block: var(--space-10) var(--space-10);
+  }
+
+  .operations-bridge__eyebrow {
+    margin-bottom: var(--space-1);
+  }
+
+  .operations-bridge__intro h2 {
+    max-width: 12ch;
+    font-size: clamp(2.4rem, 11vw, 3.25rem);
+    line-height: 1;
+  }
+
+  .operations-bridge__summary {
+    margin-top: var(--space-2);
+    font-size: 1rem;
+  }
+
+  .operations-bridge__principles {
+    gap: var(--space-5);
+    margin-top: var(--space-10);
+  }
+
+  .operations-bridge__principle {
+    display: block;
+    padding-top: var(--space-3);
+  }
+
+  .operations-bridge__principle > p {
+    margin-top: var(--space-2);
+  }
+
+  .operations-bridge__exit {
+    margin-top: var(--space-8);
+  }
+}
+
+/* ----------------------------------------------------------
+   REDUCED MOTION
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .operations-bridge__eyebrow,
+  .operations-bridge__intro h2,
+  .operations-bridge__summary,
+  .operations-bridge__principle {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .operations-bridge__principle::before {
+    transition: none;
+  }
+}

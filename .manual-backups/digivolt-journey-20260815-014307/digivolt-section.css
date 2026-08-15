@@ -1,0 +1,365 @@
+.digivolt-chapter {
+  overflow: clip;
+  padding-block: var(--space-20);
+  background: var(--text-primary);
+  color: var(--bg-950);
+}
+
+.digivolt-chapter__intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+  margin-bottom: var(--space-12);
+}
+
+.digivolt-chapter__identity {
+  grid-column: 1 / span 3;
+  padding-top: var(--space-1);
+}
+
+.digivolt-chapter__identity p,
+.digivolt-experience__copy .type-tech {
+  color: var(--gold-700);
+}
+
+.digivolt-chapter__category {
+  margin-top: var(--space-2);
+}
+
+.digivolt-chapter__statement {
+  grid-column: 5 / -1;
+}
+
+.digivolt-chapter h2,
+.digivolt-chapter h3 {
+  color: var(--bg-950);
+}
+
+.digivolt-chapter h2 {
+  max-width: 11ch;
+  margin-bottom: var(--space-3);
+  font-size: var(--type-h1);
+  letter-spacing: -0.035em;
+}
+
+.digivolt-chapter__statement > p {
+  max-width: 48ch;
+  color: var(--text-muted);
+}
+
+.digivolt-experience {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.digivolt-experience__visual {
+  grid-column: 1 / span 9;
+  margin: 0;
+}
+
+.digivolt-experience__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  border-radius: var(--radius-media);
+  object-fit: cover;
+  transform: scale(1.002);
+  transform-origin: 56% 58%;
+  transition: transform var(--motion-scene) var(--ease-emphasized);
+}
+
+.digivolt-experience[data-stage='match'] .digivolt-experience__visual img {
+  transform: scale(1.012) translateX(-0.2%);
+}
+
+.digivolt-experience[data-stage='ride'] .digivolt-experience__visual img {
+  transform: scale(1.022) translateX(-0.5%);
+}
+
+.digivolt-experience[data-stage='arrive'] .digivolt-experience__visual img {
+  transform: scale(1.012) translateX(0.2%);
+}
+
+.digivolt-experience__visual figcaption {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+}
+
+.digivolt-experience__copy {
+  grid-column: 10 / -1;
+  padding: 0 0 var(--space-4) var(--space-2);
+}
+
+.digivolt-experience__copy-state {
+  animation: digivolt-copy-enter var(--motion-component) var(--ease-standard) both;
+}
+
+.digivolt-experience__copy h3 {
+  margin: var(--space-2) 0;
+  font-size: var(--type-h3);
+  letter-spacing: -0.025em;
+}
+
+.digivolt-experience__copy p:last-child {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  font-size: var(--type-body);
+  line-height: 1.55;
+}
+
+.digivolt-journey-route {
+  grid-column: 2 / -2;
+  margin-top: var(--space-10);
+}
+
+.digivolt-journey-route svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.digivolt-journey-route .digivolt-journey-route__mobile {
+  display: none;
+}
+
+.digivolt-journey-route__base,
+.digivolt-journey-route__progress {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.digivolt-journey-route__base {
+  stroke: rgba(5, 5, 5, 0.16);
+}
+
+.digivolt-journey-route__progress {
+  stroke: var(--gold-500);
+  stroke-dasharray: var(--route-progress) calc(100 - var(--route-progress));
+  transition: stroke-dasharray var(--motion-scene) var(--ease-emphasized);
+}
+
+.digivolt-journey-route__waypoint {
+  fill: var(--text-primary);
+  stroke: rgba(5, 5, 5, 0.24);
+  stroke-width: 3;
+  transition:
+    fill var(--motion-ui) var(--ease-standard),
+    stroke var(--motion-ui) var(--ease-standard);
+}
+
+.digivolt-journey-route__waypoint[data-active='true'] {
+  fill: var(--gold-500);
+  stroke: var(--bg-950);
+}
+
+.digivolt-journey-route__vehicle {
+  transform: translate(calc(var(--vehicle-x) * 1px), calc(var(--vehicle-y) * 1px));
+  transition: transform var(--motion-scene) var(--ease-emphasized);
+}
+
+.digivolt-journey-route__vehicle--mobile {
+  transform: translate(
+    calc(var(--vehicle-mobile-x) * 1px),
+    calc(var(--vehicle-mobile-y) * 1px)
+  );
+}
+
+.digivolt-journey-route__vehicle circle {
+  fill: var(--bg-950);
+  stroke: var(--gold-400);
+  stroke-width: 2;
+}
+
+.digivolt-journey-route__vehicle text,
+.digivolt-journey-route__place {
+  fill: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.digivolt-journey-route__place {
+  fill: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.digivolt-journey {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.digivolt-journey__stage {
+  display: grid;
+  min-height: var(--space-8);
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-top: var(--border-thin) solid rgba(5, 5, 5, 0.18);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--motion-ui) var(--ease-standard),
+    color var(--motion-ui) var(--ease-standard);
+}
+
+.digivolt-journey__stage:hover,
+.digivolt-journey__stage[data-active='true'] {
+  border-color: var(--gold-700);
+  color: var(--bg-950);
+}
+
+.digivolt-journey__stage:focus-visible {
+  outline-color: var(--gold-700);
+}
+
+.digivolt-journey__stage .type-tech {
+  color: var(--gold-700);
+}
+
+.digivolt-journey__stage strong {
+  font-size: var(--type-ui);
+  text-transform: uppercase;
+}
+
+@keyframes digivolt-copy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-1));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 63.9375rem) {
+  .digivolt-chapter {
+    padding-block: var(--space-15);
+  }
+
+  .digivolt-chapter__intro {
+    margin-bottom: var(--space-10);
+  }
+
+  .digivolt-chapter__identity {
+    grid-column: 1 / span 4;
+  }
+
+  .digivolt-chapter__statement {
+    grid-column: 5 / -1;
+  }
+
+  .digivolt-experience__visual {
+    grid-column: 1 / -1;
+  }
+
+  .digivolt-experience__copy {
+    grid-column: 7 / -1;
+    grid-row: 3;
+    padding: var(--space-3) 0 0;
+  }
+
+  .digivolt-journey-route {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: var(--space-8);
+  }
+
+  .digivolt-journey {
+    grid-column: 1 / span 6;
+    grid-row: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .digivolt-chapter {
+    padding-block: var(--space-10);
+  }
+
+  .digivolt-chapter__intro {
+    display: block;
+    margin-bottom: var(--space-8);
+  }
+
+  .digivolt-chapter__statement {
+    margin-top: var(--space-6);
+  }
+
+  .digivolt-chapter h2 {
+    max-width: 9ch;
+  }
+
+  .digivolt-experience {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .digivolt-experience__visual img {
+    width: calc(100% + (var(--page-margin) * 2));
+    max-width: none;
+    margin-left: calc(var(--page-margin) * -1);
+    border-radius: 0;
+  }
+
+  .digivolt-journey-route {
+    width: 100%;
+    margin: var(--space-6) 0 0;
+  }
+
+  .digivolt-journey-route .digivolt-journey-route__desktop {
+    display: none;
+  }
+
+  .digivolt-journey-route .digivolt-journey-route__mobile {
+    display: block;
+    width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .digivolt-journey-route__place {
+    font-size: 13px;
+  }
+
+  .digivolt-journey {
+    order: 4;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1) var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .digivolt-experience__copy {
+    order: 3;
+    min-height: 12rem;
+    padding-top: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digivolt-experience__visual img,
+  .digivolt-journey-route__progress,
+  .digivolt-journey-route__waypoint,
+  .digivolt-journey-route__vehicle {
+    transition: none;
+  }
+
+  .digivolt-experience__copy-state {
+    animation: none;
+  }
+}
