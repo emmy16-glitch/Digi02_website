@@ -16,9 +16,10 @@
 .site-header__wordmark {
   grid-column: 1 / span 2;
   display: inline-flex;
-  width: max-content;
+  width: 7rem;
   height: 6.5rem;
   align-items: center;
+  overflow: visible;
   text-decoration: none;
 }
 
@@ -27,6 +28,8 @@
   display: block;
   width: auto;
   height: 100%;
+  transform: scale(1.25);
+  transform-origin: left center;
 }
 
 .desktop-navigation {
@@ -108,8 +111,12 @@
   }
 
   .site-header__wordmark {
-    width: max-content;
+    width: 5.75rem;
     height: 5.2rem;
+  }
+
+  .site-header__wordmark img {
+    transform: scale(1.3);
   }
 
   .desktop-navigation {
@@ -153,13 +160,8 @@
     transition: transform var(--motion-ui) var(--ease-standard);
   }
 
-  .mobile-navigation__icon span:first-child {
-    top: 0.25rem;
-  }
-
-  .mobile-navigation__icon span:last-child {
-    bottom: 0.25rem;
-  }
+  .mobile-navigation__icon span:first-child { top: 0.25rem; }
+  .mobile-navigation__icon span:last-child { bottom: 0.25rem; }
 
   .mobile-navigation__toggle[aria-expanded='true'] .mobile-navigation__icon span:first-child {
     transform: translateY(0.25rem) rotate(45deg);
@@ -192,7 +194,7 @@
 
   .mobile-navigation__brand {
     display: block;
-    width: max-content;
+    width: 6rem;
     height: 6rem;
     margin-bottom: var(--space-3);
   }
@@ -255,13 +257,6 @@
 }
 
 @keyframes mobile-navigation-enter {
-  from {
-    opacity: 0;
-    transform: translateY(calc(var(--space-2) * -1));
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(calc(var(--space-2) * -1)); }
+  to { opacity: 1; transform: translateY(0); }
 }
