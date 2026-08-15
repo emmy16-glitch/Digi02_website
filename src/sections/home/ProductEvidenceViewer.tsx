@@ -42,8 +42,8 @@ const products: readonly ProductEvidence[] = [
 ]
 
 const SWIPE_THRESHOLD = 55
-const EDGE_ZONE_RATIO = 0.3
-const MAX_EDGE_REVEAL = 28
+const EDGE_ZONE_RATIO = 0.2
+const MAX_EDGE_REVEAL = 30
 
 export function ProductEvidenceViewer() {
   const [activeIndex, setActiveIndex] = useState(0)
