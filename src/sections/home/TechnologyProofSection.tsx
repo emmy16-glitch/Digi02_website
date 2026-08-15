@@ -1,4 +1,4 @@
-import skyGridOperationsCenter from '../../assets/skygrid/skygrid-operations-center.webp'
+import skyGridRoutePlanner from '../../assets/skygrid/skygrid-route-planner.webp'
 import { Container } from '../../components/Container'
 import '../../styles/technology-proof.css'
 
@@ -19,10 +19,10 @@ export function TechnologyProofSection() {
           <article className="technology-proof__skygrid">
             <div className="technology-proof__skygrid-image">
               <img
-                alt="SkyGrid operations interface"
+                alt="SkyGrid route-planning interface"
                 decoding="async"
                 loading="eager"
-                src={skyGridOperationsCenter}
+                src={skyGridRoutePlanner}
               />
             </div>
             <div className="technology-proof__copy">
