@@ -1,0 +1,125 @@
+name: Core site pages QA
+
+on:
+  push:
+    branches:
+      - chatgpt/core-site-pages
+  workflow_dispatch:
+
+jobs:
+  route-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run route and responsive QA
+        run: |
+          mkdir -p core-site-pages-qa
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { chromium } from 'playwright'
+
+          const routes = [
+            ['/', 'Smarter solutions.'],
+            ['/solutions', 'Technology built around the operation.'],
+            ['/industries', 'Different industries. Different operational realities.'],
+            ['/work', 'Systems are easier to trust when you can understand how they work.'],
+            ['/company', 'We engineer technology for organizations with real operational complexity.'],
+            ['/insights', 'Ideas from the systems we build around.'],
+            ['/contact', 'Tell us what needs to work better.'],
+          ]
+
+          const browser = await chromium.launch({ headless: true })
+          const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } })
+
+          for (const [path, heading] of routes) {
+            await desktop.goto(`http://127.0.0.1:4173${path}`, { waitUntil: 'networkidle' })
+            await desktop.getByRole('heading', { level: 1, name: heading }).waitFor({ state: 'visible' })
+
+            const overflow = await desktop.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }))
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${path} overflows on desktop`)
+
+            if (path !== '/') {
+              const current = desktop.locator('.desktop-navigation__link[aria-current="page"]')
+              assert.equal(await current.count(), 1, `${path} should have one active desktop navigation item`)
+            }
+
+            const slug = path === '/' ? 'home' : path.slice(1)
+            await desktop.screenshot({ path: `core-site-pages-qa/${slug}-desktop.png`, fullPage: true })
+          }
+
+          await desktop.goto('http://127.0.0.1:4173/contact', { waitUntil: 'networkidle' })
+          assert.equal(await desktop.locator('form.contact-form').count(), 1)
+          assert.equal(await desktop.locator('input[name="name"]').count(), 1)
+          assert.equal(await desktop.locator('input[name="email"]').count(), 1)
+          assert.equal(await desktop.locator('textarea[name="project"]').count(), 1)
+
+          const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } })
+          for (const [path, heading] of routes) {
+            await mobile.goto(`http://127.0.0.1:4173${path}`, { waitUntil: 'networkidle' })
+            await mobile.getByRole('heading', { level: 1, name: heading }).waitFor({ state: 'visible' })
+            const overflow = await mobile.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }))
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${path} overflows on mobile`)
+          }
+
+          await mobile.goto('http://127.0.0.1:4173/solutions', { waitUntil: 'networkidle' })
+          await mobile.screenshot({ path: 'core-site-pages-qa/solutions-mobile.png', fullPage: true })
+          await mobile.goto('http://127.0.0.1:4173/contact', { waitUntil: 'networkidle' })
+          await mobile.screenshot({ path: 'core-site-pages-qa/contact-mobile.png', fullPage: true })
+
+          await desktop.goto('http://127.0.0.1:4173/not-a-real-route', { waitUntil: 'networkidle' })
+          await desktop.getByRole('heading', { level: 1, name: 'This route is not part of the system.' }).waitFor({ state: 'visible' })
+
+          await desktop.close()
+          await mobile.close()
+          await browser.close()
+          NODE
+
+      - name: Upload route QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-site-pages-qa
+          path: core-site-pages-qa/
+          retention-days: 2
