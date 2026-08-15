@@ -1,5 +1,6 @@
 import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import skyGridMissionPlanner from '../../assets/skygrid/skygrid-gcs-mission-planner.webp'
+import skyGridCinematic from '../../assets/skygrid/skygrid-cinematic-control-room.webp'
+import skyGridLogo from '../../assets/skygrid/skygrid-logo.png'
 
 export function HeroTechnologyComposition() {
   return (
@@ -7,11 +8,17 @@ export function HeroTechnologyComposition() {
       <div className="hero-technology__stage">
         <div className="hero-technology__skygrid">
           <img
-            alt="SkyGrid ground-control mission planning interface"
+            alt="Illustrative SkyGrid UAV operations environment"
+            className="hero-technology__skygrid-scene"
             decoding="async"
             fetchPriority="high"
-            src={skyGridMissionPlanner}
+            src={skyGridCinematic}
           />
+
+          <div className="hero-technology__skygrid-brand">
+            <img alt="SkyGrid" src={skyGridLogo} />
+            <span>UAV operations</span>
+          </div>
         </div>
 
         <div className="hero-technology__digivolt" aria-label="DigiVolt mobility journey">
@@ -34,7 +41,7 @@ export function HeroTechnologyComposition() {
       </div>
 
       <figcaption id="hero-technology-caption">
-        SkyGrid uses real product evidence. DigiVolt and ERP/POS are presented as product and system visualization.
+        SkyGrid is shown with an illustrative concept environment. DigiVolt and ERP/POS are shown as product and system visualizations.
       </figcaption>
     </figure>
   )
