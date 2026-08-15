@@ -70,15 +70,12 @@
   line-height: 1.3;
 }
 
-/* ==========================================================
-   WARM-WHITE JOURNEY
-   ========================================================== */
-
 .digivolt-journey {
   --digivolt-bg: #f7f6f2;
   --digivolt-ink: #111112;
   --digivolt-muted: #73716c;
   --digivolt-line: rgba(17, 17, 18, 0.2);
+  --digivolt-line-strong: rgba(17, 17, 18, 0.32);
   --digivolt-gold: #c9a34a;
   --digivolt-gold-dark: #86672b;
 
@@ -125,10 +122,68 @@
   line-height: 1.65;
 }
 
+.digivolt-journey__interaction {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.4fr) minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  align-items: center;
+  margin-top: clamp(6rem, 9vw, 9rem);
+}
+
+.digivolt-journey__stage-copy {
+  min-width: 0;
+}
+
+.digivolt-journey__stage-copy > span {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--digivolt-gold-dark);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.digivolt-journey__stage-copy h3 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--digivolt-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.digivolt-journey__stage-copy p {
+  max-width: 28rem;
+  margin: var(--space-3) 0 0;
+  color: var(--digivolt-muted);
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+.digivolt-journey__stage-copy > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: var(--space-4);
+  color: var(--digivolt-ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.digivolt-journey__stage-copy > strong::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--digivolt-gold);
+  content: '';
+}
+
 .digivolt-journey__route {
   position: relative;
-  min-height: clamp(30rem, 40vw, 39rem);
-  margin-top: clamp(6rem, 9vw, 9rem);
+  min-height: clamp(29rem, 38vw, 38rem);
 }
 
 .digivolt-journey__route svg {
@@ -139,12 +194,22 @@
   overflow: visible;
 }
 
-.digivolt-journey__route path {
+.digivolt-journey__route-base,
+.digivolt-journey__route-progress {
   fill: none;
-  stroke: var(--digivolt-line);
   stroke-linecap: round;
-  stroke-width: 2;
   vector-effect: non-scaling-stroke;
+}
+
+.digivolt-journey__route-base {
+  stroke: var(--digivolt-line);
+  stroke-width: 2;
+}
+
+.digivolt-journey__route-progress {
+  stroke: var(--digivolt-gold);
+  stroke-width: 3;
+  transition: stroke-dashoffset 700ms var(--ease-emphasized);
 }
 
 .digivolt-journey__point {
@@ -170,18 +235,27 @@
 .digivolt-journey__vehicle {
   position: absolute;
   z-index: 4;
-  top: 47%;
-  left: 58%;
   display: grid;
   width: 3.25rem;
   height: 3.25rem;
   place-items: center;
+  border: 2px solid var(--digivolt-gold);
   border-radius: 50%;
   background: var(--digivolt-ink);
   color: var(--digivolt-bg);
-  font-size: 0.7rem;
+  box-shadow: 0 0 0 0.45rem rgba(201, 163, 74, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   font-weight: 600;
   transform: translate(-50%, -50%);
+  transition:
+    left 700ms var(--ease-emphasized),
+    top 700ms var(--ease-emphasized),
+    box-shadow 320ms var(--ease-standard);
+}
+
+.digivolt-journey[data-stage='arrive'] .digivolt-journey__vehicle {
+  box-shadow: 0 0 0 0.7rem rgba(201, 163, 74, 0.12);
 }
 
 .digivolt-journey__route-meta {
@@ -208,8 +282,9 @@
 }
 
 .digivolt-journey__route-meta--vehicle {
-  top: 57%;
+  top: 58%;
   left: 58%;
+  max-width: 12rem;
   transform: translateX(-50%);
   text-align: center;
 }
@@ -223,29 +298,94 @@
 .digivolt-journey__stages {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(2rem, 5vw, 5rem);
-  padding: 0;
-  margin: var(--space-6) 0 0;
-  list-style: none;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(4rem, 6vw, 6rem);
 }
 
-.digivolt-journey__stages li {
-  max-width: 18rem;
+.digivolt-journey__stages button {
+  position: relative;
+  min-width: 0;
+  border: 0;
+  border-top: 1px solid var(--digivolt-line);
+  padding: var(--space-3) 0 0;
+  background: transparent;
+  color: var(--digivolt-muted);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
 }
 
-.digivolt-journey__stages h3 {
-  margin: 0;
-  color: var(--digivolt-ink);
-  font-size: clamp(1.45rem, 2vw, 2rem);
+.digivolt-journey__stages button::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--digivolt-gold);
+  content: '';
+  transition: width 420ms var(--ease-emphasized);
+}
+
+.digivolt-journey__stages button > span {
+  display: block;
+  color: var(--digivolt-gold-dark);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+}
+
+.digivolt-journey__stages button strong {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--digivolt-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.9rem);
   font-weight: 600;
   letter-spacing: -0.03em;
 }
 
-.digivolt-journey__stages p {
+.digivolt-journey__stages button p {
+  max-width: 18rem;
   margin: var(--space-1) 0 0;
   color: var(--digivolt-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.digivolt-journey__stages button:hover strong,
+.digivolt-journey__stages button[data-active='true'] strong {
+  color: var(--digivolt-ink);
+}
+
+.digivolt-journey__stages button[data-active='true']::before {
+  width: 100%;
+}
+
+.digivolt-journey__stages button:focus-visible {
+  outline: 2px solid var(--digivolt-gold-dark);
+  outline-offset: 0.35rem;
+}
+
+.digivolt-journey__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--digivolt-line);
+  padding-top: var(--space-3);
+}
+
+.digivolt-journey__footer span {
+  color: var(--digivolt-muted);
+  font-size: 0.74rem;
+}
+
+.digivolt-journey__footer strong {
+  color: var(--digivolt-gold-dark);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
 }
 
 @media (max-width: 64rem) {
@@ -277,6 +417,34 @@
   .digivolt-journey__heading > p:last-child {
     grid-column: 4 / span 7;
     margin-top: var(--space-3);
+  }
+
+  .digivolt-journey__interaction {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .digivolt-journey__stage-copy {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-6);
+    align-items: start;
+  }
+
+  .digivolt-journey__stage-copy > span,
+  .digivolt-journey__stage-copy h3 {
+    grid-column: 1;
+  }
+
+  .digivolt-journey__stage-copy p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
+
+  .digivolt-journey__stage-copy > strong {
+    grid-column: 2;
+    margin-top: 0;
   }
 }
 
@@ -321,9 +489,26 @@
     margin-top: var(--space-3);
   }
 
+  .digivolt-journey__interaction {
+    margin-top: var(--space-8);
+  }
+
+  .digivolt-journey__stage-copy {
+    display: block;
+  }
+
+  .digivolt-journey__stage-copy p,
+  .digivolt-journey__stage-copy > strong {
+    margin-top: var(--space-3);
+  }
+
+  .digivolt-journey__stage-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.4rem, 10.5vw, 3.3rem);
+  }
+
   .digivolt-journey__route {
     min-height: 24rem;
-    margin-top: var(--space-8);
   }
 
   .digivolt-journey__route svg {
@@ -342,8 +527,6 @@
   }
 
   .digivolt-journey__vehicle {
-    top: 48%;
-    left: 58%;
     width: 2.75rem;
     height: 2.75rem;
   }
@@ -353,7 +536,8 @@
   }
 
   .digivolt-journey__route-meta--vehicle {
-    top: 58%;
+    top: 59%;
+    max-width: 8rem;
   }
 
   .digivolt-journey__route-meta--destination {
@@ -361,8 +545,34 @@
   }
 
   .digivolt-journey__stages {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-5) var(--space-4);
-    margin-top: var(--space-5);
+    grid-template-columns: repeat(4, minmax(7.2rem, 1fr));
+    overflow-x: auto;
+    margin-right: calc(var(--page-margin) * -1);
+    padding-right: var(--page-margin);
+    scrollbar-width: none;
+  }
+
+  .digivolt-journey__stages::-webkit-scrollbar {
+    display: none;
+  }
+
+  .digivolt-journey__stages button p {
+    display: none;
+  }
+
+  .digivolt-journey__stages button strong {
+    font-size: 1rem;
+  }
+
+  .digivolt-journey__footer {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digivolt-journey__route-progress,
+  .digivolt-journey__vehicle,
+  .digivolt-journey__stages button::before {
+    transition: none;
   }
 }
