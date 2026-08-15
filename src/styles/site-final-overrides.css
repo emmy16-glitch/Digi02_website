@@ -74,10 +74,16 @@
 
 @media (max-width: 22.5rem) {
   .capability-page--payroll .payroll-cycle {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .capability-page--payroll .payroll-cycle__step {
+    min-height: 5.75rem;
+    padding: 0.8rem 0.6rem;
   }
 
   .capability-page--payroll .payroll-cycle__step:last-of-type {
-    grid-column: 1;
+    grid-column: 1 / -1;
   }
 }
