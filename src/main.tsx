@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './styles/tokens.css'
 import './styles/global.css'
 import App from './App.tsx'
+import './styles/erp-pos-layout-fixes.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
