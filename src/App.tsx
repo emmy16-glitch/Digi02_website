@@ -7,6 +7,7 @@ import { HomeFinalCtaSection } from './sections/home/HomeFinalCtaSection'
 import { SkyGridSection } from './sections/home/SkyGridSection'
 import { SolutionsTransformationSection } from './sections/home/SolutionsTransformationSection'
 import { WhyDigi02Section } from './sections/home/WhyDigi02Section'
+import './styles/core-homepage-responsive.css'
 
 const FOUNDATION_PATH = '/foundation'
 
