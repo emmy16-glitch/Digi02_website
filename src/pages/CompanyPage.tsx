@@ -132,19 +132,6 @@ export function CompanyPage() {
         </Container>
       </section>
 
-      <section className="company-direction" aria-labelledby="company-direction-title">
-        <Container className="company-direction__grid company-direction__grid--deep">
-          <div>
-            <p>Mission</p>
-            <h2 id="company-direction-title">Build systems that improve control, visibility and execution inside organizations.</h2>
-          </div>
-          <div>
-            <p>Direction</p>
-            <h2>Build from Nigeria for organizations that need dependable technology they can operate every day.</h2>
-          </div>
-        </Container>
-      </section>
-
       <section className="company-base" aria-labelledby="company-base-title">
         <Container className="company-base__grid">
           <div className="company-base__statement">
