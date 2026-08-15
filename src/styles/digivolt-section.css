@@ -1,120 +1,108 @@
 .digivolt-chapter {
-  --digivolt-bg: #f7f6f2;
-  --digivolt-ink: #111112;
-  --digivolt-muted: #73716c;
-  --digivolt-line: rgba(17, 17, 18, 0.14);
-  --digivolt-line-strong: rgba(17, 17, 18, 0.26);
-  --digivolt-gold: #c9a34a;
-  --digivolt-gold-dark: #86672b;
+  --digivolt-ink: var(--text-primary);
+  --digivolt-muted: var(--text-secondary);
+  --digivolt-quiet: var(--text-muted);
+  --digivolt-gold: var(--gold-500);
+  --digivolt-gold-bright: var(--gold-400);
+  --digivolt-line: var(--line-subtle);
 
   position: relative;
   overflow: clip;
-  background: var(--digivolt-bg);
+  background: var(--bg-950);
   color: var(--digivolt-ink);
 }
 
-.digivolt-chapter__inner {
-  padding-block:
-    clamp(6rem, 9vw, 9rem)
-    clamp(5rem, 8vw, 8rem);
+.digivolt-chapter__scroll-area,
+.digivolt-chapter__sticky {
+  position: relative;
 }
 
-/* ==========================================================
-   INTRO
-   ========================================================== */
+.digivolt-chapter__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(var(--space-10), 8vw, var(--space-15));
+}
 
-.digivolt-chapter__intro {
+.digivolt-chapter__layout {
   display: grid;
-  grid-template-columns:
-    minmax(12rem, 0.38fr)
-    minmax(0, 1fr);
-  gap: clamp(2rem, 7vw, 7rem);
-  align-items: start;
+  grid-template-columns: minmax(17rem, 0.76fr) minmax(0, 1.24fr);
+  gap: clamp(var(--space-6), 6vw, var(--space-12));
+  align-items: center;
+}
+
+.digivolt-chapter__copy {
+  min-width: 0;
 }
 
 .digivolt-chapter__identity {
-  padding-top: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.digivolt-chapter__identity p,
+.digivolt-chapter__identity span {
+  margin: 0;
 }
 
 .digivolt-chapter__identity p {
-  margin: 0;
-  color: var(--digivolt-gold-dark);
+  color: var(--digivolt-gold);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .digivolt-chapter__identity span {
-  display: block;
-  margin-top: var(--space-2);
-  color: var(--digivolt-muted);
-  font-size: var(--type-ui);
+  color: var(--digivolt-quiet);
+  font-size: var(--type-caption);
 }
 
-.digivolt-chapter__statement {
-  max-width: 52rem;
-}
-
-.digivolt-chapter__statement h2 {
-  max-width: 12ch;
+.digivolt-chapter__copy > h2 {
+  max-width: 10ch;
   margin: 0;
   color: var(--digivolt-ink);
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5vw, 5rem);
-  font-weight: 550;
-  letter-spacing: -0.05em;
+  font-size: clamp(3.2rem, 5.7vw, 5.8rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
   line-height: 0.96;
 }
 
-.digivolt-chapter__statement > p {
-  max-width: 40rem;
+.digivolt-chapter__summary {
+  max-width: 36rem;
   margin: var(--space-4) 0 0;
   color: var(--digivolt-muted);
   font-size: var(--type-body);
-  line-height: 1.65;
+  line-height: 1.6;
 }
-
-/* ==========================================================
-   MAIN JOURNEY
-   ========================================================== */
-
-.digivolt-journey {
-  display: grid;
-  grid-template-columns:
-    minmax(16rem, 0.42fr)
-    minmax(0, 1fr);
-  gap: clamp(3rem, 6vw, 7rem);
-  align-items: center;
-  margin-top: clamp(5rem, 8vw, 8rem);
-}
-
-/* ----------------------------------------------------------
-   COPY
-   ---------------------------------------------------------- */
 
 .digivolt-journey__copy {
-  min-width: 0;
+  max-width: 32rem;
+  margin-top: clamp(var(--space-6), 5vw, var(--space-10));
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--digivolt-line);
 }
 
 .digivolt-journey__stage-number {
   margin: 0 0 var(--space-2);
-  color: var(--digivolt-gold-dark);
+  color: var(--digivolt-gold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .digivolt-journey__copy h3 {
-  max-width: 11ch;
+  max-width: 12ch;
   margin: 0;
   color: var(--digivolt-ink);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.2vw, 3.6rem);
-  font-weight: 550;
-  letter-spacing: -0.045em;
-  line-height: 1;
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .digivolt-journey__copy > p:not(.type-tech) {
-  max-width: 28rem;
+  max-width: 31rem;
   margin: var(--space-3) 0 0;
   color: var(--digivolt-muted);
   font-size: 1rem;
@@ -122,247 +110,311 @@
 }
 
 .digivolt-journey__status {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
   color: var(--digivolt-ink);
   font-size: var(--type-caption);
   font-weight: 600;
 }
 
 .digivolt-journey__status span {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.45rem;
+  height: 0.45rem;
   border-radius: 50%;
   background: var(--digivolt-gold);
 }
 
-/* ----------------------------------------------------------
-   ROUTE CANVAS
-   ---------------------------------------------------------- */
-
 .digivolt-route {
+  position: relative;
   min-width: 0;
+}
+
+.digivolt-route__telemetry {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  width: min(21rem, 44%);
+  border-top: 1px solid var(--digivolt-line);
+  border-bottom: 1px solid var(--digivolt-line);
+  padding-block: var(--space-2);
+  background: rgba(5, 5, 5, 0.76);
+}
+
+.digivolt-route__telemetry-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.digivolt-route__telemetry-head span {
+  color: var(--digivolt-gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.digivolt-route__telemetry-head strong {
+  color: var(--digivolt-muted);
+  font-size: var(--type-caption);
+  font-weight: 500;
+}
+
+.digivolt-route__telemetry dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.digivolt-route__telemetry dl > div {
+  min-width: 0;
+  border-left: 1px solid var(--digivolt-line);
+  padding-left: var(--space-2);
+}
+
+.digivolt-route__telemetry dl > div:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.digivolt-route__telemetry dt,
+.digivolt-route__telemetry dd {
+  margin: 0;
+}
+
+.digivolt-route__telemetry dt {
+  color: var(--digivolt-quiet);
+  font-family: var(--font-mono);
+  font-size: var(--type-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.digivolt-route__telemetry dd {
+  margin-top: var(--space-0-5);
+  color: var(--digivolt-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.digivolt-route__battery {
+  height: 2px;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  background: var(--line-subtle);
+}
+
+.digivolt-route__battery span {
+  display: block;
+  height: 100%;
+  background: var(--digivolt-gold);
+  transition: width var(--motion-component) var(--ease-emphasized);
 }
 
 .digivolt-route__canvas {
   position: relative;
-  min-height: clamp(22rem, 32vw, 31rem);
-  overflow: hidden;
+  min-height: clamp(27rem, 39vw, 35rem);
 }
-
-/*
-  No giant card.
-  No fake map window.
-  The route lives directly on the page.
-*/
 
 .digivolt-route__svg {
   position: absolute;
-  inset: 8% 0 4%;
+  inset: 0;
   width: 100%;
-  height: 84%;
+  height: 100%;
   overflow: visible;
 }
 
-.digivolt-route__base,
-.digivolt-route__progress {
+.digivolt-route__terrain {
+  fill: none;
+  stroke: rgba(247, 246, 242, 0.055);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.digivolt-route__road-edge,
+.digivolt-route__road,
+.digivolt-route__lane,
+.digivolt-route__progress,
+.digivolt-route__measure {
   fill: none;
   vector-effect: non-scaling-stroke;
 }
 
-.digivolt-route__base {
-  stroke: rgba(17, 17, 18, 0.18);
-  stroke-width: 2;
+.digivolt-route__road-edge {
+  stroke: rgba(247, 246, 242, 0.12);
+  stroke-linecap: round;
+  stroke-width: 34;
+}
+
+.digivolt-route__road {
+  stroke: var(--surface-800);
+  stroke-linecap: round;
+  stroke-width: 30;
+}
+
+.digivolt-route__lane {
+  stroke: rgba(247, 246, 242, 0.16);
+  stroke-dasharray: 4 10;
+  stroke-linecap: round;
+  stroke-width: 1;
 }
 
 .digivolt-route__progress {
   stroke: var(--digivolt-gold);
   stroke-linecap: round;
-  stroke-width: 3;
-  transition:
-    stroke-dashoffset 760ms var(--ease-emphasized);
+  stroke-width: 2.5;
 }
 
-/* ----------------------------------------------------------
-   PICKUP / DESTINATION
-   ---------------------------------------------------------- */
+.digivolt-route__measure {
+  stroke: transparent;
+  stroke-width: 1;
+}
 
-.digivolt-route__location {
-  position: absolute;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: var(--digivolt-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+.digivolt-route__waypoint-ring,
+.digivolt-route__waypoint-dot {
+  vector-effect: non-scaling-stroke;
+}
+
+.digivolt-route__waypoint-ring {
+  fill: var(--bg-950);
+  stroke-width: 1.5;
+}
+
+.digivolt-route__waypoint-dot {
+  stroke: none;
+}
+
+.digivolt-route__waypoint-number,
+.digivolt-route__waypoint-label {
+  font-family: var(--font-mono);
+  pointer-events: none;
+}
+
+.digivolt-route__waypoint-number {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.digivolt-route__waypoint-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.digivolt-route__waypoint[data-state='complete'] .digivolt-route__waypoint-ring {
+  stroke: var(--text-secondary);
+}
+
+.digivolt-route__waypoint[data-state='complete'] .digivolt-route__waypoint-dot {
+  fill: var(--text-secondary);
+}
+
+.digivolt-route__waypoint[data-state='complete'] .digivolt-route__waypoint-number,
+.digivolt-route__waypoint[data-state='complete'] .digivolt-route__waypoint-label {
+  fill: var(--text-secondary);
+}
+
+.digivolt-route__waypoint[data-state='active'] .digivolt-route__waypoint-ring {
+  stroke: var(--digivolt-gold);
+}
+
+.digivolt-route__waypoint[data-state='active'] .digivolt-route__waypoint-dot {
+  fill: var(--digivolt-gold);
+}
+
+.digivolt-route__waypoint[data-state='active'] .digivolt-route__waypoint-number,
+.digivolt-route__waypoint[data-state='active'] .digivolt-route__waypoint-label {
+  fill: var(--digivolt-gold-bright);
+}
+
+.digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-ring {
+  stroke: rgba(170, 168, 162, 0.38);
+}
+
+.digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-dot {
+  fill: rgba(170, 168, 162, 0.38);
+}
+
+.digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-number,
+.digivolt-route__waypoint[data-state='upcoming'] .digivolt-route__waypoint-label {
+  fill: var(--digivolt-quiet);
+}
+
+.digivolt-route__vehicle-group,
+.digivolt-route__vehicle-image {
+  pointer-events: none;
+}
+
+.digivolt-route__vehicle-shadow {
+  fill: rgba(0, 0, 0, 0.55);
+}
+
+.digivolt-route__charger rect:first-child {
+  fill: var(--surface-700);
+  stroke: rgba(247, 246, 242, 0.2);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.digivolt-route__charger rect:nth-child(2) {
+  fill: var(--bg-950);
+  stroke: var(--line-gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.digivolt-route__charger path {
+  fill: var(--digivolt-gold);
+}
+
+.digivolt-route__charger line {
+  stroke: rgba(247, 246, 242, 0.2);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.digivolt-route__hint {
+  margin: var(--space-2) 0 0;
+  color: var(--digivolt-quiet);
+  letter-spacing: 0.1em;
+  text-align: right;
   text-transform: uppercase;
 }
 
-.digivolt-route__location strong {
-  font-weight: 600;
-}
-
-.digivolt-route__location--pickup {
-  left: 6%;
-  bottom: 18%;
-}
-
-.digivolt-route__location--destination {
-  top: 10%;
-  right: 3%;
-}
-
-.digivolt-route__location-dot {
-  display: block;
-  width: 0.75rem;
-  height: 0.75rem;
-  border: 2px solid var(--digivolt-gold);
-  border-radius: 50%;
-  background: var(--digivolt-bg);
-}
-
-/* ----------------------------------------------------------
-   EV MARKER
-   ---------------------------------------------------------- */
-
-.digivolt-route__vehicle {
-  position: absolute;
-  z-index: 6;
-  display: grid;
-  width: 3.1rem;
-  height: 3.1rem;
-  place-items: center;
-  border: 2px solid var(--digivolt-gold);
-  border-radius: 50%;
-  background: var(--digivolt-ink);
-  color: var(--digivolt-bg);
-  box-shadow:
-    0 0 0 0.4rem rgba(201, 163, 74, 0.08);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  transform: translate(-50%, -50%);
-  transition:
-    left 760ms var(--ease-emphasized),
-    top 760ms var(--ease-emphasized),
-    transform var(--motion-fast) var(--ease-standard);
-}
-
-.digivolt-route__vehicle:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* ----------------------------------------------------------
-   STAGE-SPECIFIC DETAIL
-   ---------------------------------------------------------- */
-
-.digivolt-route__pulse {
-  position: absolute;
-  z-index: 2;
-  width: 1rem;
-  height: 1rem;
-  border: 1px solid var(--digivolt-gold);
-  border-radius: 50%;
-  opacity: 0;
-}
-
-.digivolt-route__pulse--pickup {
-  left: 9%;
-  bottom: 21%;
-}
-
-.digivolt-route__pulse--destination {
-  top: 13%;
-  right: 7%;
-}
-
-.digivolt-chapter[data-stage='request']
-  .digivolt-route__pulse--pickup {
-  opacity: 1;
-  animation: digivolt-location-pulse 1.8s ease-out infinite;
-}
-
-.digivolt-chapter[data-stage='arrive']
-  .digivolt-route__pulse--destination {
-  opacity: 1;
-  animation: digivolt-location-pulse 1.8s ease-out 1;
-}
-
-@keyframes digivolt-location-pulse {
-  0% {
-    opacity: 0.7;
-    transform: scale(0.6);
-  }
-
-  70% {
-    opacity: 0;
-    transform: scale(2.4);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2.4);
-  }
-}
-
-/* ----------------------------------------------------------
-   READOUT
-   ---------------------------------------------------------- */
-
-.digivolt-route__readout {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: var(--space-2);
-  align-items: center;
-  border-top: 1px solid var(--digivolt-line);
-  padding-top: var(--space-2);
-  color: var(--digivolt-muted);
-  font-size: var(--type-caption);
-}
-
-.digivolt-route__readout strong {
-  color: var(--digivolt-ink);
-  font-weight: 600;
-  text-align: center;
-}
-
-.digivolt-route__readout span:last-child {
-  text-align: right;
-}
-
-/* ==========================================================
-   JOURNEY RAIL
-   ========================================================== */
-
 .digivolt-stage-rail {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
-  margin-top: clamp(4rem, 6vw, 6rem);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: clamp(var(--space-5), 5vw, var(--space-8));
+  border-top: 1px solid var(--digivolt-line);
 }
 
 .digivolt-stage-rail__item {
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 4.5rem;
-  align-items: flex-end;
-  gap: var(--space-1);
+  min-height: 5rem;
+  align-items: center;
+  gap: var(--space-2);
   border: 0;
-  border-top: 1px solid var(--digivolt-line);
-  padding: var(--space-2) 0 0;
+  border-left: 1px solid var(--digivolt-line);
+  padding: var(--space-2);
   background: transparent;
-  color: var(--digivolt-muted);
+  color: var(--digivolt-quiet);
   cursor: pointer;
   font: inherit;
   text-align: left;
   transition:
     color var(--motion-fast) var(--ease-standard),
-    border-color var(--motion-fast) var(--ease-standard);
+    background-color var(--motion-fast) var(--ease-standard);
+}
+
+.digivolt-stage-rail__item:first-child {
+  border-left: 0;
 }
 
 .digivolt-stage-rail__item::before {
@@ -382,124 +434,214 @@
 
 .digivolt-stage-rail__item[data-active='true'] {
   color: var(--digivolt-ink);
+  background: rgba(247, 246, 242, 0.025);
 }
 
 .digivolt-stage-rail__item[data-active='true']::before {
   width: 100%;
 }
 
-.digivolt-stage-rail__item .type-tech {
-  color: var(--digivolt-gold-dark);
-  font-size: 0.65rem;
+.digivolt-stage-rail__item[data-complete='true'] {
+  color: var(--digivolt-muted);
 }
 
-.digivolt-stage-rail__item strong {
+.digivolt-stage-rail__state {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.digivolt-stage-rail__item[data-active='true'] .digivolt-stage-rail__state {
+  border-color: var(--digivolt-gold);
+  background: var(--digivolt-gold);
+}
+
+.digivolt-stage-rail__item[data-complete='true'] .digivolt-stage-rail__state {
+  border-color: var(--text-secondary);
+  background: var(--text-secondary);
+}
+
+.digivolt-stage-rail__text {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-0-5);
+}
+
+.digivolt-stage-rail__text .type-tech {
+  color: currentColor;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+.digivolt-stage-rail__text strong {
+  overflow: hidden;
   font-size: var(--type-ui);
   font-weight: 600;
-  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.digivolt-stage-rail__item:focus-visible {
-  outline: 2px solid var(--digivolt-gold);
-  outline-offset: 0.35rem;
+.digivolt-stage-rail__item:focus-visible,
+.digivolt-replay:focus-visible {
+  outline: var(--focus-ring-width) solid var(--digivolt-gold);
+  outline-offset: var(--focus-ring-offset);
 }
 
-/* ==========================================================
-   TABLET
-   ========================================================== */
+.digivolt-replay {
+  min-width: 44px;
+  min-height: 44px;
+  margin-top: var(--space-3);
+  border: 1px solid var(--digivolt-line);
+  border-radius: var(--radius-control);
+  padding: 0 var(--space-2);
+  background: transparent;
+  color: var(--digivolt-ink);
+  cursor: pointer;
+  font: 500 var(--type-ui) / 1 var(--font-body);
+}
+
+.digivolt-replay:hover {
+  border-color: var(--line-gold);
+}
+
+@media (min-width: 64.0625rem) {
+  .digivolt-chapter__scroll-area {
+    height: 260svh;
+  }
+
+  .digivolt-chapter__sticky {
+    position: sticky;
+    top: 0;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+  }
+
+  .digivolt-chapter__inner {
+    width: 100%;
+    padding-block: clamp(var(--space-6), 7vh, var(--space-10));
+  }
+}
 
 @media (max-width: 64rem) {
-  .digivolt-chapter__intro {
+  .digivolt-chapter__layout {
     grid-template-columns: 1fr;
-    gap: var(--space-3);
+    gap: var(--space-8);
   }
 
-  .digivolt-chapter__statement h2 {
-    max-width: 11ch;
+  .digivolt-chapter__copy > h2 {
+    max-width: 12ch;
   }
 
-  .digivolt-journey {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
+  .digivolt-chapter__summary,
   .digivolt-journey__copy {
     max-width: 42rem;
   }
 
+  .digivolt-journey__copy {
+    margin-top: var(--space-6);
+  }
+
   .digivolt-route__canvas {
-    min-height: 26rem;
+    min-height: clamp(24rem, 62vw, 32rem);
+  }
+
+  .digivolt-route__telemetry {
+    width: min(21rem, 48%);
   }
 }
-
-/* ==========================================================
-   MOBILE
-   ========================================================== */
 
 @media (max-width: 47.9375rem) {
   .digivolt-chapter__inner {
     padding-block: var(--space-10);
   }
 
-  .digivolt-chapter__statement h2 {
-    font-size: clamp(2.6rem, 12vw, 3.6rem);
+  .digivolt-chapter__identity {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-1);
   }
 
-  .digivolt-chapter__statement > p {
+  .digivolt-chapter__copy > h2 {
+    max-width: 10ch;
+    font-size: clamp(2.75rem, 13vw, 4rem);
+  }
+
+  .digivolt-chapter__summary {
     margin-top: var(--space-3);
     font-size: 1rem;
   }
 
-  .digivolt-journey {
-    margin-top: var(--space-10);
+  .digivolt-journey__copy h3 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
   }
 
-  .digivolt-journey__copy h3 {
-    max-width: 12ch;
-    font-size: clamp(2rem, 9vw, 2.8rem);
+  .digivolt-route {
+    display: grid;
+  }
+
+  .digivolt-route__telemetry {
+    position: relative;
+    top: auto;
+    right: auto;
+    order: 1;
+    width: 100%;
+    margin-bottom: var(--space-3);
   }
 
   .digivolt-route__canvas {
+    order: 2;
     min-height: 20rem;
   }
 
-  .digivolt-route__vehicle {
-    width: 2.6rem;
-    height: 2.6rem;
-  }
-
-  .digivolt-route__readout {
-    grid-template-columns: 1fr auto;
-  }
-
-  .digivolt-route__readout strong {
-    display: none;
+  .digivolt-route__hint {
+    order: 3;
+    text-align: left;
   }
 
   .digivolt-stage-rail {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
+    grid-template-columns: 1fr;
+    margin-top: var(--space-6);
   }
 
   .digivolt-stage-rail__item {
-    min-height: 4rem;
+    min-height: 3.5rem;
+    border-left: 0;
+    border-bottom: 1px solid var(--digivolt-line);
+    padding-inline: 0;
+  }
+
+  .digivolt-stage-rail__item::before {
+    top: auto;
+    bottom: -1px;
+  }
+
+  .digivolt-stage-rail__text {
+    grid-template-columns: 2.5rem 1fr;
+    align-items: center;
+    width: 100%;
+  }
+
+  .digivolt-stage-rail__text strong {
+    white-space: normal;
   }
 }
 
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
-
 @media (prefers-reduced-motion: reduce) {
-  .digivolt-route__progress,
-  .digivolt-route__vehicle,
+  .digivolt-chapter__scroll-area {
+    height: auto;
+  }
+
+  .digivolt-chapter__sticky {
+    position: relative;
+    min-height: auto;
+  }
+
+  .digivolt-route__battery span,
   .digivolt-stage-rail__item,
   .digivolt-stage-rail__item::before {
     transition: none;
-  }
-
-  .digivolt-route__pulse {
-    animation: none !important;
   }
 }
