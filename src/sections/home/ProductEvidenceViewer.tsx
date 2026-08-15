@@ -70,7 +70,7 @@ export function ProductEvidenceViewer() {
 
     viewport.style.setProperty('--edge-opacity', safeStrength.toFixed(3))
     viewport.style.setProperty('--current-shift', `${signedShift.toFixed(2)}px`)
-    setHoverSide(side)
+    setHoverSide((current) => (current === side ? current : side))
   }
 
   function resetReveal() {
