@@ -28,6 +28,26 @@ select {
   touch-action: manipulation;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 2000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  transform: translateY(-160%);
+  border-radius: var(--radius-control);
+  background: var(--text-primary);
+  color: var(--bg-950);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  color: var(--bg-950);
+}
+
 .button,
 .site-header__cta,
 .mobile-navigation__toggle {
@@ -100,11 +120,6 @@ select {
 .capability-sequence article,
 .software-build__stages article {
   grid-template-columns: 1fr;
-}
-
-.company-method__sequence article,
-.capability-sequence article,
-.software-build__stages article {
   border-top: 0;
 }
 
