@@ -71,7 +71,46 @@ jobs:
             return locator.evaluate((element) => element === document.activeElement)
           }
 
+          async function paintWholePage(page, viewportHeight) {
+            let y = 0
+            let previousHeight = 0
+
+            while (true) {
+              const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight)
+              if (y >= pageHeight) break
+
+              await page.evaluate((nextY) => window.scrollTo(0, nextY), y)
+              await page.waitForTimeout(120)
+              y += Math.max(Math.floor(viewportHeight * 0.72), 500)
+
+              if (pageHeight === previousHeight && y > pageHeight) break
+              previousHeight = pageHeight
+            }
+
+            await page.evaluate(async () => {
+              const images = Array.from(document.images)
+              await Promise.all(
+                images.map(async (image) => {
+                  if (!image.complete) {
+                    await new Promise((resolve) => {
+                      image.addEventListener('load', resolve, { once: true })
+                      image.addEventListener('error', resolve, { once: true })
+                    })
+                  }
+
+                  if (typeof image.decode === 'function') {
+                    await image.decode().catch(() => undefined)
+                  }
+                }),
+              )
+            })
+
+            await page.evaluate(() => window.scrollTo(0, 0))
+            await page.waitForTimeout(250)
+          }
+
           const desktop = await openPage(1440, 1000)
+          await paintWholePage(desktop, 1000)
           await desktop.screenshot({ path: 'pass-two-qa/desktop-initial.png', fullPage: true })
 
           const operations = desktop.locator('.operations-system')
@@ -128,6 +167,10 @@ jobs:
             path: 'pass-two-qa/skygrid-review.png',
           })
 
+          const digivoltReveal = desktop.locator('.digivolt-reveal__visual')
+          await digivoltReveal.scrollIntoViewIfNeeded()
+          await desktop.waitForTimeout(250)
+
           const digivolt = desktop.locator('.digivolt-journey')
           await digivolt.scrollIntoViewIfNeeded()
           assert.equal(await digivolt.getAttribute('data-stage'), 'request')
@@ -183,6 +226,8 @@ jobs:
           await erp.getByText('Demo reset. Add an item to begin.').waitFor({ state: 'visible' })
 
           const mobile = await openPage(390, 844)
+          await paintWholePage(mobile, 844)
+
           const overflow = await mobile.evaluate(() => ({
             clientWidth: document.documentElement.clientWidth,
             scrollWidth: document.documentElement.scrollWidth,
@@ -201,6 +246,10 @@ jobs:
           await mobileSkygrid.scrollIntoViewIfNeeded()
           await mobileSkygrid.getByRole('tab', { name: /Review/ }).click()
           assert.equal(await mobileSkygrid.getAttribute('data-stage'), 'review')
+
+          const mobileDigiVoltReveal = mobile.locator('.digivolt-reveal__visual')
+          await mobileDigiVoltReveal.scrollIntoViewIfNeeded()
+          await mobile.waitForTimeout(250)
 
           const mobileDigiVolt = mobile.locator('.digivolt-journey')
           await mobileDigiVolt.scrollIntoViewIfNeeded()
