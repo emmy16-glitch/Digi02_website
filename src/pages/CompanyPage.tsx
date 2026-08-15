@@ -5,15 +5,15 @@ import '../styles/company-page.css'
 const disciplines = [
   {
     title: 'Software engineering',
-    body: 'Design and build the applications, platforms and integrations that carry operational work from interface to record.',
+    body: 'Applications, platforms and integrations designed around the work they need to carry.',
   },
   {
     title: 'Cybersecurity',
-    body: 'Treat access, system boundaries and operational risk as part of the product architecture rather than an afterthought.',
+    body: 'Access, system boundaries and operational risk considered as part of the architecture from the start.',
   },
   {
     title: 'Data & analytics',
-    body: 'Turn operational records into information that can support review, reporting and better decisions.',
+    body: 'Operational records turned into information teams can use for review, reporting and decisions.',
   },
 ] as const
 
@@ -22,14 +22,14 @@ const capabilityLines = [
   ['Payroll automation', 'Controlled payroll workflows from input through approval and record.', '/solutions/payroll-automation'],
   ['Payment systems', 'Transaction systems connected to the workflows and records behind them.', '/solutions/payment-systems'],
   ['Autonomous systems', 'UAV mission planning, flight operations and field-intelligence workflows.', '/solutions/skygrid'],
-  ['Custom software', 'Purpose-built systems for operations that cannot be represented properly by off-the-shelf software.', '/solutions/custom-software'],
+  ['Custom software', 'Software designed for operating models that do not fit an off-the-shelf product.', '/solutions/custom-software'],
 ] as const
 
 const workingMethod = [
-  ['Understand', 'Start with the operation, the people responsible for it and the constraints around it.'],
-  ['Design', 'Define the workflow, information structure and system states before decorating the interface.'],
-  ['Build', 'Engineer the product around the real sequence of work and the records the organization needs to retain.'],
-  ['Integrate', 'Connect the product to the wider systems, transactions and reporting that surround the operation.'],
+  ['Understand', 'Start with the work, the people responsible for it and the constraints around it.'],
+  ['Design', 'Define the workflow, information structure and system states before the interface is polished.'],
+  ['Build', 'Engineer the product around the sequence of work and the records the organization needs to retain.'],
+  ['Integrate', 'Connect the product to the systems, transactions and reporting that surround the operation.'],
 ] as const
 
 export function CompanyPage() {
@@ -39,11 +39,11 @@ export function CompanyPage() {
         <Container className="company-identity__grid">
           <p className="company-identity__kicker">Digi02 / Kaduna, Nigeria</p>
           <div className="company-identity__statement">
-            <h1>Built around the operation, not around the template.</h1>
+            <h1>We build technology for work that has to run reliably.</h1>
             <p>
-              Digi02 is a technology company based in Kaduna, Nigeria, building software systems
-              for businesses, institutions and operational environments that need more control,
-              clearer information and better-connected workflows.
+              Digi02 is a technology company based in Kaduna, Nigeria. We build software and
+              connected systems for businesses, institutions and operational teams that need better
+              control, clearer information and fewer disconnected tools.
             </p>
             <div className="company-identity__actions">
               <PrimaryButton href="/contact">Discuss a project <span aria-hidden="true">→</span></PrimaryButton>
@@ -57,19 +57,18 @@ export function CompanyPage() {
         <Container className="company-definition__grid">
           <div className="company-definition__lead">
             <p>Who we are</p>
-            <h2 id="company-definition-title">A technology partner for systems that have to work beyond the demo.</h2>
+            <h2 id="company-definition-title">Software, systems and engineering under one company.</h2>
           </div>
           <div className="company-definition__copy">
             <p>
-              Digi02 works across enterprise software, payroll automation, payment systems,
-              autonomous UAV operations and custom applications. Different products, but the same
-              responsibility: understand the operation first, then engineer the technology around it.
+              Our work spans enterprise software, payroll automation, payment systems, autonomous
+              UAV operations and custom applications. The products differ, but the approach is the
+              same: understand the work first, then build the technology around it.
             </p>
             <p>
-              Our public company profile identifies software engineering, cybersecurity and data
-              analytics as core disciplines inside the team. Those disciplines shape how we think
-              about product architecture, system control and the information an organization needs
-              to act on.
+              Digi02&apos;s public company profile identifies software engineering, cybersecurity and
+              data analytics as core disciplines. Together they shape how we approach architecture,
+              system control and the information an organization needs to act on.
             </p>
           </div>
         </Container>
@@ -79,13 +78,12 @@ export function CompanyPage() {
         <Container>
           <header className="company-disciplines__heading">
             <p>Inside Digi02</p>
-            <h2 id="company-disciplines-title">Three disciplines working on the same operational problem.</h2>
+            <h2 id="company-disciplines-title">Different disciplines, one operating problem.</h2>
           </header>
 
           <div className="company-disciplines__list">
-            {disciplines.map((discipline, index) => (
+            {disciplines.map((discipline) => (
               <article key={discipline.title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{discipline.title}</h3>
                 <p>{discipline.body}</p>
               </article>
@@ -98,7 +96,7 @@ export function CompanyPage() {
         <Container>
           <header className="company-systems__heading">
             <p>What we build</p>
-            <h2 id="company-systems-title">The company is wider than any single product.</h2>
+            <h2 id="company-systems-title">Digi02 is wider than any single product.</h2>
           </header>
 
           <div className="company-systems__list">
@@ -117,17 +115,16 @@ export function CompanyPage() {
         <Container className="company-method__grid">
           <div className="company-method__statement">
             <p>How we work</p>
-            <h2 id="company-method-title">Start with the operation. Keep the system understandable.</h2>
+            <h2 id="company-method-title">Understand the work before choosing the technology.</h2>
             <p>
-              The point is not to make every project look the same. The point is to give each
-              operation a clear structure, visible state and technology that can support the work.
+              A payroll system, UAV platform and mobility product should not look or behave the
+              same. Each needs a structure that fits the people, decisions and information around it.
             </p>
           </div>
 
           <div className="company-method__sequence">
-            {workingMethod.map(([title, description], index) => (
+            {workingMethod.map(([title, description]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <h3>{title}</h3>
                   <p>{description}</p>
@@ -142,11 +139,11 @@ export function CompanyPage() {
         <Container className="company-direction__grid company-direction__grid--deep">
           <div>
             <p>Mission</p>
-            <h2 id="company-direction-title">Build secure, efficient and scalable systems that solve real organizational problems.</h2>
+            <h2 id="company-direction-title">Build systems that improve control, visibility and execution inside organizations.</h2>
           </div>
           <div>
             <p>Direction</p>
-            <h2>Build from Nigeria for organizations that need technology they can actually operate.</h2>
+            <h2>Build from Nigeria for organizations that need dependable technology they can operate every day.</h2>
           </div>
         </Container>
       </section>
@@ -187,7 +184,7 @@ export function CompanyPage() {
         <Container className="company-project-cta__inner">
           <div>
             <p>Work with Digi02</p>
-            <h2>Bring us the operation that needs to work better.</h2>
+            <h2>Tell us what needs to work better.</h2>
           </div>
           <PrimaryButton href="/contact">Start a conversation <span aria-hidden="true">→</span></PrimaryButton>
         </Container>
