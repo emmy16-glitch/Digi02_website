@@ -50,12 +50,11 @@ export function PaymentSystemsPage() {
         <Container className="payment-sequence__grid">
           <header>
             <p>Transaction continuity</p>
-            <h2>A payment is only one event inside a wider business process.</h2>
+            <h2>A payment is one event inside a wider business process.</h2>
           </header>
           <div>
-            {transactionPath.map(([title, description], index) => (
+            {transactionPath.map(([title, description]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
               </article>
