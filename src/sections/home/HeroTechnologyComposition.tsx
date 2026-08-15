@@ -1,4 +1,3 @@
-import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
 import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
 import skyGridMissionPlanner from '../../assets/skygrid/skygrid-gcs-mission-planner.webp'
 
@@ -15,13 +14,13 @@ export function HeroTechnologyComposition() {
           />
         </div>
 
-        <div className="hero-technology__digivolt" aria-label="DigiVolt product visualization">
-          <img
-            alt="DigiVolt electric mobility product visualization"
-            decoding="async"
-            src={digiVoltShowcase}
-          />
+        <div className="hero-technology__digivolt" aria-label="DigiVolt mobility journey">
           <span>DigiVolt</span>
+          <div className="hero-technology__mobility-route" aria-hidden="true">
+            <i />
+            <b>EV</b>
+            <i />
+          </div>
         </div>
 
         <div className="hero-technology__erp" aria-label="ERP and POS system visualization">
@@ -35,7 +34,7 @@ export function HeroTechnologyComposition() {
       </div>
 
       <figcaption id="hero-technology-caption">
-        SkyGrid uses real product evidence. DigiVolt and ERP/POS are product and system visualizations.
+        SkyGrid uses real product evidence. DigiVolt and ERP/POS are presented as product and system visualization.
       </figcaption>
     </figure>
   )
