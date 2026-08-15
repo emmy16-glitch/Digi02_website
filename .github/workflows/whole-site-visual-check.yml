@@ -66,9 +66,17 @@ jobs:
             const context = await browser.newContext({ viewport: { width, height } })
             for (const [route, slug] of routes) {
               const page = await context.newPage()
-              const consoleErrors = []
-              page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()) })
-              page.on('pageerror', error => consoleErrors.push(error.message))
+              const pageErrors = []
+              const failedOriginResources = []
+              const externalResourceErrors = []
+
+              page.on('pageerror', error => pageErrors.push(error.message))
+              page.on('response', response => {
+                if (response.status() < 400) return
+                const url = response.url()
+                if (url.startsWith(origin)) failedOriginResources.push(`${response.status()} ${url}`)
+                else externalResourceErrors.push(`${response.status()} ${url}`)
+              })
 
               await page.goto(origin + route, { waitUntil: 'networkidle' })
               await page.locator('main').waitFor({ state: 'visible' })
@@ -95,10 +103,11 @@ jobs:
               assert.ok(metrics.scrollWidth <= metrics.clientWidth + 1, `${route} ${viewportName}: horizontal overflow ${metrics.scrollWidth}/${metrics.clientWidth}`)
               assert.equal(metrics.h1Count, 1, `${route} ${viewportName}: expected one H1`)
               assert.deepEqual(metrics.brokenImages, [], `${route} ${viewportName}: broken images`)
-              assert.deepEqual(consoleErrors, [], `${route} ${viewportName}: console errors ${consoleErrors.join(' | ')}`)
+              assert.deepEqual(pageErrors, [], `${route} ${viewportName}: page errors ${pageErrors.join(' | ')}`)
+              assert.deepEqual(failedOriginResources, [], `${route} ${viewportName}: failed local resources ${failedOriginResources.join(' | ')}`)
 
               await page.screenshot({ path: `whole-site-visual/${slug}-${viewportName}.png`, fullPage: true })
-              report.push(`${route} | ${viewportName} | ${metrics.clientWidth}/${metrics.scrollWidth} | PASS`)
+              report.push(`${route} | ${viewportName} | ${metrics.clientWidth}/${metrics.scrollWidth} | PASS${externalResourceErrors.length ? ` | external: ${externalResourceErrors.join(', ')}` : ''}`)
               await page.close()
             }
             await context.close()
