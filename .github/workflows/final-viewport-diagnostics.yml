@@ -1,0 +1,80 @@
+name: Final viewport diagnostics
+
+on:
+  push:
+    branches: [chatgpt/final-launch-audit]
+  workflow_dispatch:
+
+jobs:
+  viewport-diagnostics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/preview.log 2>&1 &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/preview.log; exit 1
+      - name: Collect viewport report
+        run: |
+          mkdir -p final-viewport-diagnostics
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { chromium } from 'playwright'
+          const origin='http://127.0.0.1:4173'
+          const routes=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/solutions/e-management','/solutions/payroll-automation','/solutions/payment-systems','/solutions/custom-software','/industries','/work','/company','/insights','/contact']
+          const routeSet=new Set(routes)
+          const viewports=[['phone-320',320,720],['phone-360',360,800],['phone-390',390,844],['phone-430',430,932],['tablet-768',768,1024],['tablet-1024',1024,1366],['desktop-1280',1280,900],['desktop-1440',1440,1000]]
+          const browser=await chromium.launch({headless:true})
+          const report=[]
+          for(const [vp,width,height] of viewports){
+            const context=await browser.newContext({viewport:{width,height}})
+            const page=await context.newPage()
+            for(const route of routes){
+              const issues=[]
+              const consoleErrors=[]
+              page.removeAllListeners('console'); page.removeAllListeners('pageerror')
+              page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())})
+              page.on('pageerror',e=>consoleErrors.push(e.message))
+              try{
+                await page.goto(origin+route,{waitUntil:'networkidle'})
+                await page.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=600){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,15))}window.scrollTo(0,0)})
+                await page.waitForTimeout(50)
+                const data=await page.evaluate(()=>{
+                  const ids=[...document.querySelectorAll('[id]')].map(e=>e.id)
+                  return {title:document.title,h1:document.querySelectorAll('main h1').length,cw:document.documentElement.clientWidth,sw:document.documentElement.scrollWidth,dups:ids.filter((id,i)=>ids.indexOf(id)!==i),badImgs:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src),unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(e=>{if(e instanceof HTMLInputElement&&e.type==='hidden')return false;if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby'))return false;if(e instanceof HTMLButtonElement)return !e.textContent?.trim();return !e.labels?.length}).map(e=>e.tagName+':'+(e.getAttribute('name')||e.textContent?.trim()||'')),small:[...document.querySelectorAll('header a,header button,form button,form input,form select')].map(e=>{const r=e.getBoundingClientRect();return {t:(e.textContent||e.getAttribute('aria-label')||e.getAttribute('name')||e.tagName).trim().slice(0,60),w:Math.round(r.width),h:Math.round(r.height)}}).filter(x=>x.w>0&&x.h>0&&x.h<42),hrefs:[...new Set([...document.querySelectorAll('a[href^="/"]')].map(a=>a.getAttribute('href')).filter(Boolean))]}
+                })
+                if(!data.title.includes('Digi02'))issues.push('title')
+                if(data.h1!==1)issues.push(`h1=${data.h1}`)
+                if(data.sw>data.cw+1)issues.push(`overflow=${data.sw}/${data.cw}`)
+                if(data.dups.length)issues.push('duplicateIds='+data.dups.join(','))
+                if(data.badImgs.length)issues.push('badImages='+data.badImgs.join(','))
+                if(data.unlabeled.length)issues.push('unlabeled='+data.unlabeled.join(','))
+                if(vp.startsWith('phone')&&data.small.length)issues.push('smallTargets='+JSON.stringify(data.small))
+                for(const href of data.hrefs){const path=new URL(href,origin).pathname.replace(/\/$/,'')||'/';if(!routeSet.has(path))issues.push('unknownHref='+href)}
+              }catch(error){issues.push('exception='+error.message)}
+              if(consoleErrors.length)issues.push('console='+consoleErrors.join(' | '))
+              report.push({vp,route,issues})
+            }
+            await context.close()
+          }
+          fs.writeFileSync('final-viewport-diagnostics/report.json',JSON.stringify(report,null,2))
+          console.log(JSON.stringify(report.filter(x=>x.issues.length),null,2))
+          await browser.close()
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-viewport-diagnostics
+          path: final-viewport-diagnostics
+          retention-days: 1
