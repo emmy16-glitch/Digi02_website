@@ -1,0 +1,32 @@
+/*
+  Focused layout correction for the working ERP/POS demo.
+  Keep content away from the workspace edges and give the order column
+  enough width to render controls and totals without visual clipping.
+*/
+
+@media (min-width: 64.0625rem) {
+  .erp-pos-workspace {
+    grid-template-columns: minmax(0, 1.38fr) minmax(23rem, 0.72fr);
+  }
+
+  .erp-pos-catalog {
+    padding-left: clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+
+  .erp-pos-order {
+    padding-right: clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+
+  .erp-pos-order__total strong {
+    max-width: 100%;
+    font-size: clamp(1.75rem, 2.1vw, 2.25rem);
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 64rem) {
+  .erp-pos-catalog,
+  .erp-pos-order {
+    padding-inline: var(--space-4);
+  }
+}
