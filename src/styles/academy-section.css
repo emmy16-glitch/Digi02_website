@@ -6,7 +6,7 @@
 }
 
 .academy-chapter__inner {
-  padding-block: clamp(6rem, 9vw, 9rem) clamp(5rem, 8vw, 8rem);
+  padding-block: clamp(6rem, 8vw, 8rem) clamp(5rem, 7vw, 7rem);
 }
 
 .academy-chapter__intro {
@@ -49,53 +49,48 @@
   max-width: 13ch;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5.2vw, 5.25rem);
+  font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 550;
-  letter-spacing: -0.052em;
-  line-height: 0.96;
+  letter-spacing: -0.05em;
+  line-height: 0.97;
 }
 
 /* ==========================================================
-   BUILDER JOURNEY
+   BUILDER JOURNEY — active meaning on the left, stages on right
    ========================================================== */
 
 .academy-builder {
   display: grid;
-  grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(3rem, 7vw, 7rem);
   align-items: stretch;
-  margin-top: clamp(5rem, 8vw, 8rem);
+  margin-top: clamp(4.5rem, 7vw, 7rem);
   border-block: var(--border-thin) solid var(--line-subtle);
 }
 
 .academy-builder__current {
   display: flex;
-  min-height: 32rem;
+  min-height: 28rem;
   flex-direction: column;
   justify-content: flex-end;
-  padding-block: clamp(3rem, 6vw, 6rem);
+  padding-block: clamp(3rem, 5vw, 5rem);
 }
 
 .academy-builder__current > .type-tech {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   color: var(--gold-400);
 }
 
-.academy-builder__current > strong {
-  display: block;
+.academy-builder__current-description {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 10vw, 9rem);
+  font-size: clamp(2.7rem, 5vw, 4.8rem);
   font-weight: 550;
-  letter-spacing: -0.07em;
-  line-height: 0.78;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
   animation: academy-stage-enter var(--motion-component) var(--ease-emphasized) both;
-}
-
-.academy-builder__current > p:last-child {
-  max-width: 29rem;
-  margin: var(--space-5) 0 0;
-  color: var(--text-secondary);
-  font-size: var(--type-body);
 }
 
 .academy-builder__steps {
@@ -123,8 +118,8 @@
   background: var(--gold-500);
   content: '';
   opacity: 0;
-  transform: scaleY(0.25);
-  transform-origin: top;
+  transform: scaleY(0.3);
+  transform-origin: center;
   transition:
     opacity var(--motion-fast) var(--ease-standard),
     transform var(--motion-component) var(--ease-emphasized);
@@ -138,8 +133,8 @@
 .academy-builder__steps button {
   display: grid;
   width: 100%;
-  min-height: 8rem;
-  grid-template-columns: var(--space-6) minmax(8rem, 0.55fr) minmax(0, 1fr) auto;
+  min-height: 7rem;
+  grid-template-columns: var(--space-6) minmax(0, 1fr) auto;
   gap: var(--space-3);
   align-items: center;
   border: 0;
@@ -148,18 +143,12 @@
   color: var(--text-muted);
   cursor: pointer;
   text-align: left;
-  transition:
-    color var(--motion-fast) var(--ease-standard),
-    background-color var(--motion-fast) var(--ease-standard);
+  transition: color var(--motion-fast) var(--ease-standard);
 }
 
 .academy-builder__steps button:hover,
 .academy-builder__steps li[data-active='true'] button {
   color: var(--text-primary);
-}
-
-.academy-builder__steps li[data-active='true'] button {
-  background: rgba(255, 255, 255, 0.025);
 }
 
 .academy-builder__steps button > .type-tech {
@@ -172,27 +161,16 @@
 
 .academy-builder__steps button > strong {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.3vw, 2.35rem);
+  font-size: clamp(1.7rem, 2.3vw, 2.35rem);
   font-weight: 550;
   letter-spacing: -0.035em;
 }
 
-.academy-builder__step-description {
-  max-width: 24rem;
-  color: var(--text-muted);
-  font-size: var(--type-ui);
-  line-height: 1.5;
-}
-
-.academy-builder__steps li[data-active='true'] .academy-builder__step-description {
-  color: var(--text-secondary);
-}
-
 .academy-builder__step-mark {
   color: var(--gold-400);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   opacity: 0;
-  transform: translateX(-0.5rem);
+  transform: translateX(-0.45rem);
   transition:
     opacity var(--motion-fast) var(--ease-standard),
     transform var(--motion-component) var(--ease-emphasized);
@@ -211,7 +189,7 @@
 @keyframes academy-stage-enter {
   from {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateY(0.75rem);
   }
 
   to {
@@ -227,13 +205,11 @@
   }
 
   .academy-builder {
-    grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1.45fr);
+    grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
     gap: var(--space-5);
   }
 
   .academy-builder__steps button {
-    grid-template-columns: var(--space-5) minmax(7rem, 0.45fr) minmax(0, 1fr) auto;
-    gap: var(--space-2);
     padding-left: var(--space-4);
   }
 }
@@ -254,17 +230,13 @@
   }
 
   .academy-builder__current {
-    min-height: 19rem;
+    min-height: 16rem;
     padding-block: var(--space-6);
   }
 
-  .academy-builder__current > strong {
-    font-size: clamp(4rem, 23vw, 6.5rem);
-  }
-
-  .academy-builder__current > p:last-child {
-    margin-top: var(--space-4);
-    font-size: 1rem;
+  .academy-builder__current-description {
+    max-width: 11ch;
+    font-size: clamp(2.35rem, 11vw, 3.25rem);
   }
 
   .academy-builder__steps {
@@ -288,18 +260,14 @@
   }
 
   .academy-builder__steps button {
-    min-height: 6.5rem;
+    min-height: 5.75rem;
     grid-template-columns: var(--space-5) minmax(0, 1fr) auto;
     padding: var(--space-3) 0;
-  }
-
-  .academy-builder__step-description {
-    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .academy-builder__current > strong,
+  .academy-builder__current-description,
   .academy-builder__steps li::before,
   .academy-builder__step-mark {
     animation: none;
