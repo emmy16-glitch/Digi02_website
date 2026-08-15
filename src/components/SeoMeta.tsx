@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-
-const SITE_URL = 'https://digi02.org'
+import { SITE_URL } from '../data/organizationStructuredData'
 
 type SeoMetaProps = {
   title: string
@@ -56,19 +55,4 @@ export function SeoMeta({ title, description, path, noIndex = false }: SeoMetaPr
   }, [description, noIndex, path, title])
 
   return null
-}
-
-export const organizationStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Digi02',
-  url: SITE_URL,
-  email: 'info@digi02.org',
-  telephone: '+2348169404088',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'No. 2, The Hub, Industrial Area, Farin Gida, Mando',
-    addressLocality: 'Kaduna',
-    addressCountry: 'NG',
-  },
 }
