@@ -84,9 +84,8 @@ export function SkyGridPage() {
           </div>
           <div>
             <p>
-              SkyGrid is presented here through mission capability and concept visualization rather
-              than application screenshots. Exact implementation scope depends on the UAV platform,
-              operating environment and mission requirements.
+              SkyGrid is being developed around mission planning, readiness, field context and review.
+              Final operating scope depends on the aircraft, environment and mission requirements.
             </p>
             <a href="/contact">Talk to Digi02 about SkyGrid <span aria-hidden="true">→</span></a>
           </div>
