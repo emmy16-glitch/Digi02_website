@@ -129,6 +129,7 @@ export function DigiVoltSection() {
 
   const sectionRef = useRef<HTMLElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const routeRef = useRef<HTMLDivElement>(null)
   const routePathRef = useRef<SVGPathElement>(null)
   const routeProgressRef = useRef<SVGPathElement>(null)
   const vehicleRef = useRef<SVGGElement>(null)
@@ -262,8 +263,8 @@ export function DigiVoltSection() {
 
   useEffect(() => {
     if (mode !== 'autoplay') return
-    const section = sectionRef.current
-    if (!section) return
+    const route = routeRef.current
+    if (!route) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -272,10 +273,13 @@ export function DigiVoltSection() {
           playMobileJourney()
         }
       },
-      { threshold: 0.3 },
+      {
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.45,
+      },
     )
 
-    observer.observe(section)
+    observer.observe(route)
     return () => {
       observer.disconnect()
       if (mobileRafRef.current !== null) {
@@ -359,7 +363,7 @@ export function DigiVoltSection() {
                 </div>
               </div>
 
-              <div className="digivolt-route">
+              <div className="digivolt-route" ref={routeRef}>
                 <div
                   aria-label="Illustrative journey telemetry"
                   className="digivolt-route__telemetry"
@@ -492,7 +496,7 @@ export function DigiVoltSection() {
                   {mode === 'scroll'
                     ? 'Scroll to move the journey'
                     : mode === 'autoplay'
-                      ? 'Plays once when this section enters view'
+                      ? 'Plays once when the journey enters view'
                       : mode === 'static'
                         ? 'Reduced motion / completed journey'
                         : 'Journey ready'}
