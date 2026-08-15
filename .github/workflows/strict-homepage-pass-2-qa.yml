@@ -89,6 +89,7 @@ jobs:
             await operations.locator('.operations-thread__step[data-state="complete"]').count(),
             5,
           )
+          await desktop.waitForTimeout(500)
           await operations.screenshot({ path: 'pass-two-qa/operations-transact.png' })
 
           const skygrid = desktop.locator('.skygrid-dashboard')
@@ -102,7 +103,7 @@ jobs:
           await skygrid.getByRole('tab', { name: /Operate/ }).click()
           assert.equal(await skygrid.getAttribute('data-stage'), 'operate')
           await skygrid.locator('.skygrid-mission').waitFor({ state: 'visible' })
-          await desktop.waitForTimeout(600)
+          await desktop.waitForTimeout(900)
           await skygrid.locator('.skygrid-stage-panel').screenshot({
             path: 'pass-two-qa/skygrid-operate.png',
           })
@@ -112,6 +113,7 @@ jobs:
           await desktop.getByAltText(/Mission Overview showing post-flight analytics/i).waitFor({
             state: 'visible',
           })
+          await desktop.waitForTimeout(650)
           await skygrid.locator('.skygrid-stage-panel').screenshot({
             path: 'pass-two-qa/skygrid-review.png',
           })
@@ -140,6 +142,7 @@ jobs:
             await digivolt.locator('.digivolt-journey__route-progress').getAttribute('stroke-dashoffset'),
             '0',
           )
+          await desktop.waitForTimeout(850)
           await digivolt.screenshot({ path: 'pass-two-qa/digivolt-arrive.png' })
 
           const erp = desktop.locator('#erp-pos')
@@ -156,6 +159,7 @@ jobs:
           await receiptDrawer.getByText('Sale #1043').waitFor({ state: 'visible' })
           await receiptDrawer.getByText('Transfer').waitFor({ state: 'visible' })
           assert.equal((await headsetRow.locator('.erp-pos-product-row__stock strong').textContent())?.trim(), '23')
+          await desktop.waitForTimeout(450)
           await receiptDrawer.screenshot({ path: 'pass-two-qa/erp-receipt.png' })
 
           await receiptDrawer.getByRole('button', { name: 'Close receipt' }).click()
@@ -188,6 +192,7 @@ jobs:
           await mobileDigiVolt.scrollIntoViewIfNeeded()
           await mobileDigiVolt.getByRole('tab', { name: /Arrive/ }).click()
           assert.equal(await mobileDigiVolt.getAttribute('data-stage'), 'arrive')
+          await mobile.waitForTimeout(900)
 
           await mobile.screenshot({ path: 'pass-two-qa/mobile-interactions.png', fullPage: true })
 
