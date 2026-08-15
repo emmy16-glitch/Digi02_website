@@ -66,9 +66,8 @@ export function SkyGridPage() {
           </header>
 
           <div className="product-lifecycle__list">
-            {lifecycle.map(([title, body], index) => (
+            {lifecycle.map(([title, body]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
@@ -86,8 +85,8 @@ export function SkyGridPage() {
           <div>
             <p>
               SkyGrid is presented here through mission capability and concept visualization rather
-              than exposed application screenshots. Exact implementation scope depends on the UAV
-              platform, operating environment and mission requirements.
+              than application screenshots. Exact implementation scope depends on the UAV platform,
+              operating environment and mission requirements.
             </p>
             <a href="/contact">Talk to Digi02 about SkyGrid <span aria-hidden="true">→</span></a>
           </div>
