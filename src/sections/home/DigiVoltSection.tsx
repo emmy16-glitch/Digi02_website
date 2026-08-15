@@ -1,6 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from 'react'
 
-import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
 import { Container } from '../../components/Container'
 import '../../styles/digivolt-section.css'
 
@@ -105,14 +104,27 @@ export function DigiVoltSection() {
             </p>
           </header>
 
-          <figure className="digivolt-reveal__visual">
-            <img
-              alt="DigiVolt electric mobility product visualization"
-              decoding="async"
-              loading="lazy"
-              src={digiVoltShowcase}
-            />
-            <figcaption>DigiVolt product visualization / in development</figcaption>
+          <figure className="digivolt-reveal__visual digivolt-reveal__visual--route">
+            <div className="digivolt-reveal-route" aria-label="Illustrative DigiVolt mobility route">
+              <div className="digivolt-reveal-route__header">
+                <span>Connected electric mobility</span>
+                <strong>Request → Match → Ride → Arrive</strong>
+              </div>
+              <svg viewBox="0 0 900 430" aria-hidden="true">
+                <path className="digivolt-reveal-route__base" d="M70 335 C160 325 185 190 300 186 C430 180 475 275 610 230 C730 190 760 90 830 72" />
+                <path className="digivolt-reveal-route__active" d="M70 335 C160 325 185 190 300 186 C430 180 475 275 610 230 C730 190 760 90 830 72" pathLength="100" />
+                <circle className="digivolt-reveal-route__point" cx="70" cy="335" r="10" />
+                <circle className="digivolt-reveal-route__point digivolt-reveal-route__point--end" cx="830" cy="72" r="10" />
+              </svg>
+              <span className="digivolt-reveal-route__pickup">Pickup</span>
+              <span className="digivolt-reveal-route__vehicle" aria-hidden="true">EV</span>
+              <span className="digivolt-reveal-route__destination">Destination</span>
+              <div className="digivolt-reveal-route__status">
+                <span>Journey state</span>
+                <strong>One connected trip record</strong>
+              </div>
+            </div>
+            <figcaption>DigiVolt product direction / in development.</figcaption>
           </figure>
         </Container>
       </section>
@@ -176,10 +188,7 @@ export function DigiVoltSection() {
                 />
               </svg>
 
-              <span
-                className="digivolt-journey__point digivolt-journey__point--pickup"
-                aria-hidden="true"
-              />
+              <span className="digivolt-journey__point digivolt-journey__point--pickup" aria-hidden="true" />
               <span
                 className="digivolt-journey__vehicle"
                 aria-hidden="true"
@@ -187,10 +196,7 @@ export function DigiVoltSection() {
               >
                 EV
               </span>
-              <span
-                className="digivolt-journey__point digivolt-journey__point--destination"
-                aria-hidden="true"
-              />
+              <span className="digivolt-journey__point digivolt-journey__point--destination" aria-hidden="true" />
             </div>
           </div>
 
@@ -202,7 +208,6 @@ export function DigiVoltSection() {
           >
             {journeyStages.map((stage, index) => {
               const isActive = index === activeIndex
-
               return (
                 <button
                   aria-controls="digivolt-stage-panel"
@@ -211,9 +216,7 @@ export function DigiVoltSection() {
                   id={`digivolt-stage-tab-${stage.id}`}
                   key={stage.id}
                   onClick={() => selectStage(index)}
-                  ref={(element) => {
-                    stageButtonRefs.current[index] = element
-                  }}
+                  ref={(element) => { stageButtonRefs.current[index] = element }}
                   role="tab"
                   tabIndex={isActive ? 0 : -1}
                   type="button"
