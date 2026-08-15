@@ -5,17 +5,17 @@ const principles = [
   {
     number: '01',
     title: 'Connect',
-    description: 'Bring systems and information into the same working context.',
+    description: 'Bring systems into one working context.',
   },
   {
     number: '02',
     title: 'Automate',
-    description: 'Remove repeated manual steps where the workflow does not need them.',
+    description: 'Remove repeated manual handoffs.',
   },
   {
     number: '03',
     title: 'Transact',
-    description: 'Keep business activity connected to the records and reporting behind it.',
+    description: 'Keep activity connected to records and reporting.',
   },
 ] as const
 
