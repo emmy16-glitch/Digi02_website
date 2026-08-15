@@ -4,23 +4,23 @@ import { PrimaryButton } from '../components/PrimaryButton'
 const environments = [
   {
     title: 'Enterprise & multi-site operations',
-    body: 'ERP, payroll, workflow and reporting systems for organizations that need one reliable view across teams and locations.',
+    body: 'ERP, payroll, workflow and reporting systems for organizations that need one dependable view across teams and locations.',
   },
   {
     title: 'Retail & commerce',
-    body: 'POS, inventory and transaction systems that keep the sale connected to stock, records and reporting behind it.',
+    body: 'POS, inventory and transaction systems that keep the sale connected to stock and reporting.',
   },
   {
     title: 'Education & institutions',
-    body: 'Payment, administration and management systems shaped around structured institutional processes.',
+    body: 'Payment, administration and management systems built around structured institutional processes.',
   },
   {
     title: 'Field & autonomous operations',
-    body: 'Mission planning, UAV coordination and data-collection workflows for work that extends beyond the office.',
+    body: 'Mission planning, UAV coordination and field-data workflows for work beyond the office.',
   },
   {
     title: 'Government & public-sector systems',
-    body: 'Digital systems for administrative, data and service workflows where access, accountability and scale matter.',
+    body: 'Administrative and service systems where access, accountability and clear records matter.',
   },
   {
     title: 'Industry-specific software',
@@ -35,11 +35,10 @@ export function IndustriesPage() {
         <Container className="interior-hero__grid">
           <p className="interior-hero__kicker">Industries</p>
           <div className="interior-hero__statement">
-            <h1>The work changes from one industry to the next.</h1>
+            <h1>Different work needs different systems.</h1>
             <p>
-              We start with the environment, constraints and people responsible for the work, then
-              design the system around those conditions instead of forcing every organization into
-              the same product.
+              We start with the environment, people and constraints around the work, then design the
+              technology to fit those conditions.
             </p>
           </div>
         </Container>
@@ -49,7 +48,7 @@ export function IndustriesPage() {
         <Container>
           <header className="section-heading section-heading--split">
             <p>Operating environments</p>
-            <h2 id="industry-index-title">The system should fit the work.</h2>
+            <h2 id="industry-index-title">The system should fit the work—not force the work to fit the system.</h2>
           </header>
 
           <div className="industry-index__grid">
@@ -66,8 +65,8 @@ export function IndustriesPage() {
       <section className="page-cta page-cta--dark">
         <Container className="page-cta__inner">
           <div>
-            <p>Have an unusual operating model?</p>
-            <h2>Start with the work that needs to improve.</h2>
+            <p>Need something specific?</p>
+            <h2>Show us the work that needs to improve.</h2>
           </div>
           <PrimaryButton href="/contact">Discuss your requirements <span aria-hidden="true">→</span></PrimaryButton>
         </Container>
