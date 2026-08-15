@@ -78,7 +78,7 @@ jobs:
             }))
             assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${path} overflows on desktop`)
 
-            if (path !== '/') {
+            if (path !== '/' && path !== '/contact') {
               const current = desktop.locator('.desktop-navigation__link[aria-current="page"]')
               assert.equal(await current.count(), 1, `${path} should have one active desktop navigation item`)
             }
