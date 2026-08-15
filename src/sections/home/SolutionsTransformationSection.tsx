@@ -140,7 +140,7 @@ export function SolutionsTransformationSection() {
                 >
                   <span>{stage.number}</span>
                   <strong>{stage.title}</strong>
-                  <p>{stage.description}</p>
+                  <span className="operations-system__stage-description">{stage.description}</span>
                 </button>
               )
             })}
@@ -205,9 +205,7 @@ export function SolutionsTransformationSection() {
 
             <footer className="operations-thread__footer">
               <span>Sample operational sequence only — not live customer data.</span>
-              <strong>
-                {String(activeIndex + 1).padStart(2, '0')} / 03
-              </strong>
+              <strong>{String(activeIndex + 1).padStart(2, '0')} / 03</strong>
             </footer>
           </article>
         </div>
