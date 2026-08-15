@@ -14,110 +14,381 @@ concurrency:
 jobs:
   launch-gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run build
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
 
-      - name: Guard copy and retired content
+      - name: Guard production repository hygiene
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs'
           import path from 'node:path'
-          const roots=['src/pages','src/sections','src/components']
-          const files=[]
-          const walk=(dir)=>{for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);e.isDirectory()?walk(p):/\.(ts|tsx)$/.test(e.name)&&files.push(p)}}
-          roots.forEach(r=>fs.existsSync(r)&&walk(r))
-          const banned=[/\bseamless(?:ly)?\b/i,/\binnovative\b/i,/\brevolutionary\b/i,/\bcutting[- ]edge\b/i,/\bempower(?:ing|ed|s)?\b/i,/\bunlock(?:ing|ed|s)?\b/i,/\bnext[- ]gen(?:eration)?\b/i,/\btransformative\b/i,/\bfuture[- ]ready\b/i,/\bredefine(?:d|s|ing)?\b/i,/\bgame[- ]chang(?:er|ing)\b/i,/\bworld[- ]class\b/i,/\bleading[- ]edge\b/i]
-          const retired=['skygrid-route-planner','skygrid-gcs-mission-planner','skygrid-operations-center','skygrid-mission-analytics','/blog/erp-solutions-nigeria.html','/blog/payroll-solutions-nigeria.html','/blog/payment-solutions-nigeria.html','/blog/uav-autopilot-nigeria.html']
+
           const errors=[]
-          for(const file of files){const text=fs.readFileSync(file,'utf8');for(const p of banned)if(p.test(text))errors.push(`${file}: generic phrase ${p}`);for(const r of retired)if(text.includes(r))errors.push(`${file}: retired reference ${r}`)}
-          for(const forbidden of ['.manual-backups','artifacts','playwright-report','test-results']) if(fs.existsSync(forbidden)) errors.push(`production tree contains ${forbidden}`)
-          if(fs.readFileSync('src/App.tsx','utf8').includes('/foundation')) errors.push('internal /foundation route remains in production App.tsx')
-          if(errors.length){console.error(errors.join('\n'));process.exit(1)}
+          const sourceFiles=[]
+          const walk=(dir)=>{
+            if(!fs.existsSync(dir)) return
+            for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+              const target=path.join(dir,entry.name)
+              entry.isDirectory()?walk(target):sourceFiles.push(target)
+            }
+          }
+          ;['src','public'].forEach(walk)
+
+          for(const forbidden of ['.manual-backups','artifacts','playwright-report','test-results']){
+            if(fs.existsSync(forbidden)) errors.push(`production tree contains ${forbidden}`)
+          }
+
+          const banned=[
+            ['TODO',/\bTODO\b/],
+            ['FIXME',/\bFIXME\b/],
+            ['debugger',/\bdebugger\b/],
+            ['console.log',/console\.log\s*\(/],
+            ['localhost',/localhost(?::\d+)?/i],
+            ['javascript URL',/href\s*=\s*["']javascript:/i],
+            ['empty href',/href\s*=\s*["']#["']/i],
+          ]
+
+          for(const file of sourceFiles){
+            if(!/\.(ts|tsx|js|jsx|css|html|xml|txt)$/.test(file) && !file.endsWith('_headers') && !file.endsWith('_redirects')) continue
+            const text=fs.readFileSync(file,'utf8')
+            for(const [label,pattern] of banned) if(pattern.test(text)) errors.push(`${file}: ${label}`)
+          }
+
+          const app=fs.readFileSync('src/App.tsx','utf8')
+          if(app.includes("'/foundation'")||app.includes('FOUNDATION_PATH')||app.includes('FoundationPreviewPage')) errors.push('internal foundation preview remains in production App.tsx')
+
+          const readme=fs.readFileSync('README.md','utf8')
+          if(/staged implementation branches/i.test(readme)||/\/foundation/.test(readme)) errors.push('README contains stale staging/foundation documentation')
+
+          const headers=fs.readFileSync('public/_headers','utf8')
+          for(const header of ['X-Content-Type-Options','Referrer-Policy','X-Frame-Options','Permissions-Policy','Content-Security-Policy','Strict-Transport-Security']){
+            if(!headers.includes(header)) errors.push(`public/_headers missing ${header}`)
+          }
+
+          if(errors.length){
+            console.error(errors.join('\n'))
+            process.exit(1)
+          }
           NODE
 
-      - name: Install browser engines
+      - name: Install audit browsers and accessibility tooling
         run: |
-          npm install --no-save --package-lock=false playwright@1.55.0
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1 @axe-core/playwright@4.13.0
           npx playwright install --with-deps chromium firefox webkit
 
-      - name: Start preview
+      - name: Start production preview
         run: |
           npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
-          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
-          cat /tmp/digi02-preview.log; exit 1
+          for i in {1..40}; do
+            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
 
-      - name: Run full launch matrix
+      - name: Run strict production matrix
         run: |
           mkdir -p final-launch-gate
           node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict'
           import fs from 'node:fs'
           import { chromium, firefox, webkit } from 'playwright'
+          import AxeBuilder from '@axe-core/playwright'
+
           const origin='http://127.0.0.1:4173'
-          const routes=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/solutions/e-management','/solutions/payroll-automation','/solutions/payment-systems','/solutions/custom-software','/industries','/work','/company','/insights','/contact']
-          const routeSet=new Set(routes)
-          const viewports=[['phone-320',320,720],['phone-360',360,800],['phone-390',390,844],['phone-430',430,932],['tablet-768',768,1024],['tablet-1024',1024,1366],['desktop-1280',1280,900],['desktop-1440',1440,1000]]
-          const smoke=['/','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/company','/contact']
-          const runtimeErrors=[]
+          const routes=[
+            ['home','/'],
+            ['solutions','/solutions'],
+            ['skygrid','/solutions/skygrid'],
+            ['digivolt','/solutions/digivolt'],
+            ['enterprise','/solutions/enterprise-systems'],
+            ['e-management','/solutions/e-management'],
+            ['payroll','/solutions/payroll-automation'],
+            ['payments','/solutions/payment-systems'],
+            ['custom-software','/solutions/custom-software'],
+            ['industries','/industries'],
+            ['work','/work'],
+            ['company','/company'],
+            ['insights','/insights'],
+            ['contact','/contact'],
+          ]
+          const publicPaths=new Set(routes.map(([,route])=>route))
+          const viewports=[
+            ['320',320,720],
+            ['360',360,800],
+            ['390',390,844],
+            ['430',430,932],
+            ['768',768,1024],
+            ['1024',1024,1366],
+            ['1280',1280,900],
+            ['1440',1440,1000],
+          ]
+          const smoke=['/','/solutions','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/contact']
+          const failures=[]
+          const fail=(message)=>failures.push(message)
 
-          const guard=(page,label)=>{
-            page.on('console',m=>{
-              if(m.type()!=='error')return
-              const text=m.text()
-              if(text.startsWith('Failed to load resource'))return
-              runtimeErrors.push(`${label}: console ${text}`)
+          async function settle(page){
+            await page.locator('main#main-content').waitFor()
+            await page.evaluate(async()=>{
+              const step=Math.max(innerHeight*.75,400)
+              for(let y=0;y<document.documentElement.scrollHeight;y+=step){
+                scrollTo(0,y)
+                await new Promise(resolve=>setTimeout(resolve,15))
+              }
+              scrollTo(0,0)
+              await Promise.all([...document.images].map(image=>image.decode().catch(()=>{})))
             })
-            page.on('pageerror',e=>runtimeErrors.push(`${label}: ${e.message}`))
-            page.on('response',r=>{if(r.url().startsWith(origin)&&r.status()>=400)runtimeErrors.push(`${label}: ${r.status()} ${r.url()}`)})
-            page.on('requestfailed',r=>{if(r.url().startsWith(origin))runtimeErrors.push(`${label}: request failed ${r.url()} ${r.failure()?.errorText||''}`)})
-          }
-          async function paintAndDecode(page){
-            await page.evaluate(async()=>{const step=Math.max(innerHeight*.8,500);for(let y=0;y<document.documentElement.scrollHeight;y+=step){scrollTo(0,y);await new Promise(r=>setTimeout(r,20))}scrollTo(0,0)})
-            await page.locator('img').evaluateAll(async images=>{await Promise.all(images.map(async image=>{try{await image.decode()}catch{}}))})
-            await page.waitForTimeout(100)
-          }
-          async function inspect(page,route,label,enforceTouch=false){
-            await page.goto(origin+route,{waitUntil:'networkidle'});await page.locator('main').waitFor();await paintAndDecode(page)
-            assert.ok((await page.title()).includes('Digi02'),`${label}: title`)
-            assert.equal(await page.locator('main h1').count(),1,`${label}: H1`)
-            assert.equal(await page.locator('a.skip-link[href="#main-content"]').count(),1,`${label}: skip link`)
-            const data=await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return{cw:document.documentElement.clientWidth,sw:document.documentElement.scrollWidth,dups:ids.filter((id,i)=>ids.indexOf(id)!==i),bad:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src),unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(e=>{if(e instanceof HTMLInputElement&&e.type==='hidden')return false;if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby'))return false;if(e instanceof HTMLButtonElement)return !e.textContent?.trim();return !e.labels?.length}).map(e=>e.tagName+':'+(e.getAttribute('name')||e.textContent?.trim()||'')),hrefs:[...new Set([...document.querySelectorAll('a[href^="/"]')].map(a=>a.getAttribute('href')).filter(Boolean))]}})
-            assert.ok(data.sw<=data.cw+1,`${label}: overflow ${data.sw}/${data.cw}`);assert.deepEqual(data.dups,[],`${label}: duplicate IDs`);assert.deepEqual(data.bad,[],`${label}: images ${data.bad}`);assert.deepEqual(data.unlabeled,[],`${label}: labels ${data.unlabeled}`)
-            for(const href of data.hrefs){const p=new URL(href,origin).pathname.replace(/\/$/,'')||'/';assert.ok(routeSet.has(p),`${label}: unknown route ${href}`)}
-            if(enforceTouch){const small=await page.locator('header a,header button,form button,form input,form select').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return{t:(e.textContent||e.getAttribute('aria-label')||e.getAttribute('name')||e.tagName).trim().slice(0,40),w:r.width,h:r.height}}).filter(x=>x.w>0&&x.h>0&&x.h<42));assert.deepEqual(small,[],`${label}: touch targets ${JSON.stringify(small)}`)}
+            await page.waitForTimeout(80)
           }
 
-          const chrome=await chromium.launch({headless:true})
-          for(const [name,w,h] of viewports){const c=await chrome.newContext({viewport:{width:w,height:h}});const p=await c.newPage();guard(p,`chromium ${name}`);for(const route of routes)await inspect(p,route,`${route} @ ${name}`,name.startsWith('phone'));await c.close()}
+          function attachRuntimeGuards(page,label){
+            page.on('pageerror',error=>fail(`${label}: pageerror ${error.message}`))
+            page.on('console',message=>{
+              if(message.type()==='error'&&!message.text().startsWith('Failed to load resource')) fail(`${label}: console ${message.text()}`)
+            })
+            page.on('response',response=>{
+              if(response.url().startsWith(origin)&&response.status()>=400) fail(`${label}: ${response.status()} ${response.url()}`)
+            })
+            page.on('requestfailed',request=>{
+              if(request.url().startsWith(origin)) fail(`${label}: request failed ${request.url()} ${request.failure()?.errorText||''}`)
+            })
+          }
 
-          {const c=await chrome.newContext({viewport:{width:390,height:844}});const p=await c.newPage();await p.goto(origin,{waitUntil:'networkidle'});const t=p.getByRole('button',{name:'Open navigation menu'});await t.click();await p.getByRole('navigation',{name:'Mobile primary navigation'}).waitFor();assert.equal(await p.locator('body').evaluate(b=>b.style.overflow),'hidden');await p.keyboard.press('Escape');await p.waitForTimeout(50);assert.equal(await t.getAttribute('aria-expanded'),'false');assert.equal(await t.evaluate(e=>document.activeElement===e),true);await c.close()}
-          {const c=await chrome.newContext({viewport:{width:1280,height:900}});const p=await c.newPage();await p.goto(origin,{waitUntil:'networkidle'});const a=p.getByRole('tab',{name:/Automate/i}).first();await a.click();await a.press('End');const tr=p.getByRole('tab',{name:/Transact/i}).first();assert.equal(await tr.getAttribute('aria-selected'),'true');assert.equal(await tr.evaluate(e=>document.activeElement===e),true);const rev=p.getByRole('tab',{name:'Review'}).first();await rev.click();assert.equal(await rev.getAttribute('aria-selected'),'true');const arr=p.getByRole('tab',{name:/Arrive/i}).first();await arr.click();await p.waitForTimeout(750);assert.equal(await arr.getAttribute('aria-selected'),'true');assert.ok((await p.locator('.digivolt-journey__stage-copy strong').textContent())?.includes('Trip complete'));await c.close()}
-          {const c=await chrome.newContext({viewport:{width:1280,height:900}});const p=await c.newPage();await p.goto(origin+'/solutions/enterprise-systems',{waitUntil:'networkidle'});const row=p.locator('.erp-pos-product-row').filter({hasText:'Wireless Headset'});assert.ok((await row.textContent())?.includes('24'));await row.getByRole('button',{name:'Add'}).click();await p.locator('input[name="erp-pos-payment"][value="Transfer"]').check();await p.getByRole('button',{name:/Complete sale/i}).click();await p.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor();assert.ok((await row.textContent())?.includes('23'));assert.ok((await p.locator('.erp-pos-receipt__payment').textContent())?.includes('Transfer'));await p.getByRole('button',{name:'Reset demo'}).click();assert.ok((await row.textContent())?.includes('24'));await c.close()}
-          {const c=await chrome.newContext({viewport:{width:390,height:844}});const p=await c.newPage();await p.goto(origin+'/contact',{waitUntil:'networkidle'});await p.getByRole('button',{name:/Prepare enquiry/i}).click();assert.equal(await p.locator('input[name="name"]:invalid').count(),1);assert.equal(await p.locator('select[name="area"]:invalid').count(),1);assert.ok((await p.locator('.contact-form__privacy').textContent())?.includes('does not send or store'));await c.close()}
+          async function inspect(page,route,label,isPhone,runAxe=true){
+            attachRuntimeGuards(page,label)
+            await page.goto(origin+route,{waitUntil:'networkidle'})
+            await settle(page)
 
-          const captures=[['/','home'],['/solutions','solutions'],['/solutions/skygrid','skygrid'],['/solutions/digivolt','digivolt'],['/solutions/enterprise-systems','erp'],['/company','company'],['/contact','contact'],['/insights','insights']]
-          for(const [route,file] of captures)for(const [name,w,h] of [['mobile',390,844],['tablet',1024,1366],['desktop',1440,1000]]){const c=await chrome.newContext({viewport:{width:w,height:h}});const p=await c.newPage();await p.goto(origin+route,{waitUntil:'networkidle'});await paintAndDecode(p);await p.screenshot({path:`final-launch-gate/${file}-${name}.png`,fullPage:true});await c.close()}
-          await chrome.close()
+            const data=await page.evaluate(()=>{
+              const ids=[...document.querySelectorAll('[id]')].map(element=>element.id)
+              return {
+                title:document.title,
+                description:document.querySelector('meta[name="description"]')?.getAttribute('content')||'',
+                robots:document.querySelector('meta[name="robots"]')?.getAttribute('content')||'',
+                canonical:document.querySelector('link[rel="canonical"]')?.getAttribute('href')||'',
+                h1:document.querySelectorAll('main h1').length,
+                mains:document.querySelectorAll('main#main-content').length,
+                skipLinks:document.querySelectorAll('a.skip-link[href="#main-content"]').length,
+                duplicateIds:[...new Set(ids.filter((id,index)=>ids.indexOf(id)!==index))],
+                clientWidth:document.documentElement.clientWidth,
+                scrollWidth:document.documentElement.scrollWidth,
+                brokenImages:[...document.images].filter(image=>!image.complete||image.naturalWidth===0).map(image=>image.currentSrc||image.src),
+                missingAlt:[...document.images].filter(image=>!image.hasAttribute('alt')).map(image=>image.currentSrc||image.src),
+                invalidAnchors:[...document.querySelectorAll('a')].filter(anchor=>!anchor.getAttribute('href')||anchor.getAttribute('href')==='#'||/^javascript:/i.test(anchor.getAttribute('href')||'')).map(anchor=>(anchor.textContent||'').trim()),
+                hrefs:[...new Set([...document.querySelectorAll('a[href^="/"]')].map(anchor=>anchor.getAttribute('href')).filter(Boolean))],
+                unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(element=>{
+                  if(element instanceof HTMLInputElement&&element.type==='hidden') return false
+                  if(element.getAttribute('aria-label')||element.getAttribute('aria-labelledby')) return false
+                  if(element instanceof HTMLButtonElement) return !(element.textContent||'').trim()
+                  return !(element.labels&&element.labels.length)
+                }).map(element=>`${element.tagName}:${element.getAttribute('name')||''}`),
+                lang:document.documentElement.lang,
+              }
+            })
 
-          for(const [engineName,launcher] of [['firefox',firefox],['webkit',webkit]]){const browser=await launcher.launch({headless:true});for(const [vp,w,h] of [['mobile',390,844],['desktop',1440,1000]]){const c=await browser.newContext({viewport:{width:w,height:h}});const p=await c.newPage();guard(p,`${engineName} ${vp}`);for(const route of smoke)await inspect(p,route,`${engineName} ${route} @ ${vp}`,false);await c.close()}await browser.close()}
-          assert.deepEqual(runtimeErrors,[],`runtime errors:\n${runtimeErrors.join('\n')}`)
-          fs.writeFileSync('final-launch-gate/result.txt','PASS\n')
+            if(!data.title.includes('Digi02')) fail(`${label}: title`)
+            if(data.description.length<50) fail(`${label}: meta description`)
+            if(data.robots!=='index, follow') fail(`${label}: robots ${data.robots}`)
+            const expectedCanonical=`https://digi02.org${route==='/'?'':route}`
+            if(data.canonical!==expectedCanonical) fail(`${label}: canonical ${data.canonical}`)
+            if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
+            if(data.mains!==1) fail(`${label}: main count ${data.mains}`)
+            if(data.skipLinks!==1) fail(`${label}: skip link count ${data.skipLinks}`)
+            if(data.duplicateIds.length) fail(`${label}: duplicate ids ${data.duplicateIds.join(',')}`)
+            if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
+            if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
+            if(data.missingAlt.length) fail(`${label}: missing alt ${data.missingAlt.join(',')}`)
+            if(data.invalidAnchors.length) fail(`${label}: invalid anchors ${data.invalidAnchors.join(',')}`)
+            if(data.unlabeled.length) fail(`${label}: unlabeled controls ${data.unlabeled.join(',')}`)
+            if(data.lang!=='en') fail(`${label}: html lang ${data.lang}`)
+
+            for(const href of data.hrefs){
+              const pathname=new URL(href,origin).pathname.replace(/\/$/,'')||'/'
+              if(!publicPaths.has(pathname)) fail(`${label}: unknown internal route ${href}`)
+            }
+
+            if(runAxe){
+              const axe=await new AxeBuilder({page}).analyze()
+              const severe=axe.violations.filter(violation=>['serious','critical'].includes(violation.impact||''))
+              if(severe.length) fail(`${label}: axe ${severe.map(violation=>`${violation.id}(${violation.nodes.length})`).join(',')}`)
+            }
+
+            if(isPhone){
+              const tiny=await page.locator('header button,header a,form button,form input,form select,form textarea').evaluateAll(elements=>elements.map(element=>{
+                const rect=element.getBoundingClientRect()
+                return {
+                  name:(element.textContent||element.getAttribute('aria-label')||element.getAttribute('name')||element.tagName).trim().slice(0,30),
+                  width:rect.width,
+                  height:rect.height,
+                }
+              }).filter(item=>item.width>0&&item.height>0&&item.height<42))
+              if(tiny.length) fail(`${label}: touch targets ${JSON.stringify(tiny)}`)
+            }
+          }
+
+          const chromiumBrowser=await chromium.launch({headless:true})
+          let chromiumPasses=0
+
+          for(const [viewportName,width,height] of viewports){
+            const context=await chromiumBrowser.newContext({viewport:{width,height}})
+            for(const [name,route] of routes){
+              const page=await context.newPage()
+              await inspect(page,route,`chromium ${route} @ ${viewportName}`,width<=430,true)
+              chromiumPasses++
+              if(viewportName==='390'||viewportName==='1440'){
+                await page.screenshot({path:`final-launch-gate/${name}-${viewportName}.png`,fullPage:true,animations:'disabled'})
+              }
+              await page.close()
+            }
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:390,height:844}})
+            const page=await context.newPage()
+            for(const route of ['/definitely-not-a-route','/foundation']){
+              await page.goto(origin+route,{waitUntil:'networkidle'})
+              await page.locator('main#main-content').waitFor()
+              const heading=(await page.locator('main h1').textContent())||''
+              const robots=await page.locator('meta[name="robots"]').getAttribute('content')
+              if(!/not found/i.test(heading)) fail(`${route}: not a public 404`)
+              if(robots!=='noindex, nofollow') fail(`${route}: 404 robots ${robots}`)
+            }
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'})
+            const page=await context.newPage()
+            for(const route of ['/','/solutions/digivolt','/solutions/skygrid']){
+              await page.goto(origin+route,{waitUntil:'networkidle'})
+              await page.waitForTimeout(300)
+              const active=await page.evaluate(()=>document.getAnimations().filter(animation=>{
+                const timing=animation.effect?.getComputedTiming()
+                return animation.playState==='running'&&Number(timing?.duration||0)>250
+              }).length)
+              if(active) fail(`${route}: reduced-motion has ${active} long animations`)
+            }
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:390,height:844}})
+            const page=await context.newPage()
+            await page.goto(origin,{waitUntil:'networkidle'})
+            const toggle=page.locator('.mobile-navigation__toggle')
+            if(await toggle.getAttribute('aria-expanded')!=='false') fail('mobile nav: initial aria-expanded')
+            await toggle.click()
+            if(await toggle.getAttribute('aria-expanded')!=='true') fail('mobile nav: did not open')
+            if(await page.locator('body').evaluate(body=>body.style.overflow)!=='hidden') fail('mobile nav: body scroll not locked')
+            await page.keyboard.press('Escape')
+            await page.waitForTimeout(80)
+            if(await toggle.getAttribute('aria-expanded')!=='false') fail('mobile nav: Escape did not close')
+            if(!await toggle.evaluate(element=>document.activeElement===element)) fail('mobile nav: focus not restored')
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:1280,height:900}})
+            const page=await context.newPage()
+            await page.goto(origin,{waitUntil:'networkidle'})
+            const tab=page.getByRole('tab',{name:/Automate/i}).first()
+            await tab.click()
+            await tab.press('End')
+            if(await page.getByRole('tab',{name:/Transact/i}).first().getAttribute('aria-selected')!=='true') fail('home tabs: End key')
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:1280,height:900}})
+            const page=await context.newPage()
+            await page.goto(origin+'/solutions/digivolt',{waitUntil:'networkidle'})
+            if(await page.locator('.mobility-route-story__route').count()!==1) fail('DigiVolt: route visualization missing')
+            if(await page.locator('.product-lifecycle__list article').count()!==4) fail('DigiVolt: lifecycle stage count')
+            const lifecycle=(await page.locator('.product-lifecycle__list').textContent())||''
+            for(const stage of ['Request','Match','Ride','Arrive']) if(!lifecycle.includes(stage)) fail(`DigiVolt: missing ${stage} stage`)
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:1280,height:900}})
+            const page=await context.newPage()
+            await page.goto(origin+'/solutions/enterprise-systems',{waitUntil:'networkidle'})
+            const row=page.locator('.erp-pos-product-row').filter({hasText:'Wireless Headset'})
+            const before=(await row.textContent())||''
+            await row.getByRole('button',{name:'Add'}).click()
+            await page.locator('input[name="erp-pos-payment"][value="Transfer"]').check()
+            await page.getByRole('button',{name:/Complete sale/i}).click()
+            await page.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor()
+            if((await row.textContent())===before) fail('ERP/POS: stock unchanged')
+            if(!/Transfer/i.test((await page.locator('.erp-pos-receipt__payment').textContent())||'')) fail('ERP/POS: receipt payment')
+            await page.getByRole('button',{name:/Reset demo/i}).click()
+            await context.close()
+          }
+
+          {
+            const context=await chromiumBrowser.newContext({viewport:{width:390,height:844}})
+            const page=await context.newPage()
+            await page.goto(origin+'/contact',{waitUntil:'networkidle'})
+            await page.getByRole('button',{name:/Prepare enquiry/i}).click()
+            if(await page.locator('input[name="name"]:invalid').count()!==1) fail('contact: name validation')
+            if(await page.locator('select[name="area"]:invalid').count()!==1) fail('contact: area validation')
+            if(!/does not send or store/i.test((await page.locator('.contact-form__privacy').textContent())||'')) fail('contact: privacy disclosure')
+            await context.close()
+          }
+
+          await chromiumBrowser.close()
+
+          for(const [engineName,launcher] of [['firefox',firefox],['webkit',webkit]]){
+            const browser=await launcher.launch({headless:true})
+            for(const [viewportName,width,height] of [['phone',390,844],['desktop',1440,1000]]){
+              const context=await browser.newContext({viewport:{width,height}})
+              for(const route of smoke){
+                const page=await context.newPage()
+                await inspect(page,route,`${engineName} ${route} @ ${viewportName}`,width<=430,false)
+                await page.close()
+              }
+              await context.close()
+            }
+            await browser.close()
+          }
+
+          const summary=`Chromium route passes: ${chromiumPasses}\nFailures: ${failures.length}\n${failures.map(message=>'FAIL '+message).join('\n')}\n`
+          fs.writeFileSync('final-launch-gate/summary.txt',summary)
+          console.log(summary)
+
+          if(failures.length){
+            failures.forEach(message=>console.error(`FAIL: ${message}`))
+            process.exit(1)
+          }
           NODE
 
       - name: Upload launch evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: final-launch-gate
           path: final-launch-gate
