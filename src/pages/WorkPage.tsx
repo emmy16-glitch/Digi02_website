@@ -4,23 +4,23 @@ const workItems = [
   {
     area: 'Autonomous systems',
     title: 'SkyGrid',
-    statement: 'Mission planning and field-operation storytelling for UAV workflows.',
+    statement: 'Mission planning and UAV field operations.',
     detail: 'Mission context, aircraft readiness, route progression and review are presented as one connected operational sequence.',
-    href: '/#skygrid',
+    href: '/solutions/skygrid',
   },
   {
     area: 'Mobility',
     title: 'DigiVolt',
     statement: 'A connected journey from request to arrival.',
     detail: 'Mobility states are presented as a clear operational sequence: request, assignment, route progress and completed arrival.',
-    href: '/#digivolt',
+    href: '/solutions/digivolt',
   },
   {
     area: 'Enterprise operations',
     title: 'ERP + POS',
     statement: 'The sale stays connected to the system behind it.',
     detail: 'A transactional workspace that links products, stock, payment choice, sale completion and receipt state in one coherent operational flow.',
-    href: '/#erp-pos',
+    href: '/solutions/enterprise-systems',
   },
 ] as const
 
@@ -54,7 +54,7 @@ export function WorkPage() {
               </div>
               <div className="work-index__detail">
                 <p>{item.detail}</p>
-                <a href={item.href}>View on homepage <span aria-hidden="true">↗</span></a>
+                <a href={item.href}>Explore the system <span aria-hidden="true">↗</span></a>
               </div>
             </article>
           ))}
