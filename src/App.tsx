@@ -20,6 +20,7 @@ import { WorkPage } from './pages/WorkPage'
 import './styles/site-pages.css'
 import './styles/product-pages.css'
 import './styles/capability-pages.css'
+import './styles/capability-theme.css'
 
 const FOUNDATION_PATH = '/foundation'
 
