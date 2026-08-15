@@ -24,6 +24,7 @@ import './styles/product-pages.css'
 import './styles/capability-pages.css'
 import './styles/capability-theme.css'
 import './styles/launch-polish.css'
+import './styles/final-touch-targets.css'
 
 const FOUNDATION_PATH = '/foundation'
 
