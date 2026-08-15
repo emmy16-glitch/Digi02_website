@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
 
@@ -27,7 +28,11 @@ export function PayrollAutomationPage() {
           <div className="payroll-cycle" aria-label="Illustrative payroll cycle">
             <div className="payroll-cycle__track" aria-hidden="true" />
             {cycle.map(([title], index) => (
-              <div className="payroll-cycle__step" key={title} style={{ '--step': index } as React.CSSProperties}>
+              <div
+                className="payroll-cycle__step"
+                key={title}
+                style={{ '--step': index } as CSSProperties}
+              >
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{title}</strong>
               </div>
