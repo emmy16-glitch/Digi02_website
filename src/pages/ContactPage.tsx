@@ -61,8 +61,8 @@ export function ContactPage() {
             <h1>Tell us what needs to work better.</h1>
           </div>
           <p>
-            Start with the operation, the constraint or the system that is failing to connect. We
-            can discuss the right technical approach from there.
+            Start with the workflow, constraint or existing system. We can discuss the technical
+            approach once we understand the work that needs to improve.
           </p>
         </Container>
       </section>
@@ -133,7 +133,7 @@ export function ContactPage() {
                 name="project"
                 rows={7}
                 required
-                placeholder="Describe the operation, workflow, constraint or existing system."
+                placeholder="Describe the workflow, constraint or existing system."
               />
             </label>
 
@@ -141,8 +141,8 @@ export function ContactPage() {
               <button className="button button--primary" type="submit">
                 Prepare enquiry <span aria-hidden="true">→</span>
               </button>
-              <p>
-                This form prepares an email to Digi02. It does not transmit or store your information on this website.
+              <p className="contact-form__privacy">
+                This form does not send or store your information on this website. It prepares an email for you to review and send from your email application.
               </p>
             </div>
 
