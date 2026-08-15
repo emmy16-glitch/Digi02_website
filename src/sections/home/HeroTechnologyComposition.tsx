@@ -1,4 +1,3 @@
-import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
 import skyGridCinematic from '../../assets/skygrid/skygrid-cinematic-control-room.webp'
 import skyGridLogo from '../../assets/skygrid/skygrid-logo.png'
 
@@ -30,18 +29,20 @@ export function HeroTechnologyComposition() {
           </div>
         </div>
 
-        <div className="hero-technology__erp" aria-label="ERP and POS system visualization">
-          <img
-            alt="Digi02 ERP and POS multi-device system visualization"
-            decoding="async"
-            src={erpPosShowcase}
-          />
-          <span>ERP + POS</span>
+        <div className="hero-technology__erp" aria-label="ERP and POS connected operation">
+          <strong>ERP + POS</strong>
+          <div className="hero-technology__erp-flow" aria-hidden="true">
+            <span>Sale</span>
+            <i />
+            <span>Stock</span>
+            <i />
+            <span>Record</span>
+          </div>
         </div>
       </div>
 
       <figcaption id="hero-technology-caption">
-        SkyGrid is shown with an illustrative concept environment. DigiVolt and ERP/POS are shown as product and system visualizations.
+        SkyGrid is shown with an illustrative concept environment. DigiVolt and ERP/POS are represented through simplified product flows.
       </figcaption>
     </figure>
   )
