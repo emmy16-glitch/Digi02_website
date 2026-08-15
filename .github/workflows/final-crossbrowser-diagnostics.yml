@@ -1,0 +1,67 @@
+name: Final cross-browser diagnostics
+
+on:
+  push:
+    branches: [chatgpt/final-launch-audit]
+  workflow_dispatch:
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install Firefox and WebKit
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps firefox webkit
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/preview.log 2>&1 &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/preview.log; exit 1
+      - name: Collect engine report
+        run: |
+          mkdir -p final-crossbrowser-diagnostics
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { firefox, webkit } from 'playwright'
+          const origin='http://127.0.0.1:4173'
+          const routes=['/','/solutions/skygrid','/solutions/digivolt','/solutions/enterprise-systems','/company','/contact']
+          const engines=[['firefox',firefox],['webkit',webkit]]
+          const viewports=[['mobile',390,844],['desktop',1440,1000]]
+          const report=[]
+          for(const [engineName,launcher] of engines){
+            const browser=await launcher.launch({headless:true})
+            for(const [vp,width,height] of viewports){
+              const context=await browser.newContext({viewport:{width,height}})
+              const page=await context.newPage()
+              for(const route of routes){
+                const issues=[];const consoleErrors=[];page.removeAllListeners('console');page.removeAllListeners('pageerror');page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});page.on('pageerror',e=>consoleErrors.push(e.message))
+                try{
+                  await page.goto(origin+route,{waitUntil:'networkidle'})
+                  await page.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=600){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,15))}window.scrollTo(0,0)})
+                  await page.waitForTimeout(80)
+                  const d=await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return{title:document.title,h1:document.querySelectorAll('main h1').length,cw:document.documentElement.clientWidth,sw:document.documentElement.scrollWidth,dups:ids.filter((id,i)=>ids.indexOf(id)!==i),bad:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src),unlabeled:[...document.querySelectorAll('button,input,textarea,select')].filter(e=>{if(e instanceof HTMLInputElement&&e.type==='hidden')return false;if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby'))return false;if(e instanceof HTMLButtonElement)return !e.textContent?.trim();return !e.labels?.length}).map(e=>e.tagName+':'+(e.getAttribute('name')||e.textContent?.trim()||''))}})
+                  if(!d.title.includes('Digi02'))issues.push('title');if(d.h1!==1)issues.push('h1='+d.h1);if(d.sw>d.cw+1)issues.push(`overflow=${d.sw}/${d.cw}`);if(d.dups.length)issues.push('dups='+d.dups.join(','));if(d.bad.length)issues.push('badImages='+d.bad.join(','));if(d.unlabeled.length)issues.push('unlabeled='+d.unlabeled.join(','))
+                }catch(error){issues.push('exception='+error.message)}
+                if(consoleErrors.length)issues.push('console='+consoleErrors.join(' | '))
+                report.push({engine:engineName,vp,route,issues})
+              }
+              await context.close()
+            }
+            await browser.close()
+          }
+          fs.writeFileSync('final-crossbrowser-diagnostics/report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report.filter(x=>x.issues.length),null,2))
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-crossbrowser-diagnostics
+          path: final-crossbrowser-diagnostics
+          retention-days: 1
