@@ -1,0 +1,75 @@
+name: Core homepage visual QA
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx --yes playwright@1.55.0 install chromium
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Capture desktop
+        run: |
+          mkdir -p visual-qa
+          npx --yes playwright@1.55.0 screenshot \
+            --browser chromium \
+            --viewport-size="1440,1000" \
+            --full-page \
+            http://127.0.0.1:4173/ \
+            visual-qa/desktop-1440.png
+
+      - name: Capture iPad width
+        run: |
+          npx --yes playwright@1.55.0 screenshot \
+            --browser chromium \
+            --viewport-size="1024,1366" \
+            --full-page \
+            http://127.0.0.1:4173/ \
+            visual-qa/ipad-1024.png
+
+      - name: Capture mobile
+        run: |
+          npx --yes playwright@1.55.0 screenshot \
+            --browser chromium \
+            --viewport-size="390,844" \
+            --full-page \
+            http://127.0.0.1:4173/ \
+            visual-qa/mobile-390.png
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-homepage-visual-qa
+          path: visual-qa/
+          retention-days: 1
