@@ -1,5 +1,6 @@
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
+import '../styles/company-page.css'
 
 const disciplines = [
   {
