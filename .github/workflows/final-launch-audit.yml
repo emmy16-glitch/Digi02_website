@@ -1,0 +1,287 @@
+name: Final launch audit
+
+on:
+  push:
+    branches:
+      - chatgpt/final-launch-audit
+  workflow_dispatch:
+
+jobs:
+  launch-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Guard against generic marketing copy and retired SkyGrid UI
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import path from 'node:path'
+
+          const roots = ['src/pages', 'src/sections', 'src/components']
+          const files = []
+          const walk = (dir) => {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const full = path.join(dir, entry.name)
+              if (entry.isDirectory()) walk(full)
+              else if (/\.(tsx|ts)$/.test(entry.name)) files.push(full)
+            }
+          }
+          roots.forEach((root) => fs.existsSync(root) && walk(root))
+
+          const banned = [
+            /\bseamless(?:ly)?\b/i,
+            /\binnovative\b/i,
+            /\brevolutionary\b/i,
+            /\bcutting[- ]edge\b/i,
+            /\bempower(?:ing|ed|s)?\b/i,
+            /\bunlock(?:ing|ed|s)?\b/i,
+            /\bnext[- ]gen(?:eration)?\b/i,
+            /\btransformative\b/i,
+            /\bfuture[- ]ready\b/i,
+            /\bredefine(?:d|s|ing)?\b/i,
+            /\bgame[- ]chang(?:er|ing)\b/i,
+            /\bworld[- ]class\b/i,
+            /\bleading[- ]edge\b/i,
+          ]
+          const retiredSkyGrid = [
+            'skygrid-route-planner',
+            'skygrid-gcs-mission-planner',
+            'skygrid-operations-center',
+            'skygrid-mission-analytics',
+          ]
+
+          const errors = []
+          for (const file of files) {
+            const text = fs.readFileSync(file, 'utf8')
+            for (const pattern of banned) {
+              if (pattern.test(text)) errors.push(`${file}: banned generic phrase ${pattern}`)
+            }
+            if (!file.includes('FoundationPreviewPage')) {
+              for (const asset of retiredSkyGrid) {
+                if (text.includes(asset)) errors.push(`${file}: retired SkyGrid app evidence ${asset}`)
+              }
+            }
+          }
+
+          if (errors.length) {
+            console.error(errors.join('\n'))
+            process.exit(1)
+          }
+          NODE
+
+      - name: Install Playwright browsers
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium firefox webkit
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/digi02-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run route, responsive, interaction and browser QA
+        run: |
+          mkdir -p final-launch-audit
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { chromium, firefox, webkit } from 'playwright'
+
+          const origin = 'http://127.0.0.1:4173'
+          const routes = [
+            '/', '/solutions', '/solutions/skygrid', '/solutions/digivolt',
+            '/solutions/enterprise-systems', '/solutions/e-management',
+            '/solutions/payroll-automation', '/solutions/payment-systems',
+            '/solutions/custom-software', '/industries', '/work', '/company',
+            '/insights', '/contact',
+          ]
+          const chromiumViewports = [
+            { name: 'phone-320', width: 320, height: 720 },
+            { name: 'phone-360', width: 360, height: 800 },
+            { name: 'phone-390', width: 390, height: 844 },
+            { name: 'phone-430', width: 430, height: 932 },
+            { name: 'tablet-768', width: 768, height: 1024 },
+            { name: 'tablet-1024', width: 1024, height: 1366 },
+            { name: 'desktop-1280', width: 1280, height: 900 },
+            { name: 'desktop-1440', width: 1440, height: 1000 },
+          ]
+          const engineSmokeRoutes = ['/', '/solutions/skygrid', '/solutions/digivolt', '/solutions/enterprise-systems', '/company', '/contact']
+          const engineViewports = [
+            { name: 'mobile', width: 390, height: 844 },
+            { name: 'desktop', width: 1440, height: 1000 },
+          ]
+
+          const badConsole = []
+          const badResponses = []
+
+          async function attachPageGuards(page, label) {
+            page.on('console', (message) => {
+              if (message.type() === 'error') badConsole.push(`${label}: ${message.text()}`)
+            })
+            page.on('pageerror', (error) => badConsole.push(`${label}: pageerror ${error.message}`))
+            page.on('response', (response) => {
+              const url = response.url()
+              if (url.startsWith(origin) && response.status() >= 400) badResponses.push(`${label}: ${response.status()} ${url}`)
+            })
+          }
+
+          async function assertPageBasics(page, route, viewportName) {
+            const label = `${route} @ ${viewportName}`
+            await page.goto(`${origin}${route}`, { waitUntil: 'networkidle' })
+            await page.locator('main').waitFor({ state: 'visible' })
+
+            const title = await page.title()
+            assert.ok(title.includes('Digi02'), `${label}: page title must identify Digi02`)
+            assert.equal(await page.locator('main h1').count(), 1, `${label}: exactly one H1 required`)
+
+            const metrics = await page.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+              duplicateIds: [...document.querySelectorAll('[id]')]
+                .map((element) => element.id)
+                .filter((id, index, ids) => ids.indexOf(id) !== index),
+            }))
+            assert.ok(metrics.scrollWidth <= metrics.clientWidth + 1, `${label}: horizontal overflow ${metrics.scrollWidth}/${metrics.clientWidth}`)
+            assert.deepEqual(metrics.duplicateIds, [], `${label}: duplicate IDs found: ${metrics.duplicateIds.join(', ')}`)
+
+            const brokenImages = await page.locator('img').evaluateAll((images) => images
+              .filter((image) => !image.complete || image.naturalWidth === 0)
+              .map((image) => image.getAttribute('src')))
+            assert.deepEqual(brokenImages, [], `${label}: broken images ${brokenImages.join(', ')}`)
+
+            const unlabeledControls = await page.locator('button, input, textarea, select').evaluateAll((controls) => controls
+              .filter((element) => {
+                if (element instanceof HTMLInputElement && element.type === 'hidden') return false
+                const aria = element.getAttribute('aria-label') || element.getAttribute('aria-labelledby')
+                if (aria) return false
+                if (element instanceof HTMLButtonElement) return !element.textContent?.trim()
+                return !element.labels?.length
+              })
+              .map((element) => `${element.tagName.toLowerCase()}[name="${element.getAttribute('name') ?? ''}"]`))
+            assert.deepEqual(unlabeledControls, [], `${label}: unlabeled controls ${unlabeledControls.join(', ')}`)
+
+            if (viewportName.startsWith('phone')) {
+              const smallTargets = await page.locator('header a, header button, form button, form input, form select').evaluateAll((elements) => elements
+                .map((element) => ({
+                  text: (element.textContent || element.getAttribute('aria-label') || element.getAttribute('name') || element.tagName).trim().slice(0, 40),
+                  rect: element.getBoundingClientRect(),
+                }))
+                .filter(({ rect }) => rect.width > 0 && rect.height > 0 && rect.height < 42)
+                .map(({ text, rect }) => `${text}:${Math.round(rect.width)}x${Math.round(rect.height)}`))
+              assert.deepEqual(smallTargets, [], `${label}: undersized primary touch targets ${smallTargets.join(', ')}`)
+            }
+
+            const allInternalHrefs = await page.locator('a[href^="/"]').evaluateAll((anchors) => [...new Set(anchors.map((anchor) => anchor.getAttribute('href')).filter(Boolean))])
+            for (const href of allInternalHrefs) {
+              const response = await page.request.get(`${origin}${href}`)
+              assert.ok(response.status() < 400, `${label}: broken internal link ${href} -> ${response.status()}`)
+            }
+          }
+
+          const chromiumBrowser = await chromium.launch({ headless: true })
+          for (const viewport of chromiumViewports) {
+            const context = await chromiumBrowser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
+            const page = await context.newPage()
+            await attachPageGuards(page, `chromium ${viewport.name}`)
+            for (const route of routes) await assertPageBasics(page, route, viewport.name)
+            await context.close()
+          }
+
+          // Navigation and mobile menu keyboard behavior.
+          {
+            const context = await chromiumBrowser.newContext({ viewport: { width: 390, height: 844 } })
+            const page = await context.newPage()
+            await page.goto(origin, { waitUntil: 'networkidle' })
+            const toggle = page.getByRole('button', { name: 'Open navigation menu' })
+            await toggle.click()
+            await page.getByRole('navigation', { name: 'Mobile primary navigation' }).waitFor({ state: 'visible' })
+            assert.equal(await page.locator('body').evaluate((body) => body.style.overflow), 'hidden', 'Mobile menu must lock body scroll')
+            await page.keyboard.press('Escape')
+            assert.equal(await toggle.getAttribute('aria-expanded'), 'false', 'Escape must close mobile menu')
+            await toggle.evaluate((element) => assertFocus(element))
+            await context.close()
+          }
+
+          // Contact form: validation and explicit preparation behavior.
+          {
+            const context = await chromiumBrowser.newContext({ viewport: { width: 390, height: 844 } })
+            const page = await context.newPage()
+            await page.goto(`${origin}/contact`, { waitUntil: 'networkidle' })
+            const submit = page.getByRole('button', { name: /prepare enquiry/i })
+            await submit.click()
+            assert.equal(await page.locator('input[name="name"]:invalid').count(), 1, 'Contact form should use native required validation')
+            await page.fill('input[name="name"]', 'QA Visitor')
+            await page.fill('input[name="email"]', 'qa@example.com')
+            await page.fill('textarea[name="project"]', 'We need a clearer operational system for approvals and reporting.')
+            await page.evaluate(() => {
+              Object.defineProperty(window, 'location', { configurable: true, value: window.location })
+            }).catch(() => {})
+            assert.ok((await page.locator('.contact-form__privacy').textContent())?.includes('does not send or store'), 'Contact privacy explanation must remain explicit')
+            await context.close()
+          }
+
+          // Representative screenshots for manual review.
+          for (const [route, name] of [['/', 'home'], ['/solutions', 'solutions'], ['/solutions/skygrid', 'skygrid'], ['/solutions/digivolt', 'digivolt'], ['/solutions/enterprise-systems', 'erp'], ['/company', 'company'], ['/contact', 'contact']]) {
+            for (const viewport of [{ name: 'mobile', width: 390, height: 844 }, { name: 'tablet', width: 1024, height: 1366 }, { name: 'desktop', width: 1440, height: 1000 }]) {
+              const context = await chromiumBrowser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
+              const page = await context.newPage()
+              await page.goto(`${origin}${route}`, { waitUntil: 'networkidle' })
+              await page.screenshot({ path: `final-launch-audit/${name}-${viewport.name}.png`, fullPage: true })
+              await context.close()
+            }
+          }
+          await chromiumBrowser.close()
+
+          // Cross-engine smoke test on the visually complex routes.
+          for (const [engineName, launcher] of [['firefox', firefox], ['webkit', webkit]]) {
+            const browser = await launcher.launch({ headless: true })
+            for (const viewport of engineViewports) {
+              const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
+              const page = await context.newPage()
+              await attachPageGuards(page, `${engineName} ${viewport.name}`)
+              for (const route of engineSmokeRoutes) await assertPageBasics(page, route, `${engineName}-${viewport.name}`)
+              await context.close()
+            }
+            await browser.close()
+          }
+
+          assert.deepEqual(badConsole, [], `Console/page errors:\n${badConsole.join('\n')}`)
+          assert.deepEqual(badResponses, [], `Failed same-origin responses:\n${badResponses.join('\n')}`)
+
+          function assertFocus(element) {
+            if (document.activeElement !== element) throw new Error('Focus did not return to mobile menu toggle')
+          }
+          NODE
+
+      - name: Upload final launch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-launch-audit
+          path: final-launch-audit
+          retention-days: 3
