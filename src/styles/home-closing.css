@@ -1,6 +1,5 @@
 .why-digi02 {
   padding-block: var(--space-20);
-  border-bottom: var(--border-thin) solid var(--line-subtle);
 }
 
 .why-digi02__layout {
@@ -13,49 +12,45 @@
   grid-column: 1 / span 5;
 }
 
-.why-digi02__statement > p {
-  margin-bottom: var(--space-4);
-  color: var(--gold-400);
+.why-digi02__eyebrow,
+.home-final-cta__eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--type-ui);
+  font-weight: 650;
 }
 
 .why-digi02__statement h2 {
-  max-width: 15ch;
-  margin-bottom: 0;
+  max-width: 14ch;
+  margin: 0;
   font-size: var(--type-h2);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
 }
 
 .why-digi02__principles {
   grid-column: 7 / -1;
+  display: grid;
+  gap: var(--space-6);
   padding: 0;
   margin: 0;
-  border-top: var(--border-thin) solid var(--line-subtle);
   list-style: none;
 }
 
 .why-digi02__principles li {
-  display: grid;
-  grid-template-columns: var(--space-6) 1fr;
-  gap: var(--space-3);
-  padding-block: var(--space-4);
-  border-bottom: var(--border-thin) solid var(--line-subtle);
-}
-
-.why-digi02__principles li > span {
-  padding-top: var(--space-1);
-  color: var(--text-muted);
+  max-width: 34rem;
 }
 
 .why-digi02__principles h3 {
-  margin-bottom: var(--space-2);
+  margin: 0 0 var(--space-2);
   font-size: var(--type-lead);
   letter-spacing: -0.02em;
 }
 
 .why-digi02__principles p {
-  margin-bottom: 0;
+  margin: 0;
   color: var(--text-secondary);
-  font-size: var(--type-ui);
+  font-size: var(--type-body);
+  line-height: 1.65;
 }
 
 .home-final-cta {
@@ -70,10 +65,9 @@
   align-items: end;
 }
 
-.home-final-cta__layout > .type-tech {
+.home-final-cta__eyebrow {
   grid-column: 1 / span 3;
   align-self: start;
-  color: var(--gold-400);
 }
 
 .home-final-cta__layout > div {
@@ -82,15 +76,17 @@
 
 .home-final-cta h2 {
   max-width: 15ch;
-  margin-bottom: var(--space-3);
+  margin: 0 0 var(--space-3);
   font-size: var(--type-h2);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
 }
 
 .home-final-cta__layout > div p {
   max-width: 35rem;
-  margin-bottom: 0;
+  margin: 0;
   color: var(--text-secondary);
+  font-size: var(--type-body);
+  line-height: 1.65;
 }
 
 .home-final-cta__layout > .button {
@@ -136,16 +132,17 @@
 
   .why-digi02__statement h2,
   .home-final-cta h2 {
-    font-size: clamp(2rem, 9vw, 2.5rem);
+    font-size: clamp(2.2rem, 9vw, 2.8rem);
   }
 
   .why-digi02__principles {
+    gap: var(--space-5);
     margin-top: var(--space-8);
   }
 
-  .why-digi02__principles li {
-    grid-template-columns: var(--space-5) 1fr;
-    padding-block: var(--space-3);
+  .why-digi02__principles p,
+  .home-final-cta__layout > div p {
+    font-size: 1rem;
   }
 
   .home-final-cta__layout > div {
