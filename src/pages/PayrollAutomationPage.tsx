@@ -33,7 +33,6 @@ export function PayrollAutomationPage() {
                 key={title}
                 style={{ '--step': index } as CSSProperties}
               >
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{title}</strong>
               </div>
             ))}
@@ -52,9 +51,8 @@ export function PayrollAutomationPage() {
             <h2>Make every stage visible before the payroll run is closed.</h2>
           </header>
           <div className="payroll-ledger__rows">
-            {cycle.map(([title, description], index) => (
+            {cycle.map(([title, description]) => (
               <article key={title}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
               </article>
