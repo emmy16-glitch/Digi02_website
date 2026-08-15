@@ -74,10 +74,6 @@
     both;
 }
 
-/* ==========================================================
-   PRODUCT EVIDENCE — NAVIGATION IS DISCOVERED AT THE EDGE
-   ========================================================== */
-
 .product-evidence {
   min-width: 0;
   margin: 0;
@@ -124,7 +120,7 @@
 
 .product-evidence__adjacent {
   z-index: 2;
-  opacity: var(--edge-opacity);
+  opacity: 0;
   pointer-events: none;
   transition:
     opacity var(--motion-ui) var(--ease-standard),
@@ -141,6 +137,7 @@
 
 .product-evidence__viewport[data-hover='left'] .product-evidence__adjacent--previous,
 .product-evidence__viewport[data-hover='right'] .product-evidence__adjacent--next {
+  opacity: var(--edge-opacity);
   transform: translateX(0) scale(1);
 }
 
@@ -328,7 +325,6 @@
   }
 }
 
-/* Keep the split composition on iPad-class widths. */
 @media (max-width: 58rem) {
   .home-hero__inner {
     min-height: auto;
@@ -391,6 +387,13 @@
     aspect-ratio: 4 / 3;
   }
 
+  .product-evidence__current[data-product='skygrid'] img,
+  .product-evidence__adjacent[data-product='skygrid'] img {
+    background: var(--bg-950);
+    object-fit: contain;
+    object-position: center;
+  }
+
   .product-evidence__footer {
     min-height: auto;
     align-items: flex-start;
@@ -414,7 +417,6 @@
   }
 }
 
-/* Touch-only phones get explicit fallback controls; larger touch screens can swipe. */
 @media (max-width: 47.9375rem) and (hover: none) and (pointer: coarse) {
   .product-evidence__hover-zone,
   .product-evidence__adjacent {
