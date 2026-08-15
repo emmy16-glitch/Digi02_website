@@ -71,6 +71,16 @@ export function PayrollAutomationPage() {
           </div>
         </Container>
       </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Fix the monthly cycle</p>
+            <h2>Show us where payroll still depends on manual reconstruction.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss payroll <span aria-hidden="true">→</span></PrimaryButton>
+        </Container>
+      </section>
     </div>
   )
 }
