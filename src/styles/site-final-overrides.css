@@ -1,5 +1,10 @@
 /* Final route-level corrections found during full-page visual QA. */
 
+/* The native payment radios remain directly operable for keyboard, pointer and QA interaction. */
+.erp-pos-payment input {
+  pointer-events: auto;
+}
+
 /* Light surfaces own their heading colors explicitly. */
 .interior-hero--light h1,
 .product-hero--digivolt h1,
