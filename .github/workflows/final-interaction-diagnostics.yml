@@ -1,0 +1,70 @@
+name: Final interaction diagnostics
+
+on:
+  push:
+    branches: [chatgpt/final-launch-audit]
+  workflow_dispatch:
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/preview.log 2>&1 &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/preview.log; exit 1
+      - name: Test interactions without stopping on first failure
+        run: |
+          mkdir -p final-interaction-diagnostics
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { chromium } from 'playwright'
+          const origin='http://127.0.0.1:4173'
+          const browser=await chromium.launch({headless:true})
+          const report=[]
+          async function test(name, fn){try{await fn();report.push({name,ok:true})}catch(error){report.push({name,ok:false,error:error.message})}}
+
+          await test('mobile-navigation',async()=>{
+            const context=await browser.newContext({viewport:{width:390,height:844}});const page=await context.newPage();await page.goto(origin,{waitUntil:'networkidle'});const toggle=page.getByRole('button',{name:'Open navigation menu'});await toggle.click();await page.getByRole('navigation',{name:'Mobile primary navigation'}).waitFor();if(await page.locator('body').evaluate(b=>b.style.overflow)!=='hidden')throw new Error('body scroll not locked');await page.keyboard.press('Escape');await page.waitForTimeout(50);if(await toggle.getAttribute('aria-expanded')!=='false')throw new Error('Escape did not close');if(!await toggle.evaluate(e=>document.activeElement===e))throw new Error('focus did not return');await context.close()
+          })
+
+          await test('homepage-operating-tabs',async()=>{
+            const context=await browser.newContext({viewport:{width:1280,height:900}});const page=await context.newPage();await page.goto(origin,{waitUntil:'networkidle'});const automate=page.getByRole('tab',{name:/Automate/i}).first();await automate.click();if(await automate.getAttribute('aria-selected')!=='true')throw new Error('Automate not selected');await automate.press('End');const transact=page.getByRole('tab',{name:/Transact/i}).first();if(await transact.getAttribute('aria-selected')!=='true')throw new Error('Transact not selected by End');if(!await transact.evaluate(e=>document.activeElement===e))throw new Error('Transact focus missing');await context.close()
+          })
+
+          await test('homepage-skygrid',async()=>{
+            const context=await browser.newContext({viewport:{width:1280,height:900}});const page=await context.newPage();await page.goto(origin,{waitUntil:'networkidle'});const tab=page.getByRole('tab',{name:'Review'}).first();await tab.click();if(await tab.getAttribute('aria-selected')!=='true')throw new Error('Review not selected');await context.close()
+          })
+
+          await test('homepage-digivolt',async()=>{
+            const context=await browser.newContext({viewport:{width:1280,height:900}});const page=await context.newPage();await page.goto(origin,{waitUntil:'networkidle'});const tab=page.getByRole('tab',{name:/Arrive/i}).first();await tab.click();await page.waitForTimeout(750);if(await tab.getAttribute('aria-selected')!=='true')throw new Error('Arrive not selected');const status=await page.locator('.digivolt-journey__stage-copy strong').textContent();if(!status?.includes('Trip complete'))throw new Error('Trip complete status missing: '+status);await context.close()
+          })
+
+          await test('erp-demo',async()=>{
+            const context=await browser.newContext({viewport:{width:1280,height:900}});const page=await context.newPage();await page.goto(origin+'/solutions/enterprise-systems',{waitUntil:'networkidle'});const row=page.locator('.erp-pos-product-row').filter({hasText:'Wireless Headset'});const start=await row.textContent();if(!start?.includes('24'))throw new Error('start stock not 24: '+start);await row.getByRole('button',{name:'Add'}).click();await page.getByText('Transfer',{exact:true}).last().click();await page.getByRole('button',{name:/Complete sale/i}).click();await page.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor();const sold=await row.textContent();if(!sold?.includes('23'))throw new Error('stock not 23: '+sold);const payment=await page.locator('.erp-pos-receipt__payment').textContent();if(!payment?.includes('Transfer'))throw new Error('receipt payment wrong: '+payment);await page.getByRole('button',{name:'Reset demo'}).click();const reset=await row.textContent();if(!reset?.includes('24'))throw new Error('reset stock not 24: '+reset);await context.close()
+          })
+
+          await test('contact-validation',async()=>{
+            const context=await browser.newContext({viewport:{width:390,height:844}});const page=await context.newPage();await page.goto(origin+'/contact',{waitUntil:'networkidle'});await page.getByRole('button',{name:/Prepare enquiry/i}).click();if(await page.locator('input[name="name"]:invalid').count()!==1)throw new Error('name required validation missing');if(await page.locator('select[name="area"]:invalid').count()!==1)throw new Error('area required validation missing');const privacy=await page.locator('.contact-form__privacy').textContent();if(!privacy?.includes('does not send or store'))throw new Error('privacy copy missing');await context.close()
+          })
+
+          fs.writeFileSync('final-interaction-diagnostics/report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));await browser.close()
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-interaction-diagnostics
+          path: final-interaction-diagnostics
+          retention-days: 1
