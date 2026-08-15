@@ -66,7 +66,7 @@ export function SolutionsPage() {
         <Container>
           <header className="section-heading section-heading--split">
             <p>Core products</p>
-            <h2 id="solution-ledger-title">Three different problems. Three different product languages.</h2>
+            <h2 id="solution-ledger-title">Three areas of work, each built around its operating context.</h2>
           </header>
 
           <div className="solution-ledger__list">
@@ -86,7 +86,7 @@ export function SolutionsPage() {
         <Container className="capability-field__grid">
           <div className="capability-field__statement">
             <p>Enterprise capability</p>
-            <h2 id="capability-field-title">The software around the product matters too.</h2>
+            <h2 id="capability-field-title">The systems behind the operation matter too.</h2>
             <p>
               E-management, payroll, payments and custom software cover the systems organizations
               use to run the work behind the customer-facing experience.
