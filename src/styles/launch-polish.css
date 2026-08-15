@@ -115,6 +115,28 @@ select {
   justify-content: flex-start;
 }
 
+/* Active state is already visible in the tab rail; do not repeat it as a micro-label. */
+.skygrid-stage-panel__copy > span,
+.digivolt-journey__stage-copy > span {
+  display: none;
+}
+
+.digivolt-journey__stages button strong {
+  margin-top: 0;
+}
+
+.digivolt-journey__stages button > .digivolt-journey__stage-description {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.digivolt-journey__footer {
+  justify-content: flex-start;
+  border-top: 0;
+}
+
 /* Removing decorative sequence numbers should also remove the empty layout columns they occupied. */
 .company-method__sequence article,
 .capability-sequence article,
