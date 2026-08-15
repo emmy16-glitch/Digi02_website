@@ -26,7 +26,7 @@ import './styles/capability-theme.css'
 import './styles/launch-polish.css'
 import './styles/final-touch-targets.css'
 import './styles/site-tightening.css'
-import './styles/light-surface-fixes.css'
+import './styles/site-final-overrides.css'
 
 const FOUNDATION_PATH = '/foundation'
 
