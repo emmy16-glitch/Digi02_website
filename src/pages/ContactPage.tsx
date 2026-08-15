@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react'
 import { Container } from '../components/Container'
-import { PrimaryButton } from '../components/PrimaryButton'
 
 export function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -83,7 +82,9 @@ export function ContactPage() {
             </label>
 
             <div className="contact-form__submit">
-              <PrimaryButton type="submit">Prepare email <span aria-hidden="true">→</span></PrimaryButton>
+              <button className="button button--primary" type="submit">
+                Prepare email <span aria-hidden="true">→</span>
+              </button>
               <p>
                 {submitted
                   ? 'Your email application should open with the project brief prepared.'
