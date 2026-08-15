@@ -5,21 +5,21 @@ const workItems = [
     area: 'Autonomous systems',
     title: 'SkyGrid',
     statement: 'Mission planning and UAV field operations.',
-    detail: 'A mission moves from planning and readiness through flight activity and review without relying on disconnected views of the work.',
+    detail: 'Plan the mission, prepare the aircraft, follow the operation and review what happened without breaking the work into unrelated views.',
     href: '/solutions/skygrid',
   },
   {
     area: 'Mobility',
     title: 'DigiVolt',
     statement: 'A connected journey from request to arrival.',
-    detail: 'The mobility flow keeps request, assignment, route progress and arrival in one understandable journey.',
+    detail: 'Keep the trip request, vehicle assignment, route progress and arrival inside one understandable mobility flow.',
     href: '/solutions/digivolt',
   },
   {
-    area: 'Enterprise operations',
+    area: 'Enterprise systems',
     title: 'ERP + POS',
-    statement: 'The sale stays connected to the system behind it.',
-    detail: 'Products, stock, payment choice, sale completion and receipt state remain part of the same transaction flow.',
+    statement: 'Keep the sale connected to the business behind it.',
+    detail: 'Products, stock, payment choice, sale completion and receipt state remain part of the same transaction record.',
     href: '/solutions/enterprise-systems',
   },
 ] as const
@@ -31,10 +31,10 @@ export function WorkPage() {
         <Container className="interior-hero__grid">
           <p className="interior-hero__kicker">Our Work</p>
           <div className="interior-hero__statement">
-            <h1>See the system through the work it has to support.</h1>
+            <h1>Selected systems, shown in context.</h1>
             <p>
-              Selected Digi02 products shown through their operating context, the decisions they
-              support and the way information moves through them.
+              Three Digi02 product directions, each shaped around a different kind of work rather
+              than one repeated interface pattern.
             </p>
           </div>
         </Container>
