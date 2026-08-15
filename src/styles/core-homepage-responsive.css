@@ -1,8 +1,14 @@
 /*
   Core homepage responsive corrections.
-  SkyGrid and DigiVolt now own their responsive behavior in their section styles.
-  This file only protects the ERP/POS working demo and removes template-like metadata styling.
+  SkyGrid and DigiVolt own their main responsive behavior in their section styles.
+  This file protects the desktop SkyGrid story length and the ERP/POS working demo.
 */
+
+@media (min-width: 64.0625rem) {
+  .skygrid-chapter__scroll {
+    height: 280svh;
+  }
+}
 
 .erp-pos-chapter__eyebrow {
   color: var(--erp-secondary) !important;
