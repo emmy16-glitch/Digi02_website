@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
-import { SeoMeta, organizationStructuredData } from './components/SeoMeta'
+import { SeoMeta } from './components/SeoMeta'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/navigation/SiteHeader'
+import { organizationStructuredData } from './data/organizationStructuredData'
 import { CompanyPage } from './pages/CompanyPage'
 import { ContactPage } from './pages/ContactPage'
 import { CustomSoftwarePage } from './pages/CustomSoftwarePage'
@@ -22,6 +23,7 @@ import './styles/site-pages.css'
 import './styles/product-pages.css'
 import './styles/capability-pages.css'
 import './styles/capability-theme.css'
+import './styles/launch-polish.css'
 
 const FOUNDATION_PATH = '/foundation'
 
