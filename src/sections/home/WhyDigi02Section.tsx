@@ -21,20 +21,18 @@ export function WhyDigi02Section() {
     <section className="why-digi02" aria-labelledby="why-digi02-title">
       <Container className="why-digi02__layout">
         <div className="why-digi02__statement">
-          <p className="type-tech">Why Digi02</p>
+          <p className="why-digi02__eyebrow">How we work</p>
           <h2 id="why-digi02-title">Technology only matters when it improves the way work gets done.</h2>
         </div>
-        <ol className="why-digi02__principles">
-          {principles.map((principle, index) => (
+
+        <ul className="why-digi02__principles">
+          {principles.map((principle) => (
             <li key={principle.title}>
-              <span className="type-tech">0{index + 1}</span>
-              <div>
-                <h3>{principle.title}</h3>
-                <p>{principle.copy}</p>
-              </div>
+              <h3>{principle.title}</h3>
+              <p>{principle.copy}</p>
             </li>
           ))}
-        </ol>
+        </ul>
       </Container>
     </section>
   )
