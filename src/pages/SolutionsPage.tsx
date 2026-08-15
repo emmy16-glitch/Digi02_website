@@ -6,19 +6,19 @@ const solutionGroups = [
     eyebrow: 'Autonomous systems',
     title: 'SkyGrid',
     body: 'UAV mission planning, operational coordination and field-data workflows designed around demanding flight operations.',
-    href: '/#skygrid',
+    href: '/solutions/skygrid',
   },
   {
     eyebrow: 'Mobility',
     title: 'DigiVolt',
     body: 'Connected mobility experiences that carry a journey from request and assignment through route progress and arrival.',
-    href: '/#digivolt',
+    href: '/solutions/digivolt',
   },
   {
     eyebrow: 'Enterprise operations',
     title: 'ERP + POS',
     body: 'Business systems that connect sales, inventory, transactions, reporting and day-to-day operational records.',
-    href: '/#erp-pos',
+    href: '/solutions/enterprise-systems',
   },
 ] as const
 
@@ -50,7 +50,7 @@ export function SolutionsPage() {
         <Container>
           <header className="section-heading section-heading--split">
             <p>Core systems</p>
-            <h2 id="solution-ledger-title">Three different operational problems. Three different visual languages.</h2>
+            <h2 id="solution-ledger-title">From field operations to mobility and enterprise systems.</h2>
           </header>
 
           <div className="solution-ledger__list">
@@ -69,7 +69,7 @@ export function SolutionsPage() {
       <section className="capability-field" aria-labelledby="capability-field-title">
         <Container className="capability-field__grid">
           <div className="capability-field__statement">
-            <p>Beyond the product chapters</p>
+            <p>Supporting capabilities</p>
             <h2 id="capability-field-title">The wider system matters too.</h2>
             <p>
               Digi02 also engineers the software, automation and transaction layers that keep
