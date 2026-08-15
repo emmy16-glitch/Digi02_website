@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Generated QA and local backup output
+.manual-backups/
+artifacts/
+playwright-report/
+test-results/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

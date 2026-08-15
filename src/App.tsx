@@ -9,7 +9,6 @@ import { CustomSoftwarePage } from './pages/CustomSoftwarePage'
 import { DigiVoltPage } from './pages/DigiVoltPage'
 import { EManagementPage } from './pages/EManagementPage'
 import { EnterpriseSystemsPage } from './pages/EnterpriseSystemsPage'
-import { FoundationPreviewPage } from './pages/FoundationPreviewPage'
 import { HomePage } from './pages/HomePage'
 import { IndustriesPage } from './pages/IndustriesPage'
 import { InsightsPage } from './pages/InsightsPage'
@@ -28,8 +27,6 @@ import './styles/final-touch-targets.css'
 import './styles/site-tightening.css'
 import './styles/site-final-overrides.css'
 
-const FOUNDATION_PATH = '/foundation'
-
 type RouteDefinition = {
   title: string
   description: string
@@ -39,20 +36,6 @@ type RouteDefinition = {
 
 function App() {
   const path = window.location.pathname.replace(/\/$/, '') || '/'
-
-  if (path === FOUNDATION_PATH) {
-    return (
-      <>
-        <SeoMeta
-          title="Design foundation — Digi02"
-          description="Internal Digi02 design-foundation preview."
-          path={FOUNDATION_PATH}
-          noIndex
-        />
-        <FoundationPreviewPage />
-      </>
-    )
-  }
 
   const routes: Record<string, RouteDefinition> = {
     '/': {

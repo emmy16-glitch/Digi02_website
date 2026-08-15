@@ -11,8 +11,6 @@ npm run dev
 
 Open `http://localhost:5173/` for the website.
 
-The internal design-foundation preview remains available at `/foundation` and is intentionally excluded from search indexing.
-
 ## Public routes
 
 - `/`
@@ -40,7 +38,7 @@ npm run lint
 npm run build
 ```
 
-GitHub Actions also runs route, responsive and production-readiness checks on the staged implementation branches.
+GitHub Actions runs the standard CI checks on `main` and pull requests into `main`. The final launch gate runs the responsive route, interaction and cross-browser production matrix.
 
 ## Contact form
 
@@ -63,8 +61,8 @@ Canonical site URL: `https://digi02.org`.
 
 The repository includes:
 
-- `vercel.json` for Vercel filesystem-first SPA fallback;
+- `vercel.json` for Vercel SPA fallback and response security headers;
 - `public/_redirects` for Netlify-compatible SPA fallback;
-- `public/_headers` with baseline static-host security headers.
+- `public/_headers` with the corresponding static-host security headers.
 
 If the production host changes, verify that direct requests such as `/company` and `/solutions/skygrid` resolve to the application shell without rewriting real static assets.
