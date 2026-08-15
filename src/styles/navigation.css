@@ -30,7 +30,7 @@
   display: block;
   width: auto;
   max-width: none;
-  height: 12rem;
+  height: 8rem;
   pointer-events: none;
   transform: translate(-50%, -50%);
 }
@@ -111,13 +111,12 @@
   }
 
   .site-header__wordmark {
-    width: 6.5rem;
+    width: 6.25rem;
     height: 4rem;
   }
 
   .site-header__wordmark img {
-    left: calc(50% + 0.5rem);
-    height: 10rem;
+    height: 7.25rem;
   }
 
   .desktop-navigation {
@@ -261,12 +260,11 @@
 
 @media (max-width: 29.9375rem) {
   .site-header__wordmark {
-    width: 6rem;
+    width: 5.75rem;
   }
 
   .site-header__wordmark img {
-    left: calc(50% + 0.375rem);
-    height: 9rem;
+    height: 6.75rem;
   }
 }
 
