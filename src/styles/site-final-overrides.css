@@ -6,6 +6,8 @@
 }
 
 /* Light surfaces own their heading colors explicitly. */
+.solutions-product--enterprise h2,
+.solutions-product--enterprise h3,
 .interior-hero--light h1,
 .product-hero--digivolt h1,
 .product-hero--digivolt .product-hero__identity > strong,
