@@ -1,0 +1,115 @@
+name: Whole-site visual tightening audit
+
+on:
+  push:
+    branches: [chatgpt/final-launch-audit]
+  workflow_dispatch:
+
+jobs:
+  visual-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/preview.log 2>&1 &
+          for i in {1..30}; do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/preview.log
+          exit 1
+      - name: Capture and validate all public routes
+        run: |
+          mkdir -p whole-site-visual
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import fs from 'node:fs'
+          import { chromium } from 'playwright'
+
+          const origin = 'http://127.0.0.1:4173'
+          const routes = [
+            ['/', 'home'],
+            ['/solutions', 'solutions'],
+            ['/solutions/skygrid', 'skygrid'],
+            ['/solutions/digivolt', 'digivolt'],
+            ['/solutions/enterprise-systems', 'enterprise'],
+            ['/solutions/e-management', 'e-management'],
+            ['/solutions/payroll-automation', 'payroll'],
+            ['/solutions/payment-systems', 'payments'],
+            ['/solutions/custom-software', 'custom-software'],
+            ['/industries', 'industries'],
+            ['/work', 'work'],
+            ['/company', 'company'],
+            ['/insights', 'insights'],
+            ['/contact', 'contact'],
+          ]
+          const viewports = [
+            ['phone-360', 360, 800],
+            ['tablet-768', 768, 1024],
+            ['desktop-1440', 1440, 1000],
+          ]
+          const report = []
+          const browser = await chromium.launch({ headless: true })
+
+          for (const [viewportName, width, height] of viewports) {
+            const context = await browser.newContext({ viewport: { width, height } })
+            for (const [route, slug] of routes) {
+              const page = await context.newPage()
+              const consoleErrors = []
+              page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()) })
+              page.on('pageerror', error => consoleErrors.push(error.message))
+
+              await page.goto(origin + route, { waitUntil: 'networkidle' })
+              await page.locator('main').waitFor({ state: 'visible' })
+              await page.evaluate(async () => {
+                const step = Math.max(innerHeight * 0.75, 450)
+                for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+                  scrollTo(0, y)
+                  await new Promise(resolve => setTimeout(resolve, 18))
+                }
+                scrollTo(0, 0)
+              })
+              await page.locator('img').evaluateAll(async images => {
+                await Promise.all(images.map(async image => { try { await image.decode() } catch {} }))
+              })
+              await page.waitForTimeout(80)
+
+              const metrics = await page.evaluate(() => ({
+                clientWidth: document.documentElement.clientWidth,
+                scrollWidth: document.documentElement.scrollWidth,
+                h1Count: document.querySelectorAll('main h1').length,
+                brokenImages: [...document.images].filter(image => !image.complete || image.naturalWidth === 0).map(image => image.src),
+              }))
+
+              assert.ok(metrics.scrollWidth <= metrics.clientWidth + 1, `${route} ${viewportName}: horizontal overflow ${metrics.scrollWidth}/${metrics.clientWidth}`)
+              assert.equal(metrics.h1Count, 1, `${route} ${viewportName}: expected one H1`)
+              assert.deepEqual(metrics.brokenImages, [], `${route} ${viewportName}: broken images`)
+              assert.deepEqual(consoleErrors, [], `${route} ${viewportName}: console errors ${consoleErrors.join(' | ')}`)
+
+              await page.screenshot({ path: `whole-site-visual/${slug}-${viewportName}.png`, fullPage: true })
+              report.push(`${route} | ${viewportName} | ${metrics.clientWidth}/${metrics.scrollWidth} | PASS`)
+              await page.close()
+            }
+            await context.close()
+          }
+
+          await browser.close()
+          fs.writeFileSync('whole-site-visual/report.txt', report.join('\n') + '\n')
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: whole-site-visual
+          path: whole-site-visual
+          retention-days: 2
