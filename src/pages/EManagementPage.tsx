@@ -70,6 +70,16 @@ export function EManagementPage() {
           </div>
         </Container>
       </section>
+
+      <section className="page-cta page-cta--dark">
+        <Container className="page-cta__inner">
+          <div>
+            <p>Replace the workaround</p>
+            <h2>Show us the process your team is managing manually today.</h2>
+          </div>
+          <PrimaryButton href="/contact">Discuss e-management <span aria-hidden="true">→</span></PrimaryButton>
+        </Container>
+      </section>
     </div>
   )
 }
