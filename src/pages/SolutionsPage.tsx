@@ -1,4 +1,3 @@
-import digivoltCar from '../assets/digivolt/digivolt-car-right.webp'
 import skyGridCinematic from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
@@ -76,6 +75,67 @@ const supportingCapabilities = [
     href: '/solutions/custom-software',
   },
 ] as const
+
+function DigiVoltVehicle() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="digivolt-preview__car"
+      viewBox="0 0 320 132"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <ellipse cx="160" cy="112" rx="140" ry="11" fill="rgba(0, 0, 0, 0.62)" />
+      <path
+        d="M20 83 C27 68 42 61 70 57 L103 52 L130 28 C141 19 155 16 178 16 H194 C211 16 224 21 239 32 L268 55 C286 58 299 67 304 80 L307 92 C307 98 302 102 296 102 H26 C20 102 16 97 17 91 Z"
+        fill="#0b0b0c"
+        stroke="rgba(247, 246, 242, 0.54)"
+        strokeWidth="1.4"
+      />
+      <path
+        d="M112 51 L139 29 C148 22 160 20 179 20 H193 C207 20 217 24 230 33 L253 52 Z"
+        fill="#181818"
+        stroke="rgba(247, 246, 242, 0.28)"
+        strokeWidth="1"
+      />
+      <path d="M180 21 L179 51" stroke="rgba(247, 246, 242, 0.22)" strokeWidth="1" />
+      <path
+        d="M38 70 C82 65 110 61 143 59 H254"
+        fill="none"
+        stroke="rgba(247, 246, 242, 0.44)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M273 62 C288 65 297 72 301 80 L283 80"
+        fill="none"
+        stroke="#e0bc67"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M22 85 L44 83"
+        fill="none"
+        stroke="rgba(247, 246, 242, 0.55)"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M128 82 H218"
+        fill="none"
+        stroke="rgba(247, 246, 242, 0.15)"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      <rect x="149" y="63" width="21" height="3" rx="1.5" fill="rgba(224, 188, 103, 0.82)" />
+      <circle cx="77" cy="98" r="23" fill="#050505" stroke="rgba(247, 246, 242, 0.5)" strokeWidth="1.5" />
+      <circle cx="77" cy="98" r="13" fill="#181818" stroke="rgba(247, 246, 242, 0.3)" strokeWidth="1" />
+      <circle cx="77" cy="98" r="4" fill="#c9a34a" />
+      <circle cx="252" cy="98" r="23" fill="#050505" stroke="rgba(247, 246, 242, 0.5)" strokeWidth="1.5" />
+      <circle cx="252" cy="98" r="13" fill="#181818" stroke="rgba(247, 246, 242, 0.3)" strokeWidth="1" />
+      <circle cx="252" cy="98" r="4" fill="#c9a34a" />
+    </svg>
+  )
+}
 
 export function SolutionsPage() {
   return (
@@ -213,15 +273,7 @@ export function SolutionsPage() {
                 />
               </svg>
 
-              <img
-                className="digivolt-preview__car"
-                src={digivoltCar}
-                alt=""
-                style={{
-                  filter:
-                    'brightness(1.65) drop-shadow(0 0 1px rgba(247, 246, 242, 0.65)) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.72))',
-                }}
-              />
+              <DigiVoltVehicle />
 
               <div className="digivolt-preview__charger">
                 <span aria-hidden="true">04</span>
