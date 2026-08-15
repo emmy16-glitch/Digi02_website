@@ -5,43 +5,32 @@
 
 .home-hero__inner {
   display: flex;
-  min-height: min(50rem, calc(100svh - var(--space-10)));
+  min-height: min(54rem, calc(100svh - 7rem));
   flex-direction: column;
-  padding-block: var(--space-5) var(--space-3);
+  padding-block: clamp(var(--space-8), 8vh, var(--space-12)) var(--space-6);
 }
 
 .home-hero__main {
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  gap: clamp(var(--space-4), 4.5vw, var(--space-8));
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(var(--space-5), 6vw, var(--space-10));
   align-items: center;
 }
 
 .home-hero__content {
   min-width: 0;
-  padding-block: var(--space-4);
-}
-
-.home-hero__label {
-  margin-bottom: var(--space-3);
-  color: var(--gold-400);
-  animation: hero-content-enter var(--motion-component) var(--ease-emphasized) both;
+  max-width: 42rem;
 }
 
 .home-hero h1 {
-  max-width: 12ch;
-  margin-bottom: var(--space-4);
-  font-size: clamp(3rem, 4.3vw, 4.4rem);
+  max-width: 11ch;
+  margin: 0 0 var(--space-5);
+  font-size: clamp(3.5rem, 5vw, 5.5rem);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 0.95;
-  animation:
-    hero-content-enter
-    var(--motion-component)
-    var(--ease-emphasized)
-    var(--motion-instant)
-    both;
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+  animation: hero-content-enter var(--motion-component) var(--ease-emphasized) both;
 }
 
 .home-hero h1 > span {
@@ -49,11 +38,11 @@
 }
 
 .home-hero__summary {
-  max-width: 36rem;
-  margin-bottom: var(--space-4);
+  max-width: 34rem;
+  margin: 0 0 var(--space-5);
   color: var(--text-secondary);
-  font-size: var(--type-body);
-  line-height: 1.6;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
   animation:
     hero-content-enter
     var(--motion-component)
@@ -65,13 +54,40 @@
 .home-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--space-3);
+  align-items: center;
   animation:
     hero-content-enter
     var(--motion-component)
     var(--ease-emphasized)
     var(--motion-ui)
     both;
+}
+
+.home-hero__text-link {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: var(--type-ui);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.home-hero__text-link:hover,
+.home-hero__text-link:focus-visible {
+  color: var(--text-primary);
+}
+
+.home-hero__text-link span {
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.home-hero__text-link:hover span,
+.home-hero__text-link:focus-visible span {
+  transform: translate(0.2rem, -0.1rem);
 }
 
 .product-evidence {
@@ -197,11 +213,11 @@
 }
 
 .product-evidence__hover-zone--left::before {
-  background: linear-gradient(90deg, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0));
+  background: linear-gradient(90deg, rgba(5, 5, 5, 0.4), rgba(5, 5, 5, 0));
 }
 
 .product-evidence__hover-zone--right::before {
-  background: linear-gradient(270deg, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0));
+  background: linear-gradient(270deg, rgba(5, 5, 5, 0.4), rgba(5, 5, 5, 0));
 }
 
 .product-evidence__reveal-arrow {
@@ -242,7 +258,7 @@
 
 .product-evidence__footer {
   display: flex;
-  min-height: 3.25rem;
+  min-height: 3rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
@@ -274,19 +290,6 @@
 
 .product-evidence__touch-controls {
   display: none;
-}
-
-.home-hero__transition {
-  margin: var(--space-2) 0 0;
-  color: var(--text-secondary);
-  font-size: var(--type-ui);
-  line-height: 1.5;
-  animation:
-    hero-content-enter
-    var(--motion-component)
-    var(--ease-emphasized)
-    var(--motion-ui)
-    both;
 }
 
 @keyframes hero-content-enter {
@@ -328,7 +331,7 @@
 @media (max-width: 58rem) {
   .home-hero__inner {
     min-height: auto;
-    padding-block: var(--space-8) var(--space-4);
+    padding-block: var(--space-8) var(--space-6);
   }
 
   .home-hero__main {
@@ -336,51 +339,47 @@
   }
 
   .home-hero__content {
-    max-width: 48rem;
-    padding-block: 0;
+    max-width: 46rem;
   }
 
   .home-hero h1 {
-    max-width: 13ch;
+    max-width: 12ch;
   }
 
   .product-evidence {
     margin-top: var(--space-8);
   }
-
-  .home-hero__transition {
-    margin-top: var(--space-6);
-  }
 }
 
 @media (max-width: 47.9375rem) {
   .home-hero__inner {
-    padding-block: var(--space-6) var(--space-4);
-  }
-
-  .home-hero__label {
-    margin-bottom: var(--space-2);
+    padding-block: 3.5rem var(--space-6);
   }
 
   .home-hero h1 {
-    max-width: 11ch;
-    margin-bottom: var(--space-3);
-    font-size: clamp(2.5rem, 10.5vw, 3rem);
-    line-height: 0.98;
+    max-width: 10.5ch;
+    margin-bottom: var(--space-4);
+    font-size: clamp(2.9rem, 12vw, 3.7rem);
+    line-height: 0.96;
   }
 
   .home-hero__summary {
-    margin-bottom: var(--space-3);
-    font-size: 1rem;
+    max-width: 31rem;
+    margin-bottom: var(--space-4);
+    font-size: 1.05rem;
+    line-height: 1.65;
   }
 
-  .home-hero__actions,
+  .home-hero__actions {
+    gap: var(--space-2) var(--space-3);
+  }
+
   .home-hero__actions .button {
-    width: 100%;
+    width: auto;
   }
 
   .product-evidence {
-    margin-top: var(--space-6);
+    margin-top: 3.5rem;
   }
 
   .product-evidence__viewport {
@@ -389,9 +388,8 @@
 
   .product-evidence__current[data-product='skygrid'] img,
   .product-evidence__adjacent[data-product='skygrid'] img {
-    background: var(--bg-950);
+    background: #f7f6f2;
     object-fit: contain;
-    object-position: center;
   }
 
   .product-evidence__footer {
@@ -432,9 +430,8 @@
     min-height: 2.75rem;
     align-items: center;
     justify-content: space-between;
-    margin-top: var(--space-2);
-    border-top: var(--border-thin) solid var(--line-subtle);
-    padding-top: var(--space-2);
+    margin-top: var(--space-1);
+    padding-top: var(--space-1);
   }
 
   .product-evidence__touch-controls > span {
@@ -456,12 +453,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-hero__label,
   .home-hero h1,
   .home-hero__summary,
   .home-hero__actions,
   .product-evidence,
-  .home-hero__transition,
   .product-evidence__current img {
     opacity: 1;
     transform: none;
