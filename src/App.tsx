@@ -3,18 +3,23 @@ import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/navigation/SiteHeader'
 import { CompanyPage } from './pages/CompanyPage'
 import { ContactPage } from './pages/ContactPage'
+import { CustomSoftwarePage } from './pages/CustomSoftwarePage'
 import { DigiVoltPage } from './pages/DigiVoltPage'
+import { EManagementPage } from './pages/EManagementPage'
 import { EnterpriseSystemsPage } from './pages/EnterpriseSystemsPage'
 import { FoundationPreviewPage } from './pages/FoundationPreviewPage'
 import { HomePage } from './pages/HomePage'
 import { IndustriesPage } from './pages/IndustriesPage'
 import { InsightsPage } from './pages/InsightsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { PaymentSystemsPage } from './pages/PaymentSystemsPage'
+import { PayrollAutomationPage } from './pages/PayrollAutomationPage'
 import { SkyGridPage } from './pages/SkyGridPage'
 import { SolutionsPage } from './pages/SolutionsPage'
 import { WorkPage } from './pages/WorkPage'
 import './styles/site-pages.css'
 import './styles/product-pages.css'
+import './styles/capability-pages.css'
 
 const FOUNDATION_PATH = '/foundation'
 
@@ -38,6 +43,22 @@ function App() {
     '/solutions/enterprise-systems': {
       title: 'ERP + POS — Enterprise systems by Digi02',
       content: <EnterpriseSystemsPage />,
+    },
+    '/solutions/e-management': {
+      title: 'E-management systems — Digi02',
+      content: <EManagementPage />,
+    },
+    '/solutions/payroll-automation': {
+      title: 'Payroll automation — Digi02',
+      content: <PayrollAutomationPage />,
+    },
+    '/solutions/payment-systems': {
+      title: 'Payment systems — Digi02',
+      content: <PaymentSystemsPage />,
+    },
+    '/solutions/custom-software': {
+      title: 'Custom software engineering — Digi02',
+      content: <CustomSoftwarePage />,
     },
     '/industries': { title: 'Industries — Digi02', content: <IndustriesPage /> },
     '/work': { title: 'Our Work — Digi02', content: <WorkPage /> },
