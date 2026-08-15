@@ -1,0 +1,83 @@
+name: Extract design foundation
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract DOCX text
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import zipfile
+          import xml.etree.ElementTree as ET
+
+          source = Path('docs/Digi02_Web_Design_Foundation_v1.0.docx')
+          output = Path('design-foundation-extracted.txt')
+          ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+
+          def extract_xml(zf, name):
+              try:
+                  data = zf.read(name)
+              except KeyError:
+                  return []
+              root = ET.fromstring(data)
+              lines = []
+              for paragraph in root.findall('.//w:p', ns):
+                  parts = []
+                  for node in paragraph.iter():
+                      if node.tag == f"{{{ns['w']}}}t" and node.text:
+                          parts.append(node.text)
+                      elif node.tag == f"{{{ns['w']}}}tab":
+                          parts.append('\t')
+                      elif node.tag == f"{{{ns['w']}}}br":
+                          parts.append('\n')
+                  text = ''.join(parts).strip()
+                  if text:
+                      lines.append(text)
+              return lines
+
+          with zipfile.ZipFile(source) as zf:
+              names = ['word/document.xml']
+              names += sorted(n for n in zf.namelist() if re.fullmatch(r'word/header\d+\.xml', n))
+              names += sorted(n for n in zf.namelist() if re.fullmatch(r'word/footer\d+\.xml', n))
+              for optional in ['word/footnotes.xml', 'word/endnotes.xml']:
+                  if optional in zf.namelist():
+                      names.append(optional)
+
+              all_lines = []
+              for name in names:
+                  section = extract_xml(zf, name)
+                  if not section:
+                      continue
+                  all_lines.append(f'===== {name} =====')
+                  all_lines.extend(section)
+                  all_lines.append('')
+
+              media = sorted(n for n in zf.namelist() if n.startswith('word/media/'))
+              all_lines.append('===== EMBEDDED MEDIA =====')
+              all_lines.extend(media or ['None'])
+
+          output.write_text('\n'.join(all_lines), encoding='utf-8')
+          print(f'Extracted {len(all_lines)} lines to {output}')
+          PY
+
+      - name: Upload extracted foundation
+        uses: actions/upload-artifact@v4
+        with:
+          name: digi02-design-foundation-text
+          path: design-foundation-extracted.txt
+          if-no-files-found: error
+          retention-days: 1
