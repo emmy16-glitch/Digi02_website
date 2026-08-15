@@ -9,7 +9,7 @@ on:
 jobs:
   launch-audit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -90,6 +90,23 @@ jobs:
           }
           NODE
 
+      - name: Validate published insight destinations
+        run: |
+          set -euo pipefail
+          urls=(
+            "https://www.digi02.org/blog/erp-solutions-nigeria.html"
+            "https://www.digi02.org/blog/payroll-solutions-nigeria.html"
+            "https://www.digi02.org/blog/payment-solutions-nigeria.html"
+            "https://www.digi02.org/blog/uav-autopilot-nigeria.html"
+          )
+          for url in "${urls[@]}"; do
+            status="$(curl --retry 2 --retry-delay 1 -L -sS -o /dev/null -w '%{http_code}' "$url")"
+            if [ "$status" -ge 400 ] || [ "$status" -eq 0 ]; then
+              echo "Broken published insight link: $url ($status)"
+              exit 1
+            fi
+          done
+
       - name: Install Playwright browsers
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
@@ -150,14 +167,28 @@ jobs:
             })
           }
 
+          async function paintFullPage(page) {
+            await page.evaluate(async () => {
+              const step = Math.max(window.innerHeight * 0.8, 500)
+              for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+                window.scrollTo(0, y)
+                await new Promise((resolve) => setTimeout(resolve, 25))
+              }
+              window.scrollTo(0, 0)
+            })
+            await page.waitForTimeout(75)
+          }
+
           async function assertPageBasics(page, route, viewportName) {
             const label = `${route} @ ${viewportName}`
             await page.goto(`${origin}${route}`, { waitUntil: 'networkidle' })
             await page.locator('main').waitFor({ state: 'visible' })
+            await paintFullPage(page)
 
             const title = await page.title()
             assert.ok(title.includes('Digi02'), `${label}: page title must identify Digi02`)
             assert.equal(await page.locator('main h1').count(), 1, `${label}: exactly one H1 required`)
+            assert.equal(await page.locator('a.skip-link[href="#main-content"]').count(), 1, `${label}: keyboard skip link missing`)
 
             const metrics = await page.evaluate(() => ({
               clientWidth: document.documentElement.clientWidth,
@@ -198,7 +229,9 @@ jobs:
 
             const allInternalHrefs = await page.locator('a[href^="/"]').evaluateAll((anchors) => [...new Set(anchors.map((anchor) => anchor.getAttribute('href')).filter(Boolean))])
             for (const href of allInternalHrefs) {
-              const response = await page.request.get(`${origin}${href}`)
+              const target = new URL(href, origin)
+              assert.ok(routes.includes(target.pathname), `${label}: internal link points to unknown route ${href}`)
+              const response = await page.request.get(target.toString())
               assert.ok(response.status() < 400, `${label}: broken internal link ${href} -> ${response.status()}`)
             }
           }
@@ -212,7 +245,7 @@ jobs:
             await context.close()
           }
 
-          // Navigation and mobile menu keyboard behavior.
+          // Mobile navigation: body lock, Escape close and focus return.
           {
             const context = await chromiumBrowser.newContext({ viewport: { width: 390, height: 844 } })
             const page = await context.newPage()
@@ -222,25 +255,66 @@ jobs:
             await page.getByRole('navigation', { name: 'Mobile primary navigation' }).waitFor({ state: 'visible' })
             assert.equal(await page.locator('body').evaluate((body) => body.style.overflow), 'hidden', 'Mobile menu must lock body scroll')
             await page.keyboard.press('Escape')
+            await page.waitForTimeout(50)
             assert.equal(await toggle.getAttribute('aria-expanded'), 'false', 'Escape must close mobile menu')
-            await toggle.evaluate((element) => assertFocus(element))
+            assert.equal(await toggle.evaluate((element) => document.activeElement === element), true, 'Focus must return to the mobile menu toggle')
             await context.close()
           }
 
-          // Contact form: validation and explicit preparation behavior.
+          // Homepage interaction regressions.
+          {
+            const context = await chromiumBrowser.newContext({ viewport: { width: 1280, height: 900 } })
+            const page = await context.newPage()
+            await page.goto(origin, { waitUntil: 'networkidle' })
+
+            const automateTab = page.getByRole('tab', { name: /Automate/i }).first()
+            await automateTab.click()
+            assert.equal(await automateTab.getAttribute('aria-selected'), 'true', 'Automate state should activate')
+            await automateTab.press('End')
+            const transactTab = page.getByRole('tab', { name: /Transact/i }).first()
+            assert.equal(await transactTab.getAttribute('aria-selected'), 'true', 'End should activate Transact')
+            assert.equal(await transactTab.evaluate((element) => document.activeElement === element), true, 'Operating-stage focus should follow keyboard state')
+
+            const skygridReview = page.getByRole('tab', { name: 'Review' }).first()
+            await skygridReview.click()
+            assert.equal(await skygridReview.getAttribute('aria-selected'), 'true', 'SkyGrid Review state should activate')
+
+            const digivoltArrive = page.getByRole('tab', { name: /Arrive/i }).first()
+            await digivoltArrive.click()
+            assert.equal(await digivoltArrive.getAttribute('aria-selected'), 'true', 'DigiVolt Arrive state should activate')
+            await page.waitForTimeout(750)
+            assert.ok((await page.locator('.digivolt-journey__stage-copy strong').textContent())?.includes('Trip complete'), 'DigiVolt Arrive state should settle as complete')
+
+            await context.close()
+          }
+
+          // ERP demo: sale updates inventory, receipt and reset state.
+          {
+            const context = await chromiumBrowser.newContext({ viewport: { width: 1280, height: 900 } })
+            const page = await context.newPage()
+            await page.goto(`${origin}/solutions/enterprise-systems`, { waitUntil: 'networkidle' })
+            const headsetRow = page.locator('.erp-pos-product-row').filter({ hasText: 'Wireless Headset' })
+            assert.ok((await headsetRow.textContent())?.includes('24'), 'ERP demo should start with 24 Wireless Headsets')
+            await headsetRow.getByRole('button', { name: 'Add' }).click()
+            await page.getByText('Transfer', { exact: true }).last().click()
+            await page.getByRole('button', { name: /Complete sale/i }).click()
+            await page.locator('.erp-pos-receipt-drawer[data-open="true"]').waitFor({ state: 'visible' })
+            assert.ok((await headsetRow.textContent())?.includes('23'), 'Completing the sample sale should reduce stock to 23')
+            assert.ok((await page.locator('.erp-pos-receipt__payment').textContent())?.includes('Transfer'), 'Receipt should retain selected payment method')
+            await page.getByRole('button', { name: 'Reset demo' }).click()
+            assert.ok((await headsetRow.textContent())?.includes('24'), 'Reset should restore demo stock')
+            await context.close()
+          }
+
+          // Contact form: native validation and explicit preparation behavior.
           {
             const context = await chromiumBrowser.newContext({ viewport: { width: 390, height: 844 } })
             const page = await context.newPage()
             await page.goto(`${origin}/contact`, { waitUntil: 'networkidle' })
             const submit = page.getByRole('button', { name: /prepare enquiry/i })
             await submit.click()
-            assert.equal(await page.locator('input[name="name"]:invalid').count(), 1, 'Contact form should use native required validation')
-            await page.fill('input[name="name"]', 'QA Visitor')
-            await page.fill('input[name="email"]', 'qa@example.com')
-            await page.fill('textarea[name="project"]', 'We need a clearer operational system for approvals and reporting.')
-            await page.evaluate(() => {
-              Object.defineProperty(window, 'location', { configurable: true, value: window.location })
-            }).catch(() => {})
+            assert.equal(await page.locator('input[name="name"]:invalid').count(), 1, 'Contact form should require a name')
+            assert.equal(await page.locator('select[name="area"]:invalid').count(), 1, 'Contact form should require an area')
             assert.ok((await page.locator('.contact-form__privacy').textContent())?.includes('does not send or store'), 'Contact privacy explanation must remain explicit')
             await context.close()
           }
@@ -251,13 +325,14 @@ jobs:
               const context = await chromiumBrowser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
               const page = await context.newPage()
               await page.goto(`${origin}${route}`, { waitUntil: 'networkidle' })
+              await paintFullPage(page)
               await page.screenshot({ path: `final-launch-audit/${name}-${viewport.name}.png`, fullPage: true })
               await context.close()
             }
           }
           await chromiumBrowser.close()
 
-          // Cross-engine smoke test on the visually complex routes.
+          // Cross-engine smoke test on visually complex routes.
           for (const [engineName, launcher] of [['firefox', firefox], ['webkit', webkit]]) {
             const browser = await launcher.launch({ headless: true })
             for (const viewport of engineViewports) {
@@ -272,10 +347,6 @@ jobs:
 
           assert.deepEqual(badConsole, [], `Console/page errors:\n${badConsole.join('\n')}`)
           assert.deepEqual(badResponses, [], `Failed same-origin responses:\n${badResponses.join('\n')}`)
-
-          function assertFocus(element) {
-            if (document.activeElement !== element) throw new Error('Focus did not return to mobile menu toggle')
-          }
           NODE
 
       - name: Upload final launch evidence
