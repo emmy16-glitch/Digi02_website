@@ -1,0 +1,157 @@
+name: Solutions reference gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: solutions-reference-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  solutions-reference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck lint and build
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run build
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+          npx playwright install --with-deps chromium
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
+          for i in {1..40}; do
+            curl --fail --silent http://127.0.0.1:4173/solutions >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Validate desktop and mobile Solutions page
+        run: |
+          mkdir -p solutions-reference-evidence
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { chromium } from 'playwright'
+
+          const origin='http://127.0.0.1:4173'
+          const failures=[]
+          const fail=message=>failures.push(message)
+
+          function overlaps(rects){
+            for(let i=0;i<rects.length;i++) for(let j=i+1;j<rects.length;j++){
+              const x=Math.max(0,Math.min(rects[i].right,rects[j].right)-Math.max(rects[i].left,rects[j].left))
+              const y=Math.max(0,Math.min(rects[i].bottom,rects[j].bottom)-Math.max(rects[i].top,rects[j].top))
+              if(x*y>1) return true
+            }
+            return false
+          }
+
+          async function inspect(page,label,screenshot){
+            page.on('pageerror',error=>fail(`${label}: pageerror ${error.message}`))
+            page.on('console',message=>{
+              if(message.type()==='error'&&!message.text().startsWith('Failed to load resource')) fail(`${label}: console ${message.text()}`)
+            })
+
+            await page.goto(origin+'/solutions',{waitUntil:'domcontentloaded',timeout:20000})
+            await page.locator('main#main-content').waitFor({timeout:10000})
+            await page.evaluate(async()=>{
+              await Promise.all([...document.images].map(image=>image.decode().catch(()=>{})))
+              scrollTo(0,document.documentElement.scrollHeight)
+              await new Promise(resolve=>setTimeout(resolve,70))
+              scrollTo(0,0)
+            })
+            await page.waitForTimeout(100)
+
+            const data=await page.evaluate(()=>{
+              const cards=[...document.querySelectorAll('.solutions-reference-card')].map(element=>element.getBoundingClientRect()).filter(rect=>rect.width>0&&rect.height>0)
+              const hero=document.querySelector('.solutions-reference-hero')?.getBoundingClientRect()
+              const heroImage=document.querySelector('.solutions-reference-hero__media img')
+              const logo=document.querySelector('.site-header__wordmark')
+              return {
+                clientWidth:document.documentElement.clientWidth,
+                scrollWidth:document.documentElement.scrollWidth,
+                h1:document.querySelectorAll('main h1').length,
+                heading:(document.querySelector('.solutions-reference-hero h1')?.textContent||'').replace(/\s+/g,' ').trim(),
+                cards,
+                filterCount:document.querySelectorAll('.solutions-reference-filter button').length,
+                activeFilter:(document.querySelector('.solutions-reference-filter button.is-active')?.textContent||'').trim(),
+                heroWidth:hero?.width||0,
+                heroHeight:hero?.height||0,
+                heroImageWidth:heroImage instanceof HTMLImageElement?heroImage.naturalWidth:0,
+                heroImageHeight:heroImage instanceof HTMLImageElement?heroImage.naturalHeight:0,
+                logoHref:logo?.getAttribute('href')||'',
+                ctaHref:document.querySelector('.solutions-reference-cta__button')?.getAttribute('href')||'',
+                brokenImages:[...document.images].filter(image=>!image.complete||image.naturalWidth===0).map(image=>image.currentSrc||image.src),
+              }
+            })
+
+            if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
+            if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
+            if(data.heading!=='Technology solutions for real operations.') fail(`${label}: hero heading ${data.heading}`)
+            if(data.cards.length!==7) fail(`${label}: solution cards ${data.cards.length}`)
+            if(data.filterCount!==6) fail(`${label}: filter count ${data.filterCount}`)
+            if(data.activeFilter!=='All Solutions') fail(`${label}: default filter ${data.activeFilter}`)
+            if(data.heroWidth<300||data.heroHeight<300) fail(`${label}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
+            if(data.heroImageWidth<400||data.heroImageHeight<200) fail(`${label}: hero image missing ${data.heroImageWidth}x${data.heroImageHeight}`)
+            if(data.logoHref!=='/') fail(`${label}: logo href ${data.logoHref}`)
+            if(data.ctaHref!=='/contact') fail(`${label}: CTA href ${data.ctaHref}`)
+            if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
+            if(overlaps(data.cards)) fail(`${label}: solution cards overlap`)
+
+            const enterprise=page.getByRole('button',{name:'Enterprise',exact:true})
+            await enterprise.click()
+            await page.waitForTimeout(80)
+            const enterpriseCount=await page.locator('.solutions-reference-card').count()
+            if(enterpriseCount!==1) fail(`${label}: Enterprise filter returned ${enterpriseCount} cards`)
+            await page.getByRole('button',{name:'All Solutions',exact:true}).click()
+            await page.waitForTimeout(80)
+
+            await page.screenshot({path:screenshot,fullPage:true,animations:'disabled'})
+          }
+
+          const browser=await chromium.launch({headless:true})
+          for(const [name,width,height] of [['390',390,844],['1440',1440,1000]]){
+            const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'})
+            const page=await context.newPage()
+            await inspect(page,`chromium ${name}`,`solutions-reference-evidence/solutions-${name}.png`)
+            await context.close()
+          }
+          await browser.close()
+
+          const summary=`Failures: ${failures.length}\n${failures.join('\n')}\n`
+          fs.writeFileSync('solutions-reference-evidence/summary.txt',summary)
+          console.log(summary)
+          if(failures.length) process.exit(1)
+          NODE
+
+      - name: Upload Solutions evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: solutions-reference-evidence
+          path: solutions-reference-evidence
+          retention-days: 3
