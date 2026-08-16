@@ -1,0 +1,158 @@
+name: Homepage reference gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: homepage-reference-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  homepage-reference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck lint and build
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run build
+
+      - name: Install browser tooling
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1 @axe-core/playwright@4.13.0
+          npx playwright install --with-deps chromium firefox webkit
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
+          for i in {1..40}; do
+            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Validate homepage across browsers and viewports
+        run: |
+          mkdir -p homepage-reference-evidence
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          import { chromium, firefox, webkit } from 'playwright'
+          import AxeBuilder from '@axe-core/playwright'
+
+          const origin='http://127.0.0.1:4173'
+          const failures=[]
+          const fail=(message)=>failures.push(message)
+
+          async function inspect(page,label,{axe=false,screenshot=null}={}){
+            page.on('pageerror',error=>fail(`${label}: pageerror ${error.message}`))
+            page.on('console',message=>{
+              if(message.type()==='error'&&!message.text().startsWith('Failed to load resource')) fail(`${label}: console ${message.text()}`)
+            })
+
+            await page.goto(origin+'/',{waitUntil:'networkidle'})
+            await page.locator('main#main-content').waitFor()
+            await page.evaluate(async()=>{
+              scrollTo(0,document.documentElement.scrollHeight)
+              await new Promise(resolve=>setTimeout(resolve,40))
+              scrollTo(0,0)
+              await Promise.all([...document.images].map(image=>image.decode().catch(()=>{})))
+            })
+            await page.waitForTimeout(80)
+
+            const data=await page.evaluate(()=>{
+              const hero=document.querySelector('.reference-home-hero__media')?.getBoundingClientRect()
+              const heroImage=document.querySelector('.reference-home-hero__image')
+              const logo=document.querySelector('.site-header__wordmark')
+              return {
+                clientWidth:document.documentElement.clientWidth,
+                scrollWidth:document.documentElement.scrollWidth,
+                h1:document.querySelectorAll('main h1').length,
+                solutionCards:document.querySelectorAll('.reference-home-solution-card').length,
+                capabilityCards:document.querySelectorAll('.reference-home-capability-card').length,
+                workCards:document.querySelectorAll('.reference-home-work-card').length,
+                heroWidth:hero?.width||0,
+                heroHeight:hero?.height||0,
+                heroImageWidth:heroImage instanceof HTMLImageElement?heroImage.naturalWidth:0,
+                heroImageHeight:heroImage instanceof HTMLImageElement?heroImage.naturalHeight:0,
+                logoHref:logo?.getAttribute('href')||'',
+                logoLabel:logo?.getAttribute('aria-label')||'',
+                brokenImages:[...document.images].filter(image=>!image.complete||image.naturalWidth===0).map(image=>image.currentSrc||image.src),
+              }
+            })
+
+            if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
+            if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
+            if(data.solutionCards!==3) fail(`${label}: flagship cards ${data.solutionCards}`)
+            if(data.capabilityCards!==4) fail(`${label}: capability cards ${data.capabilityCards}`)
+            if(data.workCards!==3) fail(`${label}: work cards ${data.workCards}`)
+            if(data.heroWidth<250||data.heroHeight<300) fail(`${label}: hero media collapsed ${data.heroWidth}x${data.heroHeight}`)
+            if(data.heroImageWidth<400||data.heroImageHeight<200) fail(`${label}: hero artwork missing ${data.heroImageWidth}x${data.heroImageHeight}`)
+            if(data.logoHref!=='/') fail(`${label}: logo href ${data.logoHref}`)
+            if(data.logoLabel!=='Digi02 home') fail(`${label}: logo label ${data.logoLabel}`)
+            if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
+
+            if(axe){
+              const result=await new AxeBuilder({page}).analyze()
+              const severe=result.violations.filter(v=>['serious','critical'].includes(v.impact||''))
+              if(severe.length) fail(`${label}: axe ${severe.map(v=>v.id).join(',')}`)
+            }
+
+            if(screenshot) await page.screenshot({path:screenshot,fullPage:true,animations:'disabled'})
+          }
+
+          const chromiumBrowser=await chromium.launch({headless:true})
+          for(const [name,width,height] of [['320',320,720],['390',390,844],['768',768,1024],['1024',1024,900],['1440',1440,1000]]){
+            const context=await chromiumBrowser.newContext({viewport:{width,height}})
+            const page=await context.newPage()
+            await inspect(page,`chromium ${name}`,{
+              axe:name==='390'||name==='1440',
+              screenshot:name==='390'||name==='1440'?`homepage-reference-evidence/home-${name}.png`:null,
+            })
+            await context.close()
+          }
+          await chromiumBrowser.close()
+
+          for(const [engineName,launcher] of [['firefox',firefox],['webkit',webkit]]){
+            const browser=await launcher.launch({headless:true})
+            for(const [name,width,height] of [['390',390,844],['1440',1440,1000]]){
+              const context=await browser.newContext({viewport:{width,height}})
+              const page=await context.newPage()
+              await inspect(page,`${engineName} ${name}`)
+              await context.close()
+            }
+            await browser.close()
+          }
+
+          fs.writeFileSync('homepage-reference-evidence/summary.txt',`Failures: ${failures.length}\n${failures.join('\n')}\n`)
+          if(failures.length){
+            failures.forEach(message=>console.error(`FAIL: ${message}`))
+            process.exit(1)
+          }
+          NODE
+
+      - name: Upload homepage evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: homepage-reference-evidence
+          path: homepage-reference-evidence
+          retention-days: 3
