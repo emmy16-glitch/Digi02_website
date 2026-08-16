@@ -1,1 +1,0 @@
-This branch uses the approved homepage reference composition. Binary hero media is updated in the following commit.
