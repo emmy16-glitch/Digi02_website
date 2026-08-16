@@ -91,7 +91,7 @@ export function HomeReferenceHero() {
         <div className="reference-home-hero__copy">
           <p className="reference-home__eyebrow">Built in Nigeria. Engineered for impact.</p>
           <h1 id="reference-home-title" className="reference-home-hero__title">
-            Technology built
+            Technology built{' '}
             <br />
             for <span>real operations.</span>
           </h1>
