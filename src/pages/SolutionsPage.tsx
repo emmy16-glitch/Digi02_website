@@ -7,6 +7,7 @@ import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import skyGridShowcase from '../assets/skygrid/skygrid-showcase-concept.png'
 import { Container } from '../components/Container'
 import '../styles/solutions-page.css'
+import '../styles/solutions-reference-tuning.css'
 
 type SolutionCategory = 'All Solutions' | 'Autonomous Systems' | 'Enterprise' | 'Finance & Payments' | 'Automation' | 'Digital Platforms'
 
