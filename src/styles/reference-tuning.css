@@ -25,6 +25,7 @@
 
   .reference-home-hero__media {
     grid-column: 6 / -1;
+    min-height: 35rem;
   }
 
   .reference-home-hero__title {
