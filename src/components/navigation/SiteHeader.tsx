@@ -27,7 +27,7 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Container className="site-header__inner">
-        <a className="site-header__wordmark" href="/">
+        <a className="site-header__wordmark" href="/" aria-label="Digi02 home">
           <img src={digi02LogoLight} alt="Digi02" />
         </a>
 
