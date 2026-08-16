@@ -1,9 +1,8 @@
 import { Container } from '../../components/Container'
-import skyGridCinematic from '../../assets/skygrid/skygrid-cinematic-control-room.webp'
-import skyGridRoutePlanner from '../../assets/skygrid/skygrid-route-planner.webp'
+import homeReferenceHero from '../../assets/skygrid/home-reference-hero.jpg'
 
 const trustMarks = [
-  { mark: 'NDA', detail: 'Defence Academy' },
+  { mark: 'NDA', detail: 'National partner' },
   { mark: 'NCS', detail: 'Nigeria Customs Service' },
   { mark: 'NEXIM', detail: 'Export-Import Bank' },
   { mark: 'Sterling', detail: 'Bank' },
@@ -11,31 +10,11 @@ const trustMarks = [
 ] as const
 
 const capabilityStrip = [
-  {
-    icon: 'autonomy',
-    title: 'Autonomous Systems',
-    detail: 'Intelligent. Reliable. Scalable.',
-  },
-  {
-    icon: 'software',
-    title: 'Software Engineering',
-    detail: 'Modern. Secure. Purpose-built.',
-  },
-  {
-    icon: 'enterprise',
-    title: 'Enterprise Technology',
-    detail: 'Systems that run operations.',
-  },
-  {
-    icon: 'mobility',
-    title: 'Mobility',
-    detail: 'Electric. Smart. Sustainable.',
-  },
-  {
-    icon: 'security',
-    title: 'Cybersecurity',
-    detail: 'Protect. Detect. Respond.',
-  },
+  { icon: 'autonomy', title: 'Autonomous Systems', detail: 'Intelligent. Reliable. Scalable.' },
+  { icon: 'software', title: 'Software Engineering', detail: 'Modern. Secure. Purpose-built.' },
+  { icon: 'enterprise', title: 'Enterprise Technology', detail: 'Systems that run operations.' },
+  { icon: 'mobility', title: 'Mobility', detail: 'Electric. Smart. Sustainable.' },
+  { icon: 'security', title: 'Cybersecurity', detail: 'Protect. Detect. Respond.' },
 ] as const
 
 type HeroIconProps = {
@@ -97,18 +76,15 @@ export function HomeReferenceHero() {
       <Container className="reference-home-hero__layout">
         <div className="reference-home-hero__copy">
           <p className="reference-home__eyebrow">Built in Nigeria. Engineered for impact.</p>
-
           <h1 id="reference-home-title" className="reference-home-hero__title">
             Technology built
             <br />
             for <span>real operations.</span>
           </h1>
-
           <p className="reference-home-hero__summary">
             Digi02 designs and builds software, autonomous systems, mobility technology and digital
             infrastructure that help organizations operate smarter, move faster and scale with confidence.
           </p>
-
           <div className="reference-home-hero__actions" aria-label="Homepage actions">
             <a className="reference-home__button reference-home__button--primary" href="/work">
               Explore our work <span aria-hidden="true">→</span>
@@ -117,7 +93,6 @@ export function HomeReferenceHero() {
               View solutions <span aria-hidden="true">→</span>
             </a>
           </div>
-
           <div className="reference-home-hero__trust" aria-label="Trusted organisations">
             <p>Trusted by organisations across Africa</p>
             <div className="reference-home-hero__trust-row">
@@ -134,48 +109,12 @@ export function HomeReferenceHero() {
         <div className="reference-home-hero__media" aria-label="Illustrative SkyGrid UAV operations scene">
           <img
             className="reference-home-hero__image"
-            src={skyGridCinematic}
+            src={homeReferenceHero}
             alt="Illustrative UAV operations control environment at sunset"
             decoding="async"
             fetchPriority="high"
           />
           <div className="reference-home-hero__media-shade" aria-hidden="true" />
-
-          <div className="reference-home-hud reference-home-hud--status" aria-hidden="true">
-            <span>SkyGrid</span>
-            <strong>UAV-02</strong>
-            <small>Status</small>
-            <b>Active</b>
-          </div>
-
-          <div className="reference-home-hud reference-home-hud--mission" aria-hidden="true">
-            <span>Mission overview</span>
-            <img src={skyGridRoutePlanner} alt="" />
-            <div>
-              <small>Area</small>
-              <strong>23.6 km²</strong>
-              <small>ETA</small>
-              <strong>14:32</strong>
-            </div>
-          </div>
-
-          <div className="reference-home-hud reference-home-hud--telemetry" aria-hidden="true">
-            <span>Telemetry</span>
-            <div>
-              <small>Altitude</small>
-              <strong>120 m</strong>
-              <small>Speed</small>
-              <strong>45 km/h</strong>
-              <small>Battery</small>
-              <strong>87%</strong>
-            </div>
-          </div>
-
-          <div className="reference-home-hud reference-home-hud--secure" aria-hidden="true">
-            <small>Link status</small>
-            <strong>Secure</strong>
-            <span>⌑</span>
-          </div>
         </div>
       </Container>
 
