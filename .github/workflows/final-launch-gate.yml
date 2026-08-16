@@ -315,10 +315,13 @@ jobs:
             const context=await chromiumBrowser.newContext({viewport:{width:1280,height:900}})
             const page=await context.newPage()
             await page.goto(origin,{waitUntil:'networkidle'})
-            const tab=page.getByRole('tab',{name:/Automate/i}).first()
-            await tab.click()
-            await tab.press('End')
-            if(await page.getByRole('tab',{name:/Transact/i}).first().getAttribute('aria-selected')!=='true') fail('home tabs: End key')
+            await settle(page)
+            if(await page.locator('.reference-home-solution-card').count()!==3) fail('home reference: flagship solution count')
+            if(await page.locator('.reference-home-capability-card').count()!==4) fail('home reference: capability count')
+            if(await page.locator('.reference-home-work-card').count()!==3) fail('home reference: selected work count')
+            const logo=page.locator('.site-header__wordmark')
+            if(await logo.getAttribute('href')!=='/') fail('home reference: logo is not wired home')
+            if(await logo.getAttribute('aria-label')!=='Digi02 home') fail('home reference: logo home label')
             await context.close()
           }
 
