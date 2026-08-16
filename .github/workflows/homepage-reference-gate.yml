@@ -82,10 +82,29 @@ jobs:
               const hero=document.querySelector('.reference-home-hero__media')?.getBoundingClientRect()
               const heroImage=document.querySelector('.reference-home-hero__image')
               const logo=document.querySelector('.site-header__wordmark')
+              const logoImage=logo?.querySelector('img')
+              const footerLogo=document.querySelector('.site-footer__brand > a')
+              const footerLogoImage=footerLogo?.querySelector('img')
+              const contained=(outer,inner)=>{
+                if(!outer||!inner) return false
+                const a=outer.getBoundingClientRect()
+                const b=inner.getBoundingClientRect()
+                return b.left>=a.left-1&&b.top>=a.top-1&&b.right<=a.right+1&&b.bottom<=a.bottom+1
+              }
+              const overlaps=(selector)=>{
+                const rects=[...document.querySelectorAll(selector)].map(element=>element.getBoundingClientRect()).filter(rect=>rect.width>0&&rect.height>0)
+                for(let i=0;i<rects.length;i++) for(let j=i+1;j<rects.length;j++){
+                  const x=Math.max(0,Math.min(rects[i].right,rects[j].right)-Math.max(rects[i].left,rects[j].left))
+                  const y=Math.max(0,Math.min(rects[i].bottom,rects[j].bottom)-Math.max(rects[i].top,rects[j].top))
+                  if(x*y>1) return true
+                }
+                return false
+              }
               return {
                 clientWidth:document.documentElement.clientWidth,
                 scrollWidth:document.documentElement.scrollWidth,
                 h1:document.querySelectorAll('main h1').length,
+                heading:(document.querySelector('.reference-home-hero__title')?.textContent||'').replace(/\s+/g,' ').trim(),
                 solutionCards:document.querySelectorAll('.reference-home-solution-card').length,
                 capabilityCards:document.querySelectorAll('.reference-home-capability-card').length,
                 workCards:document.querySelectorAll('.reference-home-work-card').length,
@@ -95,12 +114,19 @@ jobs:
                 heroImageHeight:heroImage instanceof HTMLImageElement?heroImage.naturalHeight:0,
                 logoHref:logo?.getAttribute('href')||'',
                 logoLabel:logo?.getAttribute('aria-label')||'',
+                headerLogoContained:contained(logo,logoImage),
+                footerLogoContained:contained(footerLogo,footerLogoImage),
+                solutionOverlap:overlaps('.reference-home-solution-card'),
+                capabilityOverlap:overlaps('.reference-home-capability-card'),
+                workOverlap:overlaps('.reference-home-work-card'),
+                contactEmail:document.querySelector('.site-footer__contact a[href^="mailto:"]')?.getAttribute('href')||'',
                 brokenImages:[...document.images].filter(image=>!image.complete||image.naturalWidth===0).map(image=>image.currentSrc||image.src),
               }
             })
 
             if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
             if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
+            if(data.heading!=='Technology built for real operations.') fail(`${label}: hero heading ${data.heading}`)
             if(data.solutionCards!==3) fail(`${label}: flagship cards ${data.solutionCards}`)
             if(data.capabilityCards!==4) fail(`${label}: capability cards ${data.capabilityCards}`)
             if(data.workCards!==3) fail(`${label}: work cards ${data.workCards}`)
@@ -108,6 +134,12 @@ jobs:
             if(data.heroImageWidth<400||data.heroImageHeight<200) fail(`${label}: hero artwork missing ${data.heroImageWidth}x${data.heroImageHeight}`)
             if(data.logoHref!=='/') fail(`${label}: logo href ${data.logoHref}`)
             if(data.logoLabel!=='Digi02 home') fail(`${label}: logo label ${data.logoLabel}`)
+            if(!data.headerLogoContained) fail(`${label}: header logo is clipped outside its link box`)
+            if(!data.footerLogoContained) fail(`${label}: footer logo is clipped outside its link box`)
+            if(data.solutionOverlap) fail(`${label}: flagship solution cards overlap`)
+            if(data.capabilityOverlap) fail(`${label}: capability cards overlap`)
+            if(data.workOverlap) fail(`${label}: selected work cards overlap`)
+            if(data.contactEmail!=='mailto:info@digi02.org') fail(`${label}: footer contact ${data.contactEmail}`)
             if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
 
             if(axe){
