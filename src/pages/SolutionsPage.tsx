@@ -3,7 +3,7 @@ import digiVoltShowcase from '../assets/digivolt/digivolt-electric-mobility-show
 import digiNorthShowcase from '../assets/diginorth/diginorth-community-visual.png'
 import emergingTechShowcase from '../assets/emerging-tech/emerging-tech-learning-visual.png'
 import enterpriseShowcase from '../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import skyGridHero from '../assets/skygrid/skygrid-operations-center.webp'
+import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import skyGridShowcase from '../assets/skygrid/skygrid-showcase-concept.png'
 import { Container } from '../components/Container'
 import '../styles/solutions-page.css'
@@ -173,7 +173,7 @@ export function SolutionsPage() {
             </nav>
 
             <h1 id="solutions-reference-title">
-              Technology solutions
+              Technology solutions{' '}
               <br />
               for <span>real operations.</span>
             </h1>
