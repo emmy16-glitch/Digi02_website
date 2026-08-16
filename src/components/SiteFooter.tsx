@@ -67,21 +67,16 @@ export function SiteFooter() {
 
         <div className="site-footer__contact">
           <strong>Let&apos;s connect</strong>
-          <a href="mailto:hello@digi02.com">hello@digi02.com</a>
-          <a href="tel:+2347001230202">+234 700 123 0202</a>
-          <div className="site-footer__socials" aria-label="Social channels">
-            <span aria-label="LinkedIn">in</span>
-            <span aria-label="X">𝕏</span>
-            <span aria-label="YouTube">▶</span>
-            <span aria-label="Instagram">◎</span>
-          </div>
+          <a href="mailto:info@digi02.org">info@digi02.org</a>
+          <a href="tel:+2348169404088">+234 (0)81 6940 4088</a>
+          <span className="site-footer__address">Mando, Kaduna, Nigeria</span>
         </div>
 
         <div className="site-footer__legal">
-          <span>© 2024 Digi02 Technologies Ltd. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Digi02 Technologies Ltd. All rights reserved.</span>
           <span className="site-footer__legal-links">
-            <a href="/company">Privacy Policy</a>
-            <a href="/company">Terms of Service</a>
+            <a href="/company">Company</a>
+            <a href="/contact">Contact</a>
           </span>
         </div>
       </Container>
