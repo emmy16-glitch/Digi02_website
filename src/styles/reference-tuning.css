@@ -1,0 +1,125 @@
+/* Final reference-fidelity tuning after strict browser screenshot review. */
+
+/* Use the company's own vertical logo asset as a clean horizontal wordmark crop in the shell. */
+.site-header__wordmark {
+  display: block;
+  width: 7.2rem;
+  height: 3.3rem;
+  overflow: hidden;
+}
+
+.site-header__wordmark img {
+  top: 0;
+  left: 50%;
+  height: 8.2rem;
+  transform: translate(-50%, -50%);
+}
+
+/* The approved desktop reference keeps the hero statement on exactly two lines. */
+@media (min-width: 62rem) {
+  .reference-home-hero__copy {
+    grid-column: 1 / span 6;
+    max-width: none;
+    padding-right: clamp(2rem, 4vw, 4.5rem);
+  }
+
+  .reference-home-hero__media {
+    grid-column: 6 / -1;
+  }
+
+  .reference-home-hero__title {
+    max-width: none;
+    font-size: clamp(3.65rem, 4.45vw, 4.8rem);
+    white-space: nowrap;
+  }
+
+  .reference-home-hero__summary {
+    max-width: 37rem;
+  }
+}
+
+/* Keep the reference footer compact and force each block into its intended desktop cell. */
+@media (min-width: 64rem) {
+  .site-footer__inner {
+    grid-template-columns: minmax(9rem, 1.2fr) minmax(0, 4.3fr) minmax(10rem, 1.15fr);
+    grid-template-rows: auto auto;
+    gap: 1.6rem clamp(2rem, 3vw, 3.5rem);
+    padding-block: 1.6rem 0.9rem;
+  }
+
+  .site-footer__brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .site-footer__groups {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .site-footer__contact {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .site-footer__legal {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+.site-footer__brand > a {
+  width: 7.2rem;
+  height: 2.25rem;
+  overflow: hidden;
+}
+
+.site-footer__brand img {
+  top: 0;
+  left: 50%;
+  height: 7.7rem;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 63.9375rem) {
+  .site-header__wordmark {
+    width: 6.6rem;
+    height: 3.15rem;
+  }
+
+  .site-header__wordmark img {
+    top: 0;
+    height: 7.6rem;
+  }
+
+  .reference-home-hero__title {
+    max-width: 10.5ch;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .site-footer__inner {
+    gap: 1.35rem;
+  }
+
+  .site-footer__groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 1rem;
+  }
+
+  .site-footer__brand > a {
+    width: 6.6rem;
+    height: 2.15rem;
+  }
+
+  .site-footer__brand img {
+    top: 0;
+    height: 7.2rem;
+  }
+}
+
+@media (max-width: 29.9375rem) {
+  .site-footer__groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
