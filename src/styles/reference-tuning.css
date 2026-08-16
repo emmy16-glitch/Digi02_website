@@ -1,13 +1,13 @@
 /* Final reference-fidelity tuning after strict browser screenshot review. */
 
-/* Keep the company's real logo visible and large enough to read at every breakpoint. */
+/* The source logo has generous internal canvas space; scale inside a fixed box so the real mark reads clearly. */
 .site-header__wordmark {
   display: flex;
   width: 7.4rem;
   height: 4.35rem;
   align-items: center;
-  justify-content: flex-start;
-  overflow: visible;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .site-header__wordmark img {
@@ -17,8 +17,9 @@
   max-width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: left center;
-  transform: none;
+  object-position: center;
+  transform: scale(1.58);
+  transform-origin: center;
 }
 
 /* Keep photographic/product media crisp. No blur filters are applied anywhere in the homepage. */
@@ -149,8 +150,8 @@
   width: 7.4rem;
   height: 4.7rem;
   align-items: center;
-  justify-content: flex-start;
-  overflow: visible;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .site-footer__brand img {
@@ -160,8 +161,9 @@
   max-width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: left center;
-  transform: none;
+  object-position: center;
+  transform: scale(1.48);
+  transform-origin: center;
 }
 
 .site-footer__address {
@@ -190,6 +192,10 @@
   .site-header__wordmark {
     width: 6.25rem;
     height: 3.8rem;
+  }
+
+  .site-header__wordmark img {
+    transform: scale(1.72);
   }
 
   .reference-home-hero__media {
@@ -222,6 +228,10 @@
   .site-footer__brand > a {
     width: 6.25rem;
     height: 4.2rem;
+  }
+
+  .site-footer__brand img {
+    transform: scale(1.62);
   }
 }
 
