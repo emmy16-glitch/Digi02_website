@@ -1,10 +1,10 @@
 /* Final reference-fidelity tuning after strict browser screenshot review. */
 
-/* Keep the company's real logo fully visible. Do not crop the emblem or wordmark. */
+/* Keep the company's real logo visible and large enough to read at every breakpoint. */
 .site-header__wordmark {
   display: flex;
-  width: 6.4rem;
-  height: 3.9rem;
+  width: 7.4rem;
+  height: 4.35rem;
   align-items: center;
   justify-content: flex-start;
   overflow: visible;
@@ -19,6 +19,67 @@
   object-fit: contain;
   object-position: left center;
   transform: none;
+}
+
+/* Keep photographic/product media crisp. No blur filters are applied anywhere in the homepage. */
+.reference-home-hero__image {
+  object-position: center center;
+  filter: saturate(0.96) contrast(1.04) brightness(0.92);
+  image-rendering: auto;
+  transform: scale(1.002);
+}
+
+.reference-home-hero__media::before {
+  background:
+    linear-gradient(90deg, #070809 0%, rgba(7, 8, 9, 0.82) 4%, rgba(7, 8, 9, 0.18) 29%, transparent 50%),
+    linear-gradient(180deg, rgba(3, 4, 5, 0.02) 52%, rgba(3, 4, 5, 0.46) 100%);
+}
+
+.reference-home-hud {
+  border-color: rgba(247, 246, 242, 0.28);
+  background: rgba(8, 9, 10, 0.62);
+  box-shadow: 0 0.7rem 2rem rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(4px);
+}
+
+.reference-home-hud__mission-map {
+  display: block;
+  width: 100%;
+  height: 5.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 54% 52%, rgba(224, 188, 103, 0.12), transparent 18%),
+    #11181a;
+}
+
+.reference-home-hud__mission-map path,
+.reference-home-hud__mission-map circle {
+  vector-effect: non-scaling-stroke;
+}
+
+.reference-home-hud__map-grid {
+  fill: none;
+  stroke: rgba(114, 139, 137, 0.28);
+  stroke-width: 1;
+}
+
+.reference-home-hud__map-route {
+  fill: none;
+  stroke: var(--gold-400);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.reference-home-hud__mission-map circle {
+  fill: #0f1719;
+  stroke: var(--gold-400);
+  stroke-width: 1.5;
+}
+
+.reference-home-solution-card > img,
+.reference-home-work-card > img {
+  image-rendering: auto;
 }
 
 /* The approved desktop reference keeps the hero statement on exactly two lines. */
@@ -85,8 +146,8 @@
 
 .site-footer__brand > a {
   display: flex;
-  width: 6.4rem;
-  height: 4.3rem;
+  width: 7.4rem;
+  height: 4.7rem;
   align-items: center;
   justify-content: flex-start;
   overflow: visible;
@@ -112,16 +173,43 @@
 
 @media (max-width: 63.9375rem) {
   .site-header__wordmark {
-    width: 5.9rem;
-    height: 3.75rem;
+    width: 6.8rem;
+    height: 4.1rem;
   }
 
   .reference-home-hero__title {
     max-width: 10.5ch;
   }
+
+  .reference-home-hero__media {
+    min-height: 28rem;
+  }
 }
 
 @media (max-width: 47.9375rem) {
+  .site-header__wordmark {
+    width: 6.25rem;
+    height: 3.8rem;
+  }
+
+  .reference-home-hero__media {
+    min-height: 22rem;
+  }
+
+  .reference-home-hero__image {
+    object-position: 58% center;
+  }
+
+  .reference-home-hud--status {
+    top: 1rem;
+    left: var(--page-margin);
+  }
+
+  .reference-home-hud--secure {
+    right: var(--page-margin);
+    bottom: 1rem;
+  }
+
   .site-footer__inner {
     gap: 1.35rem;
   }
@@ -132,12 +220,16 @@
   }
 
   .site-footer__brand > a {
-    width: 5.9rem;
-    height: 4rem;
+    width: 6.25rem;
+    height: 4.2rem;
   }
 }
 
 @media (max-width: 29.9375rem) {
+  .reference-home-hero__media {
+    min-height: 20rem;
+  }
+
   .site-footer__groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
