@@ -1,0 +1,120 @@
+/* Final fidelity pass for the approved Solutions reference. */
+
+@media (min-width: 64rem) {
+  .solutions-reference-hero,
+  .solutions-reference-hero__inner {
+    min-height: 24rem;
+  }
+
+  .solutions-reference-hero__inner {
+    padding-block: 2.25rem 2.6rem;
+  }
+
+  .solutions-reference-hero__copy {
+    grid-column: 1 / span 8;
+  }
+
+  .solutions-reference-hero h1 {
+    max-width: none;
+    font-size: clamp(3.4rem, 4.3vw, 4.7rem);
+    white-space: nowrap;
+  }
+
+  .solutions-reference-hero__lead {
+    max-width: 34rem;
+    margin-top: 1rem;
+    font-size: 0.98rem;
+  }
+
+  .solutions-reference-hero__principles {
+    max-width: 39rem;
+    margin-top: 1.15rem;
+  }
+
+  .solutions-reference-trust {
+    grid-column: 10 / -1;
+    width: 11rem;
+    padding: 0.85rem;
+  }
+
+  .solutions-reference-filter__inner {
+    min-height: 3.8rem;
+  }
+
+  .solutions-reference-filter button {
+    min-height: 2.35rem;
+    padding: 0.5rem 0.85rem;
+  }
+
+  .solutions-reference-showcase {
+    padding-block: 2.7rem 3.2rem;
+  }
+
+  .solutions-reference-showcase__heading {
+    margin-bottom: 1.7rem;
+  }
+
+  .solutions-reference-showcase__heading h2 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.9rem, 2.6vw, 2.7rem);
+  }
+
+  .solutions-reference-card {
+    min-height: 15.25rem;
+  }
+
+  .solutions-reference-card--featured {
+    min-height: 17.2rem;
+  }
+
+  .solutions-reference-card__content {
+    width: min(57%, 25rem);
+    padding: 1.65rem 1.85rem;
+  }
+
+  .solutions-reference-card--featured .solutions-reference-card__content {
+    width: min(43%, 28rem);
+  }
+
+  .solutions-reference-card h3 {
+    font-size: clamp(1.35rem, 1.8vw, 1.75rem);
+  }
+
+  .solutions-reference-card--featured h3 {
+    font-size: clamp(1.55rem, 2vw, 2rem);
+  }
+
+  .solutions-reference-card p {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.42;
+  }
+
+  .solutions-reference-card ul {
+    gap: 0.15rem;
+    margin-top: 0.55rem;
+    font-size: 0.69rem;
+  }
+
+  .solutions-reference-card a {
+    min-height: 40px;
+    margin-top: 0.55rem;
+    font-size: 0.74rem;
+  }
+
+  .solutions-reference-cta__inner {
+    min-height: 6rem;
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 63.9375rem) {
+  .solutions-reference-hero h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .solutions-reference-card a {
+    min-height: 44px;
+  }
+}
