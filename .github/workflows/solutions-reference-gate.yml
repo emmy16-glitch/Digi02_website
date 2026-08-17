@@ -141,6 +141,8 @@ jobs:
                 logoHref: document.querySelector('.site-header__wordmark')?.getAttribute('href') || '',
                 ctaHref: document.querySelector('.solutions-reference-cta__button')?.getAttribute('href') || '',
                 proofWidth: proof?.width || 0,
+                proofTop: proof?.top || 0,
+                proofBottom: proof?.bottom || 0,
                 proofCount: proofItems.length,
                 proofTitles: proofItems.map((item) => (item.querySelector('h3')?.textContent || '').trim()),
                 brokenImages: [...document.images]
@@ -182,7 +184,7 @@ jobs:
               if (custom.width < digiVolt.width * 1.75) fail(`${label}: Custom Software is not full-width`)
               if (Math.abs(digiVolt.top - enterprise.top) > 4) fail(`${label}: DigiVolt / Enterprise row misaligned`)
               if (Math.abs(payment.top - management.top) > 4) fail(`${label}: Payments / E-Management row misaligned`)
-              if (!(proof.top > management.bottom - 2 && custom.top > proof.bottom - 2)) fail(`${label}: proof strip is not between E-Management and Custom Software`)
+              if (!(data.proofTop > management.bottom - 2 && custom.top > data.proofBottom - 2)) fail(`${label}: proof strip is not between E-Management and Custom Software`)
             }
 
             if (width <= 430 && data.cardRects.length === 6) {
