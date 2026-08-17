@@ -1,0 +1,618 @@
+/* Company page refinement layer — loaded after the base Company and team styles. */
+
+/* HERO — remove third-party visual language and make the control-room image feel native to Digi02. */
+.company-reference-hero::before {
+  background:
+    linear-gradient(90deg, rgba(5, 6, 7, 0.995) 0%, rgba(5, 6, 7, 0.97) 34%, rgba(5, 6, 7, 0.72) 56%, rgba(5, 6, 7, 0.2) 100%),
+    linear-gradient(180deg, rgba(5, 6, 7, 0.03) 48%, rgba(5, 6, 7, 0.78) 100%);
+}
+
+.company-reference-hero__visual {
+  inset: 0 0 0 34%;
+}
+
+.company-reference-hero__visual::after {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 72% 42%, rgba(224, 188, 103, 0.08), transparent 28%),
+    linear-gradient(90deg, rgba(5, 6, 7, 0.18), transparent 28%);
+  content: '';
+  pointer-events: none;
+}
+
+.company-reference-hero__visual img {
+  object-position: 62% center;
+  filter: saturate(0.9) brightness(0.8) contrast(1.08);
+}
+
+/* ABOUT — one warm light section to give the page a deliberate visual reset. */
+.company-reference-about {
+  border-bottom: 1px solid #d8d1c3;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(181, 137, 53, 0.08), transparent 28%),
+    #f2efe8;
+}
+
+.company-reference-about__statement > p {
+  color: #9a6e22;
+}
+
+.company-reference-about__statement h2 {
+  color: #111315;
+  font-size: clamp(2rem, 2.9vw, 3rem);
+}
+
+.company-reference-about__copy p {
+  color: #4c4a45;
+  font-size: 0.98rem;
+}
+
+.company-reference-about__principles > div {
+  padding-block: 0.25rem;
+}
+
+.company-reference-about__principles svg {
+  color: #a47728;
+}
+
+.company-reference-about__principles span {
+  color: #17191b;
+  font-size: 0.92rem;
+}
+
+/* DIRECTION — stronger hierarchy and more editorial rhythm than four tiny utility blocks. */
+.company-reference-direction {
+  padding-block: clamp(4rem, 6vw, 5.5rem);
+  background: #0c0e10;
+}
+
+.company-reference-direction__heading {
+  max-width: 44rem;
+  margin-bottom: 2.5rem;
+}
+
+.company-reference-direction__heading > p {
+  margin: 0;
+  color: var(--company-gold);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.company-reference-direction__heading > h2 {
+  margin: 0.75rem 0 0;
+  color: #f2efe8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 3.4vw, 3.35rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.company-reference-direction__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(224, 188, 103, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.company-reference-direction article,
+.company-reference-direction article:first-child,
+.company-reference-direction article:nth-child(3),
+.company-reference-direction article:last-child {
+  display: block;
+  min-height: 17rem;
+  padding: 1.55rem 1.55rem 1.8rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 0;
+}
+
+.company-reference-direction article:first-child {
+  padding-left: 0;
+}
+
+.company-reference-direction article:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.company-reference-direction__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.2rem;
+}
+
+.company-reference-direction__meta > span {
+  color: #77736a;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.company-reference-direction__meta svg,
+.company-reference-direction article > svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: var(--company-gold);
+}
+
+.company-reference-direction h2 {
+  font-size: clamp(1.35rem, 1.7vw, 1.65rem);
+  line-height: 1.12;
+}
+
+.company-reference-direction p,
+.company-reference-direction ul {
+  margin-top: 0.8rem;
+  color: #b7b3aa;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.company-reference-direction ul {
+  display: grid;
+  gap: 0.16rem;
+}
+
+/* TEAM — keep the 3+2 composition, but give the people more presence. */
+.company-reference-team {
+  padding-block: clamp(4.2rem, 6.5vw, 6rem);
+}
+
+.company-reference-team__heading {
+  margin-bottom: 1.85rem;
+}
+
+.company-reference-team__intro {
+  max-width: 39rem;
+}
+
+.company-reference-team__grid {
+  max-width: 76rem;
+  gap: 1.3rem;
+}
+
+.company-reference-team__content {
+  padding: 1.2rem 1.25rem 1.35rem;
+}
+
+.company-reference-team__bio {
+  max-width: 31rem;
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+/* JOURNEY — make the history readable at a glance instead of compressing it into tiny labels. */
+.company-reference-journey {
+  padding-block: clamp(4.2rem, 6vw, 5.8rem);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(224, 188, 103, 0.045), transparent 26%),
+    #08090b;
+}
+
+.company-reference-journey__grid {
+  align-items: start;
+}
+
+.company-reference-journey__intro {
+  grid-column: 1 / span 5;
+}
+
+.company-reference-journey__intro h2 {
+  font-size: clamp(2.2rem, 3.6vw, 3.45rem);
+  letter-spacing: -0.035em;
+}
+
+.company-reference-journey__intro p {
+  max-width: 24rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.company-reference-timeline {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 2.6rem;
+}
+
+.company-reference-timeline::before {
+  top: 0.34rem;
+}
+
+.company-reference-timeline li {
+  min-height: 10.5rem;
+  padding: 1.7rem 1.25rem 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.company-reference-timeline li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.company-reference-timeline__dot {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.company-reference-timeline strong {
+  display: block;
+  color: #f2efe8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.28rem;
+  font-weight: 400;
+}
+
+.company-reference-timeline p {
+  max-width: 9.5rem;
+  margin-top: 0.55rem;
+  color: #aaa69d;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* PROOF — let the numbers do the visual work. */
+.company-reference-proof {
+  padding-block: clamp(4rem, 6vw, 5.5rem);
+  background: #0b0c0e;
+}
+
+.company-reference-proof > .container > h2 {
+  max-width: 45rem;
+  margin-bottom: 2.2rem;
+  font-size: clamp(2.1rem, 3.5vw, 3.4rem);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.company-reference-proof__grid {
+  grid-template-columns: 1fr;
+  gap: 2.2rem;
+}
+
+.company-reference-proof__metrics {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid rgba(224, 188, 103, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.company-reference-proof__metrics > div {
+  display: flex;
+  min-height: 10rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1.35rem 1.3rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.company-reference-proof__metrics > div:first-child {
+  padding-left: 0;
+}
+
+.company-reference-proof__metrics > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.company-reference-proof__metrics svg {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+.company-reference-proof__metrics p {
+  gap: 0.45rem;
+}
+
+.company-reference-proof__metrics strong {
+  color: #e7c56f;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 0.95;
+}
+
+.company-reference-proof__metrics span {
+  max-width: 10rem;
+  color: #aaa69d;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.company-reference-partners {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1.4rem;
+  align-items: center;
+  padding: 1.4rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 0;
+}
+
+.company-reference-partners > p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.company-reference-partners > div {
+  gap: 0.8rem 1.4rem;
+}
+
+.company-reference-partners strong {
+  font-size: 0.88rem;
+}
+
+.company-reference-partners span {
+  max-width: 9rem;
+  font-size: 0.62rem;
+}
+
+@media (max-width: 68rem) {
+  .company-reference-direction article,
+  .company-reference-direction article:first-child,
+  .company-reference-direction article:nth-child(3),
+  .company-reference-direction article:last-child {
+    padding-inline: 1.2rem;
+  }
+
+  .company-reference-direction article:first-child {
+    padding-left: 0;
+  }
+
+  .company-reference-direction article:last-child {
+    padding-right: 0;
+  }
+
+  .company-reference-proof__metrics strong {
+    font-size: clamp(1.7rem, 2.8vw, 2.35rem);
+  }
+}
+
+@media (max-width: 61.9375rem) {
+  .company-reference-hero__visual {
+    left: 24%;
+  }
+
+  .company-reference-direction__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .company-reference-direction article,
+  .company-reference-direction article:first-child,
+  .company-reference-direction article:nth-child(3),
+  .company-reference-direction article:last-child {
+    min-height: 15rem;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .company-reference-direction article:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .company-reference-direction article:nth-child(n + 3) {
+    border-bottom: 0;
+  }
+
+  .company-reference-team__grid {
+    max-width: 50rem;
+  }
+
+  .company-reference-timeline {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.4rem 0;
+  }
+
+  .company-reference-timeline li,
+  .company-reference-timeline li:first-child {
+    min-height: 8.5rem;
+    padding: 1.35rem 1rem 0.75rem;
+    border-top: 1px solid rgba(224, 188, 103, 0.34);
+    border-left: 0;
+  }
+
+  .company-reference-timeline li:nth-child(4n + 1) {
+    padding-left: 0;
+  }
+
+  .company-reference-proof__metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .company-reference-proof__metrics > div,
+  .company-reference-proof__metrics > div:first-child,
+  .company-reference-proof__metrics > div:last-child {
+    min-height: 9rem;
+    padding: 1.25rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .company-reference-proof__metrics > div:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .company-reference-proof__metrics > div:nth-child(n + 4) {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .company-reference-hero__visual {
+    left: 0;
+  }
+
+  .company-reference-hero__visual img {
+    object-position: 58% 44%;
+  }
+
+  .company-reference-about {
+    padding-block: 3.8rem;
+  }
+
+  .company-reference-about__statement h2 {
+    color: #111315;
+    font-size: clamp(2rem, 9vw, 2.65rem);
+  }
+
+  .company-reference-about__copy p {
+    font-size: 0.94rem;
+  }
+
+  .company-reference-direction {
+    padding-block: 3.6rem;
+  }
+
+  .company-reference-direction__heading {
+    margin-bottom: 1.8rem;
+  }
+
+  .company-reference-direction__heading > h2 {
+    font-size: clamp(2rem, 10vw, 2.7rem);
+  }
+
+  .company-reference-direction__grid {
+    grid-template-columns: 1fr;
+    border-bottom: 0;
+  }
+
+  .company-reference-direction article,
+  .company-reference-direction article:first-child,
+  .company-reference-direction article:nth-child(3),
+  .company-reference-direction article:last-child {
+    min-height: auto;
+    padding: 1.45rem 0 1.7rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .company-reference-direction article:last-child {
+    border-bottom: 0;
+  }
+
+  .company-reference-direction__meta {
+    margin-bottom: 1.25rem;
+  }
+
+  .company-reference-direction h2 {
+    font-size: 1.45rem;
+  }
+
+  .company-reference-direction p,
+  .company-reference-direction ul {
+    font-size: 0.86rem;
+  }
+
+  .company-reference-team {
+    padding-block: 3.7rem;
+  }
+
+  .company-reference-team__heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .company-reference-journey {
+    padding-block: 3.7rem;
+  }
+
+  .company-reference-journey__intro {
+    grid-column: 1;
+  }
+
+  .company-reference-journey__intro h2 {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+
+  .company-reference-journey__intro p {
+    font-size: 0.86rem;
+  }
+
+  .company-reference-timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 0.3rem;
+  }
+
+  .company-reference-timeline li,
+  .company-reference-timeline li:first-child,
+  .company-reference-timeline li:nth-child(4n + 1) {
+    display: grid;
+    min-height: auto;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0 1.1rem 1.25rem;
+    border-top: 0;
+    border-left: 1px solid rgba(224, 188, 103, 0.4);
+    border-bottom: 0;
+  }
+
+  .company-reference-timeline__dot {
+    top: 1.25rem;
+    left: -0.36rem;
+  }
+
+  .company-reference-timeline strong {
+    font-size: 1rem;
+  }
+
+  .company-reference-timeline p {
+    max-width: none;
+    margin-top: 0;
+    font-size: 0.8rem;
+  }
+
+  .company-reference-proof {
+    padding-block: 3.7rem;
+  }
+
+  .company-reference-proof > .container > h2 {
+    font-size: clamp(2rem, 9.5vw, 2.75rem);
+  }
+
+  .company-reference-proof__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .company-reference-proof__metrics > div,
+  .company-reference-proof__metrics > div:first-child,
+  .company-reference-proof__metrics > div:last-child {
+    min-height: 8.5rem;
+    padding: 1.1rem 0.9rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .company-reference-proof__metrics > div:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .company-reference-proof__metrics > div:nth-child(3) {
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .company-reference-proof__metrics > div:last-child {
+    grid-column: 1 / -1;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .company-reference-proof__metrics strong {
+    font-size: clamp(1.9rem, 9vw, 2.5rem);
+  }
+
+  .company-reference-proof__metrics span {
+    font-size: 0.68rem;
+  }
+
+  .company-reference-partners {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+}
