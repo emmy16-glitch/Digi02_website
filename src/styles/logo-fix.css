@@ -1,0 +1,76 @@
+/* Shared Digi02 logo framing fix.
+   The source brand asset is square with generous internal canvas space, so the
+   header/footer need a controlled crop rather than an oversized image that can
+   visually cut the wordmark on small screens. */
+
+.site-header__wordmark {
+  display: grid;
+  width: 7.5rem;
+  height: 4rem;
+  place-items: center;
+  overflow: hidden;
+}
+
+.site-header__wordmark img {
+  position: static;
+  width: 8.65rem;
+  max-width: none;
+  height: 8.65rem;
+  object-fit: contain;
+  pointer-events: none;
+  transform: translateY(-0.34rem);
+}
+
+.site-footer__brand > a {
+  display: grid;
+  width: 7.8rem;
+  height: 3rem;
+  place-items: center;
+  overflow: hidden;
+}
+
+.site-footer__brand img {
+  position: static;
+  width: 8.8rem;
+  max-width: none;
+  height: 8.8rem;
+  object-fit: contain;
+  transform: translateY(-0.3rem);
+}
+
+@media (max-width: 63.9375rem) {
+  .site-header__wordmark {
+    width: 7rem;
+    height: 3.85rem;
+  }
+
+  .site-header__wordmark img {
+    width: 8.1rem;
+    height: 8.1rem;
+    transform: translateY(-0.32rem);
+  }
+}
+
+@media (max-width: 29.9375rem) {
+  .site-header__wordmark {
+    width: 6.7rem;
+    height: 3.8rem;
+  }
+
+  .site-header__wordmark img {
+    width: 7.8rem;
+    height: 7.8rem;
+    transform: translateY(-0.3rem);
+  }
+
+  .site-footer__brand > a {
+    width: 7.2rem;
+    height: 2.85rem;
+  }
+
+  .site-footer__brand img {
+    width: 8.15rem;
+    height: 8.15rem;
+    transform: translateY(-0.28rem);
+  }
+}
