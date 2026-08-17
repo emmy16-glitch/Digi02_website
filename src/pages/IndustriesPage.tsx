@@ -143,7 +143,7 @@ export function IndustriesPage() {
 
             <p className="industries-reference-kicker">Technology shaped around the work</p>
             <h1 id="industries-reference-title">
-              Different environments.
+              Different environments.{' '}
               <br />
               Systems <span>engineered to fit.</span>
             </h1>
