@@ -702,7 +702,7 @@
   }
 
   .company-reference-hero__visual {
-    inset-left: 30%;
+    left: 30%;
   }
 
   .company-reference-hero h1 {
@@ -723,7 +723,7 @@
   }
 
   .company-reference-culture__visual {
-    inset-right: 55%;
+    right: 55%;
   }
 
   .company-reference-culture__spacer {
