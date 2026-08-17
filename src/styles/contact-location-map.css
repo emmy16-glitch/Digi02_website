@@ -121,7 +121,7 @@
 .digi02-location__panel h2 {
   margin: 0.55rem 0 0;
   color: #111214;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(1.55rem, 2vw, 2rem);
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -231,6 +231,12 @@
 
   .digi02-location__live-chip {
     display: none;
+  }
+}
+
+@media (max-width: 61.9375rem) and (min-width: 47.9376rem) {
+  .contact-reference-side {
+    grid-template-columns: 1fr;
   }
 }
 
