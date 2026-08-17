@@ -86,6 +86,8 @@ async function inspect(page, label, screenshot) {
 
   await page.getByRole('button', { name: 'All insights', exact: true }).click()
   await page.waitForTimeout(80)
+  await page.evaluate(() => scrollTo(0, 0))
+  await page.waitForTimeout(80)
 
   await page.screenshot({ path: screenshot, fullPage: true, animations: 'disabled' })
 }
