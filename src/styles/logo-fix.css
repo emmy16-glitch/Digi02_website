@@ -1,7 +1,7 @@
-/* Shared Digi02 logo framing fix.
-   The supplied brand mark is a square canvas containing the emblem above the
-   Digi02 wordmark. Frame that complete stack consistently instead of clipping
-   the lower wordmark on narrow viewports. */
+/* Shared Digi02 logo framing.
+   The supplied brand mark lives on a square canvas with generous internal
+   whitespace. Keep the navigation bar compact while framing the complete
+   emblem + Digi02 wordmark + tagline without clipping either edge. */
 
 .site-header__wordmark {
   position: relative;
@@ -17,10 +17,10 @@
   left: 50%;
   width: auto;
   max-width: none;
-  height: 8.45rem;
+  height: 8rem;
   object-fit: contain;
   pointer-events: none;
-  transform: translate(-50%, -64%);
+  transform: translate(-50%, -62%);
 }
 
 .site-footer__brand > a {
@@ -49,8 +49,8 @@
   }
 
   .site-header__wordmark img {
-    height: 7.85rem;
-    transform: translate(-50%, -66%);
+    height: 7.45rem;
+    transform: translate(-50%, -63%);
   }
 }
 
@@ -61,8 +61,8 @@
   }
 
   .site-header__wordmark img {
-    height: 7.55rem;
-    transform: translate(-50%, -66%);
+    height: 7.15rem;
+    transform: translate(-50%, -63%);
   }
 
   .site-footer__brand > a {
