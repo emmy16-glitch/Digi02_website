@@ -1,8 +1,10 @@
-import { useMemo, useState, type FormEvent, type MouseEvent } from 'react'
+import { useState, type FormEvent, type MouseEvent } from 'react'
 import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import { Container } from '../components/Container'
+import { Digi02LocationMap } from '../components/Digi02LocationMap'
 import '../styles/contact-production.css'
 import '../styles/contact-reference-tuning.css'
+import '../styles/contact-location-map.css'
 
 type ContactIconName = 'response' | 'expert' | 'secure' | 'location' | 'mail' | 'phone' | 'time' | 'calendar' | 'partnership' | 'support'
 
@@ -101,11 +103,6 @@ export function ContactPage() {
   const [status, setStatus] = useState('')
   const [messageLength, setMessageLength] = useState(0)
   const maxMessageLength = 1500
-
-  const directionsHref = useMemo(
-    () => 'https://www.google.com/maps/search/?api=1&query=Kaduna+Technology+Park+Kaduna+Nigeria',
-    [],
-  )
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -278,7 +275,7 @@ export function ContactPage() {
                   <span><ContactIcon name="location" /></span>
                   <div>
                     <strong>Head Office – Kaduna</strong>
-                    <p>Digi02 Technologies Ltd.<br />3rd Floor, Innovation Hub,<br />Kaduna Technology Park,<br />Kaduna, Nigeria.</p>
+                    <p>Digi02 Tech Systems.<br />No. 2, The Hub,<br />Industrial Area, Farin Gida,<br />Mando, Kaduna, Nigeria.</p>
                   </div>
                 </div>
 
@@ -306,29 +303,10 @@ export function ContactPage() {
                   </div>
                 </div>
               </section>
-
-              <section className="contact-reference-map" aria-label="Kaduna Technology Park location">
-                <svg className="contact-reference-map__roads" aria-hidden="true" viewBox="0 0 420 260" preserveAspectRatio="none">
-                  <path d="M-20 54 128 126 448 42" />
-                  <path d="M18 246 136 146 234 88 438 120" />
-                  <path d="M52 -10 86 278" />
-                  <path d="M206 -8 182 78 248 288" />
-                  <path d="M336 -16 306 82 374 280" />
-                  <path d="M-10 184 118 188 216 164 430 214" />
-                  <path d="M12 92 104 54 198 38 318 66 428 34" />
-                  <path d="M98 260 160 206 236 198 328 154 432 160" />
-                </svg>
-                <div className="contact-reference-map__pin" aria-hidden="true">
-                  <ContactIcon name="location" />
-                </div>
-                <div className="contact-reference-map__card">
-                  <strong>Kaduna Technology Park</strong>
-                  <span>Kaduna, Nigeria</span>
-                  <a href={directionsHref} target="_blank" rel="noreferrer">Get directions <span aria-hidden="true">→</span></a>
-                </div>
-              </section>
             </aside>
           </div>
+
+          <Digi02LocationMap />
 
           <div className="contact-reference-paths" aria-label="More ways to contact Digi02">
             <article>
