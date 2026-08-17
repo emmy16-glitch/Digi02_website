@@ -144,7 +144,7 @@ export function WorkPage() {
         </Container>
       </section>
 
-      <main className="work-reference-main">
+      <div className="work-reference-main">
         <section className="work-reference-controls" aria-label="Filter selected work">
           <Container className="work-reference-controls__inner">
             <div className="work-reference-filters" role="group" aria-label="Work categories">
@@ -283,7 +283,7 @@ export function WorkPage() {
             <a href="/contact">Discuss your project <span aria-hidden="true">→</span></a>
           </Container>
         </section>
-      </main>
+      </div>
     </div>
   )
 }
