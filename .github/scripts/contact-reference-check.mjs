@@ -42,12 +42,14 @@ async function inspect(page, label, screenshot) {
     const hero = document.querySelector('.contact-reference-hero')?.getBoundingClientRect()
     const form = document.querySelector('.contact-reference-form')?.getBoundingClientRect()
     const info = document.querySelector('.contact-reference-info')?.getBoundingClientRect()
-    const map = document.querySelector('.contact-reference-map')?.getBoundingClientRect()
+    const map = document.querySelector('.digi02-location__canvas')?.getBoundingClientRect()
     const paths = [...document.querySelectorAll('.contact-reference-paths article')]
       .map((element) => element.getBoundingClientRect())
       .filter((rect) => rect.width > 0 && rect.height > 0)
     const heroImage = document.querySelector('.contact-reference-hero__media img')
     const logo = document.querySelector('.site-header__wordmark')
+    const officeLogo = document.querySelector('.digi02-location__identity img')
+    const mapFrame = document.querySelector('.digi02-location__map')
 
     return {
       clientWidth: document.documentElement.clientWidth,
@@ -68,10 +70,13 @@ async function inspect(page, label, screenshot) {
       logoHref: logo?.getAttribute('href') || '',
       heroImageWidth: heroImage instanceof HTMLImageElement ? heroImage.naturalWidth : 0,
       heroImageHeight: heroImage instanceof HTMLImageElement ? heroImage.naturalHeight : 0,
+      officeLogoWidth: officeLogo instanceof HTMLImageElement ? officeLogo.naturalWidth : 0,
+      mapSrc: mapFrame instanceof HTMLIFrameElement ? mapFrame.src : '',
       brokenImages: [...document.images]
         .filter((image) => !image.complete || image.naturalWidth === 0)
         .map((image) => image.currentSrc || image.src),
-      directionHref: document.querySelector('.contact-reference-map__card a')?.getAttribute('href') || '',
+      directionHref: document.querySelector('.digi02-location__directions')?.getAttribute('href') || '',
+      openMapsHref: document.querySelector('.digi02-location__open')?.getAttribute('href') || '',
       callHref: document.querySelector('.contact-reference-paths article:first-child a')?.getAttribute('href') || '',
     }
   })
@@ -88,8 +93,11 @@ async function inspect(page, label, screenshot) {
   if (data.requiredCount < 6) fail(`${label}: required fields ${data.requiredCount}`)
   if (data.logoHref !== '/') fail(`${label}: logo href ${data.logoHref}`)
   if (data.heroImageWidth < 400 || data.heroImageHeight < 200) fail(`${label}: hero image missing ${data.heroImageWidth}x${data.heroImageHeight}`)
+  if (data.officeLogoWidth < 100) fail(`${label}: office map logo missing ${data.officeLogoWidth}`)
+  if (!data.mapSrc.includes('google.com/maps')) fail(`${label}: map source ${data.mapSrc}`)
   if (data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
-  if (!data.directionHref.includes('google.com/maps')) fail(`${label}: directions link ${data.directionHref}`)
+  if (!data.directionHref.includes('google.com/maps/dir')) fail(`${label}: directions link ${data.directionHref}`)
+  if (!data.openMapsHref.includes('google.com/maps/search')) fail(`${label}: open maps link ${data.openMapsHref}`)
   if (!data.callHref.startsWith('mailto:')) fail(`${label}: call link ${data.callHref}`)
   if (overlaps(data.paths)) fail(`${label}: contact path cards overlap`)
 

@@ -1,0 +1,303 @@
+.digi02-location {
+  margin-top: 0.8rem;
+}
+
+.digi02-location__canvas {
+  position: relative;
+  min-height: 38rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.5rem;
+  background: #f2f0ea;
+  isolation: isolate;
+}
+
+.digi02-location__map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(0.78) saturate(0.55) sepia(0.04) contrast(0.94) brightness(1.04);
+}
+
+.digi02-location__identity,
+.digi02-location__live-chip,
+.digi02-location__panel {
+  position: absolute;
+  z-index: 2;
+}
+
+.digi02-location__identity {
+  top: 1.5rem;
+  left: 1.5rem;
+  display: grid;
+  max-width: 20rem;
+  grid-template-columns: 2.35rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(15, 15, 16, 0.12);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0.7rem 1.8rem rgba(9, 10, 11, 0.1);
+  color: #111214;
+  pointer-events: none;
+}
+
+.digi02-location__identity img {
+  width: 2.35rem;
+  height: 2.35rem;
+  object-fit: contain;
+}
+
+.digi02-location__identity div {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.digi02-location__identity strong {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.digi02-location__identity span {
+  color: #66645f;
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.digi02-location__live-chip {
+  top: 1.5rem;
+  left: 50%;
+  display: inline-flex;
+  min-height: 2.4rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgba(15, 15, 16, 0.12);
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0.55rem 1.5rem rgba(9, 10, 11, 0.08);
+  color: #242528;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.digi02-location__live-chip > span {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--gold-500);
+}
+
+.digi02-location__panel {
+  top: 1.5rem;
+  right: 1.5rem;
+  width: min(22rem, calc(100% - 3rem));
+  padding: 1.55rem;
+  border: 1px solid rgba(15, 15, 16, 0.12);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 1rem 2.6rem rgba(9, 10, 11, 0.13);
+  color: #111214;
+}
+
+.digi02-location__kicker {
+  margin: 0;
+  color: #9a762e;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.digi02-location__panel h2 {
+  margin: 0.55rem 0 0;
+  color: #111214;
+  font-family: var(--font-body);
+  font-size: clamp(1.55rem, 2vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.digi02-location__address {
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  margin-top: 1.35rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(17, 18, 20, 0.1);
+}
+
+.digi02-location__address svg,
+.digi02-location__actions svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.digi02-location__address svg {
+  margin-top: 0.14rem;
+  color: #9a762e;
+}
+
+.digi02-location__address p {
+  margin: 0;
+  color: #4f5053;
+  font-size: 0.78rem;
+  line-height: 1.58;
+}
+
+.digi02-location__actions {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.35rem;
+}
+
+.digi02-location__actions a {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.digi02-location__directions {
+  border: 1px solid #161719;
+  background: #161719;
+  color: #f8f7f3 !important;
+}
+
+.digi02-location__directions svg {
+  color: var(--gold-400);
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.digi02-location__directions:hover svg {
+  transform: translateX(3px);
+}
+
+.digi02-location__open {
+  border: 1px solid rgba(17, 18, 20, 0.18);
+  background: #fff;
+  color: #292a2d !important;
+}
+
+.digi02-location__open:hover {
+  border-color: rgba(154, 118, 46, 0.65);
+}
+
+.digi02-location__actions a:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 3px;
+}
+
+.digi02-location__hint {
+  margin: 1rem 0 0;
+  color: #77756f;
+  font-size: 0.67rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 68rem) {
+  .digi02-location__canvas {
+    min-height: 35rem;
+  }
+
+  .digi02-location__identity {
+    max-width: 17rem;
+  }
+
+  .digi02-location__live-chip {
+    display: none;
+  }
+}
+
+@media (max-width: 61.9375rem) and (min-width: 47.9376rem) {
+  .contact-reference-side {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .digi02-location__canvas {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .digi02-location__map {
+    position: relative;
+    inset: auto;
+    height: 28rem;
+  }
+
+  .digi02-location__identity {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: none;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .digi02-location__panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    padding: 1.35rem 1.25rem 1.45rem;
+    border: 0;
+    border-top: 1px solid rgba(17, 18, 20, 0.12);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .digi02-location__panel h2 {
+    font-size: 1.6rem;
+  }
+
+  .digi02-location__actions a {
+    min-height: 3.2rem;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 29.9375rem) {
+  .digi02-location__map {
+    height: 24rem;
+  }
+
+  .digi02-location__identity span {
+    font-size: 0.64rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digi02-location__actions a,
+  .digi02-location__directions svg {
+    transition: none;
+  }
+}
