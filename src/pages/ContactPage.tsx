@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react'
+import { useMemo, useState, type FormEvent, type MouseEvent } from 'react'
 import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import { Container } from '../components/Container'
 import '../styles/contact-production.css'
@@ -117,10 +117,10 @@ export function ContactPage() {
     window.location.href = mailto
   }
 
-  function scrollToForm(event: React.MouseEvent<HTMLAnchorElement>) {
+  function scrollToForm(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault()
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.querySelector('.contact-reference-form')?.scrollIntoView({
+    document.querySelector('#contact-form')?.scrollIntoView({
       behavior: reduceMotion ? 'auto' : 'smooth',
       block: 'start',
     })
@@ -137,7 +137,7 @@ export function ContactPage() {
           <div className="contact-reference-hero__copy">
             <p className="contact-reference-kicker">Contact Digi02</p>
             <h1 id="contact-reference-title">
-              <span className="contact-reference-hero__line">Let’s build technology</span>
+              <span className="contact-reference-hero__line">Let’s build technology{' '}</span>
               <span className="contact-reference-hero__line">that <em>drives real impact.</em></span>
             </h1>
             <p className="contact-reference-hero__lead">
@@ -165,7 +165,7 @@ export function ContactPage() {
       <section className="contact-reference-main" aria-label="Contact Digi02">
         <Container>
           <div className="contact-reference-layout">
-            <form className="contact-reference-form" onSubmit={handleSubmit}>
+            <form id="contact-form" className="contact-reference-form" onSubmit={handleSubmit}>
               <header>
                 <h2>Send us a message</h2>
                 <p>Tell us about your project or challenge and we’ll be in touch.</p>
