@@ -1,5 +1,17 @@
 /* Final fidelity pass for the approved Solutions reference. */
 
+/* Let the real control-room image read clearly on the right while the left remains copy-safe. */
+.solutions-reference-hero__media img {
+  object-position: 68% 48%;
+  filter: saturate(0.96) contrast(1.05) brightness(0.92);
+}
+
+.solutions-reference-hero::before {
+  background:
+    linear-gradient(90deg, rgba(5, 6, 7, 0.94) 0%, rgba(5, 6, 7, 0.80) 30%, rgba(5, 6, 7, 0.34) 54%, rgba(5, 6, 7, 0.05) 100%),
+    linear-gradient(180deg, rgba(5, 6, 7, 0.03) 44%, rgba(5, 6, 7, 0.38) 100%);
+}
+
 @media (min-width: 64rem) {
   .solutions-reference-hero,
   .solutions-reference-hero__inner {
@@ -114,6 +126,17 @@
 }
 
 @media (max-width: 47.9375rem) {
+  .solutions-reference-hero__media img {
+    object-position: 72% center;
+    filter: saturate(0.94) contrast(1.04) brightness(0.88);
+  }
+
+  .solutions-reference-hero::before {
+    background:
+      linear-gradient(90deg, rgba(5, 6, 7, 0.95) 0%, rgba(5, 6, 7, 0.84) 45%, rgba(5, 6, 7, 0.42) 76%, rgba(5, 6, 7, 0.12) 100%),
+      linear-gradient(180deg, rgba(5, 6, 7, 0.08) 28%, rgba(5, 6, 7, 0.56) 100%);
+  }
+
   .solutions-reference-card a {
     min-height: 44px;
   }
