@@ -29,6 +29,7 @@ import './styles/site-final-overrides.css'
 import './styles/reference-shell.css'
 import './styles/home-reference.css'
 import './styles/reference-tuning.css'
+import './styles/logo-fix.css'
 
 type RouteDefinition = {
   title: string
@@ -80,54 +81,55 @@ function App() {
     '/solutions/payroll-automation': {
       title: 'Payroll automation — Digi02',
       description:
-        'Digi02 payroll automation structures recurring payroll inputs, review, approval and records into a controlled operational process.',
+        'Digi02 payroll automation connects employee data, attendance, allowances, deductions, approvals, payroll processing and reporting in one controlled workflow.',
       content: <PayrollAutomationPage />,
     },
     '/solutions/payment-systems': {
       title: 'Payment systems — Digi02',
       description:
-        'Digi02 payment systems connect transactions, authorization, records, reconciliation and reporting to the operation behind each payment.',
+        'Digi02 payment systems support secure payment acceptance, transaction processing, reconciliation and operational reporting for organizations.',
       content: <PaymentSystemsPage />,
     },
     '/solutions/custom-software': {
       title: 'Custom software engineering — Digi02',
       description:
-        'Digi02 designs custom software around real workflows, integrations, records and operating constraints when off-the-shelf tools are not enough.',
+        'Digi02 engineers custom software systems across frontend applications, APIs, services, data, cloud, security, monitoring and integrations.',
       content: <CustomSoftwarePage />,
     },
     '/industries': {
       title: 'Industries — Digi02',
       description:
-        'See how Digi02 approaches operational technology across organizations that need connected systems, controlled workflows and usable information.',
+        'Digi02 applies autonomous systems, enterprise technology, mobility, payments and custom software to operational challenges across sectors.',
       content: <IndustriesPage />,
     },
     '/work': {
-      title: 'Our work — Digi02',
+      title: 'Selected work — Digi02',
       description:
-        'Explore selected Digi02 technology work across autonomous systems, electric mobility and connected enterprise operations.',
+        'Explore selected Digi02 work across autonomous inspection, payments, enterprise platforms, mobility and public-sector operations.',
       content: <WorkPage />,
     },
     '/company': {
       title: 'Company — Digi02',
       description:
-        'Digi02 is a Kaduna-based technology company working across software engineering, cybersecurity, data and operational systems for organizations.',
+        'Learn about Digi02, a Nigerian technology and engineering company building software, autonomous systems, enterprise platforms and digital infrastructure.',
       content: <CompanyPage />,
     },
     '/insights': {
       title: 'Insights — Digi02',
       description:
-        'Digi02 perspectives on enterprise systems, automation, payment technology, UAV operations and the practical design of operational software.',
+        'Explore Digi02 engineering perspectives across autonomous systems, enterprise technology, mobility, software and operational design.',
       content: <InsightsPage />,
     },
     '/contact': {
-      title: 'Contact Digi02',
+      title: 'Contact — Digi02',
       description:
-        'Discuss an operational technology project with Digi02. Share the workflow, constraint or system that needs to work better.',
+        'Discuss a technology project with Digi02 across autonomous systems, enterprise platforms, mobility, payments and custom software engineering.',
       content: <ContactPage />,
     },
   }
 
-  const route = routes[path] ?? {
+  const activeRoute = routes[path]
+  const route = activeRoute ?? {
     title: 'Page not found — Digi02',
     description: 'The requested Digi02 page could not be found.',
     content: <NotFoundPage />,
@@ -136,16 +138,13 @@ function App() {
 
   return (
     <>
-      <SeoMeta
-        title={route.title}
-        description={route.description}
-        path={path}
-        noIndex={route.noIndex}
-      />
-      <script type="application/ld+json">{JSON.stringify(organizationStructuredData)}</script>
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <SeoMeta path={path} title={route.title} description={route.description} noIndex={route.noIndex} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }} />
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <SiteHeader currentPath={path} />
-      <main id="main-content" tabIndex={-1}>{route.content}</main>
+      <main id="main-content">{route.content}</main>
       <SiteFooter />
     </>
   )
