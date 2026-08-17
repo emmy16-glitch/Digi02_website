@@ -1,7 +1,8 @@
 import { useMemo, useState, type FormEvent } from 'react'
-import skyGridHero from '../assets/skygrid/home-reference-hero.jpg'
+import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
 import { Container } from '../components/Container'
 import '../styles/contact-production.css'
+import '../styles/contact-reference-tuning.css'
 
 type ContactIconName = 'response' | 'expert' | 'secure' | 'location' | 'mail' | 'phone' | 'time' | 'calendar' | 'partnership' | 'support'
 
@@ -116,6 +117,15 @@ export function ContactPage() {
     window.location.href = mailto
   }
 
+  function scrollToForm(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault()
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.querySelector('.contact-reference-form')?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    })
+  }
+
   return (
     <div className="contact-reference-page">
       <section className="contact-reference-hero" aria-labelledby="contact-reference-title">
@@ -127,9 +137,8 @@ export function ContactPage() {
           <div className="contact-reference-hero__copy">
             <p className="contact-reference-kicker">Contact Digi02</p>
             <h1 id="contact-reference-title">
-              Let’s build technology{' '}
-              <br />
-              that <span>drives real impact.</span>
+              <span className="contact-reference-hero__line">Let’s build technology</span>
+              <span className="contact-reference-hero__line">that <em>drives real impact.</em></span>
             </h1>
             <p className="contact-reference-hero__lead">
               Whether you’re optimizing operations, modernizing infrastructure, or building something new, we’re here to help. Share your goals and our team will get back to you.
@@ -356,10 +365,7 @@ export function ContactPage() {
             <h2 id="contact-reference-cta-title">Have a project in mind?</h2>
             <p>Let’s build technology that drives real results.</p>
           </div>
-          <a href="#main-content" onClick={(event) => {
-            event.preventDefault()
-            document.querySelector('.contact-reference-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }}>
+          <a href="#contact-form" onClick={scrollToForm}>
             Discuss your project <span aria-hidden="true">→</span>
           </a>
         </Container>
