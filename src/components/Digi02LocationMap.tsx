@@ -37,7 +37,7 @@ function ExternalIcon() {
 export function Digi02LocationMap() {
   return (
     <section className="digi02-location" aria-labelledby="digi02-location-title">
-      <div className="digi02-location__canvas">
+      <div className="digi02-location__map-shell">
         <iframe
           className="digi02-location__map"
           title="Interactive Google map showing the Digi02 Tech Systems office in Farin Gida, Mando, Kaduna"
@@ -50,41 +50,36 @@ export function Digi02LocationMap() {
         <div className="digi02-location__identity" aria-hidden="true">
           <img src={digi02LogoDark} alt="" />
           <div>
-            <strong>{OFFICE_NAME}</strong>
-            <span>No. 2, The Hub · Farin Gida · Mando, Kaduna</span>
+            <strong>Digi02</strong>
+            <span>Farin Gida · Mando</span>
           </div>
         </div>
 
         <div className="digi02-location__live-chip" aria-hidden="true">
-          <span /> Interactive map
+          <span /> Live map
         </div>
+      </div>
 
-        <aside className="digi02-location__panel">
-          <p className="digi02-location__kicker">Visit our office</p>
-          <h2 id="digi02-location-title">Digi02 Tech Systems</h2>
-
+      <div className="digi02-location__details">
+        <div className="digi02-location__copy">
+          <p className="digi02-location__kicker">Office location</p>
+          <h2 id="digi02-location-title">Visit Digi02</h2>
           <div className="digi02-location__address">
             <LocationIcon />
-            <p>
-              No. 2, The Hub<br />
-              Industrial Area, Farin Gida<br />
-              Mando, Kaduna, Nigeria
-            </p>
+            <p>No. 2, The Hub, Industrial Area, Farin Gida, Mando, Kaduna.</p>
           </div>
+        </div>
 
-          <div className="digi02-location__actions">
-            <a className="digi02-location__directions" href={DIRECTIONS_URL} target="_blank" rel="noreferrer">
-              <span>Get directions</span>
-              <ArrowIcon />
-            </a>
-            <a className="digi02-location__open" href={GOOGLE_MAPS_URL} target="_blank" rel="noreferrer">
-              <ExternalIcon />
-              <span>Open in Google Maps</span>
-            </a>
-          </div>
-
-          <p className="digi02-location__hint">Drag or zoom the map to explore the roads around our office.</p>
-        </aside>
+        <div className="digi02-location__actions">
+          <a className="digi02-location__directions" href={DIRECTIONS_URL} target="_blank" rel="noreferrer">
+            <span>Get directions</span>
+            <ArrowIcon />
+          </a>
+          <a className="digi02-location__open" href={GOOGLE_MAPS_URL} target="_blank" rel="noreferrer">
+            <ExternalIcon />
+            <span>Open in Google Maps</span>
+          </a>
+        </div>
       </div>
     </section>
   )

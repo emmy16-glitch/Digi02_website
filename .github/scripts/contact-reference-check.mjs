@@ -42,7 +42,8 @@ async function inspect(page, label, screenshot) {
     const hero = document.querySelector('.contact-reference-hero')?.getBoundingClientRect()
     const form = document.querySelector('.contact-reference-form')?.getBoundingClientRect()
     const info = document.querySelector('.contact-reference-info')?.getBoundingClientRect()
-    const map = document.querySelector('.digi02-location__canvas')?.getBoundingClientRect()
+    const map = document.querySelector('.digi02-location')?.getBoundingClientRect()
+    const mapShell = document.querySelector('.digi02-location__map-shell')?.getBoundingClientRect()
     const paths = [...document.querySelectorAll('.contact-reference-paths article')]
       .map((element) => element.getBoundingClientRect())
       .filter((rect) => rect.width > 0 && rect.height > 0)
@@ -62,8 +63,11 @@ async function inspect(page, label, screenshot) {
       formHeight: form?.height || 0,
       infoWidth: info?.width || 0,
       infoHeight: info?.height || 0,
+      infoBottom: info?.bottom || 0,
       mapWidth: map?.width || 0,
       mapHeight: map?.height || 0,
+      mapTop: map?.top || 0,
+      mapShellHeight: mapShell?.height || 0,
       paths,
       fieldCount: document.querySelectorAll('.contact-reference-form input, .contact-reference-form select, .contact-reference-form textarea').length,
       requiredCount: document.querySelectorAll('.contact-reference-form [required]').length,
@@ -87,7 +91,10 @@ async function inspect(page, label, screenshot) {
   if (data.heroWidth < 300 || data.heroHeight < 250) fail(`${label}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
   if (data.formWidth < 280 || data.formHeight < 500) fail(`${label}: form collapsed ${data.formWidth}x${data.formHeight}`)
   if (data.infoWidth < 250 || data.infoHeight < 260) fail(`${label}: contact info collapsed ${data.infoWidth}x${data.infoHeight}`)
-  if (data.mapWidth < 250 || data.mapHeight < 200) fail(`${label}: map collapsed ${data.mapWidth}x${data.mapHeight}`)
+  if (data.mapWidth < 250 || data.mapHeight < 280) fail(`${label}: map collapsed ${data.mapWidth}x${data.mapHeight}`)
+  if (data.mapShellHeight < 200 || data.mapShellHeight > 300) fail(`${label}: map visual height ${data.mapShellHeight}`)
+  if (data.mapTop < data.infoBottom - 2) fail(`${label}: map is not below contact information`)
+  if (Math.abs(data.mapWidth - data.infoWidth) > 4) fail(`${label}: map/info widths differ ${data.mapWidth}/${data.infoWidth}`)
   if (data.paths.length !== 3) fail(`${label}: contact path cards ${data.paths.length}`)
   if (data.fieldCount !== 8) fail(`${label}: form fields ${data.fieldCount}`)
   if (data.requiredCount < 6) fail(`${label}: required fields ${data.requiredCount}`)
@@ -115,7 +122,12 @@ async function inspect(page, label, screenshot) {
 fs.mkdirSync('contact-reference-evidence', { recursive: true })
 const browser = await chromium.launch({ headless: true })
 
-for (const [name, width, height] of [['390', 390, 844], ['1440', 1440, 1000]]) {
+for (const [name, width, height] of [
+  ['android-360', 360, 800],
+  ['android-412', 412, 915],
+  ['390', 390, 844],
+  ['1440', 1440, 1000],
+]) {
   const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'reduce' })
   const page = await context.newPage()
   await inspect(page, `chromium ${name}`, `contact-reference-evidence/contact-${name}.png`)
