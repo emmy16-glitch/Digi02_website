@@ -1,7 +1,12 @@
 import digiNorthVisual from '../assets/diginorth/diginorth-community-visual.png'
-import emergingTechVisual from '../assets/emerging-tech/emerging-tech-learning-visual.png'
+import johnOkojere from '../assets/team/john-okojere.webp'
+import covenantIregbeyen from '../assets/team/covenant-iregbeyen.webp'
+import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
+import abrahamSalifu from '../assets/team/abraham-salifu.webp'
+import iniEsiset from '../assets/team/ini-esiset.webp'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
+import '../styles/company-team.css'
 
 type IconKind =
   | 'location'
@@ -15,9 +20,6 @@ type IconKind =
   | 'vision'
   | 'values'
   | 'philosophy'
-  | 'people'
-  | 'diverse'
-  | 'purpose'
   | 'projects'
   | 'states'
   | 'clients'
@@ -37,9 +39,6 @@ function CompanyIcon({ kind }: { kind: IconKind }) {
     vision: <><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6S2.5 12 2.5 12Z" /><circle cx="12" cy="12" r="2.8" /></>,
     values: <><path d="m12 3 7 4-3 11H8L5 7l7-4Z" /><path d="m5 7 7 11 7-11M8 18l4-15 4 15" /></>,
     philosophy: <><circle cx="12" cy="12" r="3" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1m0-14.2L17 7M7 17l-2.1 2.1" /></>,
-    people: <><circle cx="9" cy="9" r="3" /><circle cx="17" cy="8" r="2" /><path d="M3 20c.5-4 2.5-6 6-6s5.5 2 6 6m0-6c3 0 5 1.6 5.5 4.5" /></>,
-    diverse: <><circle cx="12" cy="12" r="9" /><path d="M12 3c-3 2.2-4.5 5.2-4.5 9S9 18.8 12 21m0-18c3 2.2 4.5 5.2 4.5 9S15 18.8 12 21M3 12h18" /></>,
-    purpose: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="m14.5 9.5 6-6m0 0h-4m4 0v4" /></>,
     projects: <><rect x="3" y="7" width="18" height="12" rx="1" /><path d="M8 7V4h8v3M3 11h18" /></>,
     states: <><path d="m12 3 8 4v10l-8 4-8-4V7l8-4Z" /><path d="M8 12h8M12 8v8" /></>,
     clients: <><path d="M4 19V8l8-5 8 5v11M8 19v-6h8v6" /><path d="M7 10h2m6 0h2" /></>,
@@ -84,11 +83,43 @@ const direction = [
   },
 ] as const
 
-const cultureSignals = [
-  ['people', '50+', 'Talented builders and innovators'],
-  ['diverse', 'Diverse', 'Multidisciplinary teams across domains'],
-  ['purpose', 'Purpose Driven', 'Building technology that matters'],
-] as const satisfies readonly [IconKind, string, string][]
+const team = [
+  {
+    image: johnOkojere,
+    discipline: 'ECOSYSTEM',
+    name: 'John Okojere',
+    role: 'Ecosystem Lead',
+    body: 'Builds strategic partnerships, strengthens Digi02’s technology ecosystem, and connects opportunities across industry, institutions, talent, and innovation.',
+  },
+  {
+    image: covenantIregbeyen,
+    discipline: 'SOFTWARE ENGINEERING',
+    name: 'Covenant Iregbeyen',
+    role: 'Software Development Lead',
+    body: 'Leads the engineering and development of Digi02’s software products, platforms, and digital systems with a focus on reliability, scalability, and practical use.',
+  },
+  {
+    image: kosisochukwuUgwubma,
+    discipline: 'PRODUCT DESIGN',
+    name: 'Kosisochukwu Ugwubma',
+    role: 'UI/UX Lead',
+    body: 'Leads user experience and interface design across Digi02 products, translating complex technology into clear, intuitive, and effective digital experiences.',
+  },
+  {
+    image: abrahamSalifu,
+    discipline: 'CYBERSECURITY',
+    name: 'Abraham Salifu',
+    role: 'Cybersecurity Lead',
+    body: 'Leads cybersecurity across Digi02’s technology initiatives, helping ensure systems are designed with security, resilience, risk awareness, and operational protection in mind.',
+  },
+  {
+    image: iniEsiset,
+    discipline: 'AI & DATA',
+    name: 'Ini Esiset',
+    role: 'AI/Data Lead',
+    body: 'Leads Digi02’s work across artificial intelligence and data, applying intelligent systems, analytics, and automation to support better decisions and smarter operations.',
+  },
+] as const
 
 const journey = [
   ['2018', 'Company founded in Kaduna'],
@@ -194,26 +225,38 @@ export function CompanyPage() {
         </Container>
       </section>
 
-      <section className="company-reference-culture" aria-labelledby="company-culture-title">
-        <div className="company-reference-culture__visual" aria-hidden="true">
-          <img src={emergingTechVisual} alt="" loading="lazy" decoding="async" />
-        </div>
-        <Container className="company-reference-culture__grid">
-          <div className="company-reference-culture__spacer" aria-hidden="true" />
-          <div className="company-reference-culture__copy">
-            <h2 id="company-culture-title">Our People. Our Culture.</h2>
-            <p>
-              We are builders, problem solvers, and visionaries united by a passion for impact.
-              At Digi02, we foster a culture of ownership, continuous learning, and collaboration that brings out the best in our people.
+      <section className="company-reference-team" aria-labelledby="company-team-title">
+        <Container>
+          <header className="company-reference-team__heading">
+            <p className="company-reference-team__eyebrow">Our Team</p>
+            <h2 id="company-team-title">The people behind Digi02.</h2>
+            <p className="company-reference-team__intro">
+              Digi02 brings together specialists across ecosystem strategy, software engineering,
+              product design, cybersecurity, and AI/data to build technology for real operations.
             </p>
-            <a href="/contact">Join our team <span aria-hidden="true">→</span></a>
-          </div>
-          <div className="company-reference-culture__signals">
-            {cultureSignals.map(([icon, value, label]) => (
-              <div key={value}>
-                <CompanyIcon kind={icon} />
-                <p><strong>{value}</strong><span>{label}</span></p>
-              </div>
+          </header>
+
+          <div className="company-reference-team__grid">
+            {team.map((member, index) => (
+              <article
+                className={`company-reference-team__card company-reference-team__card--${index + 1}`}
+                key={member.name}
+              >
+                <div className="company-reference-team__portrait">
+                  <img
+                    src={member.image}
+                    alt={`${member.name}, ${member.role} at Digi02`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="company-reference-team__content">
+                  <p className="company-reference-team__discipline">{member.discipline}</p>
+                  <h3>{member.name}</h3>
+                  <p className="company-reference-team__role">{member.role}</p>
+                  <p className="company-reference-team__bio">{member.body}</p>
+                </div>
+              </article>
             ))}
           </div>
         </Container>

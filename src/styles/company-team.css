@@ -1,0 +1,241 @@
+.company-reference-team {
+  padding-block: clamp(3.8rem, 6vw, 5.6rem);
+  border-bottom: 1px solid var(--company-line);
+  background:
+    radial-gradient(circle at 50% -20%, rgba(224, 188, 103, 0.055), transparent 35%),
+    #090a0c;
+}
+
+.company-reference-team__heading {
+  max-width: 48rem;
+  margin-bottom: 2.25rem;
+}
+
+.company-reference-team__eyebrow {
+  margin: 0;
+  color: var(--company-gold);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.company-reference-team__heading h2 {
+  margin: 0.75rem 0 0;
+  color: #f2efe8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 3.2vw, 3.15rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.company-reference-team__intro {
+  max-width: 43rem;
+  margin: 0.85rem 0 0;
+  color: #aaa79f;
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.company-reference-team__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.15rem;
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.company-reference-team__card {
+  position: relative;
+  grid-column: span 2;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.38rem;
+  background: linear-gradient(180deg, #101214, #0d0f11);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.company-reference-team__card::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224, 188, 103, 0.8), transparent);
+  content: '';
+  opacity: 0;
+  transform: scaleX(0.35);
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.company-reference-team__card--4 {
+  grid-column: 2 / span 2;
+}
+
+.company-reference-team__card--5 {
+  grid-column: 4 / span 2;
+}
+
+.company-reference-team__portrait {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: #111315;
+}
+
+.company-reference-team__portrait::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 68%, rgba(8, 9, 10, 0.2));
+  content: '';
+  pointer-events: none;
+}
+
+.company-reference-team__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(0.98) contrast(1.035);
+  transform: scale(1.001);
+  transform-origin: 50% 42%;
+  transition: transform 460ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 300ms ease;
+}
+
+.company-reference-team__content {
+  padding: 1.15rem 1.2rem 1.35rem;
+}
+
+.company-reference-team__discipline {
+  margin: 0;
+  color: var(--company-gold);
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.company-reference-team__content h3 {
+  margin: 0.55rem 0 0;
+  color: #f2efe8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.3rem, 1.7vw, 1.65rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.company-reference-team__role {
+  margin: 0.35rem 0 0;
+  color: #e0bc67;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.company-reference-team__bio {
+  margin: 0.8rem 0 0;
+  color: #aaa79f;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .company-reference-team__card:hover {
+    z-index: 2;
+    border-color: rgba(224, 188, 103, 0.55);
+    box-shadow:
+      0 22px 46px rgba(0, 0, 0, 0.32),
+      0 0 0 1px rgba(224, 188, 103, 0.07);
+    transform: translateY(-6px);
+  }
+
+  .company-reference-team__card:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .company-reference-team__card:hover .company-reference-team__portrait img {
+    filter: saturate(1.02) contrast(1.055);
+    transform: scale(1.045);
+  }
+}
+
+@media (max-width: 61.9375rem) {
+  .company-reference-team__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 46rem;
+  }
+
+  .company-reference-team__card,
+  .company-reference-team__card--4,
+  .company-reference-team__card--5 {
+    grid-column: auto;
+  }
+
+  .company-reference-team__card--5 {
+    grid-column: 1 / -1;
+    width: calc(50% - 0.575rem);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .company-reference-team {
+    padding-block: 3.25rem;
+  }
+
+  .company-reference-team__heading {
+    margin-bottom: 1.6rem;
+  }
+
+  .company-reference-team__heading h2 {
+    font-size: clamp(2rem, 10vw, 2.7rem);
+  }
+
+  .company-reference-team__intro {
+    font-size: 0.82rem;
+  }
+
+  .company-reference-team__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 25rem;
+  }
+
+  .company-reference-team__card,
+  .company-reference-team__card--4,
+  .company-reference-team__card--5 {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .company-reference-team__content {
+    padding: 1rem 1.05rem 1.2rem;
+  }
+
+  .company-reference-team__bio {
+    font-size: 0.76rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .company-reference-team__card,
+  .company-reference-team__card::after,
+  .company-reference-team__portrait img {
+    transition: none;
+  }
+
+  .company-reference-team__card:hover,
+  .company-reference-team__card:hover .company-reference-team__portrait img {
+    transform: none;
+  }
+}
