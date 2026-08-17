@@ -1,0 +1,37 @@
+/* Final fidelity and legibility tuning for the approved Contact reference. */
+
+.contact-reference-hero__line {
+  display: block;
+  color: #f6f3eb !important;
+}
+
+.contact-reference-hero__line em {
+  color: var(--gold-400);
+  font-style: normal;
+}
+
+@media (min-width: 64rem) {
+  .contact-reference-hero__copy {
+    grid-column: 1 / span 8;
+  }
+
+  .contact-reference-hero h1 {
+    max-width: none;
+    font-size: clamp(3.55rem, 4.35vw, 4.55rem);
+    line-height: 1.02;
+  }
+
+  .contact-reference-hero__line {
+    white-space: nowrap;
+  }
+
+  .contact-reference-hero__lead {
+    max-width: 36rem;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .contact-reference-hero__line {
+    white-space: normal;
+  }
+}
