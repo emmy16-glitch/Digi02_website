@@ -1,4 +1,4 @@
-import digiNorthVisual from '../assets/diginorth/diginorth-community-visual.png'
+import digi02ControlRoom from '../assets/generated/digi02-control-room-hero.webp'
 import johnOkojere from '../assets/team/john-okojere.webp'
 import covenantIregbeyen from '../assets/team/covenant-iregbeyen.webp'
 import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
@@ -7,6 +7,7 @@ import iniEsiset from '../assets/team/ini-esiset.webp'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
 import '../styles/company-team.css'
+import '../styles/company-refinement.css'
 
 type IconKind =
   | 'location'
@@ -89,35 +90,35 @@ const team = [
     discipline: 'ECOSYSTEM',
     name: 'John Okojere',
     role: 'Ecosystem Lead',
-    body: 'Builds strategic partnerships, strengthens Digi02’s technology ecosystem, and connects opportunities across industry, institutions, talent, and innovation.',
+    body: 'Builds strategic partnerships and connects industry, institutions, talent, and innovation across Digi02’s ecosystem.',
   },
   {
     image: covenantIregbeyen,
     discipline: 'SOFTWARE ENGINEERING',
     name: 'Covenant Iregbeyen',
     role: 'Software Development Lead',
-    body: 'Leads the engineering and development of Digi02’s software products, platforms, and digital systems with a focus on reliability, scalability, and practical use.',
+    body: 'Leads software engineering across Digi02 products and platforms, with a focus on scalable, reliable systems.',
   },
   {
     image: kosisochukwuUgwubma,
     discipline: 'PRODUCT DESIGN',
     name: 'Kosisochukwu Ugwubma',
     role: 'UI/UX Lead',
-    body: 'Leads user experience and interface design across Digi02 products, translating complex technology into clear, intuitive, and effective digital experiences.',
+    body: 'Shapes clear, intuitive product experiences across Digi02’s digital platforms and services.',
   },
   {
     image: abrahamSalifu,
     discipline: 'CYBERSECURITY',
     name: 'Abraham Salifu',
     role: 'Cybersecurity Lead',
-    body: 'Leads cybersecurity across Digi02’s technology initiatives, helping ensure systems are designed with security, resilience, risk awareness, and operational protection in mind.',
+    body: 'Guides cybersecurity strategy and secure-by-design practices across Digi02’s technology operations.',
   },
   {
     image: iniEsiset,
     discipline: 'AI & DATA',
     name: 'Ini Esiset',
     role: 'AI/Data Lead',
-    body: 'Leads Digi02’s work across artificial intelligence and data, applying intelligent systems, analytics, and automation to support better decisions and smarter operations.',
+    body: 'Leads AI and data initiatives that turn information into automation, insight, and smarter decisions.',
   },
 ] as const
 
@@ -144,7 +145,7 @@ export function CompanyPage() {
     <div className="company-reference-page">
       <section className="company-reference-hero" aria-labelledby="company-reference-title">
         <div className="company-reference-hero__visual" aria-hidden="true">
-          <img src={digiNorthVisual} alt="" decoding="async" fetchPriority="high" />
+          <img src={digi02ControlRoom} alt="" decoding="async" fetchPriority="high" />
         </div>
         <Container className="company-reference-hero__inner">
           <div className="company-reference-hero__copy">
@@ -205,23 +206,33 @@ export function CompanyPage() {
         </Container>
       </section>
 
-      <section className="company-reference-direction" aria-label="Mission vision values and operating philosophy">
-        <Container className="company-reference-direction__grid">
-          {direction.map((item) => (
-            <article key={item.title}>
-              <CompanyIcon kind={item.icon} />
-              <div>
-                <h2>{item.title}</h2>
-                {item.title === 'Our Values' ? (
-                  <ul>
-                    {item.body.split('\n').map((value) => <li key={value}>{value}</li>)}
-                  </ul>
-                ) : (
-                  <p>{item.body}</p>
-                )}
-              </div>
-            </article>
-          ))}
+      <section className="company-reference-direction" aria-labelledby="company-direction-title">
+        <Container>
+          <header className="company-reference-direction__heading">
+            <p>Our Direction</p>
+            <h2 id="company-direction-title">What guides how we build.</h2>
+          </header>
+
+          <div className="company-reference-direction__grid">
+            {direction.map((item, index) => (
+              <article key={item.title}>
+                <div className="company-reference-direction__meta">
+                  <span>0{index + 1}</span>
+                  <CompanyIcon kind={item.icon} />
+                </div>
+                <div>
+                  <h2>{item.title}</h2>
+                  {item.title === 'Our Values' ? (
+                    <ul>
+                      {item.body.split('\n').map((value) => <li key={value}>{value}</li>)}
+                    </ul>
+                  ) : (
+                    <p>{item.body}</p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -231,8 +242,8 @@ export function CompanyPage() {
             <p className="company-reference-team__eyebrow">Our Team</p>
             <h2 id="company-team-title">The people behind Digi02.</h2>
             <p className="company-reference-team__intro">
-              Digi02 brings together specialists across ecosystem strategy, software engineering,
-              product design, cybersecurity, and AI/data to build technology for real operations.
+              Specialists across ecosystem strategy, software engineering, product design,
+              cybersecurity, and AI/data—working together to build technology for real operations.
             </p>
           </header>
 
