@@ -1,53 +1,56 @@
 /* Shared Digi02 logo framing fix.
-   The source brand asset is square with generous internal canvas space, so the
-   header/footer need a controlled crop rather than an oversized image that can
-   visually cut the wordmark on small screens. */
+   The supplied brand mark is a square canvas containing the emblem above the
+   Digi02 wordmark. Frame that complete stack consistently instead of clipping
+   the lower wordmark on narrow viewports. */
 
 .site-header__wordmark {
-  display: grid;
+  position: relative;
+  display: block;
   width: 7.5rem;
   height: 4rem;
-  place-items: center;
   overflow: hidden;
 }
 
 .site-header__wordmark img {
-  position: static;
-  width: 8.65rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
   max-width: none;
-  height: 8.65rem;
+  height: 8.45rem;
   object-fit: contain;
   pointer-events: none;
-  transform: translateY(-0.34rem);
+  transform: translate(-50%, -64%);
 }
 
 .site-footer__brand > a {
-  display: grid;
+  position: relative;
+  display: block;
   width: 7.8rem;
-  height: 3rem;
-  place-items: center;
+  height: 3.15rem;
   overflow: hidden;
 }
 
 .site-footer__brand img {
-  position: static;
-  width: 8.8rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
   max-width: none;
-  height: 8.8rem;
+  height: 8.55rem;
   object-fit: contain;
-  transform: translateY(-0.3rem);
+  transform: translate(-50%, -65%);
 }
 
 @media (max-width: 63.9375rem) {
   .site-header__wordmark {
     width: 7rem;
-    height: 3.85rem;
+    height: 3.9rem;
   }
 
   .site-header__wordmark img {
-    width: 8.1rem;
-    height: 8.1rem;
-    transform: translateY(-0.32rem);
+    height: 7.85rem;
+    transform: translate(-50%, -66%);
   }
 }
 
@@ -58,19 +61,17 @@
   }
 
   .site-header__wordmark img {
-    width: 7.8rem;
-    height: 7.8rem;
-    transform: translateY(-0.3rem);
+    height: 7.55rem;
+    transform: translate(-50%, -66%);
   }
 
   .site-footer__brand > a {
     width: 7.2rem;
-    height: 2.85rem;
+    height: 3rem;
   }
 
   .site-footer__brand img {
-    width: 8.15rem;
-    height: 8.15rem;
-    transform: translateY(-0.28rem);
+    height: 7.9rem;
+    transform: translate(-50%, -66%);
   }
 }
