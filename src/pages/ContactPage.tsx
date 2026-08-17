@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react'
-import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
+import skyGridHero from '../assets/skygrid/home-reference-hero.jpg'
 import { Container } from '../components/Container'
 import '../styles/contact-production.css'
 
