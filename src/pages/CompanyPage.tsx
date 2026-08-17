@@ -123,7 +123,8 @@ export function CompanyPage() {
               <span>Company</span>
             </nav>
             <h1 id="company-reference-title">
-              Built in Kaduna.<br />
+              Built in Kaduna.{' '}
+              <br />
               <span>Building for Africa.</span>
             </h1>
             <p>
