@@ -4,6 +4,7 @@ import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/navigation/SiteHeader'
 import { organizationStructuredData } from './data/organizationStructuredData'
 import { CompanyPage } from './pages/CompanyPage'
+import { CaseStudyPage } from './pages/CaseStudyPage'
 import { ContactPage } from './pages/ContactPage'
 import { CustomSoftwarePage } from './pages/CustomSoftwarePage'
 import { DigiVoltPage } from './pages/DigiVoltPage'
@@ -35,6 +36,7 @@ import './styles/home-system-final-tuning.css'
 import './styles/home-visual-system-v2.css'
 import './styles/home-reference-feature-section.css'
 import './styles/home-hero-clarity.css'
+import './styles/case-study-pages.css'
 
 type RouteDefinition = {
   title: string
@@ -112,6 +114,21 @@ function App() {
       description:
         'Explore selected Digi02 work across autonomous inspection, payments, enterprise platforms, mobility and public-sector operations.',
       content: <WorkPage />,
+    },
+    '/work/thermal-plant-inspection-automation': {
+      title: 'Thermal Plant Inspection Automation — Digi02',
+      description: 'A connected inspection workflow for mission planning, field capture and operational review.',
+      content: <CaseStudyPage slug="thermal-plant-inspection-automation" />,
+    },
+    '/work/sterling-payment-gateway': {
+      title: 'Sterling Payment Gateway — Digi02',
+      description: 'A secure, scalable payment infrastructure with clear operational visibility.',
+      content: <CaseStudyPage slug="sterling-payment-gateway" />,
+    },
+    '/work/kaduna-state-e-management-system': {
+      title: 'Kaduna State e-Management System — Digi02',
+      description: 'A unified digital platform for workflows, approvals, records and citizen-facing services.',
+      content: <CaseStudyPage slug="kaduna-state-e-management-system" />,
     },
     '/company': {
       title: 'Company — Digi02',

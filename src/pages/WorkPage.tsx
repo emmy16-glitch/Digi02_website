@@ -28,14 +28,14 @@ const workItems: readonly WorkItem[] = [
     title: 'Sterling Payment Gateway',
     category: 'Finance',
     summary: 'A secure, scalable payment infrastructure designed to process high-volume transactions with clear operational visibility.',
-    href: '/solutions/payment-systems',
+    href: '/work/sterling-payment-gateway',
     image: enterpriseVisual,
   },
   {
     title: 'Kaduna State e-Management System',
     category: 'Public Sector',
     summary: 'A unified digital platform for workflows, approvals, records and citizen-facing services.',
-    href: '/solutions/e-management',
+    href: '/work/kaduna-state-e-management-system',
     image: digiNorthVisual,
     imagePosition: 'center 45%',
   },
@@ -189,7 +189,7 @@ export function WorkPage() {
                     <p>
                       An inspection workflow that brings mission planning, field capture and operational review into one coordinated system.
                     </p>
-                    <a href="/solutions/skygrid">View full case study <span aria-hidden="true">→</span></a>
+                    <a href="/work/thermal-plant-inspection-automation">View full case study <span aria-hidden="true">→</span></a>
                   </div>
                 </div>
 

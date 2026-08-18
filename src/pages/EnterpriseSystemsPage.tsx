@@ -1,4 +1,4 @@
-import erpPosShowcase from '../assets/erp-pos/erp-pos-multidevice-showcase.png'
+import erpPosShowcase from '../assets/user-provided/engineering-team.png'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { ErpPosSection } from '../sections/home/ErpPosSection'

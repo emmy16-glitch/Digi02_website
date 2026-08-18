@@ -1,3 +1,5 @@
+import originalHero from '../../assets/generated/original-digi02/digi02-hero.jpg'
+
 export function HomeHeroCinematicVisual() {
   return (
     <div className="home-hero-cinematic" role="img" aria-label="Digi02 operations room overlooking a city with live national operations dashboards">
@@ -31,7 +33,8 @@ export function HomeHeroCinematicVisual() {
           <clipPath id="homeHeroPanelClip"><rect width="236" height="174" rx="3" /></clipPath>
         </defs>
 
-        <rect width="1600" height="720" fill="#030405" />
+        <image href={originalHero} x="0" y="0" width="1600" height="720" preserveAspectRatio="xMidYMid slice" opacity="0.72" />
+        <rect width="1600" height="720" fill="#030405" fillOpacity="0.36" />
         <rect x="250" width="1350" height="545" fill="url(#homeHeroSky)" />
         <rect x="250" width="1350" height="545" fill="url(#homeHeroGlow)" />
 

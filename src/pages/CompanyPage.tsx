@@ -4,6 +4,7 @@ import covenantIregbeyen from '../assets/team/covenant-iregbeyen.webp'
 import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
 import abrahamSalifu from '../assets/team/abraham-salifu.webp'
 import iniEsiset from '../assets/team/ini-esiset.webp'
+import peopleBehindDigi02 from '../assets/generated/company/people-behind-digi02.png'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
 import '../styles/company-team.css'
@@ -247,6 +248,16 @@ export function CompanyPage() {
             </p>
           </header>
 
+          <figure className="company-reference-team__feature">
+            <img
+              src={peopleBehindDigi02}
+              alt="Digi02 team members collaborating around software and operations dashboards"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>People Behind Digi02 / engineering, product, and operations in conversation.</figcaption>
+          </figure>
+
           <div className="company-reference-team__grid">
             {team.map((member, index) => (
               <article
@@ -323,7 +334,11 @@ export function CompanyPage() {
             <h2 id="company-reference-cta-title">Let’s build what’s next—together.</h2>
             <p>Partner with Digi02 to turn ideas into secure, scalable, and impactful solutions.</p>
           </div>
-          <a href="/contact">Discuss your project <span aria-hidden="true">→</span></a>
+          <div className="company-reference-cta__links">
+            <a href="/solutions">Explore solutions <span aria-hidden="true">→</span></a>
+            <a href="/insights">Read our insights <span aria-hidden="true">→</span></a>
+            <a href="/contact">Discuss your project <span aria-hidden="true">→</span></a>
+          </div>
         </Container>
       </section>
     </div>
