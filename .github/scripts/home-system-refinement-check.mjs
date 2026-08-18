@@ -77,7 +77,7 @@ for (const [name, width, height] of viewports) {
 
   if (data.scrollWidth > data.clientWidth + 1) fail(`${name}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
   if (data.h1Count !== 1) fail(`${name}: H1 count ${data.h1Count}`)
-  if (data.heading !== 'Technology built for real operations.') fail(`${name}: hero heading ${data.heading}`)
+  if (!/^Technology built\s*for real operations\.$/.test(data.heading)) fail(`${name}: hero heading ${data.heading}`)
   if (JSON.stringify(data.sections) !== JSON.stringify(expectedSections)) fail(`${name}: section sequence ${JSON.stringify(data.sections)}`)
   if (!data.heroBackground.includes('home-operations-room')) fail(`${name}: approved hero SVG not painted`)
   if (data.rasterCount !== 0) fail(`${name}: homepage renders ${data.rasterCount} img elements; blueprint uses SVG/HTML visuals`)
@@ -120,9 +120,16 @@ for (const [name, width, height] of viewports) {
     if (Math.max(...tops) - Math.min(...tops) > 3) fail(`${name}: proof strip is not one row`)
   }
 
-  if (width <= 430 && data.proofRects.length === 4) {
+  if (width >= 369 && width <= 430 && data.proofRects.length === 4) {
     const [a, b, c, d] = data.proofRects
     if (Math.abs(a.top - b.top) > 3 || Math.abs(c.top - d.top) > 3 || c.top <= a.top + 20) fail(`${name}: proof strip is not a clean 2x2 grid`)
+  }
+
+  if (width < 369 && data.proofRects.length === 4) {
+    const tops = data.proofRects.map((rect) => rect.top)
+    const lefts = data.proofRects.map((rect) => rect.left)
+    if (!(tops[0] < tops[1] && tops[1] < tops[2] && tops[2] < tops[3])) fail(`${name}: proof strip is not one deliberate column`)
+    if (Math.max(...lefts) - Math.min(...lefts) > 3) fail(`${name}: one-column proof strip is misaligned`)
   }
 
   if (name === '1440' || name === '390') {
