@@ -1,0 +1,106 @@
+<svg viewBox="0 0 1920 680" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract nighttime data map showing a glowing national operations network">
+  <title>Digi02 national operations network</title>
+  <defs>
+    <radialGradient id="mapFill" cx="1500" cy="350" r="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C9A227" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowBlob" cx="1500" cy="350" r="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C9A227" stop-opacity="0.34"/>
+      <stop offset="44%" stop-color="#C9A227" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#050506" stop-opacity="1"/>
+      <stop offset="43%" stop-color="#050506" stop-opacity="0.94"/>
+      <stop offset="63%" stop-color="#050506" stop-opacity="0.46"/>
+      <stop offset="84%" stop-color="#050506" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="topFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bottomFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.84"/>
+    </linearGradient>
+    <pattern id="scanlines" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#F5F1E8" stroke-width="1" opacity="0.02"/>
+    </pattern>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.1" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="680" fill="#050506"/>
+  <rect width="1920" height="680" fill="url(#scanlines)"/>
+  <rect width="1920" height="680" fill="url(#glowBlob)"/>
+
+  <g stroke="#C9A227" stroke-width="2" opacity="0.34" fill="none">
+    <path d="M50 50h60M50 50v60"/><path d="M1870 50h-60M1870 50v60"/>
+    <path d="M50 630h60M50 630v-60"/><path d="M1870 630h-60M1870 630v-60"/>
+  </g>
+
+  <text x="1860" y="92" text-anchor="end" font-family="Courier New, monospace" font-size="12" letter-spacing="2" fill="#E8C061" opacity="0.58">LIVE · NATIONAL OPERATIONS NETWORK</text>
+
+  <g opacity="0.22">
+    <line x1="0" y1="640" x2="1920" y2="640" stroke="#C9A227" stroke-width="1"/>
+    <g stroke="#C9A227" stroke-width="1">
+      <path d="M120 634v6M280 634v6M440 634v6M600 634v6M760 634v6M920 634v6M1080 634v6M1240 634v6M1400 634v6M1560 634v6M1720 634v6M1880 634v6"/>
+    </g>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <path d="M1350 220L1470 150l140 20 60 40-20 30 50 30-40 70-30 80 50 60-70 60-80 25-80-10-60-25-50-30-20-70-10-90 10-70z" fill="url(#mapFill)" stroke="#E8C061" stroke-width="1.6" opacity="0.86"/>
+    <path d="M1350 220L1470 150l140 20 60 40-20 30 50 30-40 70-30 80 50 60-70 60-80 25-80-10-60-25-50-30-20-70-10-90 10-70z" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.16"/>
+  </g>
+
+  <g stroke="#E8C061" stroke-width="1.2" opacity="0.38" stroke-dasharray="3 6">
+    <path d="M1470 300L1470 150M1470 300l30 40M1500 340l-150 150M1500 340l20 205M1470 300l-150-30M1470 300l200-90M1350 490l170 55M1320 270l180 70M1670 210l-170 130">
+      <animate attributeName="stroke-dashoffset" values="0;-36" dur="5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0 1470 300" to="360 1470 300" dur="18s" repeatCount="indefinite"/>
+      <path d="M1470 300L1730 300A260 260 0 0 1 1727.5 336.2Z" fill="#F9DE9C" opacity="0.24"/>
+      <path d="M1470 300L1727.5 336.2A260 260 0 0 1 1719.9 371.7Z" fill="#F9DE9C" opacity="0.18"/>
+      <path d="M1470 300L1719.9 371.7A260 260 0 0 1 1707.5 405.7Z" fill="#F9DE9C" opacity="0.11"/>
+      <path d="M1470 300L1707.5 405.7A260 260 0 0 1 1690.5 437.8Z" fill="#F9DE9C" opacity="0.06"/>
+    </g>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <circle cx="1470" cy="300" r="5" fill="#F9DE9C"/>
+    <circle cx="1470" cy="300" r="11" fill="none" stroke="#F9DE9C" stroke-width="1.15" opacity="0.55">
+      <animate attributeName="r" values="9;26;9" dur="3.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.55;0;0.55" dur="3.8s" repeatCount="indefinite"/>
+    </circle>
+    <line x1="1470" y1="300" x2="1500" y2="292" stroke="#E8C061" stroke-width="1.1" opacity="0.52"/>
+    <text x="1505" y="296" font-family="Courier New, monospace" font-size="12" letter-spacing="1.4" fill="#F9DE9C" opacity="0.92">KADUNA · HQ</text>
+
+    <circle cx="1500" cy="340" r="4" fill="#E8C061" opacity="0.92"/>
+    <circle cx="1500" cy="340" r="8" fill="none" stroke="#E8C061" stroke-width="1" opacity="0.45">
+      <animate attributeName="r" values="7;18;7" dur="4.2s" begin="0.7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.48;0;0.48" dur="4.2s" begin="0.7s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="1350" cy="490" r="4.5" fill="#F9DE9C"/>
+    <circle cx="1350" cy="490" r="9" fill="none" stroke="#F9DE9C" stroke-width="1.1" opacity="0.42">
+      <animate attributeName="r" values="8;21;8" dur="4.1s" begin="1.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.46;0;0.46" dur="4.1s" begin="1.3s" repeatCount="indefinite"/>
+    </circle>
+    <line x1="1350" y1="490" x2="1380" y2="498" stroke="#E8C061" stroke-width="1.05" opacity="0.4"/>
+    <text x="1386" y="502" font-family="Courier New, monospace" font-size="11" letter-spacing="1.2" fill="#F9DE9C" opacity="0.6">LAGOS</text>
+
+    <circle cx="1520" cy="545" r="4" fill="#E8C061" opacity="0.76"/>
+    <circle cx="1320" cy="270" r="3.2" fill="#E8C061" opacity="0.58"/>
+    <circle cx="1670" cy="210" r="3.2" fill="#E8C061" opacity="0.58"/>
+  </g>
+
+  <rect width="1920" height="680" fill="url(#leftFade)"/>
+  <rect width="1920" height="680" fill="url(#topFade)"/>
+  <rect width="1920" height="680" fill="url(#bottomFade)"/>
+</svg>
