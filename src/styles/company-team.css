@@ -114,6 +114,12 @@
   transition: opacity 280ms ease, transform 280ms ease;
 }
 
+.company-reference-team__card:focus-visible {
+  z-index: 2;
+  outline: 2px solid var(--company-gold);
+  outline-offset: 3px;
+}
+
 .company-reference-team__card--4 {
   grid-column: 2 / span 2;
 }
@@ -135,6 +141,41 @@
   background: linear-gradient(180deg, transparent 68%, rgba(8, 9, 10, 0.2));
   content: '';
   pointer-events: none;
+}
+
+.company-reference-team__role-reveal {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 0.28rem;
+  padding: 1.1rem 1rem;
+  background: linear-gradient(180deg, rgba(7, 8, 9, 0.06), rgba(7, 8, 9, 0.95) 54%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.65rem);
+  transition: opacity 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), transform 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.company-reference-team__role-reveal span,
+.company-reference-team__bio > span {
+  color: var(--company-gold);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.105em;
+  text-transform: uppercase;
+}
+
+.company-reference-team__role-reveal strong {
+  color: #f3f0e9;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
 .company-reference-team__portrait img {
@@ -191,6 +232,37 @@
   line-height: 1.55;
 }
 
+.company-reference-team__bio > span {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.company-reference-team__linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin-top: 0.9rem;
+  color: #8f8b83;
+  font-size: 0.64rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.company-reference-team__linkedin:hover {
+  color: #e0bc67;
+}
+
+.company-reference-team__linkedin:focus-visible {
+  outline: 2px solid var(--company-gold);
+  outline-offset: 3px;
+}
+
+.company-reference-team__linkedin svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--company-gold);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .company-reference-team__card:hover {
     z-index: 2;
@@ -209,6 +281,13 @@
   .company-reference-team__card:hover .company-reference-team__portrait img {
     filter: saturate(1.02) contrast(1.055);
     transform: scale(1.045);
+  }
+
+  .company-reference-team__card:hover .company-reference-team__role-reveal,
+  .company-reference-team__card:focus .company-reference-team__role-reveal,
+  .company-reference-team__card:focus-within .company-reference-team__role-reveal {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -281,12 +360,16 @@
 @media (prefers-reduced-motion: reduce) {
   .company-reference-team__card,
   .company-reference-team__card::after,
-  .company-reference-team__portrait img {
+  .company-reference-team__portrait img,
+  .company-reference-team__role-reveal {
     transition: none;
   }
 
   .company-reference-team__card:hover,
-  .company-reference-team__card:hover .company-reference-team__portrait img {
+  .company-reference-team__card:hover .company-reference-team__portrait img,
+  .company-reference-team__card:hover .company-reference-team__role-reveal,
+  .company-reference-team__card:focus .company-reference-team__role-reveal,
+  .company-reference-team__card:focus-within .company-reference-team__role-reveal {
     transform: none;
   }
 }

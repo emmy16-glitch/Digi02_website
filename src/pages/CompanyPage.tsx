@@ -55,6 +55,14 @@ function CompanyIcon({ kind }: { kind: IconKind }) {
   )
 }
 
+function LinkedInIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M5.2 3.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4ZM3.8 8.5h2.8V20H3.8V8.5Zm4.6 0H11v1.57h.04c.36-.7 1.25-1.92 3.1-1.92 3.3 0 3.91 2.17 3.91 4.99V20h-2.8v-6.1c0-1.46-.03-3.33-2.03-3.33-2.04 0-2.35 1.59-2.35 3.22V20H8.4V8.5Z" fill="currentColor" />
+    </svg>
+  )
+}
+
 const principles = [
   ['software', 'Software Excellence'],
   ['systems', 'Systems Thinking'],
@@ -91,35 +99,35 @@ const team = [
     discipline: 'ECOSYSTEM',
     name: 'John Okojere',
     role: 'Ecosystem Lead',
-    body: 'Builds strategic partnerships and connects industry, institutions, talent, and innovation across Digi02’s ecosystem.',
+    body: 'Add an approved 40–60 word professional profile for John Okojere.',
   },
   {
     image: covenantIregbeyen,
     discipline: 'SOFTWARE ENGINEERING',
     name: 'Covenant Iregbeyen',
     role: 'Software Development Lead',
-    body: 'Leads software engineering across Digi02 products and platforms, with a focus on scalable, reliable systems.',
+    body: 'Add an approved 40–60 word professional profile for Covenant Iregbeyen.',
   },
   {
     image: kosisochukwuUgwubma,
     discipline: 'PRODUCT DESIGN',
     name: 'Kosisochukwu Ugwubma',
     role: 'UI/UX Lead',
-    body: 'Shapes clear, intuitive product experiences across Digi02’s digital platforms and services.',
+    body: 'Add an approved 40–60 word professional profile for Kosisochukwu Ugwubma.',
   },
   {
     image: abrahamSalifu,
     discipline: 'CYBERSECURITY',
     name: 'Abraham Salifu',
     role: 'Cybersecurity Lead',
-    body: 'Guides cybersecurity strategy and secure-by-design practices across Digi02’s technology operations.',
+    body: 'Add an approved 40–60 word professional profile for Abraham Salifu.',
   },
   {
     image: iniEsiset,
     discipline: 'AI & DATA',
     name: 'Ini Esiset',
     role: 'AI/Data Lead',
-    body: 'Leads AI and data initiatives that turn information into automation, insight, and smarter decisions.',
+    body: 'Add an approved 40–60 word professional profile for Ini Esiset.',
   },
 ] as const
 
@@ -253,6 +261,7 @@ export function CompanyPage() {
               <article
                 className={`company-reference-team__card company-reference-team__card--${index + 1}`}
                 key={member.name}
+                tabIndex={0}
               >
                 <div className="company-reference-team__portrait">
                   <img
@@ -261,12 +270,17 @@ export function CompanyPage() {
                     loading="lazy"
                     decoding="async"
                   />
+                  <div className="company-reference-team__role-reveal" aria-hidden="true">
+                    <span>Role at Digi02</span>
+                    <strong>{member.role}</strong>
+                  </div>
                 </div>
                 <div className="company-reference-team__content">
                   <p className="company-reference-team__discipline">{member.discipline}</p>
                   <h3>{member.name}</h3>
                   <p className="company-reference-team__role">{member.role}</p>
-                  <p className="company-reference-team__bio">{member.body}</p>
+                  <p className="company-reference-team__bio"><span>Placeholder biography</span>{member.body}</p>
+                  <a className="company-reference-team__linkedin" href={`/contact?enquiry=linkedin-profile&member=${encodeURIComponent(member.name)}`} aria-label={`Request the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>Request LinkedIn profile</span></a>
                 </div>
               </article>
             ))}
