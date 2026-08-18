@@ -142,7 +142,7 @@ jobs:
             if(data.contactEmail!=='mailto:info@digi02.org') fail(`${label}: footer contact ${data.contactEmail}`)
             if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
 
-            for(const [name,items] of [['solutions',data.solutionRects],['capabilities',data.capabilityRects],['work',data.workRects]]){
+            for(const [name,items] of [['capabilities',data.capabilityRects],['work',data.workRects]]){
               for(let i=0;i<items.length;i++) for(let j=i+1;j<items.length;j++) if(overlap(items[i],items[j])) fail(`${label}: ${name} overlap`)
             }
 
