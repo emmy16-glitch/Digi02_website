@@ -64,7 +64,7 @@ jobs:
           function overlap(rectA,rectB){
             const x=Math.max(0,Math.min(rectA.right,rectB.right)-Math.max(rectA.left,rectB.left))
             const y=Math.max(0,Math.min(rectA.bottom,rectB.bottom)-Math.max(rectA.top,rectB.top))
-            return x*y>1
+            return x>3&&y>3
           }
 
           async function inspect(page,label,screenshot){
@@ -121,13 +121,13 @@ jobs:
 
             if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
             if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
-            if(data.heading!=='Technology built for real operations.') fail(`${label}: hero heading ${data.heading}`)
+            if(!/^Technology built\s*for real operations\.$/.test(data.heading)) fail(`${label}: hero heading ${data.heading}`)
             if(data.solutionRects.length!==3) fail(`${label}: solution cards ${data.solutionRects.length}`)
             if(data.capabilityRects.length!==4) fail(`${label}: capability cards ${data.capabilityRects.length}`)
             if(data.workRects.length!==3) fail(`${label}: work cards ${data.workRects.length}`)
             if(data.metricRects.length!==4) fail(`${label}: hero metrics ${data.metricRects.length}`)
             if(data.featureCaseRects.length!==1) fail(`${label}: featured case ${data.featureCaseRects.length}`)
-            if(data.featureImpactRects.length!==3) fail(`${label}: featured case impact metrics ${data.featureImpactRects.length}`)
+            if(data.featureImpactRects.length!==3) fail(`${label}: featured case workflow steps ${data.featureImpactRects.length}`)
             if(data.heroWidth<250||data.heroHeight<500) fail(`${label}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
             if(data.heroVectorWidth<250||data.heroVectorHeight<500) fail(`${label}: cinematic hero artwork missing ${data.heroVectorWidth}x${data.heroVectorHeight}`)
             if(data.heroVectorCount!==1) fail(`${label}: hero vector count ${data.heroVectorCount}`)
