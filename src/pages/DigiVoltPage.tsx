@@ -1,4 +1,4 @@
-import digiVoltShowcase from '../assets/digivolt/digivolt-electric-mobility-showcase.png'
+import digiVoltShowcase from '../assets/user-provided/operations-centre.png'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
 

@@ -1,4 +1,4 @@
-import skyGridCinematic from '../assets/skygrid/skygrid-cinematic-control-room.webp'
+import skyGridCinematic from '../assets/user-provided/drone-survey-operation-stockcake.jpg'
 import skyGridLogo from '../assets/skygrid/skygrid-logo.png'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
