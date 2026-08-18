@@ -1,12 +1,6 @@
 import type { ReactNode } from 'react'
 import { Container } from '../../components/Container'
-import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
-import emergingTechVisual from '../../assets/emerging-tech/emerging-tech-learning-visual.png'
-import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import digi02ControlRoom from '../../assets/generated/digi02-control-room-hero.webp'
-import paymentPosVisual from '../../assets/solutions/payment-pos.webp'
-import skyGridFieldOperations from '../../assets/solutions/skygrid-field-operations.webp'
-import skyGridShowcase from '../../assets/skygrid/skygrid-showcase-concept.png'
+import { FlagshipVisual, WorkVisual } from './HomeVisuals'
 
 type LineIconKind =
   | 'code'
@@ -114,24 +108,21 @@ const flagshipSolutions = [
     href: '/solutions/skygrid',
     title: 'SkyGrid',
     label: '△',
-    image: skyGridShowcase,
-    imageAlt: 'SkyGrid UAV operations concept',
+    visual: 'skygrid',
     copy: 'Autonomous UAV systems for mapping, inspection, surveillance and logistics.',
   },
   {
     href: '/solutions/digivolt',
     title: 'DigiVolt',
     label: 'ϟ',
-    image: digiVoltShowcase,
-    imageAlt: 'DigiVolt electric mobility technology showcase',
+    visual: 'digivolt',
     copy: 'Electric mobility technology and smart charging infrastructure for a cleaner future.',
   },
   {
     href: '/solutions/enterprise-systems',
     title: 'Enterprise Systems',
     label: '▧',
-    image: erpPosShowcase,
-    imageAlt: 'Enterprise systems interface across multiple devices',
+    visual: 'enterprise',
     copy: 'ERP, POS, HR, Payroll and custom platforms that power your operations.',
   },
 ] as const
@@ -169,24 +160,21 @@ const selectedWork = [
     category: 'Energy',
     title: 'Thermal Plant Inspection Automation',
     copy: 'Autonomous drone inspections with AI analytics across critical infrastructure.',
-    image: skyGridFieldOperations,
-    imageAlt: 'UAV field operations used for infrastructure inspection',
+    visual: 'thermal',
   },
   {
     href: '/work',
     category: 'Fintech',
     title: 'Sterling Payment Gateway',
     copy: 'A secure, scalable payment infrastructure processing millions of transactions.',
-    image: paymentPosVisual,
-    imageAlt: 'Point-of-sale payment terminal used for a fintech case study',
+    visual: 'payment',
   },
   {
     href: '/work',
     category: 'Public Sector',
     title: 'Kaduna State e-Management System',
     copy: 'Unified digital platform for workflows, approvals and citizen services.',
-    image: digi02ControlRoom,
-    imageAlt: 'Digi02 operational control environment used for a public-sector case study',
+    visual: 'public',
   },
 ] as const
 
@@ -216,12 +204,14 @@ export function HomeReferenceSolutions() {
         <div className="reference-home-solutions__grid">
           {flagshipSolutions.map((solution) => (
             <a
-              className="reference-home-solution-card"
+              className="reference-home-solution-card reference-home-solution-card--vector"
               href={solution.href}
               key={solution.title}
               data-solution={solution.title}
             >
-              <img src={solution.image} alt={solution.imageAlt} loading="lazy" decoding="async" />
+              <span className="reference-home-solution-card__visual" aria-hidden="true">
+                <FlagshipVisual kind={solution.visual} />
+              </span>
               <span className="reference-home-solution-card__shade" aria-hidden="true" />
               <span className="reference-home-solution-card__content">
                 <strong>
@@ -285,12 +275,14 @@ export function HomeReferenceWork() {
         <div className="reference-home-work__grid">
           {selectedWork.map((item) => (
             <a
-              className="reference-home-work-card"
+              className="reference-home-work-card reference-home-work-card--vector"
               href={item.href}
               key={item.title}
               data-work={item.title}
             >
-              <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" />
+              <span className="reference-home-work-card__visual" aria-hidden="true">
+                <WorkVisual kind={item.visual} />
+              </span>
               <span className="reference-home-work-card__shade" aria-hidden="true" />
               <span className="reference-home-work-card__content">
                 <small>{item.category}</small>
@@ -365,7 +357,6 @@ export function HomeReferenceLightSections() {
       <HomeReferenceSolutions />
       <HomeReferenceCapabilities />
       <HomeReferenceWork />
-      <img className="reference-home-light__ghost" src={emergingTechVisual} alt="" aria-hidden="true" />
     </div>
   )
 }
