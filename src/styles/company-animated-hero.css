@@ -1,0 +1,69 @@
+/* Animated Digi02-owned Company hero visual. Scoped so no other page is affected. */
+.company-reference-page .company-reference-hero {
+  background: #050506;
+}
+
+.company-reference-page .company-reference-hero::before {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 6, 0.995) 0%, rgba(5, 5, 6, 0.95) 34%, rgba(5, 5, 6, 0.58) 56%, rgba(5, 5, 6, 0.08) 100%),
+    linear-gradient(180deg, rgba(5, 5, 6, 0.02) 42%, rgba(5, 5, 6, 0.72) 100%);
+}
+
+.company-reference-page .company-reference-hero__visual {
+  inset: 0;
+  background-color: #050506;
+  background-image: url('../assets/generated/company-operations-network.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.company-reference-page .company-reference-hero__visual::after {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 77% 43%, rgba(232, 192, 97, 0.09), transparent 25%),
+    linear-gradient(90deg, rgba(5, 5, 6, 0.06), transparent 60%);
+  content: '';
+  pointer-events: none;
+}
+
+/* Keep the previous raster asset out of the painted hero without touching page structure. */
+.company-reference-page .company-reference-hero__visual > img {
+  display: none;
+}
+
+@media (max-width: 61.9375rem) {
+  .company-reference-page .company-reference-hero__visual {
+    inset: 0;
+    background-position: 62% center;
+    background-size: auto 100%;
+  }
+
+  .company-reference-page .company-reference-hero::before {
+    background:
+      linear-gradient(90deg, rgba(5, 5, 6, 0.99) 0%, rgba(5, 5, 6, 0.91) 42%, rgba(5, 5, 6, 0.48) 72%, rgba(5, 5, 6, 0.18) 100%),
+      linear-gradient(180deg, rgba(5, 5, 6, 0.02) 38%, rgba(5, 5, 6, 0.76) 100%);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .company-reference-page .company-reference-hero__visual {
+    background-position: 72% center;
+    background-size: auto 100%;
+  }
+
+  .company-reference-page .company-reference-hero::before {
+    background:
+      linear-gradient(180deg, rgba(5, 5, 6, 0.86) 0%, rgba(5, 5, 6, 0.77) 42%, rgba(5, 5, 6, 0.9) 100%),
+      linear-gradient(90deg, rgba(5, 5, 6, 0.97) 0%, rgba(5, 5, 6, 0.72) 68%, rgba(5, 5, 6, 0.38) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .company-reference-page .company-reference-hero__visual {
+    /* The SVG remains visible; compatible browsers may pause SMIL under OS reduced-motion settings. */
+    scroll-behavior: auto;
+  }
+}
