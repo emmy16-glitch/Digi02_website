@@ -14,7 +14,7 @@ concurrency:
 jobs:
   homepage-reference:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 12
 
     steps:
       - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
       - name: Install Chromium
         run: |
           npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
 
       - name: Start production preview
         run: |
@@ -50,124 +50,13 @@ jobs:
           cat /tmp/digi02-preview.log
           exit 1
 
-      - name: Validate desktop and mobile homepage
-        run: |
-          mkdir -p homepage-reference-evidence
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs'
-          import { chromium } from 'playwright'
-
-          const origin='http://127.0.0.1:4173'
-          const failures=[]
-          const fail=(message)=>failures.push(message)
-
-          function overlap(rectA,rectB){
-            const x=Math.max(0,Math.min(rectA.right,rectB.right)-Math.max(rectA.left,rectB.left))
-            const y=Math.max(0,Math.min(rectA.bottom,rectB.bottom)-Math.max(rectA.top,rectB.top))
-            return x>3&&y>3
-          }
-
-          async function inspect(page,label,screenshot){
-            page.on('pageerror',error=>fail(`${label}: pageerror ${error.message}`))
-            page.on('console',message=>{
-              if(message.type()==='error'&&!message.text().startsWith('Failed to load resource')) fail(`${label}: console ${message.text()}`)
-            })
-
-            await page.goto(origin+'/',{waitUntil:'domcontentloaded',timeout:20000})
-            await page.locator('main#main-content').waitFor({timeout:10000})
-            await page.evaluate(async()=>{
-              await Promise.all([...document.images].map(image=>image.decode().catch(()=>{})))
-              scrollTo(0,document.documentElement.scrollHeight)
-              await new Promise(resolve=>setTimeout(resolve,60))
-              scrollTo(0,0)
-            })
-            await page.waitForTimeout(100)
-
-            const data=await page.evaluate(()=>{
-              const rects=selector=>[...document.querySelectorAll(selector)].map(element=>element.getBoundingClientRect()).filter(rect=>rect.width>0&&rect.height>0)
-              const hero=document.querySelector('.reference-home-hero__stage')?.getBoundingClientRect()
-              const heroVector=document.querySelector('.reference-home-hero__media .home-hero-cinematic')?.getBoundingClientRect()
-              const logo=document.querySelector('.site-header__wordmark')
-              const logoRect=logo?.getBoundingClientRect()
-              return {
-                clientWidth:document.documentElement.clientWidth,
-                scrollWidth:document.documentElement.scrollWidth,
-                h1:document.querySelectorAll('main h1').length,
-                heading:(document.querySelector('.reference-home-hero__title')?.textContent||'').replace(/\s+/g,' ').trim(),
-                solutionRects:rects('.reference-home-solution-card'),
-                capabilityRects:rects('.reference-home-capability-card'),
-                workRects:rects('.reference-home-work-card'),
-                metricRects:rects('.reference-home-hero__metric'),
-                featureCaseRects:rects('.reference-home-feature-case'),
-                featureImpactRects:rects('.reference-home-feature-case__impact i'),
-                heroWidth:hero?.width||0,
-                heroHeight:hero?.height||0,
-                heroVectorWidth:heroVector?.width||0,
-                heroVectorHeight:heroVector?.height||0,
-                heroVectorCount:document.querySelectorAll('.reference-home-hero__media .home-hero-cinematic').length,
-                solutionIconCount:document.querySelectorAll('.reference-home-solution-card--compact .reference-home-solution-card__icon').length,
-                workVectorCount:document.querySelectorAll('.reference-home-work-card .home-vector-visual').length,
-                featureVectorCount:document.querySelectorAll('.reference-home-feature-case .home-vector-visual').length,
-                legacyRasterCount:document.querySelectorAll('.reference-home-hero__media img,.reference-home-solution-card img,.reference-home-work-card img').length,
-                ghostCount:document.querySelectorAll('.reference-home-light__ghost').length,
-                logoHref:logo?.getAttribute('href')||'',
-                logoLabel:logo?.getAttribute('aria-label')||'',
-                logoWidth:logoRect?.width||0,
-                logoHeight:logoRect?.height||0,
-                contactEmail:document.querySelector('.site-footer__contact a[href^="mailto:"]')?.getAttribute('href')||'',
-                brokenImages:[...document.images].filter(image=>!image.complete||image.naturalWidth===0).map(image=>image.currentSrc||image.src),
-              }
-            })
-
-            if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
-            if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
-            if(!/^Technology built\s*for real operations\.$/.test(data.heading)) fail(`${label}: hero heading ${data.heading}`)
-            if(data.solutionRects.length!==3) fail(`${label}: solution cards ${data.solutionRects.length}`)
-            if(data.capabilityRects.length!==4) fail(`${label}: capability cards ${data.capabilityRects.length}`)
-            if(data.workRects.length!==3) fail(`${label}: work cards ${data.workRects.length}`)
-            if(data.metricRects.length!==4) fail(`${label}: hero metrics ${data.metricRects.length}`)
-            if(data.featureCaseRects.length!==1) fail(`${label}: featured case ${data.featureCaseRects.length}`)
-            if(data.featureImpactRects.length!==3) fail(`${label}: featured case workflow steps ${data.featureImpactRects.length}`)
-            if(data.heroWidth<250||data.heroHeight<500) fail(`${label}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
-            if(data.heroVectorWidth<250||data.heroVectorHeight<500) fail(`${label}: cinematic hero artwork missing ${data.heroVectorWidth}x${data.heroVectorHeight}`)
-            if(data.heroVectorCount!==1) fail(`${label}: hero vector count ${data.heroVectorCount}`)
-            if(data.solutionIconCount!==3) fail(`${label}: compact solution icons ${data.solutionIconCount}`)
-            if(data.workVectorCount!==3) fail(`${label}: work vector count ${data.workVectorCount}`)
-            if(data.featureVectorCount!==1) fail(`${label}: featured case vector count ${data.featureVectorCount}`)
-            if(data.legacyRasterCount!==0) fail(`${label}: legacy homepage raster images still rendered ${data.legacyRasterCount}`)
-            if(data.ghostCount!==0) fail(`${label}: legacy light-section ghost still rendered ${data.ghostCount}`)
-            if(data.logoHref!=='/') fail(`${label}: logo href ${data.logoHref}`)
-            if(data.logoLabel!=='Digi02 home') fail(`${label}: logo label ${data.logoLabel}`)
-            if(data.logoWidth<90||data.logoHeight<44) fail(`${label}: logo box too small ${data.logoWidth}x${data.logoHeight}`)
-            if(data.contactEmail!=='mailto:info@digi02.org') fail(`${label}: footer contact ${data.contactEmail}`)
-            if(data.brokenImages.length) fail(`${label}: broken images ${data.brokenImages.join(',')}`)
-
-            for(const [name,items] of [['capabilities',data.capabilityRects],['work',data.workRects]]){
-              for(let i=0;i<items.length;i++) for(let j=i+1;j<items.length;j++) if(overlap(items[i],items[j])) fail(`${label}: ${name} overlap`)
-            }
-
-            await page.screenshot({path:screenshot,fullPage:true,animations:'disabled'})
-          }
-
-          const browser=await chromium.launch({headless:true})
-          for(const [name,width,height] of [['390',390,844],['1440',1440,1000]]){
-            const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'})
-            const page=await context.newPage()
-            await inspect(page,`chromium ${name}`,`homepage-reference-evidence/home-${name}.png`)
-            await context.close()
-          }
-          await browser.close()
-
-          const summary=`Failures: ${failures.length}\n${failures.join('\n')}\n`
-          fs.writeFileSync('homepage-reference-evidence/summary.txt',summary)
-          console.log(summary)
-          if(failures.length) process.exit(1)
-          NODE
+      - name: Validate locked homepage blueprint
+        run: node .github/scripts/home-system-refinement-check.mjs
 
       - name: Upload homepage evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: homepage-reference-evidence
-          path: homepage-reference-evidence
+          path: home-system-refinement-evidence
           retention-days: 3
