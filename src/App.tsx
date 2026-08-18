@@ -121,37 +121,33 @@ function App() {
     '/insights': {
       title: 'Insights — Digi02',
       description:
-        'Read Digi02 insights on autonomous systems, operational technology, enterprise platforms, digital infrastructure and applied technology in Africa.',
+        'Explore Digi02 engineering perspectives across autonomous systems, enterprise technology, mobility, software and operational design.',
       content: <InsightsPage />,
     },
     '/contact': {
       title: 'Contact — Digi02',
       description:
-        'Contact Digi02 in Kaduna, Nigeria to discuss autonomous systems, enterprise technology, electric mobility, payments, cybersecurity and custom software.',
+        'Discuss a technology project with Digi02 across autonomous systems, enterprise platforms, mobility, payments and custom software engineering.',
       content: <ContactPage />,
     },
   }
 
-  const route = routes[path] ?? {
+  const activeRoute = routes[path]
+  const route = activeRoute ?? {
     title: 'Page not found — Digi02',
-    description: 'The page you requested could not be found on the Digi02 website.',
+    description: 'The requested Digi02 page could not be found.',
     content: <NotFoundPage />,
     noIndex: true,
   }
 
   return (
     <>
-      <SeoMeta
-        title={route.title}
-        description={route.description}
-        pathname={path}
-        noIndex={route.noIndex}
-        structuredData={path === '/' ? organizationStructuredData : undefined}
-      />
+      <SeoMeta path={path} title={route.title} description={route.description} noIndex={route.noIndex} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }} />
       <a className="skip-link" href="#main-content">
-        Skip to content
+        Skip to main content
       </a>
-      <SiteHeader />
+      <SiteHeader currentPath={path} />
       <main id="main-content">{route.content}</main>
       <SiteFooter />
     </>
