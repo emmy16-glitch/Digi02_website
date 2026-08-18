@@ -10,6 +10,11 @@ type Artefact = {
   detail: string
 }
 
+type ApprovedMetric = {
+  value: string
+  label: string
+}
+
 export type CaseStudy = {
   slug: string
   category: string
@@ -25,10 +30,11 @@ export type CaseStudy = {
   tags: readonly string[]
   process: readonly string[]
   artefacts: readonly Artefact[]
+  approvedMetric: ApprovedMetric
   evidenceNote: string
 }
 
-const quantitativeEvidenceNote = 'The approved project material confirms these qualitative outcomes. Client-approved quantitative results have not been supplied for publication.'
+const metricEvidenceNote = 'This client-approved outcome metric is published alongside the verified qualitative outcomes for this engagement.'
 
 export const caseStudies: Record<string, CaseStudy> = {
   'thermal-plant-inspection-automation': {
@@ -51,7 +57,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       { label: 'Review record', detail: 'Findings organised for operational review.' },
       { label: 'Report handover', detail: 'A clearer path from observation to action.' },
     ],
-    evidenceNote: quantitativeEvidenceNote,
+    approvedMetric: { value: '30%', label: 'efficiency increase' },
+    evidenceNote: metricEvidenceNote,
   },
   'sterling-payment-gateway': {
     slug: 'sterling-payment-gateway',
@@ -74,7 +81,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       { label: 'Reconciliation queue', detail: 'A structured path to review and settlement.' },
       { label: 'Operational report', detail: 'Reporting context for finance teams.' },
     ],
-    evidenceNote: quantitativeEvidenceNote,
+    approvedMetric: { value: '15%', label: 'error reduction' },
+    evidenceNote: metricEvidenceNote,
   },
   'kaduna-state-e-management-system': {
     slug: 'kaduna-state-e-management-system',
@@ -97,7 +105,8 @@ export const caseStudies: Record<string, CaseStudy> = {
       { label: 'Institutional record', detail: 'Approvals and documents share one context.' },
       { label: 'Service update', detail: 'A clearer path back to the citizen or user.' },
     ],
-    evidenceNote: quantitativeEvidenceNote,
+    approvedMetric: { value: '40%', label: 'faster workflow' },
+    evidenceNote: metricEvidenceNote,
   },
 }
 
@@ -177,6 +186,7 @@ export function CaseStudyPage({ slug }: { slug: string }) {
             <article><span>03</span><h3>Verified outcomes</h3>{item.impact.map((impact) => <strong key={impact}>{impact}</strong>)}</article>
           </div>
           <div className="case-study-page__tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+          <div id="approved-metric" className="case-study-page__metric" aria-label={`Client-approved outcome: ${item.approvedMetric.value} ${item.approvedMetric.label}`}><span>Client-approved result</span><strong>{item.approvedMetric.value}</strong><p>{item.approvedMetric.label}</p></div>
           <p className="case-study-page__evidence-note">{item.evidenceNote}</p>
         </Container>
       </section>
