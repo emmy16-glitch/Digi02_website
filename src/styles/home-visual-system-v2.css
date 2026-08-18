@@ -1,4 +1,4 @@
-/* Homepage visual-system v2: replaces reused raster screenshots with one crisp Digi02 vector language. */
+/* Homepage visual-system v2: crisp Digi02-owned vector language with a cinematic operations hero. */
 .reference-home .home-vector-visual,
 .reference-home .home-vector-visual__svg {
   display: block;
@@ -15,33 +15,233 @@
   object-fit: cover;
 }
 
-/* Hero: the visual itself is now code-built, not an old control-room photo. */
-.reference-home .reference-home-hero__media--vector {
-  background:
-    radial-gradient(circle at 70% 38%, rgba(217, 163, 78, 0.09), transparent 30%),
-    #070909;
+/* Cinematic homepage hero */
+.reference-home .reference-home-hero--cinematic {
+  border-bottom: 0;
+  background: #020303;
 }
 
-.reference-home .reference-home-hero__media--vector > .home-vector-visual {
+.reference-home .reference-home-hero__stage {
+  position: relative;
+  min-height: 41rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.reference-home .reference-home-hero__layout--cinematic {
+  position: relative;
+  z-index: 3;
+  display: block;
+  min-height: 41rem;
+}
+
+.reference-home .reference-home-hero__copy--cinematic {
+  display: flex;
+  width: min(100%, 44rem);
+  max-width: 44rem;
+  min-height: 41rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6.7rem 0 4.8rem;
+}
+
+.reference-home .reference-home-hero__media--cinematic {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #020303;
+}
+
+.reference-home .home-hero-cinematic,
+.reference-home .home-hero-cinematic__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.reference-home .home-hero-cinematic {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
-.reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
+.reference-home .home-hero-cinematic__svg {
+  position: absolute;
+  inset: 0;
   min-width: 100%;
   min-height: 100%;
 }
 
-.reference-home .reference-home-hero__media--vector::before {
+.reference-home .reference-home-hero__media--cinematic::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
   background:
-    linear-gradient(90deg, #070809 0%, rgba(7, 8, 9, 0.96) 4%, rgba(7, 8, 9, 0.42) 24%, rgba(7, 8, 9, 0.06) 50%, transparent 70%),
-    linear-gradient(180deg, rgba(3, 4, 5, 0.02) 38%, rgba(3, 4, 5, 0.62) 100%);
+    linear-gradient(90deg, rgba(2, 3, 3, 0.995) 0%, rgba(2, 3, 3, 0.96) 20%, rgba(2, 3, 3, 0.75) 34%, rgba(2, 3, 3, 0.28) 52%, rgba(2, 3, 3, 0.04) 74%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.54) 100%);
+  content: '';
+  pointer-events: none;
 }
 
-.reference-home .reference-home-hero__media--vector .reference-home-hero__media-shade {
+.reference-home .reference-home-hero__media--cinematic .reference-home-hero__media-shade {
+  z-index: 2;
   background:
-    radial-gradient(circle at 72% 43%, rgba(217, 163, 78, 0.07), transparent 24%),
-    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.18));
+    radial-gradient(circle at 78% 42%, rgba(217, 163, 78, 0.055), transparent 24%),
+    linear-gradient(180deg, transparent 64%, rgba(0, 0, 0, 0.18));
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__title {
+  max-width: 12ch;
+  margin: 0;
+  color: #f6f3ed;
+  font-size: clamp(3.65rem, 5vw, 5.65rem);
+  letter-spacing: -0.052em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__title span {
+  color: #d9a34e;
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__summary {
+  max-width: 38rem;
+  margin-top: 1.45rem;
+  color: #d4d2cc;
+  font-size: clamp(1rem, 1.25vw, 1.16rem);
+  line-height: 1.58;
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__actions {
+  margin-top: 1.75rem;
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home__button {
+  min-width: 13.4rem;
+  min-height: 3.35rem;
+  padding-inline: 1.55rem;
+  font-size: 0.86rem;
+}
+
+.reference-home .reference-home__button--primary {
+  border-color: #d9a34e;
+  background: #d9a34e;
+  color: #090909;
+}
+
+.reference-home .reference-home__button--primary:hover,
+.reference-home .reference-home__button--primary:focus-visible {
+  border-color: #efbd70;
+  background: #efbd70;
+  color: #050505;
+}
+
+.reference-home .reference-home__button--secondary {
+  border-color: rgba(217, 163, 78, 0.58);
+  background: rgba(2, 3, 3, 0.54);
+  color: #f4f2ed;
+  backdrop-filter: blur(8px);
+}
+
+.reference-home .reference-home-hero__origin {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1.8rem 0 0;
+  color: #cbc8c1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.reference-home .reference-home-hero__origin > span {
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 1.45rem;
+  place-items: center;
+  border: 1px solid rgba(217, 163, 78, 0.74);
+  border-radius: 50%;
+  color: #d9a34e;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* Proof band directly under the hero, matching the supplied reference. */
+.reference-home .reference-home-hero__metrics {
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(7, 9, 10, 0.98);
+}
+
+.reference-home .reference-home-hero__metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reference-home .reference-home-hero__metric {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  align-items: center;
+  min-height: 6.2rem;
+  padding: 1rem 1.85rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.reference-home .reference-home-hero__metric:first-child {
+  padding-left: 0;
+}
+
+.reference-home .reference-home-hero__metric:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.reference-home .reference-home-hero__metric-icon {
+  display: grid;
+  width: 3.1rem;
+  height: 3.1rem;
+  place-items: center;
+  border: 1px solid rgba(217, 163, 78, 0.72);
+  border-radius: 50%;
+  color: #d9a34e;
+}
+
+.reference-home .reference-home-hero__metric-icon svg {
+  width: 1.45rem;
+  height: 1.45rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.55;
+}
+
+.reference-home .reference-home-hero__metric > span:last-child {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.reference-home .reference-home-hero__metric strong {
+  color: #f3f0e9;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.7rem, 2vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.reference-home .reference-home-hero__metric small {
+  color: #aaa69e;
+  font-size: 0.76rem;
+  line-height: 1.3;
 }
 
 /* Flagship: same illustration system and hierarchy across all three cards. */
@@ -116,19 +316,141 @@
   display: none !important;
 }
 
-@media (max-width: 61.9375rem) {
-  .reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
+@media (max-width: 74rem) {
+  .reference-home .reference-home-hero__copy--cinematic {
+    width: min(100%, 39rem);
+  }
+
+  .reference-home .home-hero-cinematic__svg {
     width: 112%;
     max-width: none;
-    transform: translateX(-4%);
+    transform: translateX(-5%);
+  }
+
+  .reference-home .reference-home-hero__metric {
+    padding-inline: 1.2rem;
+  }
+}
+
+@media (max-width: 61.9375rem) {
+  .reference-home .reference-home-hero__stage,
+  .reference-home .reference-home-hero__layout--cinematic,
+  .reference-home .reference-home-hero__copy--cinematic {
+    min-height: 38rem;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic {
+    width: min(100%, 35rem);
+    padding: 5.5rem 0 4rem;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic .reference-home-hero__title {
+    font-size: clamp(3.25rem, 7vw, 4.7rem);
+  }
+
+  .reference-home .reference-home-hero__metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reference-home .reference-home-hero__metric:nth-child(2) {
+    border-right: 0;
+  }
+
+  .reference-home .reference-home-hero__metric:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .reference-home .reference-home-hero__metric:first-child,
+  .reference-home .reference-home-hero__metric:nth-child(3) {
+    padding-left: 0;
+  }
+
+  .reference-home .reference-home-hero__metric:nth-child(2),
+  .reference-home .reference-home-hero__metric:last-child {
+    padding-right: 0;
   }
 }
 
 @media (max-width: 47.9375rem) {
-  .reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
-    width: 145%;
+  .reference-home .reference-home-hero__stage,
+  .reference-home .reference-home-hero__layout--cinematic,
+  .reference-home .reference-home-hero__copy--cinematic {
+    min-height: 40rem;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic {
+    width: 100%;
+    max-width: 31rem;
+    padding: 4.6rem 0 3.2rem;
+    justify-content: flex-end;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic .reference-home-hero__title {
+    max-width: 10ch;
+    font-size: clamp(2.85rem, 12vw, 3.65rem);
+    line-height: 0.96;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic .reference-home-hero__summary {
+    max-width: 29rem;
+    margin-top: 1.2rem;
+    font-size: 0.98rem;
+    line-height: 1.52;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic .reference-home-hero__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    width: min(100%, 24rem);
+    margin-top: 1.4rem;
+  }
+
+  .reference-home .reference-home-hero__copy--cinematic .reference-home__button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .reference-home .reference-home-hero__origin {
+    margin-top: 1.35rem;
+    font-size: 0.84rem;
+  }
+
+  .reference-home .home-hero-cinematic__svg {
+    width: 205%;
     max-width: none;
-    transform: translateX(-21%);
+    transform: translateX(-42%);
+  }
+
+  .reference-home .reference-home-hero__media--cinematic::before {
+    background:
+      linear-gradient(180deg, rgba(2, 3, 3, 0.2) 0%, rgba(2, 3, 3, 0.44) 30%, rgba(2, 3, 3, 0.92) 76%, rgba(2, 3, 3, 0.99) 100%),
+      linear-gradient(90deg, rgba(2, 3, 3, 0.84) 0%, rgba(2, 3, 3, 0.36) 72%, rgba(2, 3, 3, 0.16) 100%);
+  }
+
+  .reference-home .reference-home-hero__metric {
+    grid-template-columns: 2.65rem 1fr;
+    gap: 0.72rem;
+    min-height: 5.6rem;
+    padding: 0.9rem 0.8rem;
+  }
+
+  .reference-home .reference-home-hero__metric-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .reference-home .reference-home-hero__metric-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .reference-home .reference-home-hero__metric strong {
+    font-size: 1.42rem;
+  }
+
+  .reference-home .reference-home-hero__metric small {
+    font-size: 0.65rem;
   }
 
   .reference-home .reference-home-solution-card__visual .home-vector-visual__svg,
