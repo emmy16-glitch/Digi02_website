@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Container } from '../../components/Container'
-import { FlagshipVisual, WorkVisual } from './HomeVisuals'
+import { WorkVisual } from './HomeVisuals'
 
 type LineIconKind =
   | 'code'
@@ -11,6 +11,8 @@ type LineIconKind =
   | 'briefcase'
   | 'globe'
   | 'award'
+  | 'skygrid'
+  | 'enterprise'
 
 type LineIconProps = {
   kind: LineIconKind
@@ -81,6 +83,26 @@ function LineIcon({ kind }: LineIconProps) {
     )
   }
 
+  if (kind === 'skygrid') {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M3.5 12h17M12 3.5c2.2 2.1 3.3 4.9 3.3 8.5S14.2 18.4 12 20.5M12 3.5C9.8 5.6 8.7 8.4 8.7 12s1.1 6.4 3.3 8.5" />
+      </svg>
+    )
+  }
+
+  if (kind === 'enterprise') {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <rect x="4" y="5" width="16" height="4" rx="1" />
+        <rect x="4" y="10" width="16" height="4" rx="1" />
+        <rect x="4" y="15" width="16" height="4" rx="1" />
+        <path d="M7 7h.01M7 12h.01M7 17h.01" />
+      </svg>
+    )
+  }
+
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
       <circle cx="12" cy="9" r="5" />
@@ -107,22 +129,19 @@ const flagshipSolutions = [
   {
     href: '/solutions/skygrid',
     title: 'SkyGrid',
-    label: '△',
-    visual: 'skygrid',
+    icon: 'skygrid',
     copy: 'Autonomous UAV systems for mapping, inspection, surveillance and logistics.',
   },
   {
     href: '/solutions/digivolt',
     title: 'DigiVolt',
-    label: 'ϟ',
-    visual: 'digivolt',
-    copy: 'Electric mobility technology and smart charging infrastructure for a cleaner future.',
+    icon: 'energy',
+    copy: 'Smart energy technology and infrastructure for a cleaner future.',
   },
   {
     href: '/solutions/enterprise-systems',
     title: 'Enterprise Systems',
-    label: '▧',
-    visual: 'enterprise',
+    icon: 'enterprise',
     copy: 'ERP, POS, HR, Payroll and custom platforms that power your operations.',
   },
 ] as const
@@ -185,45 +204,58 @@ const impactMetrics = [
   { icon: 'award', value: 'ISO 27001', label: 'Security and quality standards' },
 ] as const
 
+const caseStudyImpact = [
+  { value: '60%', label: 'Faster inspection cycles' },
+  { value: '24/7', label: 'Field data availability' },
+  { value: '< 1 hr', label: 'Reporting turnaround' },
+] as const
+
 export function HomeReferenceSolutions() {
   return (
-    <section className="reference-home-solutions" aria-labelledby="reference-solutions-title">
+    <section className="reference-home-solutions reference-home-solutions--feature" aria-labelledby="reference-solutions-title">
       <Container>
-        <SectionHeading
-          label="Our flagship solutions"
-          action={
-            <a href="/solutions">
-              Explore all solutions <span aria-hidden="true">→</span>
-            </a>
-          }
-        />
-        <h2 id="reference-solutions-title" className="visually-hidden">
-          Digi02 flagship solutions
-        </h2>
+        <div className="reference-home-solutions__feature-layout">
+          <div className="reference-home-solutions__catalog">
+            <p className="reference-home-solutions__eyebrow">Our solutions</p>
+            <h2 id="reference-solutions-title">Purpose-built technology.<br />Measurable impact.</h2>
+            <div className="reference-home-solutions__compact-grid">
+              {flagshipSolutions.map((solution) => (
+                <a className="reference-home-solution-card reference-home-solution-card--compact" href={solution.href} key={solution.title}>
+                  <span className="reference-home-solution-card__icon reference-home-icon-badge">
+                    <LineIcon kind={solution.icon as LineIconKind} />
+                  </span>
+                  <strong>{solution.title}</strong>
+                  <span>{solution.copy}</span>
+                  <small>Learn more <b aria-hidden="true">→</b></small>
+                </a>
+              ))}
+            </div>
+          </div>
 
-        <div className="reference-home-solutions__grid">
-          {flagshipSolutions.map((solution) => (
-            <a
-              className="reference-home-solution-card reference-home-solution-card--vector"
-              href={solution.href}
-              key={solution.title}
-              data-solution={solution.title}
-            >
-              <span className="reference-home-solution-card__visual" aria-hidden="true">
-                <FlagshipVisual kind={solution.visual} />
+          <a className="reference-home-feature-case" href="/work" aria-label="View Thermal Plant Inspection Automation case study">
+            <span className="reference-home-feature-case__copy">
+              <small>Featured case study</small>
+              <strong>Thermal Plant<br />Inspection Automation</strong>
+              <p>An inspection workflow that brings mission planning, field capture and operational review into one coordinated system.</p>
+
+              <span className="reference-home-feature-case__impact" aria-label="Operational impact">
+                <b>Operational impact</b>
+                <span>
+                  {caseStudyImpact.map((metric) => (
+                    <i key={metric.label}>
+                      <strong>{metric.value}</strong>
+                      <small>{metric.label}</small>
+                    </i>
+                  ))}
+                </span>
               </span>
-              <span className="reference-home-solution-card__shade" aria-hidden="true" />
-              <span className="reference-home-solution-card__content">
-                <strong>
-                  <i aria-hidden="true">{solution.label}</i> {solution.title}
-                </strong>
-                <span>{solution.copy}</span>
-                <small>
-                  Learn more <b aria-hidden="true">→</b>
-                </small>
-              </span>
-            </a>
-          ))}
+
+              <b className="reference-home-feature-case__link">View case study <i aria-hidden="true">→</i></b>
+            </span>
+            <span className="reference-home-feature-case__visual" aria-hidden="true">
+              <WorkVisual kind="thermal" />
+            </span>
+          </a>
         </div>
       </Container>
     </section>
