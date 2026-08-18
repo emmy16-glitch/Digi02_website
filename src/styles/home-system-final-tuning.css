@@ -1,0 +1,4 @@
+/* Final homepage visual balance after 1440px and 390px render review. */
+.reference-home .reference-home-solution-card:nth-child(1) > img {
+  filter: brightness(0.5) saturate(0.58) contrast(1.13);
+}
