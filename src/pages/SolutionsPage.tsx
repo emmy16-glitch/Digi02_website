@@ -1,8 +1,8 @@
 import { Fragment, useMemo, useState } from 'react'
-import emergingTechShowcase from '../assets/emerging-tech/emerging-tech-learning-visual.png'
-import digiVoltShowcase from '../assets/digivolt/digivolt-electric-mobility-showcase.png'
-import digiNorthShowcase from '../assets/diginorth/diginorth-community-visual.png'
-import enterpriseShowcase from '../assets/erp-pos/erp-pos-multidevice-showcase.png'
+import customSoftwareShowcase from '../assets/generated/original-digi02/digi02-detail.png'
+import digiVoltShowcase from '../assets/generated/solutions/digivolt-electric-infrastructure.png'
+import digiNorthShowcase from '../assets/user-provided/operations-centre.png'
+import enterpriseShowcase from '../assets/user-provided/engineering-team.png'
 import paymentShowcase from '../assets/solutions/payment-pos.webp'
 import skyGridShowcase from '../assets/solutions/skygrid-field-operations.webp'
 import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
@@ -96,7 +96,7 @@ const solutions: readonly Solution[] = [
     description: 'End-to-end software development tailored to your unique needs.',
     bullets: ['Discovery & strategy', 'Modern engineering', 'Support & evolution'],
     href: '/solutions/custom-software',
-    image: emergingTechShowcase,
+    image: customSoftwareShowcase,
     icon: 'software',
     className: 'solutions-reference-card--software',
   },
@@ -190,8 +190,7 @@ export function SolutionsPage() {
               const cardClassName = ['solutions-reference-card', solution.className ?? '', isAllSolutions && solution.title === 'Custom Software' ? 'solutions-reference-card--wide' : ''].filter(Boolean).join(' ')
               return (
                 <Fragment key={solution.title}>
-                  <article className={cardClassName}>
-                    <img src={solution.image} alt="" loading="lazy" decoding="async" />
+                  <article className={cardClassName} style={{ backgroundImage: `url(${solution.image})` }}>
                     <div className="solutions-reference-card__shade" aria-hidden="true" />
                     <div className="solutions-reference-card__content">
                       <div className="solutions-reference-card__title-row"><span className="solutions-reference-card__icon"><SolutionIcon kind={solution.icon} /></span><h3>{solution.title}</h3></div>

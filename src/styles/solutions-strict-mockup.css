@@ -15,20 +15,23 @@
   border-color: rgba(255,255,255,.18);
   border-radius: .42rem;
   background: #0d0f10;
+  background-position: 64% center;
+  background-repeat: no-repeat;
+  background-size: cover;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.012);
 }
 .solutions-reference-card:hover { border-color: rgba(224,188,103,.5); transform: translateY(-2px); }
 .solutions-reference-card > img {
   object-position: 64% center;
-  filter: saturate(.92) brightness(.82) contrast(1.06);
+  filter: saturate(.96) brightness(.94) contrast(1.06);
   transform: scale(1.006);
   transition: transform 420ms cubic-bezier(.2,.7,.2,1), filter 260ms ease;
 }
-.solutions-reference-card:hover > img { filter: saturate(.98) brightness(.86) contrast(1.06); transform: scale(1.025); }
+.solutions-reference-card:hover > img { filter: saturate(1) brightness(1) contrast(1.06); transform: scale(1.025); }
 .solutions-reference-card__shade {
   background:
-    linear-gradient(90deg, rgba(5,6,7,.985) 0%, rgba(5,6,7,.94) 30%, rgba(5,6,7,.58) 51%, rgba(5,6,7,.12) 78%, rgba(5,6,7,.02) 100%),
-    linear-gradient(180deg, rgba(5,6,7,.02) 52%, rgba(5,6,7,.42) 100%);
+    linear-gradient(90deg, rgba(5,6,7,.99) 0%, rgba(5,6,7,.94) 31%, rgba(5,6,7,.45) 53%, rgba(5,6,7,.05) 78%, rgba(5,6,7,0) 100%),
+    linear-gradient(180deg, rgba(5,6,7,0) 52%, rgba(5,6,7,.30) 100%);
 }
 .solutions-reference-card__content { width: min(51%, 26rem); padding: clamp(1.6rem, 2.5vw, 2.2rem); }
 .solutions-reference-card h3 { font-size: clamp(1.45rem, 2vw, 1.95rem); }
@@ -41,18 +44,18 @@
 .solutions-reference-card--featured { grid-column:1/-1; min-height:22rem; }
 .solutions-reference-card--featured .solutions-reference-card__content { width:min(34%,27rem); }
 .solutions-reference-card--featured h3 { font-size:clamp(1.75rem,2.35vw,2.35rem); }
-.solutions-reference-card--featured > img { object-position:66% 50%; filter:saturate(.95) brightness(.86) contrast(1.04); }
+.solutions-reference-card--featured { background-position:66% 50%; }
 .solutions-reference-card--featured .solutions-reference-card__shade,
 .solutions-reference-card--wide .solutions-reference-card__shade {
   background:
     linear-gradient(90deg, rgba(5,6,7,.995) 0%, rgba(5,6,7,.97) 27%, rgba(5,6,7,.52) 44%, rgba(5,6,7,.08) 69%, rgba(5,6,7,.01) 100%),
     linear-gradient(180deg, rgba(5,6,7,.03) 54%, rgba(5,6,7,.35) 100%);
 }
-.solutions-reference-card--digivolt > img { object-position:70% 54%; }
-.solutions-reference-card--enterprise > img { object-position:69% 50%; }
-.solutions-reference-card--payment > img { object-position:68% 53%; }
-.solutions-reference-card--management > img { object-position:70% 50%; }
-.solutions-reference-card--software > img { object-position:66% 51%; }
+.solutions-reference-card--digivolt { background-position:72% 54%; }
+.solutions-reference-card--enterprise { background-position:70% 48%; }
+.solutions-reference-card--payment { background-position:66% 53%; }
+.solutions-reference-card--management { background-position:72% 48%; }
+.solutions-reference-card--software { background-position:48% 55%; }
 .solutions-reference-card--wide { grid-column:1/-1; min-height:19rem; }
 .solutions-reference-card--wide .solutions-reference-card__content { width:min(34%,27rem); }
 
@@ -104,7 +107,7 @@
   .solutions-reference-showcase__heading h2 { max-width:15ch; margin-inline:auto; }
   .solutions-reference-grid { grid-template-columns:1fr; gap:.9rem; }
   .solutions-reference-card,.solutions-reference-card--featured,.solutions-reference-card--wide { grid-column:1; min-height:27rem; }
-  .solutions-reference-card>img,.solutions-reference-card--featured>img,.solutions-reference-card--wide>img { object-position:center 35%; filter:saturate(.95) brightness(.8) contrast(1.05); }
+  .solutions-reference-card,.solutions-reference-card--featured,.solutions-reference-card--wide { background-position:center 35%; }
   .solutions-reference-card__shade,.solutions-reference-card--featured .solutions-reference-card__shade,.solutions-reference-card--wide .solutions-reference-card__shade {
     background:linear-gradient(180deg,rgba(5,6,7,.12) 0%,rgba(5,6,7,.2) 30%,rgba(5,6,7,.86) 57%,rgba(5,6,7,.995) 77%,#050607 100%),linear-gradient(90deg,rgba(5,6,7,.2),rgba(5,6,7,.03));
   }
