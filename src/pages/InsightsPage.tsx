@@ -207,7 +207,7 @@ export function InsightsPage() {
                     onClick={() => setActiveCategory(category)}
                     type="button"
                   >
-                    {category === 'All' ? 'All topics' : category}
+                    {category === 'All' ? 'All insights' : category}
                   </button>
                 ))}
               </div>
