@@ -96,9 +96,23 @@
   background: linear-gradient(180deg, #101214, #0d0f11);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition:
-    transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 360ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    transform 360ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
     border-color 280ms ease,
     box-shadow 280ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .company-reference-team__card {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  .company-reference-team__card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--team-card-delay, 0ms);
+  }
 }
 
 .company-reference-team__card::after {
@@ -271,6 +285,7 @@
       0 22px 46px rgba(0, 0, 0, 0.32),
       0 0 0 1px rgba(224, 188, 103, 0.07);
     transform: translateY(-6px);
+    transition-delay: 0ms;
   }
 
   .company-reference-team__card:hover::after {
@@ -363,6 +378,10 @@
   .company-reference-team__portrait img,
   .company-reference-team__role-reveal {
     transition: none;
+  }
+
+  .company-reference-team__card {
+    opacity: 1;
   }
 
   .company-reference-team__card:hover,

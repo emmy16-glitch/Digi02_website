@@ -4,6 +4,7 @@ import covenantIregbeyen from '../assets/team/covenant-iregbeyen.jpg'
 import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
 import abrahamSalifu from '../assets/team/abraham-salifu.webp'
 import iniEsiset from '../assets/team/ini-esiset.webp'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
 import '../styles/company-team.css'
@@ -131,6 +132,59 @@ const team = [
   },
 ] as const
 
+function TeamCard({ member, index }: { member: (typeof team)[number]; index: number }) {
+  const cardRef = useRef<HTMLElement>(null)
+  const [isRevealed, setIsRevealed] = useState(false)
+
+  useEffect(() => {
+    const card = cardRef.current
+    if (!card || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      setIsRevealed(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsRevealed(true)
+        observer.unobserve(entry.target)
+      }
+    }, { threshold: 0.16 })
+
+    observer.observe(card)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <article
+      ref={cardRef}
+      className={`company-reference-team__card company-reference-team__card--${index + 1}${isRevealed ? ' is-revealed' : ''}`}
+      key={member.name}
+      style={{ '--team-card-delay': `${index * 60}ms` } as CSSProperties}
+      tabIndex={0}
+    >
+      <div className="company-reference-team__portrait">
+        <img
+          src={member.image}
+          alt={`${member.name}, ${member.role} at Digi02`}
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="company-reference-team__role-reveal" aria-hidden="true">
+          <span>Role at Digi02</span>
+          <strong>{member.role}</strong>
+        </div>
+      </div>
+      <div className="company-reference-team__content">
+        <p className="company-reference-team__discipline">{member.discipline}</p>
+        <h3>{member.name}</h3>
+        <p className="company-reference-team__role">{member.role}</p>
+        <p className="company-reference-team__bio"><span>Placeholder biography</span>{member.body}</p>
+        <a className="company-reference-team__linkedin" href={`/contact?enquiry=linkedin-profile&member=${encodeURIComponent(member.name)}`} aria-label={`Request the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>Request LinkedIn profile</span></a>
+      </div>
+    </article>
+  )
+}
+
 const journey = [
   ['2018', 'Company founded in Kaduna'],
   ['2019', 'Delivered first enterprise software solutions'],
@@ -257,33 +311,7 @@ export function CompanyPage() {
           </header>
 
           <div className="company-reference-team__grid">
-            {team.map((member, index) => (
-              <article
-                className={`company-reference-team__card company-reference-team__card--${index + 1}`}
-                key={member.name}
-                tabIndex={0}
-              >
-                <div className="company-reference-team__portrait">
-                  <img
-                    src={member.image}
-                    alt={`${member.name}, ${member.role} at Digi02`}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="company-reference-team__role-reveal" aria-hidden="true">
-                    <span>Role at Digi02</span>
-                    <strong>{member.role}</strong>
-                  </div>
-                </div>
-                <div className="company-reference-team__content">
-                  <p className="company-reference-team__discipline">{member.discipline}</p>
-                  <h3>{member.name}</h3>
-                  <p className="company-reference-team__role">{member.role}</p>
-                  <p className="company-reference-team__bio"><span>Placeholder biography</span>{member.body}</p>
-                  <a className="company-reference-team__linkedin" href={`/contact?enquiry=linkedin-profile&member=${encodeURIComponent(member.name)}`} aria-label={`Request the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>Request LinkedIn profile</span></a>
-                </div>
-              </article>
-            ))}
+            {team.map((member, index) => <TeamCard key={member.name} member={member} index={index} />)}
           </div>
         </Container>
       </section>

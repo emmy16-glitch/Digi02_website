@@ -18,6 +18,8 @@ test('uses the supplied leadership portrait assignments in the Company team sect
   assert.match(companyPage, /\/contact\?enquiry=linkedin-profile/)
   assert.match(companyPage, /company-reference-team__role-reveal/)
   assert.match(companyPage, /tabIndex=\{0\}/)
+  assert.match(companyPage, /IntersectionObserver/)
+  assert.match(companyPage, /--team-card-delay/)
   assert.doesNotMatch(companyPage, /people-behind-digi02/)
 })
 
@@ -26,6 +28,9 @@ test('keeps portrait crops editorial and provides a reduced-motion hero fallback
   assert.match(teamStyles, /company-reference-team__role-reveal/)
   assert.match(teamStyles, /card:hover \.company-reference-team__role-reveal/)
   assert.match(teamStyles, /card:focus \.company-reference-team__role-reveal/)
+  assert.match(teamStyles, /company-reference-team__card\.is-revealed/)
+  assert.match(teamStyles, /opacity: 0/)
+  assert.match(teamStyles, /prefers-reduced-motion: no-preference/)
   assert.match(heroStyles, /background-image: none/)
   assert.match(heroStyles, /hero__visual > img[\s\S]*display: block/)
 })
