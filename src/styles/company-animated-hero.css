@@ -63,7 +63,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .company-reference-page .company-reference-hero__visual {
-    /* The SVG remains visible; compatible browsers may pause SMIL under OS reduced-motion settings. */
+    background-image: none;
     scroll-behavior: auto;
+  }
+
+  .company-reference-page .company-reference-hero__visual > img {
+    display: block;
   }
 }

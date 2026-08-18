@@ -1,14 +1,14 @@
 import digi02ControlRoom from '../assets/generated/digi02-control-room-hero.webp'
 import johnOkojere from '../assets/team/john-okojere.webp'
-import covenantIregbeyen from '../assets/team/covenant-iregbeyen.webp'
+import covenantIregbeyen from '../assets/team/covenant-iregbeyen.jpg'
 import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
 import abrahamSalifu from '../assets/team/abraham-salifu.webp'
 import iniEsiset from '../assets/team/ini-esiset.webp'
-import peopleBehindDigi02 from '../assets/generated/company/people-behind-digi02.png'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
 import '../styles/company-team.css'
 import '../styles/company-refinement.css'
+import '../styles/company-animated-hero.css'
 
 type IconKind =
   | 'location'
@@ -237,26 +237,16 @@ export function CompanyPage() {
         </Container>
       </section>
 
-      <section className="company-reference-team" aria-labelledby="company-team-title">
+      <section id="meet-our-team" className="company-reference-team" aria-labelledby="company-team-title">
         <Container>
           <header className="company-reference-team__heading">
             <p className="company-reference-team__eyebrow">Our Team</p>
             <h2 id="company-team-title">The people behind Digi02.</h2>
             <p className="company-reference-team__intro">
-              Specialists across ecosystem strategy, software engineering, product design,
+              A cross-functional team spanning ecosystem strategy, software engineering, product design,
               cybersecurity, and AI/data—working together to build technology for real operations.
             </p>
           </header>
-
-          <figure className="company-reference-team__feature">
-            <img
-              src={peopleBehindDigi02}
-              alt="Digi02 team members collaborating around software and operations dashboards"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>People Behind Digi02 / engineering, product, and operations in conversation.</figcaption>
-          </figure>
 
           <div className="company-reference-team__grid">
             {team.map((member, index) => (
