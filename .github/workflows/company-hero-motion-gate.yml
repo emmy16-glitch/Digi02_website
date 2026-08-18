@@ -14,7 +14,7 @@ concurrency:
 jobs:
   company-hero-motion:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 12
 
     steps:
       - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
       - name: Install Chromium
         run: |
           npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
 
       - name: Start production preview
         run: |
