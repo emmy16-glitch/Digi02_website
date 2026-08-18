@@ -39,6 +39,45 @@
   line-height: 1.65;
 }
 
+.company-reference-team__feature {
+  position: relative;
+  margin: 0 0 3rem;
+  overflow: hidden;
+  border: 1px solid rgba(224, 188, 103, 0.24);
+  background: #111315;
+}
+
+.company-reference-team__feature::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(9, 10, 12, 0.44), transparent 58%);
+  content: '';
+  pointer-events: none;
+}
+
+.company-reference-team__feature img {
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  max-height: 580px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.company-reference-team__feature figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 1rem;
+  max-width: min(540px, calc(100% - 2rem));
+  color: #f2efe8;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
 .company-reference-team__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -203,6 +242,14 @@
 
   .company-reference-team__intro {
     font-size: 0.82rem;
+  }
+
+  .company-reference-team__feature {
+    margin-bottom: 2rem;
+  }
+
+  .company-reference-team__feature img {
+    min-height: 250px;
   }
 
   .company-reference-team__grid {

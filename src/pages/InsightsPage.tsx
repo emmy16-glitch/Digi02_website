@@ -5,6 +5,7 @@ import emergingTechVisual from '../assets/emerging-tech/emerging-tech-learning-v
 import enterpriseVisual from '../assets/erp-pos/erp-pos-multidevice-showcase.png'
 import skyGridAnalytics from '../assets/skygrid/skygrid-mission-analytics.webp'
 import skyGridRoutePlanner from '../assets/skygrid/skygrid-route-planner.webp'
+import insightsHero from '../assets/generated/insights/insights-hero.png'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
 import '../styles/insights-reference.css'
@@ -14,8 +15,10 @@ type InsightCategory = 'All' | 'Autonomous' | 'Enterprise' | 'Mobility' | 'Engin
 type InsightItem = {
   category: Exclude<InsightCategory, 'All'>
   eyebrow: string
+  readingTime: string
   title: string
   summary: string
+  takeaway: string
   href: string
   linkLabel: string
   image: string
@@ -35,9 +38,11 @@ const insights: readonly InsightItem[] = [
   {
     category: 'Enterprise',
     eyebrow: 'Enterprise systems',
+    readingTime: '4 min read',
     title: 'What should stay connected after a transaction?',
     summary:
       'Sales, stock, approvals and reporting are easier to control when the business event and the record behind it remain part of the same operating system.',
+    takeaway: 'A transaction is only useful when its surrounding context remains visible to the people responsible for the next decision.',
     href: '/solutions/enterprise-systems',
     linkLabel: 'Explore enterprise systems',
     image: enterpriseVisual,
@@ -46,9 +51,11 @@ const insights: readonly InsightItem[] = [
   {
     category: 'Mobility',
     eyebrow: 'Mobility systems',
+    readingTime: '5 min read',
     title: 'Designing mobility software around the operation, not just the trip.',
     summary:
       'A useful mobility platform has to connect the rider journey with assignment, operational visibility and the systems that keep the service understandable.',
+    takeaway: 'The ride is one moment. The operating system must also make dispatch, exceptions, handoffs and review clear.',
     href: '/solutions/digivolt',
     linkLabel: 'Explore DigiVolt',
     image: digiVoltVisual,
@@ -57,9 +64,11 @@ const insights: readonly InsightItem[] = [
   {
     category: 'Engineering',
     eyebrow: 'Engineering practice',
+    readingTime: '3 min read',
     title: 'When should custom software replace a workaround?',
     summary:
       'The important question is not whether software can be built. It is whether the workflow, ownership and information around the work are clear enough to engineer well.',
+    takeaway: 'Before writing code, define the decision, the owner, the record and the point at which a team needs to act.',
     href: '/solutions/custom-software',
     linkLabel: 'Explore custom software',
     image: emergingTechVisual,
@@ -68,9 +77,11 @@ const insights: readonly InsightItem[] = [
   {
     category: 'Community',
     eyebrow: 'Technology community',
+    readingTime: '4 min read',
     title: 'Why local context still matters when the engineering standard is global.',
     summary:
       'Technology has to fit the people, constraints and operating environment around it. Local understanding and disciplined engineering are not competing ideas.',
+    takeaway: 'Strong engineering becomes more useful when it starts with the realities of the people and institutions it is meant to serve.',
     href: '/company',
     linkLabel: 'About Digi02',
     image: digiNorthVisual,
@@ -79,9 +90,11 @@ const insights: readonly InsightItem[] = [
   {
     category: 'Autonomous',
     eyebrow: 'Mission data',
+    readingTime: '6 min read',
     title: 'The mission is not finished when the aircraft lands.',
     summary:
       'Review, evidence and operational records are part of the mission system too. The value of collected data depends on how clearly teams can understand and act on it.',
+    takeaway: 'The most valuable output of a mission is a record that gives the next operator enough context to decide with confidence.',
     href: '/solutions/skygrid',
     linkLabel: 'Explore SkyGrid',
     image: skyGridAnalytics,
@@ -104,7 +117,7 @@ export function InsightsPage() {
     <div className="insights-reference-page">
       <section className="insights-reference-hero" aria-labelledby="insights-reference-title">
         <div className="insights-reference-hero__media" aria-hidden="true">
-          <img src={skyGridAnalytics} alt="" decoding="async" fetchPriority="high" />
+          <img src={insightsHero} alt="" decoding="async" fetchPriority="high" />
         </div>
         <Container className="insights-reference-hero__inner">
           <div className="insights-reference-hero__copy">
@@ -143,10 +156,13 @@ export function InsightsPage() {
             <span>Real product evidence / SkyGrid</span>
           </div>
           <article className="insights-reference-featured__copy">
-            <p>Featured perspective / Autonomous systems</p>
+            <p>Featured perspective / Autonomous systems / 6 min read</p>
             <h2 id="featured-insight-title">What should an operator know before, during and after a UAV mission?</h2>
             <p>
               Mission planning, readiness, field context and review are more useful when they remain part of the same mission record.
+            </p>
+            <p className="insights-reference-featured__note">
+              A reliable mission system does not begin with a flight plan and end with a file upload. It gives the team a shared view of the objective, the constraints, the evidence collected, and the decisions that need to follow.
             </p>
             <a href="/solutions/skygrid">Explore SkyGrid <span aria-hidden="true">→</span></a>
           </article>
@@ -185,9 +201,10 @@ export function InsightsPage() {
                   <img src={insight.image} alt={insight.imageAlt} loading="lazy" decoding="async" />
                 </div>
                 <div className="insights-reference-card__body">
-                  <p>{insight.eyebrow}</p>
+                  <p>{insight.eyebrow} <span aria-hidden="true">/</span> {insight.readingTime}</p>
                   <h3>{insight.title}</h3>
                   <p>{insight.summary}</p>
+                  <p className="insights-reference-card__takeaway"><strong>Field note:</strong> {insight.takeaway}</p>
                   <a href={insight.href}>{insight.linkLabel} <span aria-hidden="true">→</span></a>
                 </div>
               </article>

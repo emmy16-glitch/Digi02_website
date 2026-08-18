@@ -219,6 +219,15 @@
   line-height: 1.7;
 }
 
+.insights-reference-featured__note {
+  margin-top: 1rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(134, 103, 43, 0.3);
+  color: #5f5d58 !important;
+  font-size: 0.93rem !important;
+  line-height: 1.7;
+}
+
 .insights-reference-featured__copy a,
 .insights-reference-card a {
   display: inline-flex;
@@ -413,6 +422,23 @@
   margin: var(--space-3) 0 0;
   color: var(--text-secondary);
   line-height: 1.65;
+}
+
+.insights-reference-card__takeaway {
+  margin-top: 1rem !important;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line-subtle);
+  color: var(--text-muted) !important;
+  font-size: 0.78rem;
+  line-height: 1.62;
+}
+
+.insights-reference-card__takeaway strong {
+  color: var(--gold-400);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .insights-reference-card a {

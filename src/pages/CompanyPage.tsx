@@ -4,6 +4,7 @@ import covenantIregbeyen from '../assets/team/covenant-iregbeyen.webp'
 import kosisochukwuUgwubma from '../assets/team/kosisochukwu-ugwubma.webp'
 import abrahamSalifu from '../assets/team/abraham-salifu.webp'
 import iniEsiset from '../assets/team/ini-esiset.webp'
+import peopleBehindDigi02 from '../assets/user-provided/engineering-team.png'
 import { Container } from '../components/Container'
 import '../styles/company-page.css'
 import '../styles/company-team.css'
@@ -246,6 +247,16 @@ export function CompanyPage() {
               cybersecurity, and AI/data—working together to build technology for real operations.
             </p>
           </header>
+
+          <figure className="company-reference-team__feature">
+            <img
+              src={peopleBehindDigi02}
+              alt="Digi02 team members collaborating around software and operations dashboards"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>People Behind Digi02 / engineering, product, and operations in conversation.</figcaption>
+          </figure>
 
           <div className="company-reference-team__grid">
             {team.map((member, index) => (
