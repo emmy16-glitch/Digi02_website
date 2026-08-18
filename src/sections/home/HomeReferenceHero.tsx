@@ -70,20 +70,6 @@ function HeroIcon({ kind }: HeroIconProps) {
   )
 }
 
-function MissionOverviewGraphic() {
-  return (
-    <svg className="reference-home-hud__mission-map" viewBox="0 0 220 116" aria-hidden="true">
-      <path className="reference-home-hud__map-grid" d="M18 20 55 10l34 11 37-9 33 13 43-7M12 48l39-11 41 8 30-9 35 10 52-8M15 77l35-9 37 10 39-12 35 12 45-7M25 103l33-13 37 9 38-10 35 12 30-9" />
-      <path className="reference-home-hud__map-route" d="M22 87C45 70 57 58 78 64c19 5 24-27 47-25 24 2 21 34 47 24 13-5 23-19 32-29" />
-      <circle cx="22" cy="87" r="4" />
-      <circle cx="78" cy="64" r="4" />
-      <circle cx="125" cy="39" r="5" />
-      <circle cx="172" cy="63" r="4" />
-      <circle cx="204" cy="34" r="4" />
-    </svg>
-  )
-}
-
 export function HomeReferenceHero() {
   return (
     <section className="reference-home-hero" aria-labelledby="reference-home-title">
@@ -137,17 +123,6 @@ export function HomeReferenceHero() {
             <b>Active</b>
           </div>
 
-          <div className="reference-home-hud reference-home-hud--mission" aria-hidden="true">
-            <span>Mission overview</span>
-            <MissionOverviewGraphic />
-            <div>
-              <small>Area</small>
-              <small>ETA</small>
-              <strong>23.6 km²</strong>
-              <strong>14:32</strong>
-            </div>
-          </div>
-
           <div className="reference-home-hud reference-home-hud--telemetry" aria-hidden="true">
             <span>Telemetry</span>
             <div>
@@ -160,12 +135,6 @@ export function HomeReferenceHero() {
               <strong>87%</strong>
               <strong>RTK</strong>
             </div>
-          </div>
-
-          <div className="reference-home-hud reference-home-hud--secure" aria-hidden="true">
-            <small>Link status</small>
-            <strong>Secure</strong>
-            <span>▣</span>
           </div>
         </div>
       </Container>
