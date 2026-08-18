@@ -32,6 +32,9 @@ import './styles/reference-tuning.css'
 import './styles/logo-fix.css'
 import './styles/home-system-refinement.css'
 import './styles/home-system-final-tuning.css'
+import './styles/home-visual-system-v2.css'
+import './styles/home-reference-feature-section.css'
+import './styles/home-hero-clarity.css'
 
 type RouteDefinition = {
   title: string

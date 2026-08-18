@@ -1,0 +1,37 @@
+/* Final clarity pass for the cinematic homepage hero. */
+.reference-home .home-hero-cinematic__svg {
+  filter: brightness(1.09) saturate(1.08) contrast(1.025);
+}
+
+.reference-home .reference-home-hero__media--cinematic::before {
+  background:
+    linear-gradient(90deg, rgba(2, 3, 3, 0.99) 0%, rgba(2, 3, 3, 0.93) 18%, rgba(2, 3, 3, 0.68) 31%, rgba(2, 3, 3, 0.24) 46%, rgba(2, 3, 3, 0.035) 66%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.015) 42%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__title {
+  text-shadow: 0 0.2rem 1.7rem rgba(0, 0, 0, 0.42);
+}
+
+.reference-home .reference-home-hero__copy--cinematic .reference-home-hero__summary,
+.reference-home .reference-home-hero__origin {
+  text-shadow: 0 0.12rem 1rem rgba(0, 0, 0, 0.48);
+}
+
+@media (max-width: 47.9375rem) {
+  .reference-home .reference-home-hero__copy--cinematic {
+    box-sizing: border-box;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .reference-home .reference-home-hero__media--cinematic::before {
+    background:
+      linear-gradient(180deg, rgba(2, 3, 3, 0.15) 0%, rgba(2, 3, 3, 0.38) 28%, rgba(2, 3, 3, 0.84) 69%, rgba(2, 3, 3, 0.98) 100%),
+      linear-gradient(90deg, rgba(2, 3, 3, 0.76) 0%, rgba(2, 3, 3, 0.3) 72%, rgba(2, 3, 3, 0.08) 100%);
+  }
+
+  .reference-home .home-hero-cinematic__svg {
+    filter: brightness(1.13) saturate(1.08) contrast(1.02);
+  }
+}
