@@ -1,0 +1,152 @@
+/* Homepage visual-system v2: replaces reused raster screenshots with one crisp Digi02 vector language. */
+.reference-home .home-vector-visual,
+.reference-home .home-vector-visual__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.reference-home .home-vector-visual {
+  overflow: hidden;
+  background: #080a0a;
+}
+
+.reference-home .home-vector-visual__svg {
+  object-fit: cover;
+}
+
+/* Hero: the visual itself is now code-built, not an old control-room photo. */
+.reference-home .reference-home-hero__media--vector {
+  background:
+    radial-gradient(circle at 70% 38%, rgba(217, 163, 78, 0.09), transparent 30%),
+    #070909;
+}
+
+.reference-home .reference-home-hero__media--vector > .home-vector-visual {
+  position: absolute;
+  inset: 0;
+}
+
+.reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.reference-home .reference-home-hero__media--vector::before {
+  background:
+    linear-gradient(90deg, #070809 0%, rgba(7, 8, 9, 0.96) 4%, rgba(7, 8, 9, 0.42) 24%, rgba(7, 8, 9, 0.06) 50%, transparent 70%),
+    linear-gradient(180deg, rgba(3, 4, 5, 0.02) 38%, rgba(3, 4, 5, 0.62) 100%);
+}
+
+.reference-home .reference-home-hero__media--vector .reference-home-hero__media-shade {
+  background:
+    radial-gradient(circle at 72% 43%, rgba(217, 163, 78, 0.07), transparent 24%),
+    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.18));
+}
+
+/* Flagship: same illustration system and hierarchy across all three cards. */
+.reference-home .reference-home-solution-card--vector,
+.reference-home .reference-home-work-card--vector {
+  isolation: isolate;
+  background: #080a0a;
+}
+
+.reference-home .reference-home-solution-card__visual,
+.reference-home .reference-home-work-card__visual {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.reference-home .reference-home-solution-card__visual .home-vector-visual,
+.reference-home .reference-home-work-card__visual .home-vector-visual {
+  transition: transform 520ms cubic-bezier(0.19, 1, 0.22, 1), filter 520ms ease;
+}
+
+.reference-home .reference-home-solution-card--vector:hover .reference-home-solution-card__visual .home-vector-visual,
+.reference-home .reference-home-solution-card--vector:focus-visible .reference-home-solution-card__visual .home-vector-visual,
+.reference-home .reference-home-work-card--vector:hover .reference-home-work-card__visual .home-vector-visual,
+.reference-home .reference-home-work-card--vector:focus-visible .reference-home-work-card__visual .home-vector-visual {
+  transform: scale(1.025);
+}
+
+.reference-home .reference-home-solution-card--vector .reference-home-solution-card__shade {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(4, 5, 5, 0.02) 10%, rgba(4, 5, 5, 0.2) 48%, rgba(4, 5, 5, 0.94) 100%),
+    linear-gradient(90deg, rgba(3, 4, 4, 0.28), transparent 72%);
+}
+
+.reference-home .reference-home-solution-card--vector .reference-home-solution-card__content {
+  z-index: 2;
+}
+
+.reference-home .reference-home-solution-card--vector .reference-home-solution-card__content > strong {
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.5);
+}
+
+.reference-home .reference-home-solution-card--vector .reference-home-solution-card__content > span {
+  max-width: 31rem;
+  color: #d8d4cc;
+}
+
+/* Selected work: editorial case-study visuals, not screenshots or dashboard exports. */
+.reference-home .reference-home-work-card--vector .reference-home-work-card__shade {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(3, 4, 4, 0.02) 8%, rgba(3, 4, 4, 0.24) 48%, rgba(3, 4, 4, 0.96) 100%),
+    linear-gradient(90deg, rgba(3, 4, 4, 0.16), transparent 72%);
+}
+
+.reference-home .reference-home-work-card--vector .reference-home-work-card__content {
+  z-index: 2;
+}
+
+.reference-home .reference-home-work-card--vector .reference-home-work-card__content > span {
+  color: #d8d4cc;
+}
+
+/* Remove any visual dependence on old raster selectors in the refined cards. */
+.reference-home .reference-home-solution-card--vector > img,
+.reference-home .reference-home-work-card--vector > img,
+.reference-home .reference-home-hero__media--vector > img,
+.reference-home .reference-home-light__ghost {
+  display: none !important;
+}
+
+@media (max-width: 61.9375rem) {
+  .reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
+    width: 112%;
+    max-width: none;
+    transform: translateX(-4%);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .reference-home .reference-home-hero__media--vector .home-vector-visual__svg {
+    width: 145%;
+    max-width: none;
+    transform: translateX(-21%);
+  }
+
+  .reference-home .reference-home-solution-card__visual .home-vector-visual__svg,
+  .reference-home .reference-home-work-card__visual .home-vector-visual__svg {
+    width: 116%;
+    max-width: none;
+    transform: translateX(-7%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home .reference-home-solution-card__visual .home-vector-visual,
+  .reference-home .reference-home-work-card__visual .home-vector-visual {
+    transition: none;
+  }
+
+  .reference-home .reference-home-solution-card--vector:hover .reference-home-solution-card__visual .home-vector-visual,
+  .reference-home .reference-home-work-card--vector:hover .reference-home-work-card__visual .home-vector-visual {
+    transform: none;
+  }
+}
