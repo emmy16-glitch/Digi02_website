@@ -2,14 +2,14 @@
 
 /* Let the real control-room image read clearly on the right while the left remains copy-safe. */
 .solutions-reference-hero__media img {
-  object-position: 68% 48%;
-  filter: saturate(0.96) contrast(1.05) brightness(0.92);
+  object-position: 62% 30%;
+  filter: saturate(0.92) contrast(1.04) brightness(1.03);
 }
 
 .solutions-reference-hero::before {
   background:
-    linear-gradient(90deg, rgba(5, 6, 7, 0.94) 0%, rgba(5, 6, 7, 0.80) 30%, rgba(5, 6, 7, 0.34) 54%, rgba(5, 6, 7, 0.05) 100%),
-    linear-gradient(180deg, rgba(5, 6, 7, 0.03) 44%, rgba(5, 6, 7, 0.38) 100%);
+    linear-gradient(90deg, rgba(5, 6, 7, 0.96) 0%, rgba(5, 6, 7, 0.80) 31%, rgba(5, 6, 7, 0.28) 57%, rgba(5, 6, 7, 0.01) 100%),
+    linear-gradient(180deg, rgba(5, 6, 7, 0.02) 42%, rgba(5, 6, 7, 0.30) 100%);
 }
 
 @media (min-width: 64rem) {

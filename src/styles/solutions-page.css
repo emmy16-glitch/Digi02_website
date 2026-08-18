@@ -14,12 +14,15 @@
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: #070809;
+  background-position: 62% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
   isolation: isolate;
 }
 
 .solutions-reference-hero__media {
   position: absolute;
-  z-index: -2;
+  z-index: 1;
   inset: 0;
 }
 
@@ -34,7 +37,7 @@
 
 .solutions-reference-hero::before {
   position: absolute;
-  z-index: -1;
+  z-index: 2;
   inset: 0;
   background:
     linear-gradient(90deg, rgba(5, 6, 7, 0.99) 0%, rgba(5, 6, 7, 0.92) 33%, rgba(5, 6, 7, 0.36) 61%, rgba(5, 6, 7, 0.16) 100%),
@@ -43,6 +46,8 @@
 }
 
 .solutions-reference-hero__inner {
+  position: relative;
+  z-index: 3;
   display: grid;
   min-height: 30rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));

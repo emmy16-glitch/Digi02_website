@@ -44,18 +44,18 @@
 .solutions-reference-card--featured { grid-column:1/-1; min-height:22rem; }
 .solutions-reference-card--featured .solutions-reference-card__content { width:min(34%,27rem); }
 .solutions-reference-card--featured h3 { font-size:clamp(1.75rem,2.35vw,2.35rem); }
-.solutions-reference-card--featured { background-position:66% 50%; }
+.solutions-reference-card--featured { background-position:50% 33%; }
 .solutions-reference-card--featured .solutions-reference-card__shade,
 .solutions-reference-card--wide .solutions-reference-card__shade {
   background:
     linear-gradient(90deg, rgba(5,6,7,.995) 0%, rgba(5,6,7,.97) 27%, rgba(5,6,7,.52) 44%, rgba(5,6,7,.08) 69%, rgba(5,6,7,.01) 100%),
     linear-gradient(180deg, rgba(5,6,7,.03) 54%, rgba(5,6,7,.35) 100%);
 }
-.solutions-reference-card--digivolt { background-position:72% 54%; }
-.solutions-reference-card--enterprise { background-position:70% 48%; }
-.solutions-reference-card--payment { background-position:66% 53%; }
-.solutions-reference-card--management { background-position:72% 48%; }
-.solutions-reference-card--software { background-position:48% 55%; }
+.solutions-reference-card--digivolt { background-position:70% 50%; }
+.solutions-reference-card--enterprise { background-position:71% 50%; }
+.solutions-reference-card--payment { background-position:68% 48%; }
+.solutions-reference-card--management { background-position:67% 54%; }
+.solutions-reference-card--software { background-position:72% 50%; }
 .solutions-reference-card--wide { grid-column:1/-1; min-height:19rem; }
 .solutions-reference-card--wide .solutions-reference-card__content { width:min(34%,27rem); }
 

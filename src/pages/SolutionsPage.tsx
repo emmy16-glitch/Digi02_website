@@ -1,11 +1,11 @@
 import { Fragment, useMemo, useState } from 'react'
-import customSoftwareShowcase from '../assets/generated/original-digi02/digi02-detail.png'
-import digiVoltShowcase from '../assets/generated/solutions/digivolt-electric-infrastructure.png'
-import digiNorthShowcase from '../assets/user-provided/operations-centre.png'
-import enterpriseShowcase from '../assets/user-provided/engineering-team.png'
-import paymentShowcase from '../assets/solutions/payment-pos.webp'
-import skyGridShowcase from '../assets/solutions/skygrid-field-operations.webp'
-import skyGridHero from '../assets/skygrid/skygrid-cinematic-control-room.webp'
+import customSoftwareShowcase from '../assets/editorial/solutions/custom-software-team.jpg'
+import digiVoltShowcase from '../assets/editorial/solutions/digivolt-commercial-charging.jpg'
+import eManagementShowcase from '../assets/editorial/solutions/e-management-african-workflow.jpg'
+import enterpriseShowcase from '../assets/editorial/solutions/enterprise-engineering-workspace.jpg'
+import paymentShowcase from '../assets/editorial/solutions/payment-terminal-contactless.jpg'
+import skyGridShowcase from '../assets/editorial/solutions/skygrid-drone-pilot.jpg'
+import solutionsHero from '../assets/editorial/solutions/solutions-hero-industrial-sunset.jpg'
 import { Container } from '../components/Container'
 import '../styles/solutions-page.css'
 import '../styles/solutions-reference-tuning.css'
@@ -86,7 +86,7 @@ const solutions: readonly Solution[] = [
     description: 'Unified digital platform for workflows, approvals and citizen services.',
     bullets: ['Workflow automation', 'Document management', 'Transparency & accountability'],
     href: '/solutions/e-management',
-    image: digiNorthShowcase,
+    image: eManagementShowcase,
     icon: 'management',
     className: 'solutions-reference-card--management',
   },
@@ -156,8 +156,7 @@ export function SolutionsPage() {
 
   return (
     <div className="solutions-reference-page">
-      <section className="solutions-reference-hero" aria-labelledby="solutions-reference-title">
-        <div className="solutions-reference-hero__media" aria-hidden="true"><img src={skyGridHero} alt="" decoding="async" fetchPriority="high" /></div>
+      <section className="solutions-reference-hero" aria-labelledby="solutions-reference-title" style={{ backgroundImage: `url(${solutionsHero})` }}>
         <Container className="solutions-reference-hero__inner">
           <div className="solutions-reference-hero__copy">
             <nav className="solutions-reference-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">›</span><span>Solutions</span></nav>
