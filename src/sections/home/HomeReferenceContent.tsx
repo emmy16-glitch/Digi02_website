@@ -3,8 +3,9 @@ import { Container } from '../../components/Container'
 import digiVoltShowcase from '../../assets/digivolt/digivolt-electric-mobility-showcase.png'
 import emergingTechVisual from '../../assets/emerging-tech/emerging-tech-learning-visual.png'
 import erpPosShowcase from '../../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import skyGridAnalytics from '../../assets/skygrid/skygrid-mission-analytics.webp'
-import skyGridOperations from '../../assets/skygrid/skygrid-operations-center.webp'
+import digi02ControlRoom from '../../assets/generated/digi02-control-room-hero.webp'
+import paymentPosVisual from '../../assets/solutions/payment-pos.webp'
+import skyGridFieldOperations from '../../assets/solutions/skygrid-field-operations.webp'
 import skyGridShowcase from '../../assets/skygrid/skygrid-showcase-concept.png'
 
 type LineIconKind =
@@ -168,24 +169,24 @@ const selectedWork = [
     category: 'Energy',
     title: 'Thermal Plant Inspection Automation',
     copy: 'Autonomous drone inspections with AI analytics across critical infrastructure.',
-    image: skyGridOperations,
-    imageAlt: 'Industrial operations environment used for an inspection case study',
+    image: skyGridFieldOperations,
+    imageAlt: 'UAV field operations used for infrastructure inspection',
   },
   {
     href: '/work',
     category: 'Fintech',
     title: 'Sterling Payment Gateway',
     copy: 'A secure, scalable payment infrastructure processing millions of transactions.',
-    image: erpPosShowcase,
-    imageAlt: 'Payment and enterprise interface devices',
+    image: paymentPosVisual,
+    imageAlt: 'Point-of-sale payment terminal used for a fintech case study',
   },
   {
     href: '/work',
     category: 'Public Sector',
     title: 'Kaduna State e-Management System',
     copy: 'Unified digital platform for workflows, approvals and citizen services.',
-    image: skyGridAnalytics,
-    imageAlt: 'Operational analytics interface used as an e-management visual',
+    image: digi02ControlRoom,
+    imageAlt: 'Digi02 operational control environment used for a public-sector case study',
   },
 ] as const
 
@@ -214,7 +215,12 @@ export function HomeReferenceSolutions() {
 
         <div className="reference-home-solutions__grid">
           {flagshipSolutions.map((solution) => (
-            <a className="reference-home-solution-card" href={solution.href} key={solution.title}>
+            <a
+              className="reference-home-solution-card"
+              href={solution.href}
+              key={solution.title}
+              data-solution={solution.title}
+            >
               <img src={solution.image} alt={solution.imageAlt} loading="lazy" decoding="async" />
               <span className="reference-home-solution-card__shade" aria-hidden="true" />
               <span className="reference-home-solution-card__content">
@@ -246,7 +252,7 @@ export function HomeReferenceCapabilities() {
         <div className="reference-home-capabilities__grid">
           {capabilityCards.map((card) => (
             <a className="reference-home-capability-card" href={card.href} key={card.title}>
-              <span className="reference-home-capability-card__icon">
+              <span className="reference-home-capability-card__icon reference-home-icon-badge">
                 <LineIcon kind={card.icon as LineIconKind} />
               </span>
               <strong>{card.title}</strong>
@@ -278,7 +284,12 @@ export function HomeReferenceWork() {
 
         <div className="reference-home-work__grid">
           {selectedWork.map((item) => (
-            <a className="reference-home-work-card" href={item.href} key={item.title}>
+            <a
+              className="reference-home-work-card"
+              href={item.href}
+              key={item.title}
+              data-work={item.title}
+            >
               <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" />
               <span className="reference-home-work-card__shade" aria-hidden="true" />
               <span className="reference-home-work-card__content">
