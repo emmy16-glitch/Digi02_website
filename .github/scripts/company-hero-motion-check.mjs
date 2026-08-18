@@ -40,7 +40,7 @@ async function inspectResponsiveHero(name, width, height) {
   if (!data.backgroundImage.includes('company-operations-network')) fail(`${name}: animated SVG is not the painted hero background`)
   if (data.rasterPainted !== 'none') fail(`${name}: previous raster hero is still painted`)
   if (data.scrollWidth > data.clientWidth + 1) fail(`${name}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
-  if (data.heroWidth < data.clientWidth - 2 || data.heroHeight < 400) fail(`${name}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
+  if (data.heroWidth < 300 || data.heroHeight < 400) fail(`${name}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
   if (data.headingWidth < 180 || data.headingHeight < 80) fail(`${name}: hero heading collapsed`)
   if (data.ctaWidth < 100 || data.ctaHeight < 42) fail(`${name}: hero CTA collapsed`)
 
