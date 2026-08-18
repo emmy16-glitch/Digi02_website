@@ -1,5 +1,5 @@
 import { Container } from '../../components/Container'
-import homeReferenceHero from '../../assets/skygrid/skygrid-operations-center.webp'
+import { HomeHeroOperationsVisual } from './HomeVisuals'
 
 const trustMarks = [
   { mark: 'NDA', detail: 'National partner' },
@@ -106,14 +106,8 @@ export function HomeReferenceHero() {
           </div>
         </div>
 
-        <div className="reference-home-hero__media" aria-label="Illustrative SkyGrid UAV operations scene">
-          <img
-            className="reference-home-hero__image"
-            src={homeReferenceHero}
-            alt="Illustrative SkyGrid UAV operations control environment"
-            decoding="async"
-            fetchPriority="high"
-          />
+        <div className="reference-home-hero__media reference-home-hero__media--vector">
+          <HomeHeroOperationsVisual />
           <div className="reference-home-hero__media-shade" aria-hidden="true" />
 
           <div className="reference-home-hud reference-home-hud--status" aria-hidden="true">
