@@ -32,6 +32,8 @@ import './styles/reference-tuning.css'
 import './styles/logo-fix.css'
 import './styles/home-system-refinement.css'
 import './styles/home-system-final-tuning.css'
+import './styles/home-visual-system-v2.css'
+import './styles/home-reference-feature-section.css'
 
 type RouteDefinition = {
   title: string
@@ -119,33 +121,37 @@ function App() {
     '/insights': {
       title: 'Insights — Digi02',
       description:
-        'Explore Digi02 engineering perspectives across autonomous systems, enterprise technology, mobility, software and operational design.',
+        'Read Digi02 insights on autonomous systems, operational technology, enterprise platforms, digital infrastructure and applied technology in Africa.',
       content: <InsightsPage />,
     },
     '/contact': {
       title: 'Contact — Digi02',
       description:
-        'Discuss a technology project with Digi02 across autonomous systems, enterprise platforms, mobility, payments and custom software engineering.',
+        'Contact Digi02 in Kaduna, Nigeria to discuss autonomous systems, enterprise technology, electric mobility, payments, cybersecurity and custom software.',
       content: <ContactPage />,
     },
   }
 
-  const activeRoute = routes[path]
-  const route = activeRoute ?? {
+  const route = routes[path] ?? {
     title: 'Page not found — Digi02',
-    description: 'The requested Digi02 page could not be found.',
+    description: 'The page you requested could not be found on the Digi02 website.',
     content: <NotFoundPage />,
     noIndex: true,
   }
 
   return (
     <>
-      <SeoMeta path={path} title={route.title} description={route.description} noIndex={route.noIndex} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }} />
+      <SeoMeta
+        title={route.title}
+        description={route.description}
+        pathname={path}
+        noIndex={route.noIndex}
+        structuredData={path === '/' ? organizationStructuredData : undefined}
+      />
       <a className="skip-link" href="#main-content">
-        Skip to main content
+        Skip to content
       </a>
-      <SiteHeader currentPath={path} />
+      <SiteHeader />
       <main id="main-content">{route.content}</main>
       <SiteFooter />
     </>
