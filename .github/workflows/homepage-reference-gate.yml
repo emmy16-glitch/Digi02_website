@@ -85,8 +85,8 @@ jobs:
 
             const data=await page.evaluate(()=>{
               const rects=selector=>[...document.querySelectorAll(selector)].map(element=>element.getBoundingClientRect()).filter(rect=>rect.width>0&&rect.height>0)
-              const hero=document.querySelector('.reference-home-hero__media')?.getBoundingClientRect()
-              const heroVector=document.querySelector('.reference-home-hero__media .home-vector-visual')?.getBoundingClientRect()
+              const hero=document.querySelector('.reference-home-hero__stage')?.getBoundingClientRect()
+              const heroVector=document.querySelector('.reference-home-hero__media .home-hero-cinematic')?.getBoundingClientRect()
               const logo=document.querySelector('.site-header__wordmark')
               const logoRect=logo?.getBoundingClientRect()
               return {
@@ -97,13 +97,17 @@ jobs:
                 solutionRects:rects('.reference-home-solution-card'),
                 capabilityRects:rects('.reference-home-capability-card'),
                 workRects:rects('.reference-home-work-card'),
+                metricRects:rects('.reference-home-hero__metric'),
+                featureCaseRects:rects('.reference-home-feature-case'),
+                featureImpactRects:rects('.reference-home-feature-case__impact i'),
                 heroWidth:hero?.width||0,
                 heroHeight:hero?.height||0,
                 heroVectorWidth:heroVector?.width||0,
                 heroVectorHeight:heroVector?.height||0,
-                heroVectorCount:document.querySelectorAll('.reference-home-hero__media .home-vector-visual').length,
-                flagshipVectorCount:document.querySelectorAll('.reference-home-solution-card .home-vector-visual').length,
+                heroVectorCount:document.querySelectorAll('.reference-home-hero__media .home-hero-cinematic').length,
+                solutionIconCount:document.querySelectorAll('.reference-home-solution-card--compact .reference-home-solution-card__icon').length,
                 workVectorCount:document.querySelectorAll('.reference-home-work-card .home-vector-visual').length,
+                featureVectorCount:document.querySelectorAll('.reference-home-feature-case .home-vector-visual').length,
                 legacyRasterCount:document.querySelectorAll('.reference-home-hero__media img,.reference-home-solution-card img,.reference-home-work-card img').length,
                 ghostCount:document.querySelectorAll('.reference-home-light__ghost').length,
                 logoHref:logo?.getAttribute('href')||'',
@@ -118,14 +122,18 @@ jobs:
             if(data.scrollWidth>data.clientWidth+1) fail(`${label}: horizontal overflow ${data.scrollWidth}/${data.clientWidth}`)
             if(data.h1!==1) fail(`${label}: H1 count ${data.h1}`)
             if(data.heading!=='Technology built for real operations.') fail(`${label}: hero heading ${data.heading}`)
-            if(data.solutionRects.length!==3) fail(`${label}: flagship cards ${data.solutionRects.length}`)
+            if(data.solutionRects.length!==3) fail(`${label}: solution cards ${data.solutionRects.length}`)
             if(data.capabilityRects.length!==4) fail(`${label}: capability cards ${data.capabilityRects.length}`)
             if(data.workRects.length!==3) fail(`${label}: work cards ${data.workRects.length}`)
-            if(data.heroWidth<250||data.heroHeight<300) fail(`${label}: hero media collapsed ${data.heroWidth}x${data.heroHeight}`)
-            if(data.heroVectorWidth<250||data.heroVectorHeight<300) fail(`${label}: vector hero artwork missing ${data.heroVectorWidth}x${data.heroVectorHeight}`)
+            if(data.metricRects.length!==4) fail(`${label}: hero metrics ${data.metricRects.length}`)
+            if(data.featureCaseRects.length!==1) fail(`${label}: featured case ${data.featureCaseRects.length}`)
+            if(data.featureImpactRects.length!==3) fail(`${label}: featured case impact metrics ${data.featureImpactRects.length}`)
+            if(data.heroWidth<250||data.heroHeight<500) fail(`${label}: hero collapsed ${data.heroWidth}x${data.heroHeight}`)
+            if(data.heroVectorWidth<250||data.heroVectorHeight<500) fail(`${label}: cinematic hero artwork missing ${data.heroVectorWidth}x${data.heroVectorHeight}`)
             if(data.heroVectorCount!==1) fail(`${label}: hero vector count ${data.heroVectorCount}`)
-            if(data.flagshipVectorCount!==3) fail(`${label}: flagship vector count ${data.flagshipVectorCount}`)
+            if(data.solutionIconCount!==3) fail(`${label}: compact solution icons ${data.solutionIconCount}`)
             if(data.workVectorCount!==3) fail(`${label}: work vector count ${data.workVectorCount}`)
+            if(data.featureVectorCount!==1) fail(`${label}: featured case vector count ${data.featureVectorCount}`)
             if(data.legacyRasterCount!==0) fail(`${label}: legacy homepage raster images still rendered ${data.legacyRasterCount}`)
             if(data.ghostCount!==0) fail(`${label}: legacy light-section ghost still rendered ${data.ghostCount}`)
             if(data.logoHref!=='/') fail(`${label}: logo href ${data.logoHref}`)
