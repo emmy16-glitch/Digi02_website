@@ -17,9 +17,6 @@ async function inspect(name, width, height) {
 
   await page.goto(`${origin}/`, { waitUntil: 'networkidle', timeout: 20000 })
   await page.locator('.reference-home').waitFor({ timeout: 10000 })
-  await page.evaluate(async () => {
-    await Promise.all([...document.images].map((image) => image.decode().catch(() => {})))
-  })
 
   const data = await page.evaluate(() => {
     const visibleRects = (selector) =>
@@ -34,9 +31,7 @@ async function inspect(name, width, height) {
     const heroBadge = document.querySelector('.reference-home-hero__capability-icon')?.getBoundingClientRect()
     const capabilityBadge = document.querySelector('.reference-home-capability-card__icon')?.getBoundingClientRect()
     const capabilityBadgeStyle = document.querySelector('.reference-home-capability-card__icon')
-    const summary = document.querySelector('.reference-home-hero__summary')
     const light = document.querySelector('.reference-home-light')
-    const workImages = [...document.querySelectorAll('.reference-home-work-card img')]
 
     return {
       clientWidth: document.documentElement.clientWidth,
@@ -51,16 +46,17 @@ async function inspect(name, width, height) {
         : null,
       titleGold: titleGold ? getComputedStyle(titleGold).color : '',
       primaryBackground: primary ? getComputedStyle(primary).backgroundColor : '',
-      summaryColor: summary ? getComputedStyle(summary).color : '',
       lightBackground: light ? getComputedStyle(light).backgroundColor : '',
       heroBadge: heroBadge ? { width: heroBadge.width, height: heroBadge.height } : null,
       capabilityBadge: capabilityBadge ? { width: capabilityBadge.width, height: capabilityBadge.height } : null,
       capabilityBadgeRadius: capabilityBadgeStyle ? getComputedStyle(capabilityBadgeStyle).borderRadius : '',
-      workSources: workImages.map((image) => image.currentSrc || image.src),
-      workNatural: workImages.map((image) => ({ width: image.naturalWidth, height: image.naturalHeight })),
-      brokenImages: [...document.images]
-        .filter((image) => !image.complete || image.naturalWidth === 0)
-        .map((image) => image.currentSrc || image.src),
+      heroRasterCount: document.querySelectorAll('.reference-home-hero__media img').length,
+      flagshipRasterCount: document.querySelectorAll('.reference-home-solution-card img').length,
+      workRasterCount: document.querySelectorAll('.reference-home-work-card img').length,
+      heroVectorCount: document.querySelectorAll('.reference-home-hero__media .home-vector-visual').length,
+      flagshipVectorCount: document.querySelectorAll('.reference-home-solution-card .home-vector-visual').length,
+      workVectorCount: document.querySelectorAll('.reference-home-work-card .home-vector-visual').length,
+      ghostCount: document.querySelectorAll('.reference-home-light__ghost').length,
     }
   })
 
@@ -68,7 +64,14 @@ async function inspect(name, width, height) {
   if (data.trustCount !== 5) fail(`${name}: trust marks ${data.trustCount}`)
   if (data.solutionRects.length !== 3) fail(`${name}: flagship cards ${data.solutionRects.length}`)
   if (data.workRects.length !== 3) fail(`${name}: selected-work cards ${data.workRects.length}`)
-  if (data.brokenImages.length) fail(`${name}: broken images ${data.brokenImages.join(', ')}`)
+
+  if (data.heroRasterCount !== 0) fail(`${name}: old hero raster still rendered (${data.heroRasterCount})`)
+  if (data.flagshipRasterCount !== 0) fail(`${name}: old flagship raster images still rendered (${data.flagshipRasterCount})`)
+  if (data.workRasterCount !== 0) fail(`${name}: old selected-work raster images still rendered (${data.workRasterCount})`)
+  if (data.ghostCount !== 0) fail(`${name}: old light-section ghost image still rendered`)
+  if (data.heroVectorCount !== 1) fail(`${name}: hero vector count ${data.heroVectorCount}`)
+  if (data.flagshipVectorCount !== 3) fail(`${name}: flagship vector count ${data.flagshipVectorCount}`)
+  if (data.workVectorCount !== 3) fail(`${name}: work vector count ${data.workVectorCount}`)
 
   if (data.titleGold !== 'rgb(217, 163, 78)') fail(`${name}: title gold ${data.titleGold}`)
   if (data.primaryBackground !== 'rgb(217, 163, 78)') fail(`${name}: primary button gold ${data.primaryBackground}`)
@@ -81,13 +84,6 @@ async function inspect(name, width, height) {
       fail(`${name}: icon badge sizes diverge`)
     }
     if (data.capabilityBadgeRadius !== '50%') fail(`${name}: capability badge is not circular (${data.capabilityBadgeRadius})`)
-  }
-
-  if (!data.workSources[0]?.includes('skygrid-field-operations')) fail(`${name}: Thermal work visual not updated`)
-  if (!data.workSources[1]?.includes('payment-pos')) fail(`${name}: Sterling work visual not updated`)
-  if (!data.workSources[2]?.includes('digi02-control-room-hero')) fail(`${name}: Kaduna work visual not updated`)
-  for (const [index, image] of data.workNatural.entries()) {
-    if (image.width < 200 || image.height < 120) fail(`${name}: work image ${index + 1} too small ${image.width}x${image.height}`)
   }
 
   if (width >= 1000) {
