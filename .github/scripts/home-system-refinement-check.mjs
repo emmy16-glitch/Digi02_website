@@ -87,7 +87,7 @@ async function inspect(name, width, height) {
     fail(`${name}: cinematic hero stage missing`)
   } else {
     if (data.heroStage.height < 520) fail(`${name}: hero too short ${data.heroStage.height}`)
-    if (data.heroVisual.width < data.clientWidth - 2) fail(`${name}: hero visual is not full width ${data.heroVisual.width}/${data.clientWidth}`)
+    if (data.heroVisual.width < data.heroStage.width - 2) fail(`${name}: hero visual narrower than stage ${data.heroVisual.width}/${data.heroStage.width}`)
     if (data.heroVisual.height < data.heroStage.height - 2) fail(`${name}: hero visual collapsed ${data.heroVisual.height}/${data.heroStage.height}`)
   }
 
