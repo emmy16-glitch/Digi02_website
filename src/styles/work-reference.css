@@ -90,6 +90,28 @@
 
 .work-reference-hero__cta:hover { background: rgba(224, 188, 103, 0.09); }
 
+.work-reference-filter { border-bottom: 1px solid rgba(255, 255, 255, 0.09); background: #0b0d0f; }
+
+.work-reference-filter__inner { display: flex; min-height: 5.25rem; align-items: center; justify-content: space-between; gap: 1.5rem; }
+
+.work-reference-filter__buttons { display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; }
+
+.work-reference-filter__buttons::-webkit-scrollbar { display: none; }
+
+.work-reference-filter__buttons button { min-height: 2.55rem; flex: 0 0 auto; padding: 0.55rem 0.85rem; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 4px; background: transparent; color: #bdb9b1; font: inherit; font-size: 0.72rem; cursor: pointer; transition: background 160ms var(--ease-standard, ease), border-color 160ms var(--ease-standard, ease), color 160ms var(--ease-standard, ease); }
+
+.work-reference-filter__buttons button:hover { border-color: rgba(224, 188, 103, 0.58); color: #f1eee7; }
+
+.work-reference-filter__buttons button.is-active { border-color: transparent; background: var(--work-gold); color: #0c0d0d; font-weight: 700; }
+
+.work-reference-filter__inner > p { flex: 0 0 auto; margin: 0; color: #8e8b84; font-family: var(--font-mono, monospace); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.work-reference-empty { padding: 5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); background: #0a0c0d; }
+
+.work-reference-empty p { margin: 0; color: #c6c2ba; font-size: 1rem; }
+
+.work-reference-empty button { min-height: 2.8rem; margin-top: 1rem; padding: 0.65rem 0.9rem; border: 1px solid rgba(224, 188, 103, 0.6); border-radius: 4px; background: transparent; color: var(--work-gold); font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+
 .work-reference-featured,
 .work-reference-named,
 .work-reference-applications { padding: clamp(4.5rem, 8vw, 7.5rem) 0; }
@@ -251,6 +273,8 @@
   .work-reference-hero__inner { padding-top: 6rem; padding-bottom: 16rem; }
   .work-reference-hero h1 { max-width: 9.8ch; font-size: clamp(2.8rem, 12.5vw, 4rem); }
   .work-reference-hero__inner > p:not(.work-reference-kicker) { font-size: 1rem; }
+  .work-reference-filter__inner { min-height: auto; align-items: flex-start; flex-direction: column; padding: 0.9rem 0; gap: 0.75rem; }
+  .work-reference-filter__buttons { width: calc(100% + (var(--page-margin) * 2)); margin-inline: calc(var(--page-margin) * -1); padding-inline: var(--page-margin); }
   .work-reference-featured, .work-reference-named, .work-reference-applications { padding: 3.75rem 0; }
   .work-reference-featured__media { min-height: 24rem; }
   .work-reference-featured__content { padding: 1.25rem; }
