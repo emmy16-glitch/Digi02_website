@@ -204,10 +204,10 @@ const impactMetrics = [
   { icon: 'award', value: 'ISO 27001', label: 'Security and quality standards' },
 ] as const
 
-const caseStudyImpact = [
-  { value: '60%', label: 'Faster inspection cycles' },
-  { value: '24/7', label: 'Field data availability' },
-  { value: '< 1 hr', label: 'Reporting turnaround' },
+const caseStudyWorkflow = [
+  { value: '01', label: 'Plan the mission' },
+  { value: '02', label: 'Capture field data' },
+  { value: '03', label: 'Review operations' },
 ] as const
 
 export function HomeReferenceSolutions() {
@@ -238,13 +238,13 @@ export function HomeReferenceSolutions() {
               <strong>Thermal Plant<br />Inspection Automation</strong>
               <p>An inspection workflow that brings mission planning, field capture and operational review into one coordinated system.</p>
 
-              <span className="reference-home-feature-case__impact" aria-label="Operational impact">
-                <b>Operational impact</b>
+              <span className="reference-home-feature-case__impact" aria-label="Operational workflow">
+                <b>Operational workflow</b>
                 <span>
-                  {caseStudyImpact.map((metric) => (
-                    <i key={metric.label}>
-                      <strong>{metric.value}</strong>
-                      <small>{metric.label}</small>
+                  {caseStudyWorkflow.map((step) => (
+                    <i key={step.label}>
+                      <strong>{step.value}</strong>
+                      <small>{step.label}</small>
                     </i>
                   ))}
                 </span>
