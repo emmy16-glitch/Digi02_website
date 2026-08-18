@@ -1,0 +1,62 @@
+name: Company hero motion gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: company-hero-motion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  company-hero-motion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck lint and build
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run build
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+          npx playwright install --with-deps chromium
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
+          for i in {1..40}; do
+            curl --fail --silent http://127.0.0.1:4173/company >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Verify autonomous hero motion
+        run: node .github/scripts/company-hero-motion-check.mjs
+
+      - name: Upload motion evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: company-hero-motion-evidence
+          path: company-hero-motion-evidence
+          retention-days: 3
