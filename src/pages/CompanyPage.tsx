@@ -334,7 +334,11 @@ export function CompanyPage() {
             <h2 id="company-reference-cta-title">Let’s build what’s next—together.</h2>
             <p>Partner with Digi02 to turn ideas into secure, scalable, and impactful solutions.</p>
           </div>
-          <a href="/contact">Discuss your project <span aria-hidden="true">→</span></a>
+          <div className="company-reference-cta__links">
+            <a href="/solutions">Explore solutions <span aria-hidden="true">→</span></a>
+            <a href="/insights">Read our insights <span aria-hidden="true">→</span></a>
+            <a href="/contact">Discuss your project <span aria-hidden="true">→</span></a>
+          </div>
         </Container>
       </section>
     </div>

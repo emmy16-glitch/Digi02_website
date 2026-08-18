@@ -11,9 +11,11 @@ import { PrimaryButton } from '../components/PrimaryButton'
 import '../styles/insights-reference.css'
 
 type InsightCategory = 'All' | 'Autonomous' | 'Enterprise' | 'Mobility' | 'Engineering' | 'Community'
+type InsightFormat = 'All' | 'Field note' | 'Perspective'
 
 type InsightItem = {
   category: Exclude<InsightCategory, 'All'>
+  format: Exclude<InsightFormat, 'All'>
   eyebrow: string
   readingTime: string
   title: string
@@ -34,9 +36,12 @@ const categories: readonly InsightCategory[] = [
   'Community',
 ]
 
+const formats: readonly InsightFormat[] = ['All', 'Field note', 'Perspective']
+
 const insights: readonly InsightItem[] = [
   {
     category: 'Enterprise',
+    format: 'Field note',
     eyebrow: 'Enterprise systems',
     readingTime: '4 min read',
     title: 'What should stay connected after a transaction?',
@@ -50,6 +55,7 @@ const insights: readonly InsightItem[] = [
   },
   {
     category: 'Mobility',
+    format: 'Perspective',
     eyebrow: 'Mobility systems',
     readingTime: '5 min read',
     title: 'Designing mobility software around the operation, not just the trip.',
@@ -63,6 +69,7 @@ const insights: readonly InsightItem[] = [
   },
   {
     category: 'Engineering',
+    format: 'Field note',
     eyebrow: 'Engineering practice',
     readingTime: '3 min read',
     title: 'When should custom software replace a workaround?',
@@ -76,6 +83,7 @@ const insights: readonly InsightItem[] = [
   },
   {
     category: 'Community',
+    format: 'Perspective',
     eyebrow: 'Technology community',
     readingTime: '4 min read',
     title: 'Why local context still matters when the engineering standard is global.',
@@ -89,6 +97,7 @@ const insights: readonly InsightItem[] = [
   },
   {
     category: 'Autonomous',
+    format: 'Field note',
     eyebrow: 'Mission data',
     readingTime: '6 min read',
     title: 'The mission is not finished when the aircraft lands.',
@@ -104,14 +113,20 @@ const insights: readonly InsightItem[] = [
 
 export function InsightsPage() {
   const [activeCategory, setActiveCategory] = useState<InsightCategory>('All')
+  const [activeFormat, setActiveFormat] = useState<InsightFormat>('All')
+  const [query, setQuery] = useState('')
 
-  const visibleInsights = useMemo(
-    () =>
-      activeCategory === 'All'
-        ? insights
-        : insights.filter((insight) => insight.category === activeCategory),
-    [activeCategory],
-  )
+  const visibleInsights = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase()
+
+    return insights.filter((insight) => {
+      const matchesTopic = activeCategory === 'All' || insight.category === activeCategory
+      const matchesFormat = activeFormat === 'All' || insight.format === activeFormat
+      const searchableText = [insight.category, insight.format, insight.eyebrow, insight.title, insight.summary, insight.takeaway].join(' ').toLowerCase()
+      const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery)
+      return matchesTopic && matchesFormat && matchesQuery
+    })
+  }, [activeCategory, activeFormat, query])
 
   return (
     <div className="insights-reference-page">
@@ -171,19 +186,49 @@ export function InsightsPage() {
 
       <section className="insights-reference-filter" aria-label="Filter insights">
         <Container className="insights-reference-filter__inner">
-          <div className="insights-reference-filter__buttons">
-            {categories.map((category) => (
-              <button
-                className={activeCategory === category ? 'is-active' : undefined}
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                type="button"
-              >
-                {category === 'All' ? 'All insights' : category}
-              </button>
-            ))}
+          <div className="insights-reference-filter__controls">
+            <label className="insights-reference-search">
+              <span className="sr-only">Search insights</span>
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search ideas, systems, or topics"
+              />
+              {query ? <button type="button" onClick={() => setQuery('')} aria-label="Clear insight search">Clear</button> : null}
+            </label>
+            <div className="insights-reference-filter__group" aria-label="Filter insights by topic">
+              <span>Topic</span>
+              <div className="insights-reference-filter__buttons">
+                {categories.map((category) => (
+                  <button
+                    className={activeCategory === category ? 'is-active' : undefined}
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    type="button"
+                  >
+                    {category === 'All' ? 'All topics' : category}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="insights-reference-filter__group" aria-label="Filter insights by format">
+              <span>Format</span>
+              <div className="insights-reference-filter__buttons">
+                {formats.map((format) => (
+                  <button
+                    className={activeFormat === format ? 'is-active' : undefined}
+                    key={format}
+                    onClick={() => setActiveFormat(format)}
+                    type="button"
+                  >
+                    {format === 'All' ? 'All formats' : format}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-          <span>{visibleInsights.length} perspectives</span>
+          <span>{visibleInsights.length} {visibleInsights.length === 1 ? 'perspective' : 'perspectives'}</span>
         </Container>
       </section>
 
@@ -201,7 +246,7 @@ export function InsightsPage() {
                   <img src={insight.image} alt={insight.imageAlt} loading="lazy" decoding="async" />
                 </div>
                 <div className="insights-reference-card__body">
-                  <p>{insight.eyebrow} <span aria-hidden="true">/</span> {insight.readingTime}</p>
+                  <p>{insight.eyebrow} <span aria-hidden="true">/</span> {insight.format} <span aria-hidden="true">/</span> {insight.readingTime}</p>
                   <h3>{insight.title}</h3>
                   <p>{insight.summary}</p>
                   <p className="insights-reference-card__takeaway"><strong>Field note:</strong> {insight.takeaway}</p>
@@ -209,6 +254,12 @@ export function InsightsPage() {
                 </div>
               </article>
             ))}
+            {visibleInsights.length === 0 ? (
+              <div className="insights-reference-empty">
+                <p>No perspectives match this search.</p>
+                <button type="button" onClick={() => { setQuery(''); setActiveCategory('All'); setActiveFormat('All') }}>Reset filters</button>
+              </div>
+            ) : null}
           </div>
         </Container>
       </section>

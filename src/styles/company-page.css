@@ -117,7 +117,7 @@
 }
 
 .company-reference-hero__cta,
-.company-reference-cta__inner > a {
+.company-reference-cta__links a {
   display: inline-flex;
   min-height: 3rem;
   align-items: center;
@@ -137,13 +137,13 @@
 }
 
 .company-reference-hero__cta span,
-.company-reference-cta__inner > a span,
+.company-reference-cta__links a span,
 .company-reference-culture__copy a span {
   transition: transform var(--motion-fast) var(--ease-standard);
 }
 
 .company-reference-hero__cta:hover span,
-.company-reference-cta__inner > a:hover span,
+.company-reference-cta__links a:hover span,
 .company-reference-culture__copy a:hover span {
   transform: translateX(3px);
 }
@@ -646,6 +646,23 @@
   font-size: 0.78rem;
 }
 
+.company-reference-cta__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.company-reference-cta__links a {
+  text-decoration: none;
+}
+
+.company-reference-cta__links a:not(:last-child) {
+  border-color: rgba(239, 207, 125, 0.48);
+  background: transparent;
+  color: #efcf7d;
+}
+
 @media (min-width: 64rem) {
   .company-reference-hero h1 {
     white-space: nowrap;
@@ -1027,7 +1044,12 @@
     font-size: 1.9rem;
   }
 
-  .company-reference-cta__inner > a {
+  .company-reference-cta__links {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .company-reference-cta__links a {
     width: 100%;
   }
 }

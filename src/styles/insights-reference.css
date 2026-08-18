@@ -262,16 +262,78 @@
 
 .insights-reference-filter__inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-3);
-  min-height: 4.5rem;
+  padding-block: 1rem;
+}
+
+.insights-reference-filter__controls {
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.insights-reference-search {
+  display: flex;
+  align-items: center;
+  width: min(100%, 31rem);
+  min-height: 44px;
+  border: 1px solid var(--line-subtle);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.insights-reference-search:focus-within {
+  border-color: var(--line-gold);
+}
+
+.insights-reference-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.83rem;
+  padding: 0.7rem 0.85rem;
+}
+
+.insights-reference-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.insights-reference-search button {
+  min-height: 32px;
+  margin-right: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--gold-400);
+  font: inherit;
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.insights-reference-filter__group {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.insights-reference-filter__group > span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .insights-reference-filter__buttons {
   display: flex;
   align-items: center;
   gap: var(--space-1);
+  flex-wrap: wrap;
 }
 
 .insights-reference-filter button {
@@ -447,6 +509,29 @@
 
 .insights-reference-card a span {
   color: var(--gold-400);
+}
+
+.insights-reference-empty {
+  grid-column: 1 / -1;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px dashed var(--line-subtle);
+  text-align: center;
+}
+
+.insights-reference-empty p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.insights-reference-empty button {
+  min-height: 44px;
+  margin-top: 1rem;
+  border: 1px solid var(--line-gold);
+  background: transparent;
+  color: var(--gold-400);
+  font: inherit;
+  cursor: pointer;
+  padding: 0.55rem 0.9rem;
 }
 
 .insights-reference-principles {
@@ -689,6 +774,19 @@
     display: block;
     min-height: 0;
     padding-block: var(--space-2);
+  }
+
+  .insights-reference-filter__controls {
+    gap: 0.75rem;
+  }
+
+  .insights-reference-search {
+    width: 100%;
+  }
+
+  .insights-reference-filter__group {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
   }
 
   .insights-reference-filter__buttons {
