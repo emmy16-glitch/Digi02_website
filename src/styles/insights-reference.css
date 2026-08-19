@@ -399,16 +399,51 @@
 }
 
 .insights-reference-card {
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--line-subtle);
   background: var(--surface-800);
-  transition: transform var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: transform 220ms var(--ease-standard), border-color 220ms var(--ease-standard), background 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard);
+  will-change: transform;
 }
 
-.insights-reference-card:hover {
-  transform: translateY(-2px);
+.insights-reference-card::after {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  content: '';
+  background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 260ms var(--ease-standard);
+}
+
+.insights-reference-card:focus-within {
+  transform: translateY(-3px);
   border-color: rgba(201, 163, 74, 0.28);
   background: #141414;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+}
+
+.insights-reference-card:focus-within::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .insights-reference-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(201, 163, 74, 0.28);
+    background: #141414;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+  }
+
+  .insights-reference-card:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .insights-reference-card:nth-child(1) {
@@ -449,11 +484,17 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  transition: transform var(--motion-component) var(--ease-standard);
+  transition: transform 360ms var(--ease-standard);
 }
 
-.insights-reference-card:hover .insights-reference-card__media img {
-  transform: scale(1.015);
+.insights-reference-card:focus-within .insights-reference-card__media img {
+  transform: scale(1.025);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .insights-reference-card:hover .insights-reference-card__media img {
+    transform: scale(1.025);
+  }
 }
 
 .insights-reference-card__body {
@@ -504,11 +545,47 @@
 }
 
 .insights-reference-card a {
+  position: relative;
   color: var(--text-primary);
+  outline-offset: 0.35rem;
+  transition: color 180ms var(--ease-standard);
 }
 
 .insights-reference-card a span {
   color: var(--gold-400);
+}
+
+.insights-reference-card a::after {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 0.28rem;
+  left: 0;
+  height: 1px;
+  content: '';
+  background: currentColor;
+  opacity: 0.58;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-standard);
+}
+
+.insights-reference-card:focus-within a::after {
+  transform: scaleX(1);
+}
+
+.insights-reference-card a:focus-visible {
+  color: var(--gold-400);
+  outline: 2px solid var(--gold-400);
+}
+
+.insights-reference-card a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .insights-reference-card:hover a::after {
+    transform: scaleX(1);
+  }
 }
 
 .insights-reference-empty {
@@ -856,14 +933,19 @@
 
 @media (prefers-reduced-motion: reduce) {
   .insights-reference-card,
+  .insights-reference-card::after,
   .insights-reference-card__media img,
   .insights-reference-featured__copy a span,
-  .insights-reference-card a span {
+  .insights-reference-card a span,
+  .insights-reference-card a,
+  .insights-reference-card a::after {
     transition: none;
   }
 
   .insights-reference-card:hover,
+  .insights-reference-card:focus-within,
   .insights-reference-card:hover .insights-reference-card__media img,
+  .insights-reference-card:focus-within .insights-reference-card__media img,
   .insights-reference-featured__copy a:hover span,
   .insights-reference-card a:hover span {
     transform: none;

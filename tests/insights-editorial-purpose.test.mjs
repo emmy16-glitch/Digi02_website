@@ -38,3 +38,14 @@ test('preserves Insights discovery controls after the editorial redesign', () =>
   assert.match(page, /aria-label="Filter insights by format"/)
   assert.match(page, /Reset filters/)
 })
+
+test('provides refined hover and keyboard-focus feedback for Insights cards with reduced-motion protection', () => {
+  assert.match(styles, /\.insights-reference-card:focus-within/)
+  assert.match(styles, /@media \(hover: hover\) and \(pointer: fine\)/)
+  assert.match(styles, /\.insights-reference-card:hover::after/)
+  assert.match(styles, /\.insights-reference-card a:focus-visible/)
+  assert.match(styles, /box-shadow: 0 18px 38px/)
+  assert.match(styles, /scale\(1\.025\)/)
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/)
+  assert.match(styles, /\.insights-reference-card:focus-within \.insights-reference-card__media img/)
+})
