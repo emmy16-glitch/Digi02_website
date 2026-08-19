@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import digi02OperationsLogo from '../../assets/brand/digi02-logo-operations-light.png'
 import { Container } from '../Container'
 import { DesktopNavigation, type NavigationItem } from './DesktopNavigation'
 import { MobileNavigation } from './MobileNavigation'
@@ -28,7 +27,7 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
     <header className="site-header">
       <Container className="site-header__inner">
         <a className="site-header__wordmark" href="/" aria-label="Digi02 home">
-          <img src={digi02OperationsLogo} alt="Digi02 — Technology built for real operations" decoding="async" />
+          <span aria-hidden="true">Digi<span>02</span></span>
         </a>
 
         <DesktopNavigation currentPath={currentPath} items={navigationItems} />
