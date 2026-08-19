@@ -136,6 +136,19 @@ const capabilities = [
   },
 ] as const
 
+const operationalCapabilities = [
+  { title: 'Autonomous Systems', label: 'Field orchestration', copy: 'Mission-ready systems for inspection, mapping, surveillance and logistics—connecting planning, field capture and review.', href: '/solutions/skygrid', icon: 'skygrid', visual: 'mission' },
+  { title: 'Enterprise Platforms', label: 'Core operations', copy: 'ERP, payments, HR and service platforms built around the workflows that keep organisations moving.', href: '/solutions/enterprise-systems', icon: 'enterprise', visual: 'platform' },
+  { title: 'Digital Infrastructure', label: 'Secure by design', copy: 'Connected foundations that protect data, sustain service continuity and support reliable growth.', href: '/solutions', icon: 'security', visual: 'infrastructure' },
+  { title: 'Operational Intelligence', label: 'Signals to action', copy: 'Decision-ready insight that brings distributed signals, review cycles and teams into one operating picture.', href: '/solutions/custom-software', icon: 'automation', visual: 'intelligence' },
+] as const
+
+const approvedOutcomes = [
+  { value: '30%', label: 'efficiency increase', project: 'Thermal Plant Inspection Automation', href: '/work/thermal-plant-inspection-automation' },
+  { value: '15%', label: 'error reduction', project: 'Sterling Payment Gateway', href: '/work/sterling-payment-gateway' },
+  { value: '40%', label: 'faster workflow', project: 'Kaduna State e-Management System', href: '/work/kaduna-state-e-management-system' },
+] as const
+
 const work = [
   {
     category: 'Energy',
@@ -237,12 +250,67 @@ export function HomeBlueprintCapabilities() {
   )
 }
 
+export function HomeBlueprintOperationalBento() {
+  return (
+    <section className="home-blueprint-bento" data-home-section="H04A" aria-labelledby="home-bento-title">
+      <Container>
+        <header className="home-blueprint-bento__heading">
+          <div>
+            <SectionEyebrow>Systems in operation</SectionEyebrow>
+            <h2 id="home-bento-title">Designed for the work beneath the work.</h2>
+          </div>
+          <p>Digi02 brings field systems, enterprise workflows, secure foundations and decision intelligence into a coordinated operating model.</p>
+        </header>
+        <div className="home-blueprint-bento__grid">
+          {operationalCapabilities.map((capability) => (
+            <a className={`home-blueprint-bento-card home-blueprint-bento-card--${capability.visual}`} href={capability.href} key={capability.title}>
+              <span className="home-blueprint-bento-card__topline"><IconBadge kind={capability.icon as IconKind} /><small>{capability.label}</small></span>
+              <span className="home-blueprint-bento-card__copy"><strong>{capability.title}</strong><span>{capability.copy}</span></span>
+              <span className="home-blueprint-bento-card__visual" aria-hidden="true">
+                {capability.visual === 'mission' && <><i /><i /><i /><b>Plan</b><b>Capture</b><b>Review</b></>}
+                {capability.visual === 'platform' && <><i>ERP</i><i>PAY</i><i>HR</i><i>OPS</i></>}
+                {capability.visual === 'infrastructure' && <><i /><i /><i /><i /><b /></>}
+                {capability.visual === 'intelligence' && <><i /><i /><i /><i /><b>Signal review</b></>}
+              </span>
+              <b className="home-blueprint-bento-card__action">Explore capability <i aria-hidden="true">→</i></b>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </section>
+  )
+}
+
 export function HomeBlueprintPhilosophy() {
   return (
     <section className="home-blueprint-philosophy" data-home-section="H05" aria-labelledby="home-philosophy-title">
       <Container className="home-blueprint-philosophy__layout">
         <p className="home-blueprint-eyebrow">Our Approach</p>
         <h2 id="home-philosophy-title">Technology should fit the operation — not force the operation to fit the technology.</h2>
+      </Container>
+    </section>
+  )
+}
+
+export function HomeBlueprintOutcomes() {
+  return (
+    <section className="home-blueprint-outcomes" data-home-section="H05A" aria-labelledby="home-outcomes-title">
+      <Container className="home-blueprint-outcomes__layout">
+        <header className="home-blueprint-outcomes__heading">
+          <SectionEyebrow>Approved outcomes</SectionEyebrow>
+          <h2 id="home-outcomes-title">Evidence from real operations.</h2>
+          <p>Client-approved results from the systems Digi02 has helped put into operation.</p>
+        </header>
+        <div className="home-blueprint-outcomes__grid">
+          {approvedOutcomes.map((outcome) => (
+            <a href={outcome.href} key={outcome.project}>
+              <span>{outcome.project}</span>
+              <strong>{outcome.value}</strong>
+              <b>{outcome.label}</b>
+              <small>Read case study <i aria-hidden="true">→</i></small>
+            </a>
+          ))}
+        </div>
       </Container>
     </section>
   )

@@ -1,6 +1,8 @@
 import {
   HomeBlueprintCapabilities,
   HomeBlueprintFinalCta,
+  HomeBlueprintOperationalBento,
+  HomeBlueprintOutcomes,
   HomeBlueprintPhilosophy,
   HomeBlueprintRegionalProof,
   HomeBlueprintSolutions,
@@ -8,6 +10,7 @@ import {
 } from '../sections/home/HomeBlueprintContent'
 import { HomeBlueprintHero } from '../sections/home/HomeBlueprintHero'
 import '../styles/home-blueprint.css'
+import '../styles/home-capability-bento.css'
 
 export function HomePage() {
   return (
@@ -15,7 +18,9 @@ export function HomePage() {
       <HomeBlueprintHero />
       <HomeBlueprintSolutions />
       <HomeBlueprintCapabilities />
+      <HomeBlueprintOperationalBento />
       <HomeBlueprintPhilosophy />
+      <HomeBlueprintOutcomes />
       <HomeBlueprintWork />
       <HomeBlueprintRegionalProof />
       <HomeBlueprintFinalCta />
