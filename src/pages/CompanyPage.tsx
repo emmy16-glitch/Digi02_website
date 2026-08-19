@@ -97,17 +97,19 @@ const direction = [
 const team = [
   {
     image: johnOkojere,
-    discipline: 'ECOSYSTEM',
+    discipline: 'TECHNICAL LEADERSHIP',
     name: 'John Okojere',
-    role: 'Ecosystem Lead',
-    body: 'Add an approved 40–60 word professional profile for John Okojere.',
+    role: 'Technical Lead',
+    body: 'At Digi02 Tech Systems, John focuses on developing and delivering scalable solutions that align with business objectives.',
+    linkedInUrl: 'https://ng.linkedin.com/in/okojere',
   },
   {
     image: covenantIregbeyen,
-    discipline: 'SOFTWARE ENGINEERING',
+    discipline: 'SOLUTIONS ENGINEERING',
     name: 'Covenant Iregbeyen',
-    role: 'Software Development Lead',
-    body: 'Add an approved 40–60 word professional profile for Covenant Iregbeyen.',
+    role: 'Tech-Driven Solutions Specialist',
+    body: 'At Digi02 Tech Systems, Covenant works across software architecture, systems engineering, and AI-enabled business systems.',
+    linkedInUrl: 'https://ng.linkedin.com/in/covenantayo',
   },
   {
     image: kosisochukwuUgwubma,
@@ -115,6 +117,7 @@ const team = [
     name: 'Kosisochukwu Ugwubma',
     role: 'UI/UX Lead',
     body: 'Add an approved 40–60 word professional profile for Kosisochukwu Ugwubma.',
+    linkedInUrl: undefined,
   },
   {
     image: abrahamSalifu,
@@ -122,6 +125,7 @@ const team = [
     name: 'Abraham Salifu',
     role: 'Cybersecurity Lead',
     body: 'Add an approved 40–60 word professional profile for Abraham Salifu.',
+    linkedInUrl: undefined,
   },
   {
     image: iniEsiset,
@@ -129,6 +133,7 @@ const team = [
     name: 'Ini Esiset',
     role: 'AI/Data Lead',
     body: 'Add an approved 40–60 word professional profile for Ini Esiset.',
+    linkedInUrl: undefined,
   },
 ] as const
 
@@ -178,8 +183,12 @@ function TeamCard({ member, index }: { member: (typeof team)[number]; index: num
         <p className="company-reference-team__discipline">{member.discipline}</p>
         <h3>{member.name}</h3>
         <p className="company-reference-team__role">{member.role}</p>
-        <p className="company-reference-team__bio"><span>Placeholder biography</span>{member.body}</p>
-        <a className="company-reference-team__linkedin" href={`/contact?enquiry=linkedin-profile&member=${encodeURIComponent(member.name)}`} aria-label={`Request the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>Request LinkedIn profile</span></a>
+        <p className="company-reference-team__bio"><span>{member.linkedInUrl ? 'Public LinkedIn summary' : 'Placeholder biography'}</span>{member.body}</p>
+        {member.linkedInUrl ? (
+          <a className="company-reference-team__linkedin" href={member.linkedInUrl} target="_blank" rel="noreferrer" aria-label={`View the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>View LinkedIn profile</span></a>
+        ) : (
+          <a className="company-reference-team__linkedin" href={`/contact?enquiry=linkedin-profile&member=${encodeURIComponent(member.name)}`} aria-label={`Request the LinkedIn profile for ${member.name}`}><LinkedInIcon /><span>Request LinkedIn profile</span></a>
+        )}
       </div>
     </article>
   )
