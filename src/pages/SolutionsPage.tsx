@@ -160,14 +160,14 @@ export function SolutionsPage() {
         <Container className="solutions-reference-hero__inner">
           <div className="solutions-reference-hero__copy">
             <nav className="solutions-reference-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">›</span><span>Solutions</span></nav>
-            <h1 id="solutions-reference-title">Technology solutions <br />for <span>real operations.</span></h1>
-            <p className="solutions-reference-hero__lead">Digi02 builds secure, scalable and intelligent systems that power critical operations across industries.</p>
+            <h1 id="solutions-reference-title">One delivery partner <br />for <span>complex operations.</span></h1>
+            <p className="solutions-reference-hero__lead">Digi02 turns operational problems into secure, dependable systems—across discovery, product strategy, engineering, integration, rollout and improvement.</p>
             <div className="solutions-reference-hero__principles" aria-label="Solution principles">
-              <div><span className="solutions-reference-principle-icon" aria-hidden="true">✣</span><p><strong>Built for impact</strong><small>Practical technology that solves real business challenges.</small></p></div>
-              <div><span className="solutions-reference-principle-icon" aria-hidden="true">▧</span><p><strong>Engineered for scale</strong><small>Robust, reliable and ready for the future.</small></p></div>
+              <div><span className="solutions-reference-principle-icon" aria-hidden="true">01</span><p><strong>Start with the operation</strong><small>Make the workflow, constraints and decisions visible before choosing technology.</small></p></div>
+              <div><span className="solutions-reference-principle-icon" aria-hidden="true">02</span><p><strong>Build for use</strong><small>Engineer a system teams can adopt, operate and improve with confidence.</small></p></div>
             </div>
           </div>
-          <aside className="solutions-reference-trust" aria-label="Trusted organisations"><small>Trusted by</small><strong>NDA</strong><span>Nigerian Defence Academy</span><strong>NCS</strong><span>Nigeria Customs Service</span><strong>NEXIM</strong><span>Export-Import Bank</span><strong>Sterling</strong></aside>
+          <aside className="solutions-reference-trust" aria-label="Digi02 delivery discipline"><small>How we deliver</small><strong>Discover</strong><span>Understand the operating reality.</span><strong>Design</strong><span>Choose the system around the work.</span><strong>Deliver</strong><span>Roll out with a clear path to improvement.</span></aside>
         </Container>
       </section>
 
@@ -182,7 +182,7 @@ export function SolutionsPage() {
 
       <section className="solutions-reference-showcase" aria-labelledby="solutions-showcase-title">
         <Container>
-          <header className="solutions-reference-showcase__heading"><p>Our flagship solutions</p><h2 id="solutions-showcase-title">Purpose-built technology. Measurable impact.</h2></header>
+          <header className="solutions-reference-showcase__heading"><p>Capability areas</p><h2 id="solutions-showcase-title">The systems behind dependable operations.</h2></header>
           <div className="solutions-reference-grid" aria-live="polite">
             {visibleSolutions.map((solution) => {
               const isAllSolutions = activeCategory === 'All Solutions'
@@ -207,7 +207,7 @@ export function SolutionsPage() {
       </section>
 
       <section className="solutions-reference-cta" aria-labelledby="solutions-reference-cta-title">
-        <Container className="solutions-reference-cta__inner"><div><h2 id="solutions-reference-cta-title">Not sure which solution fits?</h2><p>Talk to our experts. We’ll help you find the right fit.</p></div><a className="solutions-reference-cta__button" href="/contact">Discuss your project <span aria-hidden="true">→</span></a></Container>
+        <Container className="solutions-reference-cta__inner"><div><h2 id="solutions-reference-cta-title">Start with the real problem.</h2><p>Bring the workflow, constraint or system question. We’ll help frame the right next step.</p></div><a className="solutions-reference-cta__button" href="/contact">Start a project brief <span aria-hidden="true">→</span></a></Container>
       </section>
     </div>
   )

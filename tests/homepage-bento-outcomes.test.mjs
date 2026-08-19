@@ -31,12 +31,19 @@ test('places only client-approved outcome metrics before the homepage Work secti
   assert.match(homeContent, /faster workflow/)
 })
 
+test('connects each homepage project card directly to its corresponding case study', () => {
+  assert.match(homeContent, /href: '\/work\/thermal-plant-inspection-automation'/)
+  assert.match(homeContent, /href: '\/work\/sterling-payment-gateway'/)
+  assert.match(homeContent, /href: '\/work\/kaduna-state-e-management-system'/)
+  assert.match(homeContent, /href=\{item\.href\}/)
+})
+
 test('adds a user-controllable operational motion treatment to the homepage hero', () => {
   assert.match(hero, /const \[isMotionPaused, setIsMotionPaused\] = useState\(false\)/)
   assert.match(hero, /data-motion=\{isMotionPaused \? 'paused' : 'active'\}/)
   assert.match(hero, /aria-pressed=\{isMotionPaused\}/)
   assert.match(hero, /Pause visual movement/)
-  assert.match(hero, /From field signals/)
+  assert.match(hero, /From complex work/)
   assert.match(heroStyles, /@keyframes home-hero-scan/)
   assert.match(heroStyles, /@keyframes home-hero-signal/)
   assert.match(heroStyles, /\[data-motion='paused'\]/)

@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react'
 import enterpriseVisual from '../assets/editorial/work/enterprise-african-operations-team.jpeg'
 import fleetVisual from '../assets/editorial/work/fleet-african-truck-driver.jpeg'
 import gridVisual from '../assets/editorial/work/grid-african-field-engineer.jpeg'
-import kadunaVisual from '../assets/editorial/work/kaduna-african-workflow-team.jpeg'
-import sterlingVisual from '../assets/editorial/work/sterling-african-mobile-payment.jpeg'
 import workHeroVisual from '../assets/editorial/work/work-hero-black-african-tech-team.jpg'
-import thermalVisual from '../assets/user-provided/field-drone-team.png'
+import kadunaOverviewVisual from '../assets/editorial/work/work-workflow-collaboration.jpg'
+import sterlingOverviewVisual from '../assets/editorial/work/work-payment-terminal-professional.jpg'
+import thermalOverviewVisual from '../assets/editorial/work/work-thermal-field-inspector.jpeg'
 import { Container } from '../components/Container'
 import '../styles/work-reference.css'
 
@@ -56,8 +56,8 @@ const featuredCase: NamedCase = {
   caseLabel: 'Read the inspection automation case study',
   solutionHref: '/solutions/skygrid',
   solutionLabel: 'Explore SkyGrid',
-  image: thermalVisual,
-  imageAlt: 'Black African drone-inspection team preparing a UAV near power infrastructure',
+  image: thermalOverviewVisual,
+  imageAlt: 'Black African field professional in safety equipment at an operational site',
   imagePosition: 'center 50%',
 }
 
@@ -75,9 +75,9 @@ const namedCases: readonly NamedCase[] = [
     caseLabel: 'Read the Sterling payment case study',
     solutionHref: '/solutions/payment-systems',
     solutionLabel: 'Explore Payment Systems',
-    image: sterlingVisual,
-    imageAlt: 'Black African professional using a payment card beside a laptop',
-    imagePosition: 'center 47%',
+    image: sterlingOverviewVisual,
+    imageAlt: 'Black technology professional completing a card payment at a point-of-sale terminal',
+    imagePosition: 'center 53%',
   },
   {
     industry: 'Public Sector',
@@ -92,8 +92,8 @@ const namedCases: readonly NamedCase[] = [
     caseLabel: 'Read the Kaduna e-Management case study',
     solutionHref: '/solutions/e-management',
     solutionLabel: 'Explore E-Management',
-    image: kadunaVisual,
-    imageAlt: 'Black African team collaborating around laptops and documents in a workflow meeting',
+    image: kadunaOverviewVisual,
+    imageAlt: 'Black African technology professionals collaborating around a laptop in an office meeting',
     imagePosition: 'center 48%',
   },
 ]
@@ -138,7 +138,7 @@ export function WorkPage() {
       {visibleCount === 0 && <section className="work-reference-empty"><Container><p>No work is currently listed for this industry.</p><button type="button" onClick={() => setActiveFilter('All Work')}>Show all work →</button></Container></section>}
 
       <section className="work-reference-method" aria-labelledby="method-title"><Container className="work-reference-method__inner"><header><p>How Digi02 delivers</p><h2 id="method-title">Start with the operation. Engineer from there.</h2></header><ol>{deliverySteps.map(([number, title, copy]) => <li key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol></Container></section>
-      <section className="work-reference-cta" aria-labelledby="work-cta-title"><Container className="work-reference-cta__inner"><div><p>Start a conversation</p><h2 id="work-cta-title">Have an operation that needs a better system?</h2><span>Show us the environment, workflow or constraint. We will help identify the system that can move the work forward.</span></div><a href="/contact">Discuss your project <b aria-hidden="true">→</b></a></Container></section>
+      <section className="work-reference-cta" aria-labelledby="work-cta-title"><Container className="work-reference-cta__inner"><div><p>Start a conversation</p><h2 id="work-cta-title">Have an operation that needs a better system?</h2><span>Show us the environment, workflow or constraint. We will help identify the system that can move the work forward.</span></div><a href="/contact">Start a project brief <b aria-hidden="true">→</b></a></Container></section>
     </main>
   )
 }

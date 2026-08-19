@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Container } from '../../components/Container'
 
 const metrics = [
-  { kind: 'projects', value: '100+', label: 'Projects delivered' },
-  { kind: 'clients', value: '50+', label: 'Clients across sectors' },
-  { kind: 'states', value: '10+', label: 'States impacted' },
-  { kind: 'security', value: 'ISO 27001', label: 'Security & quality' },
+  { kind: 'projects', value: '01', label: 'Understand the operation' },
+  { kind: 'clients', value: '02', label: 'Design the right system' },
+  { kind: 'states', value: '03', label: 'Deliver with rigour' },
+  { kind: 'security', value: '04', label: 'Improve in use' },
 ] as const
 
 const heroCaseStudies = [
@@ -83,21 +83,21 @@ export function HomeBlueprintHero() {
       </div>
       <Container className="home-blueprint-hero__content">
         <div className="home-blueprint-hero__copy">
-          <p className="home-blueprint-eyebrow">Built in Nigeria · Engineered for impact</p>
+          <p className="home-blueprint-eyebrow">Kaduna-rooted operational technology</p>
           <h1 id="home-blueprint-title">
             Technology built
             <br />
             for <span>real operations.</span>
           </h1>
           <p className="home-blueprint-hero__summary">
-            We design software and systems that help organisations see clearly, move faster, and operate with confidence.
+            Digi02 helps organisations turn complex work into dependable systems—from discovery and system design to engineering, rollout and improvement.
           </p>
           <div className="home-blueprint-hero__actions" aria-label="Homepage actions">
             <a className="home-blueprint-button home-blueprint-button--primary" href="/work">
-              Explore our work <span aria-hidden="true">→</span>
+              Explore proven work <span aria-hidden="true">→</span>
             </a>
             <a className="home-blueprint-button home-blueprint-button--secondary" href="/solutions">
-              See our solutions <span aria-hidden="true">→</span>
+              Explore capabilities <span aria-hidden="true">→</span>
             </a>
           </div>
           <nav className="home-blueprint-hero__mobile-signal-chips" aria-label="Selected Digi02 case studies">
@@ -114,7 +114,7 @@ export function HomeBlueprintHero() {
           </button>
           <p className="home-blueprint-hero__origin">
             <span aria-hidden="true">✓</span>
-            Built in Kaduna. Engineered for impact.
+            From operating problem to durable system.
           </p>
           <button className="home-blueprint-hero__motion-control" type="button" aria-pressed={isMotionPaused} onClick={() => setIsMotionPaused((isPaused) => !isPaused)}>
             <span aria-hidden="true">{isMotionPaused ? '▶' : 'Ⅱ'}</span>
@@ -123,8 +123,8 @@ export function HomeBlueprintHero() {
         </div>
 
         <aside className="home-blueprint-hero__operations-view" aria-label="Digi02 operational view">
-          <p>Operational view</p>
-          <strong>From field signals<br />to clear decisions.</strong>
+          <p>Digi02 delivery view</p>
+          <strong>From complex work<br />to durable systems.</strong>
           <nav className="home-blueprint-hero__signal-links" aria-label="Selected Digi02 case studies">
             {heroCaseStudies.map((caseStudy) => (
               <a href={caseStudy.href} key={caseStudy.signal} aria-label={`${caseStudy.signal}: ${caseStudy.project} case study`}>
@@ -175,7 +175,7 @@ export function HomeBlueprintHero() {
         <p className="home-blueprint-project-map__note">This map groups selected work by operational signal; it does not represent project geography.</p>
       </dialog>
 
-      <div className="home-blueprint-proof" data-home-section="H02" aria-label="Digi02 proof metrics">
+      <div className="home-blueprint-proof" data-home-section="H02" aria-label="Digi02 delivery discipline">
         <Container className="home-blueprint-proof__grid">
           {metrics.map((metric) => (
             <div className="home-blueprint-proof__item" key={metric.value}>

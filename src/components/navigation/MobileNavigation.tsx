@@ -93,9 +93,9 @@ export function MobileNavigation({
             </ul>
 
             <div className="mobile-navigation__closing">
-              <p>Have a system, workflow or product that needs to work better?</p>
+              <p>Bring the workflow, system or product question that needs a clearer path forward.</p>
               <PrimaryButton className="mobile-navigation__cta" href="/contact" onClick={onClose}>
-                Discuss your project <span aria-hidden="true">→</span>
+                Start a project brief <span aria-hidden="true">→</span>
               </PrimaryButton>
             </div>
           </div>

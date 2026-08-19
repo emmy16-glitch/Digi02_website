@@ -17,7 +17,7 @@ test('shared navigation and footer render deliberately proportioned Digi02 wordm
     assert.match(source, /digi02-brand-lockup__name/)
   }
 
-  assert.match(footer, /<p>Technology built for/)
+  assert.match(footer, /<p>Operational technology/)
 })
 
 test('visible logo presentation prioritizes readable shared wordmarks and preserve map-logo containment', async () => {

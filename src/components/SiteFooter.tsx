@@ -88,7 +88,7 @@ export function SiteFooter() {
               <span className="digi02-brand-lockup__name">Digi<span>02</span></span>
             </span>
           </a>
-          <p>Technology built for<br />real operations.</p>
+          <p>Operational technology<br />for complex work.</p>
         </div>
 
         <div className="site-footer__groups">

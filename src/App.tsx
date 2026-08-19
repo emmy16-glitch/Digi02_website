@@ -54,13 +54,13 @@ function App() {
     '/': {
       title: 'Digi02 — Technology for real operations',
       description:
-        'Digi02 designs and builds enterprise software, autonomous UAV systems, electric mobility technology, payment systems and custom operational platforms from Kaduna, Nigeria.',
+        'Digi02 is a Kaduna-rooted operational technology partner helping organisations turn complex work into dependable systems—from discovery and system design to engineering, rollout and improvement.',
       content: <HomePage />,
     },
     '/solutions': {
       title: 'Technology solutions — Digi02',
       description:
-        'Explore Digi02 solutions across autonomous UAV operations, electric mobility, ERP and POS, e-management, payroll automation, payment systems and custom software.',
+        'Explore Digi02 capabilities across autonomous systems, enterprise platforms, mobility, payments, workflow technology and custom software engineering for complex operations.',
       content: <SolutionsPage />,
     },
     '/solutions/skygrid': {

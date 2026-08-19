@@ -155,26 +155,29 @@ const work = [
     title: 'Thermal Plant Inspection Automation',
     copy: 'Autonomous drone inspections with AI-assisted review across critical infrastructure.',
     visual: 'thermal',
+    href: '/work/thermal-plant-inspection-automation',
   },
   {
     category: 'Finance',
     title: 'Sterling Payment Gateway',
     copy: 'Secure payment infrastructure for high-volume transaction processing and reconciliation.',
     visual: 'payment',
+    href: '/work/sterling-payment-gateway',
   },
   {
     category: 'Public Sector',
     title: 'Kaduna State e-Management System',
     copy: 'A unified platform for workflows, approvals, records and digital service delivery.',
     visual: 'public',
+    href: '/work/kaduna-state-e-management-system',
   },
 ] as const
 
 const regionalMetrics = [
-  { value: '100+', label: 'Projects delivered', icon: 'briefcase' },
-  { value: '50+', label: 'Clients across sectors', icon: 'people' },
-  { value: '10+', label: 'States impacted', icon: 'globe' },
-  { value: 'ISO 27001', label: 'Security & quality', icon: 'award' },
+  { value: 'LOCAL', label: 'Close to the operating reality', icon: 'briefcase' },
+  { value: 'CONNECTED', label: 'Systems, people and decisions in view', icon: 'people' },
+  { value: 'PRACTICAL', label: 'Delivery built around real constraints', icon: 'globe' },
+  { value: 'DURABLE', label: 'Technology designed to improve in use', icon: 'award' },
 ] as const
 
 const workflow = [
@@ -202,7 +205,7 @@ export function HomeBlueprintSolutions() {
           </div>
         </div>
 
-        <a className="home-blueprint-feature" href="/work" aria-label="View Thermal Plant Inspection Automation case study">
+        <a className="home-blueprint-feature" href="/work/thermal-plant-inspection-automation" aria-label="View Thermal Plant Inspection Automation case study">
           <span className="home-blueprint-feature__copy">
             <SectionEyebrow>Featured Case Study</SectionEyebrow>
             <strong>Thermal Plant<br />Inspection Automation</strong>
@@ -329,7 +332,7 @@ export function HomeBlueprintWork() {
         </header>
         <div className="home-blueprint-work__grid">
           {work.map((item) => (
-            <a className="home-blueprint-work-card" href="/work" key={item.title}>
+            <a className="home-blueprint-work-card" href={item.href} key={item.title}>
               <span className="home-blueprint-work-card__media" aria-hidden="true">
                 <HomeBlueprintWorkVisual kind={item.visual as 'thermal' | 'payment' | 'public'} />
               </span>
@@ -359,9 +362,9 @@ export function HomeBlueprintRegionalProof() {
             <path d="m45 65 31 5 31-18 23 19 24 4" />
           </svg>
           <div>
-            <p className="home-blueprint-eyebrow">Built here. Built to scale.</p>
+            <p className="home-blueprint-eyebrow">Kaduna-rooted. Operational by design.</p>
             <h2 id="home-regional-title">Built in Kaduna.<br />Building for Africa.</h2>
-            <p>Digi02 brings software, autonomous systems and operational technology together around the realities of organisations working across Africa.</p>
+            <p>Digi02 brings software, autonomous systems and operational technology together around the realities of organisations that need dependable work in the field, office and wider system.</p>
           </div>
         </div>
         <div className="home-blueprint-regional__metrics">
@@ -384,11 +387,11 @@ export function HomeBlueprintFinalCta() {
       <span className="home-blueprint-cta__wave" aria-hidden="true" />
       <Container className="home-blueprint-cta__layout">
         <div>
-          <h2 id="home-cta-title">Have a project in mind?</h2>
-          <p>Let&apos;s build technology that drives real results.</p>
+          <h2 id="home-cta-title">Start with the operation you need to improve.</h2>
+          <p>Bring the workflow, constraint or system question. We&apos;ll help frame the right next step.</p>
         </div>
         <a className="home-blueprint-button home-blueprint-button--primary" href="/contact">
-          Discuss your project <span aria-hidden="true">→</span>
+          Start a project brief <span aria-hidden="true">→</span>
         </a>
       </Container>
     </section>

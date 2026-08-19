@@ -41,7 +41,7 @@ export function DesktopNavigation({ currentPath, items, theme, onThemeToggle }: 
       <ThemeToggle theme={theme} onToggle={onThemeToggle} />
 
       <PrimaryButton className="site-header__cta" href="/contact">
-        Discuss your project <span aria-hidden="true">→</span>
+        Start a project brief <span aria-hidden="true">→</span>
       </PrimaryButton>
     </nav>
   )

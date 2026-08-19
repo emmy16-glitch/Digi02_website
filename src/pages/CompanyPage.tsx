@@ -205,11 +205,11 @@ const journey = [
 ] as const
 
 const proof = [
-  ['projects', '100+', 'Projects delivered across sectors'],
-  ['states', '10+', 'States impacted across Nigeria'],
-  ['clients', '50+', 'Government & enterprise clients served'],
-  ['uptime', '99.9%', 'System uptime across platforms'],
-  ['security', 'ISO 27001', 'Security & quality standards'],
+  ['projects', '01', 'Understand the operation and its constraints'],
+  ['states', '02', 'Design the system around the real workflow'],
+  ['clients', '03', 'Deliver with clear ownership and evidence'],
+  ['uptime', '04', 'Improve the system in use'],
+  ['security', '05', 'Protect continuity, data and decision-making'],
 ] as const satisfies readonly [IconKind, string, string][]
 
 export function CompanyPage() {
@@ -232,8 +232,7 @@ export function CompanyPage() {
               <span>Building for Africa.</span>
             </h1>
             <p>
-              Digi02 is a Nigerian technology company engineering software, autonomous systems,
-              enterprise solutions, and digital infrastructure that solve real problems and unlock progress.
+              Digi02 is a Kaduna-rooted operational technology partner. We turn complex work into dependable systems across software, autonomous systems, enterprise platforms and digital infrastructure.
             </p>
             <a className="company-reference-hero__cta" href="/contact">
               Work with us <span aria-hidden="true">→</span>
@@ -257,13 +256,10 @@ export function CompanyPage() {
 
           <div className="company-reference-about__copy">
             <p>
-              Founded with a bold belief in Africa’s potential, Digi02 partners with governments,
-              enterprises, and forward-thinking organisations to deliver technology that is secure,
-              scalable, and human-centered.
+              Digi02 works with organisations that need technology to hold up in the real world: where workflows, field conditions, people, records and decisions have to stay connected.
             </p>
             <p>
-              From autonomous systems and enterprise platforms to critical infrastructure and digital
-              transformation, our work is designed for Africa—built to compete globally.
+              From discovery and system design to engineering, rollout and improvement, we bring a disciplined delivery approach to complex operational technology work.
             </p>
           </div>
 
@@ -345,7 +341,7 @@ export function CompanyPage() {
 
       <section className="company-reference-proof" aria-labelledby="company-proof-title">
         <Container>
-          <h2 id="company-proof-title">Trusted by partners. Measured by impact.</h2>
+          <h2 id="company-proof-title">A clear discipline for complex work.</h2>
           <div className="company-reference-proof__grid">
             <div className="company-reference-proof__metrics">
               {proof.map(([icon, value, label]) => (
@@ -356,13 +352,14 @@ export function CompanyPage() {
               ))}
             </div>
             <div className="company-reference-partners">
-              <p>Our Partners</p>
+              <p>Delivery principle</p>
               <div aria-label="Partner names">
-                <strong>NDA</strong>
-                <span>Nigerian Defence Service</span>
-                <strong>Sterling</strong>
-                <strong>NEXIM</strong>
-                <strong>Kaduna State Government</strong>
+                <strong>Context before code</strong>
+                <span>Technology starts with the work people need to do.</span>
+                <strong>Systems, not features</strong>
+                <span>We connect the workflow, information and decisions around an operation.</span>
+                <strong>Evidence in use</strong>
+                <span>Success is measured by what becomes clearer, more reliable or easier to act on.</span>
               </div>
             </div>
           </div>

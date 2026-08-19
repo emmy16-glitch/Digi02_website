@@ -20,7 +20,7 @@ const requiredFields: FieldName[] = ['name', 'company', 'email', 'projectType', 
 const contactFaqs = [
   {
     question: 'How quickly will Digi02 respond to my enquiry?',
-    answer: 'We aim to respond within 24 hours on business days. Sharing your organisation, project type, and a clear challenge helps the right team prepare for the conversation.',
+    answer: 'Once your email brief is sent, Digi02 will review the operating context and direct it to the appropriate next conversation. A clear organisation, project type and challenge make that review more useful.',
   },
   {
     question: 'What happens after I prepare an enquiry?',
@@ -60,7 +60,7 @@ function ContactIcon({ name }: { name: ContactIconName }) {
 
 function validateField(name: FieldName, values: ContactValues) {
   const value = values[name]
-  if (name === 'consent') return value ? '' : 'Please accept the privacy and terms notice to continue.'
+  if (name === 'consent') return value ? '' : 'Please acknowledge the privacy and local-email-draft notice to continue.'
   if (name === 'email') {
     if (!String(value).trim()) return 'Enter your work email address.'
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value)) ? '' : 'Enter a valid email address.'
@@ -97,7 +97,7 @@ function buildEnquiry(values: ContactValues) {
     String(values.message).trim(),
   ].join('\n')
 
-  return `mailto:hello@digi02.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  return `mailto:info@digi02.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 function FieldError({ id, error }: { id: string; error?: string }) {
@@ -180,11 +180,11 @@ export function ContactPage() {
           <div className="contact-reference-hero__copy">
             <p className="contact-reference-kicker">Contact Digi02</p>
             <h1 id="contact-reference-title"><span className="contact-reference-hero__line">Let’s build technology </span><span className="contact-reference-hero__line">that <em>drives real impact.</em></span></h1>
-            <p className="contact-reference-hero__lead">Whether you’re optimizing operations, modernizing infrastructure, or building something new, we’re here to help. Share your goals and our team will get back to you.</p>
+            <p className="contact-reference-hero__lead">Bring the workflow, operating constraint or system question. Digi02 helps frame a practical path from the real problem to a dependable technology outcome.</p>
             <div className="contact-reference-benefits" aria-label="Contact benefits">
-              <div><span className="contact-reference-benefits__icon"><ContactIcon name="response" /></span><p><strong>Fast response</strong><small>Within 24 hours</small></p></div>
-              <div><span className="contact-reference-benefits__icon"><ContactIcon name="expert" /></span><p><strong>Expert team</strong><small>Ready to help</small></p></div>
-              <div><span className="contact-reference-benefits__icon"><ContactIcon name="secure" /></span><p><strong>Secure &amp; Confidential</strong><small>Your data is safe</small></p></div>
+              <div><span className="contact-reference-benefits__icon"><ContactIcon name="response" /></span><p><strong>Start with context</strong><small>Share the operation, not just the feature list.</small></p></div>
+              <div><span className="contact-reference-benefits__icon"><ContactIcon name="expert" /></span><p><strong>Frame the system</strong><small>Clarify workflows, decisions and information needs.</small></p></div>
+              <div><span className="contact-reference-benefits__icon"><ContactIcon name="secure" /></span><p><strong>Choose a next step</strong><small>Leave with a practical project brief to review.</small></p></div>
             </div>
           </div>
         </Container>
@@ -209,7 +209,7 @@ export function ContactPage() {
               <label className={`${fieldClass('message')} contact-reference-form__message`}><span>Message <b aria-hidden="true">*</b></span><textarea name="message" rows={6} maxLength={maxMessageLength} placeholder="Tell us about your project, goals, and how we can help..." value={String(values.message)} onChange={handleChange('message')} onBlur={handleBlur('message')} aria-invalid={Boolean(touched.message && errors.message)} aria-describedby={errors.message ? 'message-error' : 'message-count'} /><FieldError id="message-error" error={touched.message ? errors.message : undefined} /></label>
 
               <div className="contact-reference-form__agreement">
-                <label className={fieldClass('consent')}><input type="checkbox" name="consent" checked={Boolean(values.consent)} onChange={handleChange('consent')} onBlur={handleBlur('consent')} aria-invalid={Boolean(touched.consent && errors.consent)} aria-describedby={errors.consent ? 'consent-error' : undefined} /><span>I agree to Digi02’s <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</span><FieldError id="consent-error" error={touched.consent ? errors.consent : undefined} /></label>
+                <label className={fieldClass('consent')}><input type="checkbox" name="consent" checked={Boolean(values.consent)} onChange={handleChange('consent')} onBlur={handleBlur('consent')} aria-invalid={Boolean(touched.consent && errors.consent)} aria-describedby={errors.consent ? 'consent-error' : undefined} /><span>I agree to Digi02’s <a href="/privacy">Privacy Policy</a> and understand that preparing a brief opens a local email draft for my review.</span><FieldError id="consent-error" error={touched.consent ? errors.consent : undefined} /></label>
                 <span id="message-count">{String(values.message).length} / {maxMessageLength}</span>
               </div>
 
@@ -237,8 +237,8 @@ export function ContactPage() {
               <section className="contact-reference-info" aria-labelledby="contact-info-title">
                 <h2 id="contact-info-title">Contact information</h2>
                 <div className="contact-reference-info__item"><span><ContactIcon name="location" /></span><div><strong>Head Office – Kaduna</strong><p>Digi02 Tech Systems.<br />No. 2, The Hub,<br />Industrial Area, Farin Gida,<br />Mando, Kaduna, Nigeria.</p></div></div>
-                <div className="contact-reference-info__item"><span><ContactIcon name="mail" /></span><div><strong>Email</strong><a href="mailto:hello@digi02.com">hello@digi02.com</a></div></div>
-                <div className="contact-reference-info__item"><span><ContactIcon name="phone" /></span><div><strong>Phone</strong><a href="tel:+2347001230202">+234 700 123 0202</a></div></div>
+                <div className="contact-reference-info__item"><span><ContactIcon name="mail" /></span><div><strong>Email</strong><a href="mailto:info@digi02.org">info@digi02.org</a></div></div>
+                <div className="contact-reference-info__item"><span><ContactIcon name="phone" /></span><div><strong>Phone</strong><a href="tel:+2348169404088">+234 (0)81 6940 4088</a></div></div>
               </section>
 
               <section className="contact-reference-hours" aria-labelledby="contact-hours-title">
@@ -249,7 +249,7 @@ export function ContactPage() {
 
               <section className="contact-reference-connect" aria-labelledby="contact-connect-title">
                 <header><p>Connect online</p><h2 id="contact-connect-title">Stay in the loop</h2></header>
-                <div><a href="https://ng.linkedin.com/company/digi02" target="_blank" rel="noreferrer"><ContactIcon name="linkedin" /><span><strong>LinkedIn</strong><small>Company updates</small></span><b aria-hidden="true">↗</b></a><a href="mailto:hello@digi02.com"><ContactIcon name="mail" /><span><strong>Email Digi02</strong><small>Start a conversation</small></span><b aria-hidden="true">↗</b></a><a href="/insights"><ContactIcon name="calendar" /><span><strong>Insights</strong><small>Read our latest thinking</small></span><b aria-hidden="true">→</b></a></div>
+                <div><a href="https://ng.linkedin.com/company/digi02" target="_blank" rel="noreferrer"><ContactIcon name="linkedin" /><span><strong>LinkedIn</strong><small>Company updates</small></span><b aria-hidden="true">↗</b></a><a href="mailto:info@digi02.org"><ContactIcon name="mail" /><span><strong>Email Digi02</strong><small>Start a conversation</small></span><b aria-hidden="true">↗</b></a><a href="/insights"><ContactIcon name="calendar" /><span><strong>Insights</strong><small>Read our latest thinking</small></span><b aria-hidden="true">→</b></a></div>
               </section>
             </aside>
           </div>
@@ -257,14 +257,14 @@ export function ContactPage() {
           <Digi02LocationMap />
 
           <div className="contact-reference-paths" aria-label="More ways to contact Digi02">
-            <article><span className="contact-reference-paths__icon"><ContactIcon name="calendar" /></span><div><h3>Book a call</h3><p>Schedule a 30-minute call with our experts to discuss your needs.</p><a href="mailto:hello@digi02.com?subject=Schedule%20a%20Digi02%20project%20call">Schedule now <span aria-hidden="true">→</span></a></div></article>
-            <article><span className="contact-reference-paths__icon"><ContactIcon name="partnership" /></span><div><h3>Partnerships</h3><p>Explore partnership and collaboration opportunities with Digi02.</p><a href="mailto:hello@digi02.com?subject=Digi02%20partnership%20enquiry">Explore partnerships <span aria-hidden="true">→</span></a></div></article>
+            <article><span className="contact-reference-paths__icon"><ContactIcon name="calendar" /></span><div><h3>Project conversation</h3><p>Share the operating problem, stakeholders and desired next step.</p><a href="mailto:info@digi02.org?subject=Start%20a%20Digi02%20project%20brief">Start by email <span aria-hidden="true">→</span></a></div></article>
+            <article><span className="contact-reference-paths__icon"><ContactIcon name="partnership" /></span><div><h3>Partnerships</h3><p>Explore a partnership or delivery conversation with Digi02.</p><a href="mailto:info@digi02.org?subject=Digi02%20partnership%20enquiry">Explore partnerships <span aria-hidden="true">→</span></a></div></article>
             <article><span className="contact-reference-paths__icon"><ContactIcon name="support" /></span><div><h3>Support</h3><p>Need help with an existing solution? Our support team is here.</p><a href="mailto:support@digi02.org">Get support <span aria-hidden="true">→</span></a></div></article>
           </div>
         </Container>
       </section>
 
-      <section className="contact-reference-cta" aria-labelledby="contact-reference-cta-title"><Container className="contact-reference-cta__inner"><div><h2 id="contact-reference-cta-title">Have a project in mind?</h2><p>Let’s build technology that drives real results.</p></div><a href="#contact-form" onClick={scrollToForm}>Discuss your project <span aria-hidden="true">→</span></a></Container></section>
+      <section className="contact-reference-cta" aria-labelledby="contact-reference-cta-title"><Container className="contact-reference-cta__inner"><div><h2 id="contact-reference-cta-title">Have an operation that needs a clearer system?</h2><p>Start with the workflow, constraint or decision that needs to move forward.</p></div><a href="#contact-form" onClick={scrollToForm}>Start a project brief <span aria-hidden="true">→</span></a></Container></section>
 
       {isSuccessModalOpen && <div className="contact-reference-modal-backdrop" role="presentation" onMouseDown={() => setIsSuccessModalOpen(false)}><div className="contact-reference-modal" role="dialog" aria-modal="true" aria-labelledby="contact-success-title" aria-describedby="contact-success-description" ref={successDialogRef} tabIndex={-1} onMouseDown={(event) => event.stopPropagation()}><span className="contact-reference-modal__mark"><ContactIcon name="response" /></span><p className="contact-reference-modal__eyebrow">Enquiry ready</p><h2 id="contact-success-title">Your project brief is ready.</h2><p id="contact-success-description">We’ve formatted your enquiry for an email draft. Review it, add anything else you need, and send it from your email application.</p><div className="contact-reference-modal__actions"><button type="button" className="contact-reference-modal__primary" onClick={openEmailDraft}>Open email draft <span aria-hidden="true">→</span></button><button type="button" className="contact-reference-modal__secondary" onClick={() => setIsSuccessModalOpen(false)}>Continue browsing</button></div></div></div>}
     </div>
