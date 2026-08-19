@@ -13,6 +13,7 @@ import { EnterpriseSystemsPage } from './pages/EnterpriseSystemsPage'
 import { HomePage } from './pages/HomePage'
 import { IndustriesPage } from './pages/IndustriesPage'
 import { InsightsPage } from './pages/InsightsPage'
+import { InsightDetailPage } from './pages/InsightDetailPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PaymentSystemsPage } from './pages/PaymentSystemsPage'
 import { PayrollAutomationPage } from './pages/PayrollAutomationPage'
@@ -20,6 +21,7 @@ import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
 import { SkyGridPage } from './pages/SkyGridPage'
 import { SolutionsPage } from './pages/SolutionsPage'
 import { WorkPage } from './pages/WorkPage'
+import { insights } from './data/insights'
 import './styles/site-pages.css'
 import './styles/product-pages.css'
 import './styles/capability-pages.css'
@@ -49,6 +51,14 @@ type RouteDefinition = {
 
 function App() {
   const path = window.location.pathname.replace(/\/$/, '') || '/'
+  const insightRoutes = insights.reduce<Record<string, RouteDefinition>>((routes, insight) => {
+    routes[`/insights/${insight.slug}`] = {
+      title: `${insight.title} — Digi02 Insights`,
+      description: insight.summary,
+      content: <InsightDetailPage slug={insight.slug} />,
+    }
+    return routes
+  }, {})
 
   const routes: Record<string, RouteDefinition> = {
     '/': {
@@ -144,6 +154,7 @@ function App() {
         'Explore Digi02 engineering perspectives across autonomous systems, enterprise technology, mobility, software and operational design.',
       content: <InsightsPage />,
     },
+    ...insightRoutes,
     '/contact': {
       title: 'Contact — Digi02',
       description:

@@ -1,0 +1,36 @@
+.insight-detail-page { background: #f7f6f2; color: #171716; }
+.insight-detail-page__hero { position: relative; overflow: hidden; padding: clamp(6.5rem, 12vw, 10.5rem) 0 clamp(4rem, 8vw, 7rem); background: radial-gradient(circle at 78% 24%, rgba(201, 163, 74, 0.22), transparent 27%), linear-gradient(124deg, #090b0c 0%, #121518 68%, #242012 100%); color: #f7f6f2; }
+.insight-detail-page__hero::after { position: absolute; right: -8rem; bottom: -16rem; width: min(48vw, 44rem); aspect-ratio: 1; border: 1px solid rgba(201, 163, 74, 0.34); border-radius: 50%; box-shadow: 0 0 0 2rem rgba(201, 163, 74, 0.06), 0 0 0 4rem rgba(201, 163, 74, 0.04); content: ''; pointer-events: none; }
+.insight-detail-page__hero .container { position: relative; z-index: 1; max-width: 70rem; }
+.insight-detail-page__breadcrumb { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: clamp(2.4rem, 5vw, 4.5rem); color: #c9c4ba; font-family: var(--font-mono, monospace); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.insight-detail-page__breadcrumb a { color: #e8c46c; }
+.insight-detail-page__eyebrow, .insight-detail-page__related > .container > p { margin: 0; color: #d4ae55; font-family: var(--font-mono, monospace); font-size: 0.63rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.insight-detail-page h1 { max-width: 15ch; margin: 0.8rem 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(3rem, 7.5vw, 7.1rem); font-weight: 400; letter-spacing: -0.065em; line-height: 0.94; }
+.insight-detail-page__summary { max-width: 42rem; margin: 1.5rem 0 0; color: #dedbd3; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.58; }
+.insight-detail-page__byline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.55rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.18); color: #bcb8ae; font-size: 0.75rem; }
+.insight-detail-page__byline span { font-family: var(--font-mono, monospace); font-size: 0.57rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.insight-detail-page__byline strong { color: #f7f6f2; font-size: 0.82rem; }
+.insight-detail-page__article { padding: clamp(4rem, 8vw, 8rem) 0; }
+.insight-detail-page__article-grid { display: grid; grid-template-columns: minmax(14rem, 0.38fr) minmax(0, 0.62fr); gap: clamp(2.5rem, 8vw, 9rem); }
+.insight-detail-page__aside { position: sticky; top: 7.5rem; align-self: start; padding: 1.25rem; border: 1px solid rgba(23, 23, 22, 0.14); border-radius: 6px; background: #f0eee8; }
+.insight-detail-page__aside p { margin: 0; color: #8a6f35; font-family: var(--font-mono, monospace); font-size: 0.57rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.insight-detail-page__aside strong { display: block; margin-top: 0.7rem; font-family: Georgia, 'Times New Roman', serif; font-size: 1.25rem; font-weight: 400; letter-spacing: -0.03em; line-height: 1.18; }
+.insight-detail-page__aside a, .insight-detail-page__back { display: inline-flex; margin-top: 1.25rem; color: #473509; font-size: 0.72rem; font-weight: 700; }
+.insight-detail-page__body { max-width: 46rem; }
+.insight-detail-page__body section { padding: 0 0 clamp(2rem, 4vw, 3.25rem); margin-bottom: clamp(2rem, 4vw, 3.25rem); border-bottom: 1px solid rgba(23, 23, 22, 0.12); }
+.insight-detail-page__section-number { margin: 0; color: #b8913e; font-family: var(--font-mono, monospace); font-size: 0.6rem; letter-spacing: 0.1em; }
+.insight-detail-page__body h2 { max-width: 18ch; margin: 0.65rem 0 1rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 3.4vw, 3.25rem); font-weight: 400; letter-spacing: -0.045em; line-height: 1.01; }
+.insight-detail-page__body p:not(.insight-detail-page__section-number) { max-width: 41rem; margin: 0.9rem 0 0; color: #55534e; font-size: 1rem; line-height: 1.72; }
+.insight-detail-page__related { padding: clamp(4rem, 8vw, 7rem) 0; border-top: 1px solid rgba(201, 163, 74, 0.28); background: #0b0d0e; color: #f7f6f2; }
+.insight-detail-page__related h2 { max-width: 11ch; margin: 0.75rem 0 2.25rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.4rem, 4vw, 4.5rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.97; }
+.insight-detail-page__related > .container > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+.insight-detail-page__related > .container > div > a { position: relative; display: grid; min-height: 13rem; align-content: space-between; padding: 1.35rem; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 6px; background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent), #111517; transition: transform 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), border-color 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)); }
+.insight-detail-page__related > .container > div > a span { color: #d8ae53; font-family: var(--font-mono, monospace); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.insight-detail-page__related > .container > div > a strong { max-width: 22ch; color: #f4f1e9; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 400; letter-spacing: -0.035em; line-height: 1.04; }
+.insight-detail-page__related > .container > div > a b { position: absolute; right: 1.35rem; bottom: 1.2rem; color: #d8ae53; }
+.insight-detail-page__related > .container > div > a:hover, .insight-detail-page__related > .container > div > a:focus-visible { border-color: rgba(216, 174, 83, 0.74); transform: translateY(-3px); }
+.insight-detail-page__back { color: #e0bd69; }
+.insight-detail-missing { min-height: 60vh; display: grid; place-items: center; background: #0b0d0e; color: #f7f6f2; }
+.insight-detail-missing a { color: #e0bd69; }
+@media (max-width: 48rem) { .insight-detail-page__hero { padding-top: 6.25rem; } .insight-detail-page__article-grid { grid-template-columns: 1fr; gap: 2rem; } .insight-detail-page__aside { position: static; } .insight-detail-page__related > .container > div { grid-template-columns: 1fr; } .insight-detail-page__related > .container > div > a { min-height: 11rem; } }
+@media (prefers-reduced-motion: reduce) { .insight-detail-page__related > .container > div > a { transition-duration: 0.01ms; } .insight-detail-page__related > .container > div > a:hover, .insight-detail-page__related > .container > div > a:focus-visible { transform: none; } }

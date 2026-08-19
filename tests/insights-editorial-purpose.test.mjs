@@ -5,6 +5,7 @@ import test from 'node:test'
 const root = new URL('..', import.meta.url)
 const page = await readFile(new URL('./src/pages/InsightsPage.tsx', root), 'utf8')
 const styles = await readFile(new URL('./src/styles/insights-reference.css', root), 'utf8')
+const insightData = await readFile(new URL('./src/data/insights.ts', root), 'utf8')
 
 test('positions Insights as Digi02 practical operating-technology knowledge hub', () => {
   assert.match(page, /Digi02 Insights \/ Practical operating knowledge/)
@@ -16,20 +17,20 @@ test('positions Insights as Digi02 practical operating-technology knowledge hub'
 })
 
 test('uses distinct real-people editorial image assets for every Insights visual', () => {
-  const assetImports = [...page.matchAll(/\.\.\/assets\/editorial\/insights\/([^']+)/g)].map((match) => match[1])
+  const assetImports = [...`${page}\n${insightData}`.matchAll(/\.\.\/assets\/editorial\/insights\/([^']+)/g)].map((match) => match[1])
   assert.equal(assetImports.length, 7)
   assert.equal(new Set(assetImports).size, 7)
   assert.ok(assetImports.every((asset) => asset.startsWith('insights-african-')))
-  assert.doesNotMatch(page, /assets\/(generated\/insights|diginorth|digivolt|emerging-tech|erp-pos|skygrid)\//)
+  assert.doesNotMatch(insightData, /assets\/(generated\/insights|diginorth|digivolt|emerging-tech|erp-pos|skygrid)\//)
   assert.match(styles, /object-fit: cover/)
-  assert.match(page, /Black African technology professionals/)
-  assert.match(page, /Black African software developers/)
-  assert.match(page, /Black African electronics engineers/)
+  assert.match(insightData, /Black African technology professionals/)
+  assert.match(insightData, /Black African software developers/)
+  assert.match(insightData, /Black African electronics engineers/)
 })
 
 test('preserves Insights discovery controls after the editorial redesign', () => {
-  assert.match(page, /const \[activeCategory, setActiveCategory\] = useState<InsightCategory>\('All'\)/)
-  assert.match(page, /const \[activeFormat, setActiveFormat\] = useState<InsightFormat>\('All'\)/)
+  assert.match(page, /const \[activeCategory, setActiveCategory\] = useState<'All' \| InsightCategory>\('All'\)/)
+  assert.match(page, /const \[activeFormat, setActiveFormat\] = useState<'All' \| InsightFormat>\('All'\)/)
   assert.match(page, /const \[query, setQuery\] = useState\(''\)/)
   assert.match(page, /matchesTopic/)
   assert.match(page, /matchesFormat/)
