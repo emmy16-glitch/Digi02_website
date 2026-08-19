@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
-import digiNorthVisual from '../assets/diginorth/diginorth-community-visual.png'
-import digiVoltVisual from '../assets/digivolt/digivolt-electric-mobility-showcase.png'
-import emergingTechVisual from '../assets/emerging-tech/emerging-tech-learning-visual.png'
-import enterpriseVisual from '../assets/erp-pos/erp-pos-multidevice-showcase.png'
-import skyGridAnalytics from '../assets/skygrid/skygrid-mission-analytics.webp'
-import skyGridRoutePlanner from '../assets/skygrid/skygrid-route-planner.webp'
-import insightsHero from '../assets/generated/insights/insights-hero.png'
+import insightsHero from '../assets/editorial/insights/insights-african-tech-roundtable.jpg'
+import insightsFeature from '../assets/editorial/insights/insights-african-developer-pair.jpg'
+import enterpriseInsight from '../assets/editorial/insights/insights-african-laptop-collaboration.jpg'
+import mobilityInsight from '../assets/editorial/insights/insights-african-operations-analyst.jpg'
+import engineeringInsight from '../assets/editorial/insights/insights-african-software-engineer.jpg'
+import communityInsight from '../assets/editorial/insights/insights-african-tech-community.jpg'
+import autonomousInsight from '../assets/editorial/insights/insights-african-electronics-engineering.jpg'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
 import '../styles/insights-reference.css'
@@ -50,8 +50,8 @@ const insights: readonly InsightItem[] = [
     takeaway: 'A transaction is only useful when its surrounding context remains visible to the people responsible for the next decision.',
     href: '/solutions/enterprise-systems',
     linkLabel: 'Explore enterprise systems',
-    image: enterpriseVisual,
-    imageAlt: 'Enterprise operations interface visualization',
+    image: enterpriseInsight,
+    imageAlt: 'Black African technology professionals reviewing a laptop together',
   },
   {
     category: 'Mobility',
@@ -64,8 +64,8 @@ const insights: readonly InsightItem[] = [
     takeaway: 'The ride is one moment. The operating system must also make dispatch, exceptions, handoffs and review clear.',
     href: '/solutions/digivolt',
     linkLabel: 'Explore DigiVolt',
-    image: digiVoltVisual,
-    imageAlt: 'DigiVolt electric mobility product visualization',
+    image: mobilityInsight,
+    imageAlt: 'Black African technology professional concentrating at a laptop in an operations office',
   },
   {
     category: 'Engineering',
@@ -78,8 +78,8 @@ const insights: readonly InsightItem[] = [
     takeaway: 'Before writing code, define the decision, the owner, the record and the point at which a team needs to act.',
     href: '/solutions/custom-software',
     linkLabel: 'Explore custom software',
-    image: emergingTechVisual,
-    imageAlt: 'Digi02 engineering and learning pathway visualization',
+    image: engineeringInsight,
+    imageAlt: 'Black African software engineer working at a multi-screen coding desk',
   },
   {
     category: 'Community',
@@ -92,8 +92,8 @@ const insights: readonly InsightItem[] = [
     takeaway: 'Strong engineering becomes more useful when it starts with the realities of the people and institutions it is meant to serve.',
     href: '/company',
     linkLabel: 'About Digi02',
-    image: digiNorthVisual,
-    imageAlt: 'DigiNorth community editorial visualization',
+    image: communityInsight,
+    imageAlt: 'Two Black African women technology professionals holding laptops',
   },
   {
     category: 'Autonomous',
@@ -106,8 +106,8 @@ const insights: readonly InsightItem[] = [
     takeaway: 'The most valuable output of a mission is a record that gives the next operator enough context to decide with confidence.',
     href: '/solutions/skygrid',
     linkLabel: 'Explore SkyGrid',
-    image: skyGridAnalytics,
-    imageAlt: 'SkyGrid mission analytics interface',
+    image: autonomousInsight,
+    imageAlt: 'Black African electronics engineers working together at a hardware bench',
   },
 ]
 
@@ -141,21 +141,21 @@ export function InsightsPage() {
               <span aria-hidden="true">›</span>
               <span>Insights</span>
             </nav>
-            <p className="insights-reference-hero__label">Digi02 / Engineering perspectives</p>
+            <p className="insights-reference-hero__label">Digi02 Insights / Practical operating knowledge</p>
             <h1 id="insights-reference-title">
-              Ideas for systems{' '}
+              Perspectives from the work{' '}
               <br />
-              that have to <span>work.</span>
+              that keeps systems <span>moving.</span>
             </h1>
             <p className="insights-reference-hero__lead">
-              Notes on architecture, operations, automation and the decisions that shape dependable technology.
+              Insights is Digi02&apos;s working library for practical lessons, field perspectives and case-study learning on the systems that help organisations operate with clarity.
             </p>
           </div>
 
           <div className="insights-reference-hero__signals" aria-label="Editorial themes">
-            <div><span>01</span><strong>Systems thinking</strong><small>Start with the operation.</small></div>
-            <div><span>02</span><strong>Engineering decisions</strong><small>Explain the trade-offs.</small></div>
-            <div><span>03</span><strong>Evidence</strong><small>Show what supports the claim.</small></div>
+            <div><span>01</span><strong>Field lessons</strong><small>Start with the operation.</small></div>
+            <div><span>02</span><strong>System decisions</strong><small>Make trade-offs visible.</small></div>
+            <div><span>03</span><strong>Case-study learning</strong><small>Share what delivery teaches.</small></div>
           </div>
         </Container>
       </section>
@@ -164,15 +164,15 @@ export function InsightsPage() {
         <Container className="insights-reference-featured__grid">
           <div className="insights-reference-featured__visual">
             <img
-              src={skyGridRoutePlanner}
-              alt="SkyGrid route-planning interface"
+              src={insightsFeature}
+              alt="Black African software developers reviewing code together"
               decoding="async"
             />
-            <span>Real product evidence / SkyGrid</span>
+            <span>Editorial field note / Systems in operation</span>
           </div>
           <article className="insights-reference-featured__copy">
-            <p>Featured perspective / Autonomous systems / 6 min read</p>
-            <h2 id="featured-insight-title">What should an operator know before, during and after a UAV mission?</h2>
+            <p>Featured field note / Systems in operation / 6 min read</p>
+            <h2 id="featured-insight-title">From field signal to decision: what a reliable mission system makes visible.</h2>
             <p>
               Mission planning, readiness, field context and review are more useful when they remain part of the same mission record.
             </p>
@@ -235,8 +235,8 @@ export function InsightsPage() {
       <section className="insights-reference-library" aria-labelledby="insights-library-title">
         <Container>
           <header className="insights-reference-library__heading">
-            <p>Latest thinking</p>
-            <h2 id="insights-library-title">Notes from the work behind the technology.</h2>
+            <p>Browse Insights</p>
+            <h2 id="insights-library-title">Practical perspectives from the work behind the work.</h2>
           </header>
 
           <div className="insights-reference-library__grid" aria-live="polite">
