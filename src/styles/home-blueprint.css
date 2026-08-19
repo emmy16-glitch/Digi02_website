@@ -694,6 +694,129 @@
   transform: scale(1.04);
 }
 
+/* H05B */
+.home-blueprint-contexts {
+  padding: clamp(4.6rem, 7vw, 6.8rem) 0;
+  border-top: 1px solid rgba(23, 23, 21, 0.1);
+  border-bottom: 1px solid rgba(23, 23, 21, 0.1);
+  background:
+    radial-gradient(circle at 87% 22%, rgba(201, 163, 74, 0.11), transparent 24%),
+    #ECEAE3;
+  color: #171715;
+}
+
+.home-blueprint-contexts__layout {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 5vw, 5.6rem);
+  align-items: center;
+}
+
+.home-blueprint-contexts__heading h2 {
+  margin: 0.8rem 0 0;
+  color: #171715;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.45rem, 3.7vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.home-blueprint-contexts__heading > p:last-child {
+  max-width: 29rem;
+  margin: 1rem 0 0;
+  color: #5E5A52;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.home-blueprint-contexts__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.home-blueprint-contexts__card {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: minmax(10rem, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid rgba(23, 23, 21, 0.14);
+  background: rgba(247, 246, 242, 0.86);
+  color: #171715;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.home-blueprint-contexts__card:hover,
+.home-blueprint-contexts__card:focus-visible {
+  border-color: rgba(201, 163, 74, 0.68);
+  box-shadow: 0 1rem 2.25rem rgba(35, 29, 18, 0.1);
+  transform: translateY(-3px);
+}
+
+.home-blueprint-contexts__mark {
+  display: grid;
+  min-width: 0;
+  min-height: 10rem;
+  place-items: center;
+  padding: clamp(1.35rem, 2.5vw, 2.25rem);
+  border-bottom: 1px solid rgba(23, 23, 21, 0.1);
+  background: #F7F6F2;
+}
+
+.home-blueprint-contexts__mark img {
+  display: block;
+  width: 100%;
+  height: min(7.2rem, 14vw);
+  max-width: 15rem;
+  max-height: 7.2rem;
+  object-fit: contain;
+}
+
+.home-blueprint-contexts__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 1.05rem 1.15rem;
+}
+
+.home-blueprint-contexts__copy small {
+  color: var(--home-gold-dark);
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-blueprint-contexts__copy strong {
+  margin-top: 0.5rem;
+  color: #171715;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.home-blueprint-contexts__copy b {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  margin-top: 1rem;
+  color: #504B42;
+  font-size: 0.67rem;
+}
+
+.home-blueprint-contexts__copy i {
+  color: var(--home-gold-dark);
+  font-style: normal;
+  transition: transform 180ms ease;
+}
+
+.home-blueprint-contexts__card:hover .home-blueprint-contexts__copy i,
+.home-blueprint-contexts__card:focus-visible .home-blueprint-contexts__copy i {
+  transform: translateX(0.2rem);
+}
+
 /* H07 */
 .home-blueprint-regional {
   padding: clamp(4.7rem, 7vw, 7rem) 0;
@@ -833,7 +956,8 @@
 
 @media (max-width: 74rem) {
   .home-blueprint-solutions__layout,
-  .home-blueprint-regional__layout {
+  .home-blueprint-regional__layout,
+  .home-blueprint-contexts__layout {
     grid-template-columns: 1fr;
   }
 
@@ -967,7 +1091,8 @@
   }
 
   .home-blueprint-solutions,
-  .home-blueprint-work {
+  .home-blueprint-work,
+  .home-blueprint-contexts {
     padding: 3.4rem 0;
   }
 
@@ -1091,6 +1216,27 @@
     position: relative;
     min-height: 0;
     padding: 1rem;
+  }
+
+  .home-blueprint-contexts__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-blueprint-contexts__card {
+    grid-template-columns: minmax(8rem, 0.76fr) minmax(0, 1.24fr);
+    grid-template-rows: 1fr;
+  }
+
+  .home-blueprint-contexts__mark {
+    min-height: 9rem;
+    border-right: 1px solid rgba(23, 23, 21, 0.1);
+    border-bottom: 0;
+    padding: 1.1rem;
+  }
+
+  .home-blueprint-contexts__mark img {
+    height: 5.2rem;
+    max-height: 5.2rem;
   }
 
   .home-blueprint-regional {

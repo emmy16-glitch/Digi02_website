@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { Container } from '../../components/Container'
 import { HomeBlueprintWorkVisual } from './HomeBlueprintVisuals'
+import sterlingBankLogo from '../../assets/client-logos/sterling-bank-official-logo.png'
+import kadunaStateGovernmentInsignia from '../../assets/client-logos/kaduna-state-government-official-insignia.png'
 
 type IconKind = 'skygrid' | 'energy' | 'enterprise' | 'code' | 'automation' | 'security' | 'briefcase' | 'people' | 'globe' | 'award'
 
@@ -147,6 +149,23 @@ const approvedOutcomes = [
   { value: '30%', label: 'efficiency increase', project: 'Thermal Plant Inspection Automation', href: '/work/thermal-plant-inspection-automation' },
   { value: '15%', label: 'error reduction', project: 'Sterling Payment Gateway', href: '/work/sterling-payment-gateway' },
   { value: '40%', label: 'faster workflow', project: 'Kaduna State e-Management System', href: '/work/kaduna-state-e-management-system' },
+] as const
+
+const selectedWorkContexts = [
+  {
+    name: 'Sterling',
+    context: 'Sterling Payment Gateway',
+    href: '/work/sterling-payment-gateway',
+    logo: sterlingBankLogo,
+    alt: 'Sterling logo',
+  },
+  {
+    name: 'Kaduna State Government',
+    context: 'Kaduna State e-Management System',
+    href: '/work/kaduna-state-e-management-system',
+    logo: kadunaStateGovernmentInsignia,
+    alt: 'Kaduna State Government insignia',
+  },
 ] as const
 
 const work = [
@@ -311,6 +330,28 @@ export function HomeBlueprintOutcomes() {
               <strong>{outcome.value}</strong>
               <b>{outcome.label}</b>
               <small>Read case study <i aria-hidden="true">→</i></small>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </section>
+  )
+}
+
+export function HomeBlueprintSelectedWorkContexts() {
+  return (
+    <section className="home-blueprint-contexts" data-home-section="H05B" aria-labelledby="home-contexts-title">
+      <Container className="home-blueprint-contexts__layout">
+        <header className="home-blueprint-contexts__heading">
+          <SectionEyebrow>Selected work contexts</SectionEyebrow>
+          <h2 id="home-contexts-title">Specific organisations.<br />Named work.</h2>
+          <p>Public marks shown to identify the organisations in these named Digi02 work contexts. Their appearance does not imply endorsement.</p>
+        </header>
+        <div className="home-blueprint-contexts__grid">
+          {selectedWorkContexts.map((item) => (
+            <a className="home-blueprint-contexts__card" href={item.href} key={item.name} aria-label={`Read the ${item.context} case study`}>
+              <span className="home-blueprint-contexts__mark"><img src={item.logo} alt={item.alt} loading="lazy" decoding="async" /></span>
+              <span className="home-blueprint-contexts__copy"><small>Named work context</small><strong>{item.context}</strong><b>Read case study <i aria-hidden="true">→</i></b></span>
             </a>
           ))}
         </div>

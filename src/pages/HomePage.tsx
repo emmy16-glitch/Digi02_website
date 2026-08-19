@@ -5,6 +5,7 @@ import {
   HomeBlueprintOutcomes,
   HomeBlueprintPhilosophy,
   HomeBlueprintRegionalProof,
+  HomeBlueprintSelectedWorkContexts,
   HomeBlueprintSolutions,
   HomeBlueprintWork,
 } from '../sections/home/HomeBlueprintContent'
@@ -27,6 +28,7 @@ const revealCadence = {
   bento: { delay: 65, duration: 500, offset: 18 },
   philosophy: { delay: 0, duration: 520, offset: 20 },
   outcomes: { delay: 35, duration: 420, offset: 14 },
+  contexts: { delay: 55, duration: 440, offset: 16 },
   work: { delay: 70, duration: 500, offset: 20 },
   regional: { delay: 25, duration: 460, offset: 16 },
   cta: { delay: 55, duration: 540, offset: 18 },
@@ -90,6 +92,7 @@ export function HomePage() {
       <HomeSectionReveal timing={revealCadence.bento}><HomeBlueprintOperationalBento /></HomeSectionReveal>
       <HomeSectionReveal timing={revealCadence.philosophy}><HomeBlueprintPhilosophy /></HomeSectionReveal>
       <HomeSectionReveal timing={revealCadence.outcomes}><HomeBlueprintOutcomes /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.contexts}><HomeBlueprintSelectedWorkContexts /></HomeSectionReveal>
       <HomeSectionReveal timing={revealCadence.work}><HomeBlueprintWork /></HomeSectionReveal>
       <HomeSectionReveal timing={revealCadence.regional}><HomeBlueprintRegionalProof /></HomeSectionReveal>
       <HomeSectionReveal timing={revealCadence.cta}><HomeBlueprintFinalCta /></HomeSectionReveal>

@@ -21,8 +21,8 @@ test('integrates the operational capability bento into the Digi02 homepage', () 
   assert.match(bentoStyles, /prefers-reduced-motion: reduce/)
 })
 
-test('places only client-approved outcome metrics before the homepage Work section', () => {
-  assert.match(homePage, /HomeSectionReveal timing=\{revealCadence\.outcomes\}><HomeBlueprintOutcomes \/><\/HomeSectionReveal>\s*<HomeSectionReveal timing=\{revealCadence\.work\}><HomeBlueprintWork/)
+test('places only client-approved outcome metrics before the credibility and homepage Work sections', () => {
+  assert.match(homePage, /HomeSectionReveal timing=\{revealCadence\.outcomes\}><HomeBlueprintOutcomes \/><\/HomeSectionReveal>\s*<HomeSectionReveal timing=\{revealCadence\.contexts\}><HomeBlueprintSelectedWorkContexts \/><\/HomeSectionReveal>\s*<HomeSectionReveal timing=\{revealCadence\.work\}><HomeBlueprintWork/)
   assert.match(homeContent, /30%/)
   assert.match(homeContent, /15%/)
   assert.match(homeContent, /40%/)
