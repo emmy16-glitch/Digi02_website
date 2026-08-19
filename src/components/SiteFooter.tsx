@@ -1,4 +1,4 @@
-import digi02LogoLight from '../assets/brand/digi02-logo-light.png'
+import digi02OperationsLogo from '../assets/brand/digi02-logo-operations-light.png'
 import { useState, type FormEvent } from 'react'
 import { Container } from './Container'
 
@@ -68,9 +68,8 @@ export function SiteFooter() {
       <Container className="site-footer__inner">
         <div className="site-footer__brand">
           <a href="/" aria-label="Digi02 home">
-            <img src={digi02LogoLight} alt="Digi02" />
+            <img src={digi02OperationsLogo} alt="Digi02 — Technology built for real operations" decoding="async" />
           </a>
-          <p>Technology built for<br />real operations.</p>
         </div>
 
         <div className="site-footer__groups">
