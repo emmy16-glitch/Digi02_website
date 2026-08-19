@@ -12,8 +12,9 @@ test('shared navigation and footer render deliberately proportioned Digi02 wordm
   ])
 
   for (const source of [header, footer]) {
-    assert.match(source, /Digi<span>02<\/span>/)
-    assert.doesNotMatch(source, /digi02-logo-operations-light\.png/)
+    assert.match(source, /digi02-globe-mark\.png/)
+    assert.match(source, /digi02-brand-lockup__globe/)
+    assert.match(source, /digi02-brand-lockup__name/)
   }
 
   assert.match(footer, /<p>Technology built for/)
@@ -30,6 +31,8 @@ test('visible logo presentation prioritizes readable shared wordmarks and preser
   assert.match(styles, /font-size: clamp\(2rem/)
   assert.match(styles, /font-size: clamp\(2\.45rem/)
   assert.match(styles, /overflow: visible/)
+  assert.match(styles, /object-fit: contain/)
+  assert.match(styles, /\.digi02-brand-lockup__globe/)
   assert.match(styles, /outline: 2px solid var\(--gold-400\)/)
   assert.match(mapStyles, /\.digi02-location__identity img[\s\S]*?object-fit: contain/)
 })

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Container } from '../../components/Container'
 
 const metrics = [
@@ -45,9 +46,15 @@ function MetricIcon({ kind }: { kind: MetricKind }) {
 }
 
 export function HomeBlueprintHero() {
+  const [isMotionPaused, setIsMotionPaused] = useState(false)
+
   return (
-    <section className="home-blueprint-hero" data-home-section="H01" aria-labelledby="home-blueprint-title">
-      <div className="home-blueprint-hero__visual" aria-hidden="true" />
+    <section className="home-blueprint-hero" data-home-section="H01" data-motion={isMotionPaused ? 'paused' : 'active'} aria-labelledby="home-blueprint-title">
+      <div className="home-blueprint-hero__visual" aria-hidden="true">
+        <span className="home-blueprint-hero__orbital-grid" />
+        <span className="home-blueprint-hero__signal-path" />
+        <span className="home-blueprint-hero__scanline" />
+      </div>
       <Container className="home-blueprint-hero__content">
         <div className="home-blueprint-hero__copy">
           <p className="home-blueprint-eyebrow">Built in Nigeria · Engineered for impact</p>
@@ -71,7 +78,22 @@ export function HomeBlueprintHero() {
             <span aria-hidden="true">✓</span>
             Built in Kaduna. Engineered for impact.
           </p>
+          <button className="home-blueprint-hero__motion-control" type="button" aria-pressed={isMotionPaused} onClick={() => setIsMotionPaused((isPaused) => !isPaused)}>
+            <span aria-hidden="true">{isMotionPaused ? '▶' : 'Ⅱ'}</span>
+            {isMotionPaused ? 'Resume visual movement' : 'Pause visual movement'}
+          </button>
         </div>
+
+        <aside className="home-blueprint-hero__operations-view" aria-label="Digi02 operational view">
+          <p>Operational view</p>
+          <strong>From field signals<br />to clear decisions.</strong>
+          <div>
+            <span>Field capture</span>
+            <span>Workflow context</span>
+            <span>Secure review</span>
+          </div>
+          <small>Explore the systems behind the work <span aria-hidden="true">↗</span></small>
+        </aside>
       </Container>
 
       <div className="home-blueprint-proof" data-home-section="H02" aria-label="Digi02 proof metrics">

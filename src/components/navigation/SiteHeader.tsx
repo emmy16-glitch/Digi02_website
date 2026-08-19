@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Container } from '../Container'
 import { DesktopNavigation, type NavigationItem } from './DesktopNavigation'
 import { MobileNavigation } from './MobileNavigation'
+import globeMark from '../../assets/brand/digi02-globe-mark.png'
 import '../../styles/navigation.css'
 
 const navigationItems: readonly NavigationItem[] = [
@@ -72,7 +73,10 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
     <header className="site-header">
       <Container className="site-header__inner">
         <a className="site-header__wordmark" href="/" aria-label="Digi02 home">
-          <span aria-hidden="true">Digi<span>02</span></span>
+          <span className="digi02-brand-lockup" aria-hidden="true">
+            <span className="digi02-brand-lockup__globe"><img src={globeMark} alt="" /></span>
+            <span className="digi02-brand-lockup__name">Digi<span>02</span></span>
+          </span>
         </a>
 
         <DesktopNavigation currentPath={currentPath} items={navigationItems} theme={theme} onThemeToggle={() => setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')} />

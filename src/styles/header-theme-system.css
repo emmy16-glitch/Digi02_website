@@ -76,12 +76,17 @@ html[data-theme='light'] .site-header {
   box-shadow: 0 1px 0 rgba(16, 17, 19, 0.15), 0 0.6rem 1.6rem rgba(16, 17, 19, 0.08);
 }
 
-html[data-theme='light'] .site-header__wordmark {
+html[data-theme='light'] .site-header__wordmark,
+html[data-theme='light'] .site-header__wordmark .digi02-brand-lockup__name {
   color: #101113;
 }
 
-html[data-theme='light'] .site-header__wordmark > span > span {
+html[data-theme='light'] .site-header__wordmark .digi02-brand-lockup__name > span {
   color: #101113;
+}
+
+html[data-theme='light'] .site-header__wordmark .digi02-brand-lockup__globe img {
+  filter: brightness(0);
 }
 
 html[data-theme='light'] .desktop-navigation__link,

@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Container } from './Container'
+import globeMark from '../assets/brand/digi02-globe-mark.png'
 
 const mailchimpDemoEndpoint = 'https://example.list-manage.com/subscribe/post?u=digi02-demo&id=newsletter-demo'
 
@@ -82,7 +83,10 @@ export function SiteFooter() {
       <Container className="site-footer__inner">
         <div className="site-footer__brand">
           <a href="/" aria-label="Digi02 home">
-            <span aria-hidden="true">Digi<span>02</span></span>
+            <span className="digi02-brand-lockup digi02-brand-lockup--footer" aria-hidden="true">
+              <span className="digi02-brand-lockup__globe"><img src={globeMark} alt="" /></span>
+              <span className="digi02-brand-lockup__name">Digi<span>02</span></span>
+            </span>
           </a>
           <p>Technology built for<br />real operations.</p>
         </div>

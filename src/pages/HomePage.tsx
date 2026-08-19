@@ -11,6 +11,7 @@ import {
 import { HomeBlueprintHero } from '../sections/home/HomeBlueprintHero'
 import '../styles/home-blueprint.css'
 import '../styles/home-capability-bento.css'
+import '../styles/home-hero-interaction.css'
 
 export function HomePage() {
   return (

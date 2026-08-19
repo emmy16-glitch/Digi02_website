@@ -1,0 +1,232 @@
+.home-blueprint-hero__visual {
+  overflow: hidden;
+}
+
+.home-blueprint-hero__visual::before,
+.home-blueprint-hero__visual::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+}
+
+.home-blueprint-hero__visual::before {
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(201, 163, 74, 0.08) 0 1px, transparent 1px 100%),
+    linear-gradient(rgba(201, 163, 74, 0.06) 0 1px, transparent 1px 100%);
+  background-position: right 10% center;
+  background-size: 3.8rem 3.8rem;
+  mask-image: linear-gradient(90deg, transparent 36%, rgba(0, 0, 0, 0.88) 62%, transparent 98%);
+  opacity: 0.52;
+}
+
+.home-blueprint-hero__visual::after {
+  inset: 13% -9% auto auto;
+  width: clamp(24rem, 39vw, 44rem);
+  height: clamp(24rem, 39vw, 44rem);
+  border: 1px solid rgba(201, 163, 74, 0.32);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3.2rem rgba(201, 163, 74, 0.035), 0 0 0 6.4rem rgba(201, 163, 74, 0.02);
+  animation: home-hero-orbit 18s linear infinite;
+}
+
+.home-blueprint-hero__orbital-grid,
+.home-blueprint-hero__signal-path,
+.home-blueprint-hero__scanline {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.home-blueprint-hero__orbital-grid {
+  right: 10%;
+  bottom: 12%;
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid rgba(201, 163, 74, 0.22);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2.5rem rgba(201, 163, 74, 0.025);
+  animation: home-hero-orbit 12s linear infinite reverse;
+}
+
+.home-blueprint-hero__signal-path {
+  right: 15%;
+  bottom: 29%;
+  width: min(32vw, 31rem);
+  height: 1px;
+  overflow: hidden;
+  background: linear-gradient(90deg, transparent, rgba(201, 163, 74, 0.72), transparent);
+}
+
+.home-blueprint-hero__signal-path::after {
+  position: absolute;
+  inset: -2px auto -2px -15%;
+  width: 16%;
+  border-radius: 50%;
+  background: var(--home-gold-light);
+  box-shadow: 0 0 1rem rgba(224, 188, 103, 0.85);
+  content: '';
+  animation: home-hero-signal 5.2s var(--ease-standard) infinite;
+}
+
+.home-blueprint-hero__scanline {
+  inset: -10% 0 auto;
+  height: 18%;
+  background: linear-gradient(180deg, transparent, rgba(224, 188, 103, 0.1), transparent);
+  mix-blend-mode: screen;
+  animation: home-hero-scan 8s var(--ease-standard) infinite;
+}
+
+@keyframes home-hero-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes home-hero-signal {
+  0%, 10% { transform: translateX(0); opacity: 0; }
+  22% { opacity: 1; }
+  78% { opacity: 1; }
+  100% { transform: translateX(760%); opacity: 0; }
+}
+
+@keyframes home-hero-scan {
+  0%, 14% { transform: translateY(-8%); opacity: 0; }
+  26% { opacity: 1; }
+  78% { opacity: 0.7; }
+  100% { transform: translateY(580%); opacity: 0; }
+}
+
+.home-blueprint-hero__content {
+  justify-content: space-between;
+  gap: clamp(2rem, 6vw, 7rem);
+}
+
+.home-blueprint-hero__motion-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  margin-top: 1.2rem;
+  padding: 0.3rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(201, 163, 74, 0.48);
+  background: transparent;
+  color: #c7c3ba;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: border-color 160ms var(--ease-standard), color 160ms var(--ease-standard);
+}
+
+.home-blueprint-hero__motion-control > span {
+  width: 1.05rem;
+  color: var(--home-gold-light);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.home-blueprint-hero__motion-control:hover,
+.home-blueprint-hero__motion-control:focus-visible {
+  border-color: var(--home-gold-light);
+  color: var(--home-white);
+}
+
+.home-blueprint-hero__operations-view {
+  display: grid;
+  align-self: center;
+  width: min(19rem, 28vw);
+  gap: 0.85rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border: 1px solid rgba(201, 163, 74, 0.34);
+  background: rgba(6, 9, 10, 0.68);
+  box-shadow: 0 1.1rem 2.8rem rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(9px);
+}
+
+.home-blueprint-hero__operations-view > p,
+.home-blueprint-hero__operations-view > small {
+  margin: 0;
+  color: var(--home-gold-light);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.home-blueprint-hero__operations-view > strong {
+  color: var(--home-white);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 1.8vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.home-blueprint-hero__operations-view > div {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.82rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.home-blueprint-hero__operations-view > div > span {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: #cfcbc3;
+  font-size: 0.7rem;
+}
+
+.home-blueprint-hero__operations-view > div > span::before {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--home-gold);
+  box-shadow: 0 0 0.6rem rgba(201, 163, 74, 0.55);
+  content: '';
+}
+
+.home-blueprint-hero__operations-view > small {
+  color: #b5b1a8;
+  font-size: 0.53rem;
+}
+
+.home-blueprint-hero__operations-view > small span {
+  color: var(--home-gold-light);
+}
+
+.home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__visual::after,
+.home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__orbital-grid,
+.home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__signal-path::after,
+.home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__scanline {
+  animation-play-state: paused;
+}
+
+@media (max-width: 63.9375rem) {
+  .home-blueprint-hero__operations-view {
+    width: min(16rem, 31vw);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .home-blueprint-hero__operations-view {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-blueprint-hero__visual::after,
+  .home-blueprint-hero__orbital-grid,
+  .home-blueprint-hero__signal-path::after,
+  .home-blueprint-hero__scanline {
+    animation: none;
+  }
+
+  .home-blueprint-hero__motion-control {
+    transition: none;
+  }
+}
