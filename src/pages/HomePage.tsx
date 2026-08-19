@@ -15,7 +15,24 @@ import '../styles/home-capability-bento.css'
 import '../styles/home-hero-interaction.css'
 import '../styles/home-scroll-reveal.css'
 
-function HomeSectionReveal({ children, index }: { children: ReactNode; index: number }) {
+type RevealTiming = {
+  delay: number
+  duration: number
+  offset: number
+}
+
+const revealCadence = {
+  solutions: { delay: 0, duration: 460, offset: 15 },
+  capabilities: { delay: 35, duration: 400, offset: 12 },
+  bento: { delay: 65, duration: 500, offset: 18 },
+  philosophy: { delay: 0, duration: 520, offset: 20 },
+  outcomes: { delay: 35, duration: 420, offset: 14 },
+  work: { delay: 70, duration: 500, offset: 20 },
+  regional: { delay: 25, duration: 460, offset: 16 },
+  cta: { delay: 55, duration: 540, offset: 18 },
+} as const satisfies Record<string, RevealTiming>
+
+function HomeSectionReveal({ children, timing }: { children: ReactNode; timing: RevealTiming }) {
   const revealRef = useRef<HTMLDivElement>(null)
   const [isRevealed, setIsRevealed] = useState(false)
 
@@ -53,7 +70,11 @@ function HomeSectionReveal({ children, index }: { children: ReactNode; index: nu
     <div
       ref={revealRef}
       className={`home-section-reveal${isRevealed ? ' is-revealed' : ''}`}
-      style={{ '--home-reveal-delay': `${Math.min(index * 45, 180)}ms` } as CSSProperties}
+      style={{
+        '--home-reveal-delay': `${timing.delay}ms`,
+        '--home-reveal-duration': `${timing.duration}ms`,
+        '--home-reveal-offset': `${timing.offset}px`,
+      } as CSSProperties}
     >
       {children}
     </div>
@@ -64,14 +85,14 @@ export function HomePage() {
   return (
     <div className="home-blueprint">
       <HomeBlueprintHero />
-      <HomeSectionReveal index={0}><HomeBlueprintSolutions /></HomeSectionReveal>
-      <HomeSectionReveal index={1}><HomeBlueprintCapabilities /></HomeSectionReveal>
-      <HomeSectionReveal index={2}><HomeBlueprintOperationalBento /></HomeSectionReveal>
-      <HomeSectionReveal index={3}><HomeBlueprintPhilosophy /></HomeSectionReveal>
-      <HomeSectionReveal index={4}><HomeBlueprintOutcomes /></HomeSectionReveal>
-      <HomeSectionReveal index={5}><HomeBlueprintWork /></HomeSectionReveal>
-      <HomeSectionReveal index={6}><HomeBlueprintRegionalProof /></HomeSectionReveal>
-      <HomeSectionReveal index={7}><HomeBlueprintFinalCta /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.solutions}><HomeBlueprintSolutions /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.capabilities}><HomeBlueprintCapabilities /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.bento}><HomeBlueprintOperationalBento /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.philosophy}><HomeBlueprintPhilosophy /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.outcomes}><HomeBlueprintOutcomes /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.work}><HomeBlueprintWork /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.regional}><HomeBlueprintRegionalProof /></HomeSectionReveal>
+      <HomeSectionReveal timing={revealCadence.cta}><HomeBlueprintFinalCta /></HomeSectionReveal>
     </div>
   )
 }

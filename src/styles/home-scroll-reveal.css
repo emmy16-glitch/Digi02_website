@@ -1,9 +1,9 @@
 .home-section-reveal {
   opacity: 0;
-  transform: translateY(1.25rem);
+  transform: translateY(var(--home-reveal-offset, 1.25rem));
   transition:
-    opacity 420ms var(--ease-standard) var(--home-reveal-delay, 0ms),
-    transform 420ms var(--ease-standard) var(--home-reveal-delay, 0ms);
+    opacity var(--home-reveal-duration, 420ms) var(--ease-standard) var(--home-reveal-delay, 0ms),
+    transform var(--home-reveal-duration, 420ms) var(--ease-standard) var(--home-reveal-delay, 0ms);
   will-change: opacity, transform;
 }
 

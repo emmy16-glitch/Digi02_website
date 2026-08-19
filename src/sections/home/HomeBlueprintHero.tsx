@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Container } from '../../components/Container'
 
 const metrics = [
@@ -9,9 +9,9 @@ const metrics = [
 ] as const
 
 const heroCaseStudies = [
-  { signal: 'Field capture', project: 'Thermal Plant inspection', href: '/work/thermal-plant-inspection-automation' },
-  { signal: 'Workflow context', project: 'Kaduna e-Management', href: '/work/kaduna-state-e-management-system' },
-  { signal: 'Secure review', project: 'Sterling Payment Gateway', href: '/work/sterling-payment-gateway' },
+  { signal: 'Field capture', project: 'Thermal Plant inspection', href: '/work/thermal-plant-inspection-automation', mapKey: 'thermal' },
+  { signal: 'Workflow context', project: 'Kaduna e-Management', href: '/work/kaduna-state-e-management-system', mapKey: 'kaduna' },
+  { signal: 'Secure review', project: 'Sterling Payment Gateway', href: '/work/sterling-payment-gateway', mapKey: 'sterling' },
 ] as const
 
 type MetricKind = (typeof metrics)[number]['kind']
@@ -51,8 +51,28 @@ function MetricIcon({ kind }: { kind: MetricKind }) {
   )
 }
 
+function ProjectMapIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="m4 6 5-3 6 3 5-3v15l-5 3-6-3-5 3V6Z" />
+      <path d="M9 3v15M15 6v15" />
+      <circle cx="12" cy="11" r="1.5" />
+    </svg>
+  )
+}
+
 export function HomeBlueprintHero() {
   const [isMotionPaused, setIsMotionPaused] = useState(false)
+  const [isProjectMapOpen, setIsProjectMapOpen] = useState(false)
+  const projectMapDialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    const dialog = projectMapDialogRef.current
+    if (!dialog) return
+
+    if (isProjectMapOpen && !dialog.open) dialog.showModal()
+    if (!isProjectMapOpen && dialog.open) dialog.close()
+  }, [isProjectMapOpen])
 
   return (
     <section className="home-blueprint-hero" data-home-section="H01" data-motion={isMotionPaused ? 'paused' : 'active'} aria-labelledby="home-blueprint-title">
@@ -80,6 +100,18 @@ export function HomeBlueprintHero() {
               See our solutions <span aria-hidden="true">→</span>
             </a>
           </div>
+          <nav className="home-blueprint-hero__mobile-signal-chips" aria-label="Selected Digi02 case studies">
+            {heroCaseStudies.map((caseStudy) => (
+              <a href={caseStudy.href} key={caseStudy.signal} aria-label={`${caseStudy.signal}: ${caseStudy.project} case study`}>
+                <span aria-hidden="true" />
+                {caseStudy.signal}
+              </a>
+            ))}
+          </nav>
+          <button className="home-blueprint-hero__project-map-trigger" type="button" aria-haspopup="dialog" aria-controls="home-project-map-dialog" aria-expanded={isProjectMapOpen} onClick={() => setIsProjectMapOpen(true)}>
+            <ProjectMapIcon />
+            View project map <span aria-hidden="true">↗</span>
+          </button>
           <p className="home-blueprint-hero__origin">
             <span aria-hidden="true">✓</span>
             Built in Kaduna. Engineered for impact.
@@ -105,6 +137,43 @@ export function HomeBlueprintHero() {
           <small>Selected case studies <span aria-hidden="true">↗</span></small>
         </aside>
       </Container>
+
+      <dialog
+        ref={projectMapDialogRef}
+        id="home-project-map-dialog"
+        className="home-blueprint-project-map"
+        aria-labelledby="home-project-map-title"
+        onClose={() => setIsProjectMapOpen(false)}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) setIsProjectMapOpen(false)
+        }}
+      >
+        <header className="home-blueprint-project-map__header">
+          <div>
+            <p>Selected work</p>
+            <h2 id="home-project-map-title">Project map</h2>
+            <span>Choose an operational signal to open its case study.</span>
+          </div>
+          <button type="button" onClick={() => setIsProjectMapOpen(false)} aria-label="Close project map">×</button>
+        </header>
+        <div className="home-blueprint-project-map__canvas" aria-label="Interactive map of selected Digi02 case studies">
+          <svg aria-hidden="true" viewBox="0 0 700 360" preserveAspectRatio="none">
+            <path d="M84 265C176 245 191 86 335 130s136 133 284 51" />
+            <path d="M84 265C202 312 370 322 619 181" />
+            <circle cx="84" cy="265" r="4" />
+            <circle cx="335" cy="130" r="4" />
+            <circle cx="619" cy="181" r="4" />
+          </svg>
+          {heroCaseStudies.map((caseStudy) => (
+            <a className={`home-blueprint-project-map__node home-blueprint-project-map__node--${caseStudy.mapKey}`} href={caseStudy.href} key={caseStudy.signal}>
+              <span>{caseStudy.signal}</span>
+              <strong>{caseStudy.project}</strong>
+              <i aria-hidden="true">Open case study ↗</i>
+            </a>
+          ))}
+        </div>
+        <p className="home-blueprint-project-map__note">This map groups selected work by operational signal; it does not represent project geography.</p>
+      </dialog>
 
       <div className="home-blueprint-proof" data-home-section="H02" aria-label="Digi02 proof metrics">
         <Container className="home-blueprint-proof__grid">

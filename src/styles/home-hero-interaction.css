@@ -132,6 +132,54 @@
   color: var(--home-white);
 }
 
+.home-blueprint-hero__mobile-signal-chips {
+  display: none;
+}
+
+.home-blueprint-hero__project-map-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin-top: 1.05rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #d5d1c8;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  transition: color 160ms var(--ease-standard);
+}
+
+.home-blueprint-hero__project-map-trigger svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: var(--home-gold-light);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.45;
+}
+
+.home-blueprint-hero__project-map-trigger > span {
+  color: var(--home-gold-light);
+  transition: transform 160ms var(--ease-standard);
+}
+
+.home-blueprint-hero__project-map-trigger:hover,
+.home-blueprint-hero__project-map-trigger:focus-visible {
+  color: var(--home-white);
+}
+
+.home-blueprint-hero__project-map-trigger:hover > span,
+.home-blueprint-hero__project-map-trigger:focus-visible > span {
+  transform: translate(0.14rem, -0.14rem);
+}
+
 .home-blueprint-hero__operations-view {
   display: grid;
   align-self: center;
@@ -236,6 +284,167 @@
   color: var(--home-gold-light);
 }
 
+.home-blueprint-project-map {
+  width: min(45rem, calc(100vw - 2rem));
+  max-height: min(44rem, calc(100vh - 2rem));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid rgba(201, 163, 74, 0.48);
+  background: #090a0a;
+  color: var(--home-white);
+  box-shadow: 0 1.8rem 6rem rgba(0, 0, 0, 0.58);
+}
+
+.home-blueprint-project-map::backdrop {
+  background: rgba(2, 3, 3, 0.76);
+  backdrop-filter: blur(4px);
+}
+
+.home-blueprint-project-map__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.35rem 1.5rem 1.15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-blueprint-project-map__header p,
+.home-blueprint-project-map__header span,
+.home-blueprint-project-map__note {
+  margin: 0;
+  color: #aaa69e;
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.07em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.home-blueprint-project-map__header p {
+  color: var(--home-gold-light);
+  font-weight: 700;
+}
+
+.home-blueprint-project-map__header h2 {
+  margin: 0.3rem 0 0.35rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 5vw, 2.7rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.home-blueprint-project-map__header > button {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(201, 163, 74, 0.38);
+  background: transparent;
+  color: var(--home-gold-light);
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+  transition: background-color 160ms var(--ease-standard), color 160ms var(--ease-standard);
+}
+
+.home-blueprint-project-map__header > button:hover,
+.home-blueprint-project-map__header > button:focus-visible {
+  background: var(--home-gold);
+  color: #11110f;
+}
+
+.home-blueprint-project-map__canvas {
+  position: relative;
+  min-height: 23rem;
+  margin: 1.25rem 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid rgba(201, 163, 74, 0.22);
+  background:
+    linear-gradient(90deg, rgba(201, 163, 74, 0.07) 0 1px, transparent 1px 100%),
+    linear-gradient(rgba(201, 163, 74, 0.05) 0 1px, transparent 1px 100%),
+    radial-gradient(circle at 48% 34%, rgba(201, 163, 74, 0.1), transparent 30%),
+    #070909;
+  background-size: 3.5rem 3.5rem, 3.5rem 3.5rem, auto, auto;
+}
+
+.home-blueprint-project-map__canvas > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgba(224, 188, 103, 0.64);
+  stroke-dasharray: 3 7;
+  stroke-width: 1.5;
+}
+
+.home-blueprint-project-map__node {
+  position: absolute;
+  display: grid;
+  width: min(11rem, 31%);
+  gap: 0.25rem;
+  padding: 0.7rem;
+  border: 1px solid rgba(201, 163, 74, 0.4);
+  background: rgba(7, 9, 9, 0.86);
+  color: var(--home-white);
+  text-decoration: none;
+  transition: border-color 180ms var(--ease-standard), background-color 180ms var(--ease-standard), transform 180ms var(--ease-standard);
+}
+
+.home-blueprint-project-map__node::before {
+  position: absolute;
+  top: -0.33rem;
+  left: -0.33rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid rgba(224, 188, 103, 0.9);
+  border-radius: 50%;
+  background: #0c0e0e;
+  box-shadow: 0 0 0.8rem rgba(224, 188, 103, 0.66);
+  content: '';
+}
+
+.home-blueprint-project-map__node > span,
+.home-blueprint-project-map__node > i {
+  color: var(--home-gold-light);
+  font-family: var(--font-mono);
+  font-size: 0.49rem;
+  font-style: normal;
+  letter-spacing: 0.065em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.home-blueprint-project-map__node > strong {
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.home-blueprint-project-map__node > i {
+  margin-top: 0.16rem;
+  color: #bbb7ae;
+}
+
+.home-blueprint-project-map__node--thermal { left: 7%; top: 61%; }
+.home-blueprint-project-map__node--sterling { left: 41%; top: 18%; }
+.home-blueprint-project-map__node--kaduna { right: 7%; top: 44%; }
+
+.home-blueprint-project-map__node:hover,
+.home-blueprint-project-map__node:focus-visible {
+  border-color: var(--home-gold-light);
+  background: rgba(201, 163, 74, 0.12);
+  transform: translateY(-0.2rem);
+}
+
+.home-blueprint-project-map__note {
+  display: block;
+  padding: 0.9rem 1.5rem 1.2rem;
+}
+
 .home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__visual::after,
 .home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__orbital-grid,
 .home-blueprint-hero[data-motion='paused'] .home-blueprint-hero__signal-path::after,
@@ -253,6 +462,69 @@
   .home-blueprint-hero__operations-view {
     display: none;
   }
+
+  .home-blueprint-hero__mobile-signal-chips {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.42rem;
+    margin-top: 1.1rem;
+  }
+
+  .home-blueprint-hero__mobile-signal-chips > a {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2rem;
+    padding: 0.38rem 0.45rem;
+    border: 1px solid rgba(201, 163, 74, 0.3);
+    background: rgba(6, 9, 10, 0.52);
+    color: #d9d4ca;
+    font-family: var(--font-mono);
+    font-size: 0.48rem;
+    letter-spacing: 0.035em;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: border-color 160ms var(--ease-standard), background-color 160ms var(--ease-standard), color 160ms var(--ease-standard);
+  }
+
+  .home-blueprint-hero__mobile-signal-chips > a > span {
+    width: 0.32rem;
+    height: 0.32rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--home-gold);
+    box-shadow: 0 0 0.45rem rgba(201, 163, 74, 0.55);
+  }
+
+  .home-blueprint-hero__mobile-signal-chips > a:hover,
+  .home-blueprint-hero__mobile-signal-chips > a:focus-visible {
+    border-color: var(--home-gold-light);
+    background: rgba(201, 163, 74, 0.12);
+    color: var(--home-white);
+  }
+
+  .home-blueprint-project-map__canvas {
+    min-height: 27rem;
+    margin: 1rem 1rem 0;
+  }
+
+  .home-blueprint-project-map__header {
+    gap: 1rem;
+    padding: 1.1rem 1rem 0.95rem;
+  }
+
+  .home-blueprint-project-map__node {
+    width: min(10.5rem, 52%);
+  }
+
+  .home-blueprint-project-map__node--thermal { left: 6%; top: 67%; }
+  .home-blueprint-project-map__node--sterling { left: 40%; top: 13%; }
+  .home-blueprint-project-map__node--kaduna { right: 5%; top: 42%; }
+
+  .home-blueprint-project-map__note {
+    padding: 0.85rem 1rem 1rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -264,6 +536,17 @@
   }
 
   .home-blueprint-hero__motion-control {
+    transition: none;
+  }
+
+  .home-blueprint-hero__mobile-signal-chips > a {
+    transition: none;
+  }
+
+  .home-blueprint-hero__project-map-trigger,
+  .home-blueprint-hero__project-map-trigger > span,
+  .home-blueprint-project-map__header > button,
+  .home-blueprint-project-map__node {
     transition: none;
   }
 

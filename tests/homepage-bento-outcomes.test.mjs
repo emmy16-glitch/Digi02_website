@@ -22,7 +22,7 @@ test('integrates the operational capability bento into the Digi02 homepage', () 
 })
 
 test('places only client-approved outcome metrics before the homepage Work section', () => {
-  assert.match(homePage, /HomeSectionReveal index=\{4\}><HomeBlueprintOutcomes \/><\/HomeSectionReveal>\s*<HomeSectionReveal index=\{5\}><HomeBlueprintWork/)
+  assert.match(homePage, /HomeSectionReveal timing=\{revealCadence\.outcomes\}><HomeBlueprintOutcomes \/><\/HomeSectionReveal>\s*<HomeSectionReveal timing=\{revealCadence\.work\}><HomeBlueprintWork/)
   assert.match(homeContent, /30%/)
   assert.match(homeContent, /15%/)
   assert.match(homeContent, /40%/)
@@ -51,7 +51,20 @@ test('connects live hero signals to selected case studies', () => {
   assert.match(hero, /\/work\/kaduna-state-e-management-system/)
   assert.match(hero, /\/work\/sterling-payment-gateway/)
   assert.match(hero, /aria-label="Selected Digi02 case studies"/)
+  assert.match(hero, /home-blueprint-hero__mobile-signal-chips/)
   assert.match(heroStyles, /\.home-blueprint-hero__signal-links > a/)
+  assert.match(heroStyles, /\.home-blueprint-hero__mobile-signal-chips > a/)
+})
+
+test('adds an interactive hero project-map entry point with accessible selected-work nodes', () => {
+  assert.match(hero, /home-blueprint-hero__project-map-trigger/)
+  assert.match(hero, /aria-haspopup="dialog"/)
+  assert.match(hero, /projectMapDialogRef/)
+  assert.match(hero, /dialog\.showModal\(\)/)
+  assert.match(hero, /id="home-project-map-dialog"/)
+  assert.match(hero, /This map groups selected work by operational signal/)
+  assert.match(heroStyles, /\.home-blueprint-project-map__node/)
+  assert.match(heroStyles, /\.home-blueprint-project-map::backdrop/)
 })
 
 test('reveals homepage sections on scroll while keeping reduced-motion content immediately visible', () => {
@@ -59,8 +72,11 @@ test('reveals homepage sections on scroll while keeping reduced-motion content i
   assert.match(homePage, /IntersectionObserver/)
   assert.match(homePage, /prefers-reduced-motion: reduce/)
   assert.match(homePage, /window\.addEventListener\('scroll', revealWhenReached, \{ passive: true \}\)/)
-  assert.match(homePage, /HomeSectionReveal index=\{7\}/)
+  assert.match(homePage, /const revealCadence/)
+  assert.match(homePage, /revealCadence\.bento/)
+  assert.match(homePage, /revealCadence\.cta/)
   assert.match(revealStyles, /\.home-section-reveal\.is-revealed/)
-  assert.match(revealStyles, /translateY\(1\.25rem\)/)
+  assert.match(revealStyles, /--home-reveal-duration/)
+  assert.match(revealStyles, /--home-reveal-offset/)
   assert.match(revealStyles, /prefers-reduced-motion: reduce/)
 })
