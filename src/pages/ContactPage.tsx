@@ -17,6 +17,28 @@ const initialValues: ContactValues = {
   name: '', company: '', email: '', projectType: '', budget: '', timeline: '', message: '', consent: false,
 }
 const requiredFields: FieldName[] = ['name', 'company', 'email', 'projectType', 'message', 'consent']
+const contactFaqs = [
+  {
+    question: 'How quickly will Digi02 respond to my enquiry?',
+    answer: 'We aim to respond within 24 hours on business days. Sharing your organisation, project type, and a clear challenge helps the right team prepare for the conversation.',
+  },
+  {
+    question: 'What happens after I prepare an enquiry?',
+    answer: 'The form prepares an email brief for you to review and send from your own email application. Once received, the Digi02 team will review the context and advise on the appropriate next step.',
+  },
+  {
+    question: 'Can I visit the Kaduna office?',
+    answer: 'Yes. Visits and on-site meetings are arranged in advance. Share your preferred date and time, and the team will confirm office availability before you travel.',
+  },
+  {
+    question: 'Will our project information be handled confidentially?',
+    answer: 'Use the enquiry form to share a concise project overview. If a deeper discussion is required, Digi02 can agree the appropriate confidentiality process before detailed information is exchanged.',
+  },
+  {
+    question: 'Where can I get support for an existing Digi02 solution?',
+    answer: 'Use the Support contact path below the map for help with an existing solution. For new projects, use the enquiry form so the request can be directed to the right team.',
+  },
+] as const
 
 function ContactIcon({ name }: { name: ContactIconName }) {
   const paths: Record<ContactIconName, React.ReactNode> = {
@@ -194,6 +216,22 @@ export function ContactPage() {
               <button className="contact-reference-submit" type="submit">Prepare enquiry <span aria-hidden="true">→</span></button>
               <p id="contact-form-status" className="contact-reference-form__status" aria-live="polite">{formStatus}</p>
             </form>
+
+            <section className="contact-reference-faq" aria-labelledby="contact-faq-title">
+              <header>
+                <p>Before you reach out</p>
+                <h2 id="contact-faq-title">Common questions</h2>
+                <span>Quick guidance on enquiries, office visits, and existing support.</span>
+              </header>
+              <div className="contact-reference-faq__items">
+                {contactFaqs.map((faq) => (
+                  <details key={faq.question}>
+                    <summary><span>{faq.question}</span><b aria-hidden="true">+</b></summary>
+                    <div><p>{faq.answer}</p></div>
+                  </details>
+                ))}
+              </div>
+            </section>
 
             <aside className="contact-reference-side">
               <section className="contact-reference-info" aria-labelledby="contact-info-title">

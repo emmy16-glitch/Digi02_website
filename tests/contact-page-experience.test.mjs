@@ -31,3 +31,12 @@ test('keeps contact interactions animated but reduced-motion safe', () => {
   assert.match(contactStyles, /prefers-reduced-motion: reduce/)
   assert.match(contactStyles, /contact-reference-form__label\.is-invalid/)
 })
+
+test('adds a native accessible collapsible FAQ directly beneath the Contact form', () => {
+  assert.match(contactPage, /const contactFaqs/)
+  assert.match(contactPage, /contact-reference-faq/)
+  assert.match(contactPage, /<details key=\{faq\.question\}>/)
+  assert.match(contactPage, /<summary>/)
+  assert.match(contactPage, /How quickly will Digi02 respond to my enquiry\?/) 
+  assert.match(contactStyles, /contact-reference-faq details\[open\]/)
+})

@@ -87,6 +87,35 @@
 .contact-reference-connect small { color: #918e86; font-size: 0.59rem; }
 .contact-reference-connect a > b { color: var(--gold-400); font-size: 0.75rem; font-weight: 400; }
 
+.contact-reference-faq {
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.45rem;
+  background: linear-gradient(125deg, rgba(201, 163, 74, 0.055), transparent 38%), rgba(14, 16, 18, 0.82);
+}
+
+.contact-reference-faq header > p {
+  margin: 0;
+  color: var(--gold-400);
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contact-reference-faq h2 { margin: 0.38rem 0 0; color: #f2efe8; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.3rem, 2.1vw, 1.7rem); font-weight: 400; letter-spacing: -0.025em; }
+.contact-reference-faq header > span { display: block; max-width: 34rem; margin-top: 0.5rem; color: #a7a39b; font-size: 0.69rem; line-height: 1.5; }
+.contact-reference-faq__items { margin-top: 1.15rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.contact-reference-faq details { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.contact-reference-faq summary { display: grid; grid-template-columns: minmax(0, 1fr) 1.5rem; gap: 1rem; align-items: center; min-height: 3.5rem; color: #e8e4dc; cursor: pointer; font-size: 0.73rem; font-weight: 600; list-style: none; }
+.contact-reference-faq summary::-webkit-details-marker { display: none; }
+.contact-reference-faq summary b { display: grid; width: 1.5rem; height: 1.5rem; place-items: center; border: 1px solid rgba(224,188,103,0.36); border-radius: 50%; color: var(--gold-400); font-size: 1rem; font-weight: 400; line-height: 1; transition: transform 180ms var(--ease-out), background-color 180ms var(--ease-out); }
+.contact-reference-faq details[open] summary b { background: rgba(201,163,74,0.12); transform: rotate(45deg); }
+.contact-reference-faq summary:focus-visible { outline: 2px solid var(--gold-400); outline-offset: -2px; }
+.contact-reference-faq details > div { overflow: hidden; }
+.contact-reference-faq details p { max-width: 45rem; margin: -0.1rem 0 0; padding: 0 2.5rem 1rem 0; color: #aaa79f; font-size: 0.71rem; line-height: 1.6; }
+
 .contact-reference-modal-backdrop { position: fixed; z-index: 60; inset: 0; display: grid; place-items: center; padding: 1.25rem; background: rgba(3,4,5,0.72); backdrop-filter: blur(8px); animation: contact-modal-backdrop 180ms var(--ease-out) both; }
 .contact-reference-modal { width: min(100%, 31rem); padding: clamp(1.5rem,4vw,2.2rem); border: 1px solid rgba(224,188,103,0.62); border-radius: 0.5rem; background: radial-gradient(circle at 85% 0%, rgba(201,163,74,0.14), transparent 32%), #111315; box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.48); outline: 0; animation: contact-modal-enter 260ms var(--ease-out) both; }
 .contact-reference-modal__mark { display: grid; width: 2.7rem; height: 2.7rem; place-items: center; border: 1px solid rgba(224,188,103,0.5); border-radius: 50%; color: var(--gold-400); }
@@ -108,3 +137,14 @@
 @media (max-width: 61.9375rem) { .contact-reference-side { grid-template-columns: repeat(2, minmax(0,1fr)); } .contact-reference-info { grid-row: span 2; } }
 @media (max-width: 47.9375rem) { .contact-reference-side { grid-template-columns: 1fr; } .contact-reference-info { grid-row: auto; } .contact-reference-hours, .contact-reference-connect { padding-inline: 1.1rem; } .contact-reference-connect header { padding-inline: 0; } .contact-reference-connect a { padding-inline: 0; } .contact-reference-modal__actions { flex-direction: column; } .contact-reference-modal__actions button { width: 100%; } }
 @media (prefers-reduced-motion: reduce) { .contact-reference-submit, .contact-reference-connect a, .contact-reference-modal-backdrop, .contact-reference-modal { animation: none; transition: none; } }
+
+@media (min-width: 62rem) {
+  .contact-reference-main > .container { grid-template-rows: auto auto auto; }
+  .contact-reference-form { grid-row: 1; }
+  .contact-reference-faq { grid-column: 1; grid-row: 2; }
+  .contact-reference-side { grid-column: 2; grid-row: 1; }
+  .digi02-location { grid-column: 2; grid-row: 2; }
+  .contact-reference-paths { grid-column: 1 / -1; grid-row: 3; }
+}
+
+@media (prefers-reduced-motion: reduce) { .contact-reference-faq summary b { transition: none; } }
