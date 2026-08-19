@@ -48,19 +48,34 @@ export function SiteFooter() {
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterError, setNewsletterError] = useState('')
   const [newsletterStatus, setNewsletterStatus] = useState('')
+  const [newsletterFeedback, setNewsletterFeedback] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const isNewsletterSubmitting = newsletterFeedback === 'submitting'
 
-  function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (isNewsletterSubmitting) return
+
     const email = newsletterEmail.trim()
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setNewsletterError('Enter a valid email address to preview the subscription flow.')
       setNewsletterStatus('')
+      setNewsletterFeedback('error')
       return
     }
 
+    setNewsletterFeedback('submitting')
     setNewsletterError('')
-    setNewsletterStatus('Demo confirmation: no email was sent or stored. Add the live Mailchimp form URL before launch.')
+    setNewsletterStatus('')
+
+    try {
+      await new Promise((resolve) => window.setTimeout(resolve, 420))
+      setNewsletterFeedback('success')
+      setNewsletterStatus('Demo confirmation: no email was sent or stored. Add the live Mailchimp form URL before launch.')
+    } catch {
+      setNewsletterFeedback('error')
+      setNewsletterError('The newsletter demonstration could not be completed. Please try again.')
+    }
   }
 
   return (
@@ -99,11 +114,13 @@ export function SiteFooter() {
             <p>Receive selected perspectives on systems, infrastructure, and practical technology delivery.</p>
           </div>
           <div className="site-footer__newsletter-action">
-            <form className="site-footer__newsletter-form" action={mailchimpDemoEndpoint} method="post" noValidate onSubmit={handleNewsletterSubmit} data-mailchimp-demo-endpoint={mailchimpDemoEndpoint}>
+            <form className="site-footer__newsletter-form" action={mailchimpDemoEndpoint} method="post" noValidate onSubmit={handleNewsletterSubmit} data-mailchimp-demo-endpoint={mailchimpDemoEndpoint} aria-busy={isNewsletterSubmitting}>
               <label htmlFor="footer-newsletter-email">Email address</label>
               <div className="site-footer__newsletter-fields">
-                <input id="footer-newsletter-email" name="EMAIL" type="email" autoComplete="email" inputMode="email" placeholder="you@company.com" value={newsletterEmail} onChange={(event) => { setNewsletterEmail(event.target.value); setNewsletterError(''); setNewsletterStatus('') }} aria-invalid={Boolean(newsletterError)} aria-describedby="footer-newsletter-note footer-newsletter-error footer-newsletter-status" />
-                <button type="submit">Subscribe <span aria-hidden="true">→</span></button>
+                <input id="footer-newsletter-email" name="EMAIL" type="email" autoComplete="email" inputMode="email" placeholder="you@company.com" value={newsletterEmail} onChange={(event) => { setNewsletterEmail(event.target.value); setNewsletterError(''); setNewsletterStatus(''); setNewsletterFeedback('idle') }} aria-invalid={Boolean(newsletterError)} aria-describedby="footer-newsletter-note footer-newsletter-error footer-newsletter-status" disabled={isNewsletterSubmitting} />
+                <button className={isNewsletterSubmitting ? 'is-loading' : undefined} type="submit" disabled={isNewsletterSubmitting}>
+                  {isNewsletterSubmitting ? <><span className="site-footer__newsletter-spinner" aria-hidden="true" />Confirming…</> : <>Subscribe <span aria-hidden="true">→</span></>}
+                </button>
               </div>
             </form>
             <p className="site-footer__newsletter-consent">By selecting Subscribe, you agree to receive updates when the live form is connected. Read our <a href="/privacy">Privacy Policy</a>.</p>

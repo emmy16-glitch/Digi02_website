@@ -254,6 +254,31 @@
   transform: scale(0.97);
 }
 
+.site-footer__newsletter-fields button:disabled {
+  cursor: wait;
+  opacity: 0.78;
+}
+
+.site-footer__newsletter-fields button.is-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.site-footer__newsletter-spinner {
+  width: 0.72rem;
+  height: 0.72rem;
+  border: 1.5px solid rgba(9, 10, 12, 0.32);
+  border-top-color: #090a0c;
+  border-radius: 50%;
+  animation: newsletter-spin 560ms linear infinite;
+}
+
+@keyframes newsletter-spin {
+  to { transform: rotate(360deg); }
+}
+
 .site-footer__newsletter-fields button:focus-visible {
   outline: 2px solid #f2efe8;
   outline-offset: 3px;
@@ -424,5 +449,9 @@
   .site-footer__newsletter-fields input,
   .site-footer__newsletter-fields button {
     transition: none;
+  }
+
+  .site-footer__newsletter-spinner {
+    animation: none;
   }
 }
