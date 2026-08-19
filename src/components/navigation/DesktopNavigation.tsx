@@ -1,4 +1,5 @@
 import { PrimaryButton } from '../PrimaryButton'
+import { ThemeToggle } from './ThemeToggle'
 
 export type NavigationItem = {
   href: string
@@ -8,13 +9,15 @@ export type NavigationItem = {
 type DesktopNavigationProps = {
   currentPath: string
   items: readonly NavigationItem[]
+  theme: 'dark' | 'light'
+  onThemeToggle: () => void
 }
 
 function isCurrentPath(currentPath: string, href: string) {
   return currentPath === href || currentPath.startsWith(`${href}/`)
 }
 
-export function DesktopNavigation({ currentPath, items }: DesktopNavigationProps) {
+export function DesktopNavigation({ currentPath, items, theme, onThemeToggle }: DesktopNavigationProps) {
   return (
     <nav className="desktop-navigation" aria-label="Primary navigation">
       <ul className="desktop-navigation__list">
@@ -34,6 +37,8 @@ export function DesktopNavigation({ currentPath, items }: DesktopNavigationProps
           )
         })}
       </ul>
+
+      <ThemeToggle theme={theme} onToggle={onThemeToggle} />
 
       <PrimaryButton className="site-header__cta" href="/contact">
         Discuss your project <span aria-hidden="true">→</span>

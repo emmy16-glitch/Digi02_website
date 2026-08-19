@@ -1,6 +1,7 @@
 import { useEffect, useRef, type KeyboardEvent } from 'react'
 import { PrimaryButton } from '../PrimaryButton'
 import type { NavigationItem } from './DesktopNavigation'
+import { ThemeToggle } from './ThemeToggle'
 
 type MobileNavigationProps = {
   currentPath: string
@@ -8,6 +9,8 @@ type MobileNavigationProps = {
   items: readonly NavigationItem[]
   onClose: () => void
   onToggle: () => void
+  theme: 'dark' | 'light'
+  onThemeToggle: () => void
 }
 
 function isCurrentPath(currentPath: string, href: string) {
@@ -20,6 +23,8 @@ export function MobileNavigation({
   items,
   onClose,
   onToggle,
+  theme,
+  onThemeToggle,
 }: MobileNavigationProps) {
   const toggleRef = useRef<HTMLButtonElement>(null)
 
@@ -43,6 +48,7 @@ export function MobileNavigation({
 
   return (
     <div className="mobile-navigation" onKeyDown={handleKeyDown}>
+      <ThemeToggle theme={theme} onToggle={onThemeToggle} />
       <button
         ref={toggleRef}
         className="mobile-navigation__toggle"
