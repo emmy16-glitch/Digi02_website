@@ -1,5 +1,8 @@
 import digi02LogoLight from '../assets/brand/digi02-logo-light.png'
+import { useState, type FormEvent } from 'react'
 import { Container } from './Container'
+
+const mailchimpDemoEndpoint = 'https://example.list-manage.com/subscribe/post?u=digi02-demo&id=newsletter-demo'
 
 const footerGroups = [
   {
@@ -42,6 +45,24 @@ const footerGroups = [
 ] as const
 
 export function SiteFooter() {
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterError, setNewsletterError] = useState('')
+  const [newsletterStatus, setNewsletterStatus] = useState('')
+
+  function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const email = newsletterEmail.trim()
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNewsletterError('Enter a valid email address to preview the subscription flow.')
+      setNewsletterStatus('')
+      return
+    }
+
+    setNewsletterError('')
+    setNewsletterStatus('Demo confirmation: no email was sent or stored. Add the live Mailchimp form URL before launch.')
+  }
+
   return (
     <footer className="site-footer">
       <Container className="site-footer__inner">
@@ -71,6 +92,27 @@ export function SiteFooter() {
           <a href="tel:+2348169404088">+234 (0)81 6940 4088</a>
           <span className="site-footer__address">Mando, Kaduna, Nigeria</span>
         </div>
+
+        <section className="site-footer__newsletter" aria-labelledby="newsletter-title">
+          <div className="site-footer__newsletter-copy">
+            <p className="site-footer__newsletter-kicker">Digi02 updates</p>
+            <h2 id="newsletter-title">Operational signals, occasionally.</h2>
+            <p>Receive selected perspectives on systems, infrastructure, and practical technology delivery.</p>
+          </div>
+          <div className="site-footer__newsletter-action">
+            <form className="site-footer__newsletter-form" action={mailchimpDemoEndpoint} method="post" noValidate onSubmit={handleNewsletterSubmit} data-mailchimp-demo-endpoint={mailchimpDemoEndpoint}>
+              <label htmlFor="footer-newsletter-email">Email address</label>
+              <div className="site-footer__newsletter-fields">
+                <input id="footer-newsletter-email" name="EMAIL" type="email" autoComplete="email" inputMode="email" placeholder="you@company.com" value={newsletterEmail} onChange={(event) => { setNewsletterEmail(event.target.value); setNewsletterError(''); setNewsletterStatus('') }} aria-invalid={Boolean(newsletterError)} aria-describedby="footer-newsletter-note footer-newsletter-error footer-newsletter-status" />
+                <button type="submit">Subscribe <span aria-hidden="true">→</span></button>
+              </div>
+            </form>
+            <p className="site-footer__newsletter-consent">By selecting Subscribe, you agree to receive updates when the live form is connected. Read our <a href="/privacy">Privacy Policy</a>.</p>
+            <p id="footer-newsletter-note" className="site-footer__newsletter-note">Mailchimp demonstration only. This form does not submit, transmit, or store your email.</p>
+            <p id="footer-newsletter-error" className="site-footer__newsletter-error" role="status">{newsletterError}</p>
+            <p id="footer-newsletter-status" className="site-footer__newsletter-status" aria-live="polite">{newsletterStatus}</p>
+          </div>
+        </section>
 
         <div className="site-footer__legal">
           <span>© {new Date().getFullYear()} Digi02 Technologies Ltd. All rights reserved.</span>

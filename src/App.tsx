@@ -16,6 +16,7 @@ import { InsightsPage } from './pages/InsightsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PaymentSystemsPage } from './pages/PaymentSystemsPage'
 import { PayrollAutomationPage } from './pages/PayrollAutomationPage'
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
 import { SkyGridPage } from './pages/SkyGridPage'
 import { SolutionsPage } from './pages/SolutionsPage'
 import { WorkPage } from './pages/WorkPage'
@@ -147,6 +148,11 @@ function App() {
       description:
         'Discuss a technology project with Digi02 across autonomous systems, enterprise platforms, mobility, payments and custom software engineering.',
       content: <ContactPage />,
+    },
+    '/privacy': {
+      title: 'Privacy Policy — Digi02',
+      description: 'Read how Digi02 will handle newsletter information when the live subscription service is connected.',
+      content: <PrivacyPolicyPage />,
     },
   }
 

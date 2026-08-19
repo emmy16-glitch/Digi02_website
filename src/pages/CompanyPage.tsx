@@ -116,7 +116,7 @@ const team = [
     discipline: 'PRODUCT DESIGN',
     name: 'Kosisochukwu Ugwubma',
     role: 'UI/UX Lead',
-    body: 'Add an approved 40–60 word professional profile for Kosisochukwu Ugwubma.',
+    body: 'Approved biography pending. Digi02 will publish Kosisochukwu’s profile after it has been confirmed for release.',
     linkedInUrl: undefined,
   },
   {
@@ -124,7 +124,7 @@ const team = [
     discipline: 'CYBERSECURITY',
     name: 'Abraham Salifu',
     role: 'Cybersecurity Lead',
-    body: 'Add an approved 40–60 word professional profile for Abraham Salifu.',
+    body: 'Approved biography pending. Digi02 will publish Abraham’s profile after it has been confirmed for release.',
     linkedInUrl: undefined,
   },
   {
@@ -132,7 +132,7 @@ const team = [
     discipline: 'AI & DATA',
     name: 'Ini Esiset',
     role: 'AI/Data Lead',
-    body: 'Add an approved 40–60 word professional profile for Ini Esiset.',
+    body: 'Approved biography pending. Digi02 will publish Ini’s profile after it has been confirmed for release.',
     linkedInUrl: undefined,
   },
 ] as const

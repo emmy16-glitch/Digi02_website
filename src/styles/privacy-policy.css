@@ -1,0 +1,102 @@
+.privacy-policy-page {
+  background: #f1eee7;
+  color: #101214;
+}
+
+.privacy-policy-page__hero {
+  padding-block: clamp(6rem, 10vw, 9rem) clamp(3.5rem, 6vw, 5.5rem);
+  background: #090a0c;
+  color: #f2efe8;
+}
+
+.privacy-policy-page__breadcrumb {
+  display: flex;
+  gap: 0.45rem;
+  color: #aaa79f;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+
+.privacy-policy-page__breadcrumb a { color: #d8d4cb; }
+
+.privacy-policy-page__kicker {
+  margin: 3rem 0 0;
+  color: var(--gold-400);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.privacy-policy-page h1 {
+  max-width: 13ch;
+  margin: 0.65rem 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.privacy-policy-page__lead {
+  max-width: 42rem;
+  margin: 1.4rem 0 0;
+  color: #bbb7ae;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.privacy-policy-page__content { padding-block: clamp(3.5rem, 7vw, 6rem); }
+
+.privacy-policy-page__grid {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  max-width: 58rem;
+}
+
+.privacy-policy-page__grid aside p {
+  margin: 0;
+  color: #69665f;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.privacy-policy-page__grid aside strong {
+  display: block;
+  margin-top: 0.45rem;
+  color: #292b2d;
+  font-size: 0.82rem;
+}
+
+.privacy-policy-page__grid section + section { margin-top: 2.4rem; }
+
+.privacy-policy-page__grid h2 {
+  margin: 0;
+  color: #101214;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.privacy-policy-page__grid section p {
+  max-width: 40rem;
+  margin: 0.7rem 0 0;
+  color: #4f4e49;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.privacy-policy-page__grid section a { color: #26221a; text-underline-offset: 0.2em; }
+
+@media (max-width: 47.9375rem) {
+  .privacy-policy-page__hero { padding-top: 6rem; }
+  .privacy-policy-page__kicker { margin-top: 2rem; }
+  .privacy-policy-page__grid { grid-template-columns: 1fr; gap: 1.8rem; }
+}
