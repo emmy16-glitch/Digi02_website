@@ -165,7 +165,7 @@
   line-height: 0.98;
 }
 
-.home-blueprint-hero__operations-view > div {
+.home-blueprint-hero__signal-links {
   display: grid;
   gap: 0.42rem;
   padding: 0.82rem 0;
@@ -173,21 +173,58 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.home-blueprint-hero__operations-view > div > span {
-  display: flex;
+.home-blueprint-hero__signal-links > a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.42rem minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.48rem;
+  padding: 0.12rem 0;
   color: #cfcbc3;
   font-size: 0.7rem;
+  text-decoration: none;
+  transition: color 160ms var(--ease-standard), transform 160ms var(--ease-standard);
 }
 
-.home-blueprint-hero__operations-view > div > span::before {
+.home-blueprint-hero__signal-links > a::before {
   width: 0.35rem;
   height: 0.35rem;
   border-radius: 50%;
   background: var(--home-gold);
   box-shadow: 0 0 0.6rem rgba(201, 163, 74, 0.55);
   content: '';
+}
+
+.home-blueprint-hero__signal-links > a > small {
+  grid-column: 2;
+  color: #a5a199;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.home-blueprint-hero__signal-links > a > i {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  color: var(--home-gold-light);
+  font-style: normal;
+  opacity: 0;
+  transform: translateX(-0.2rem);
+  transition: opacity 160ms var(--ease-standard), transform 160ms var(--ease-standard);
+}
+
+.home-blueprint-hero__signal-links > a:hover,
+.home-blueprint-hero__signal-links > a:focus-visible {
+  color: var(--home-white);
+  transform: translateX(0.15rem);
+}
+
+.home-blueprint-hero__signal-links > a:hover > i,
+.home-blueprint-hero__signal-links > a:focus-visible > i {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .home-blueprint-hero__operations-view > small {
@@ -227,6 +264,11 @@
   }
 
   .home-blueprint-hero__motion-control {
+    transition: none;
+  }
+
+  .home-blueprint-hero__signal-links > a,
+  .home-blueprint-hero__signal-links > a > i {
     transition: none;
   }
 }

@@ -108,26 +108,29 @@
 
 @media (max-width: 63.9375rem) {
   .site-header__wordmark {
-    min-width: 8.65rem;
+    width: 2.8rem;
+    min-width: 2.8rem;
+    justify-content: center;
+  }
+
+  .site-header__wordmark .digi02-brand-lockup--header {
+    gap: 0;
+  }
+
+  .site-header__wordmark .digi02-brand-lockup__globe {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .site-header__wordmark .digi02-brand-lockup__name {
+    display: none;
   }
 }
 
 @media (max-width: 47.9375rem) {
   .site-header__wordmark {
-    min-width: 8rem;
-  }
-
-  .site-header__wordmark .digi02-brand-lockup {
-    gap: 0.36rem;
-  }
-
-  .site-header__wordmark .digi02-brand-lockup__globe {
-    width: 1.65rem;
-    height: 1.65rem;
-  }
-
-  .site-header__wordmark .digi02-brand-lockup__name {
-    font-size: 1.88rem;
+    width: 2.6rem;
+    min-width: 2.6rem;
   }
 
   .site-footer__brand .digi02-brand-lockup__name {

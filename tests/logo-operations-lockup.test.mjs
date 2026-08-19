@@ -33,6 +33,8 @@ test('visible logo presentation prioritizes readable shared wordmarks and preser
   assert.match(styles, /overflow: visible/)
   assert.match(styles, /object-fit: contain/)
   assert.match(styles, /\.digi02-brand-lockup__globe/)
+  assert.match(styles, /\.digi02-brand-lockup--header/)
+  assert.match(styles, /\.site-header__wordmark \.digi02-brand-lockup__name[\s\S]*?display: none/)
   assert.match(styles, /outline: 2px solid var\(--gold-400\)/)
   assert.match(mapStyles, /\.digi02-location__identity img[\s\S]*?object-fit: contain/)
 })

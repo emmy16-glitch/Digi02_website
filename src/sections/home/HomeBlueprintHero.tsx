@@ -8,6 +8,12 @@ const metrics = [
   { kind: 'security', value: 'ISO 27001', label: 'Security & quality' },
 ] as const
 
+const heroCaseStudies = [
+  { signal: 'Field capture', project: 'Thermal Plant inspection', href: '/work/thermal-plant-inspection-automation' },
+  { signal: 'Workflow context', project: 'Kaduna e-Management', href: '/work/kaduna-state-e-management-system' },
+  { signal: 'Secure review', project: 'Sterling Payment Gateway', href: '/work/sterling-payment-gateway' },
+] as const
+
 type MetricKind = (typeof metrics)[number]['kind']
 
 function MetricIcon({ kind }: { kind: MetricKind }) {
@@ -87,12 +93,16 @@ export function HomeBlueprintHero() {
         <aside className="home-blueprint-hero__operations-view" aria-label="Digi02 operational view">
           <p>Operational view</p>
           <strong>From field signals<br />to clear decisions.</strong>
-          <div>
-            <span>Field capture</span>
-            <span>Workflow context</span>
-            <span>Secure review</span>
-          </div>
-          <small>Explore the systems behind the work <span aria-hidden="true">↗</span></small>
+          <nav className="home-blueprint-hero__signal-links" aria-label="Selected Digi02 case studies">
+            {heroCaseStudies.map((caseStudy) => (
+              <a href={caseStudy.href} key={caseStudy.signal} aria-label={`${caseStudy.signal}: ${caseStudy.project} case study`}>
+                <span>{caseStudy.signal}</span>
+                <small>{caseStudy.project}</small>
+                <i aria-hidden="true">↗</i>
+              </a>
+            ))}
+          </nav>
+          <small>Selected case studies <span aria-hidden="true">↗</span></small>
         </aside>
       </Container>
 

@@ -73,7 +73,7 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
     <header className="site-header">
       <Container className="site-header__inner">
         <a className="site-header__wordmark" href="/" aria-label="Digi02 home">
-          <span className="digi02-brand-lockup" aria-hidden="true">
+          <span className="digi02-brand-lockup digi02-brand-lockup--header" aria-hidden="true">
             <span className="digi02-brand-lockup__globe"><img src={globeMark} alt="" /></span>
             <span className="digi02-brand-lockup__name">Digi<span>02</span></span>
           </span>
