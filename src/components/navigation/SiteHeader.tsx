@@ -30,6 +30,7 @@ function initialTheme(): Theme {
 export function SiteHeader({ currentPath }: SiteHeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [theme, setTheme] = useState<Theme>(initialTheme)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -37,6 +38,31 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
     window.localStorage.setItem(themeStorageKey, theme)
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#050505' : '#f1eee7')
   }, [theme])
+
+  useEffect(() => {
+    let frame = 0
+
+    function updateProgress() {
+      const maximumScroll = document.documentElement.scrollHeight - window.innerHeight
+      const nextProgress = maximumScroll > 0 ? Math.min(100, Math.max(0, (window.scrollY / maximumScroll) * 100)) : 100
+      setScrollProgress((currentProgress) => Math.abs(currentProgress - nextProgress) < 0.1 ? currentProgress : nextProgress)
+    }
+
+    function scheduleProgressUpdate() {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(updateProgress)
+    }
+
+    scheduleProgressUpdate()
+    window.addEventListener('scroll', scheduleProgressUpdate, { passive: true })
+    window.addEventListener('resize', scheduleProgressUpdate)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', scheduleProgressUpdate)
+      window.removeEventListener('resize', scheduleProgressUpdate)
+    }
+  }, [currentPath])
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false)
@@ -60,6 +86,9 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
           onThemeToggle={() => setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')}
         />
       </Container>
+      <div className="site-header__progress" role="progressbar" aria-label="Page reading progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(scrollProgress)}>
+        <span style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+      </div>
     </header>
   )
 }
