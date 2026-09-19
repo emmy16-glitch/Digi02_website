@@ -1,193 +1,140 @@
-import type { ReactNode } from 'react'
-import { SeoMeta } from './components/SeoMeta'
-import { SiteFooter } from './components/SiteFooter'
-import { SiteHeader } from './components/navigation/SiteHeader'
-import { organizationStructuredData } from './data/organizationStructuredData'
-import { CompanyPage } from './pages/CompanyPage'
-import { CaseStudyPage } from './pages/CaseStudyPage'
-import { ContactPage } from './pages/ContactPage'
-import { CustomSoftwarePage } from './pages/CustomSoftwarePage'
-import { DigiVoltPage } from './pages/DigiVoltPage'
-import { EManagementPage } from './pages/EManagementPage'
-import { EnterpriseSystemsPage } from './pages/EnterpriseSystemsPage'
-import { HomePage } from './pages/HomePage'
-import { IndustriesPage } from './pages/IndustriesPage'
-import { InsightsPage } from './pages/InsightsPage'
-import { InsightDetailPage } from './pages/InsightDetailPage'
-import { NotFoundPage } from './pages/NotFoundPage'
-import { PaymentSystemsPage } from './pages/PaymentSystemsPage'
-import { PayrollAutomationPage } from './pages/PayrollAutomationPage'
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
-import { SkyGridPage } from './pages/SkyGridPage'
-import { SolutionsPage } from './pages/SolutionsPage'
-import { WorkPage } from './pages/WorkPage'
-import { insights } from './data/insights'
-import './styles/site-pages.css'
-import './styles/product-pages.css'
-import './styles/capability-pages.css'
-import './styles/capability-theme.css'
-import './styles/launch-polish.css'
-import './styles/final-touch-targets.css'
-import './styles/site-tightening.css'
-import './styles/site-final-overrides.css'
-import './styles/reference-shell.css'
-import './styles/home-reference.css'
-import './styles/reference-tuning.css'
-import './styles/visible-logo-layout.css'
-import './styles/header-theme-system.css'
-import './styles/home-system-refinement.css'
-import './styles/home-system-final-tuning.css'
-import './styles/home-visual-system-v2.css'
-import './styles/home-reference-feature-section.css'
-import './styles/home-hero-clarity.css'
-import './styles/case-study-pages.css'
+import { useEffect } from 'react'
+import { Footer, Header } from '@/premium/components/layout'
+import { useRoute, useScrollTopOnRoute } from '@/premium/lib/router'
+import CompanyPage from '@/premium/pages/Company'
+import ContactPage from '@/premium/pages/Contact'
+import Home from '@/premium/pages/Home'
+import { IndustriesPage, WorkPage } from '@/premium/pages/Industries'
+import { InsightArticlePage, InsightsPage } from '@/premium/pages/Insights'
+import { SolutionDetailPage, SolutionsPage } from '@/premium/pages/Solutions'
+import { Btn, Container, Eyebrow, GridBackdrop, Reveal } from '@/premium/components/ui'
+import { linkProps } from '@/premium/lib/router'
 
-type RouteDefinition = {
-  title: string
-  description: string
-  content: ReactNode
-  noIndex?: boolean
+const TITLES: Record<string, string> = {
+  '/': 'Digi02 — Software Engineered for Operations | Kaduna, Nigeria',
+  '/solutions': 'Solutions — Digi02',
+  '/industries': 'Industries — Digi02',
+  '/work': 'Our Work — Digi02',
+  '/company': 'Company — Digi02',
+  '/insights': 'Insights — Digi02',
+  '/contact': 'Contact — Digi02',
+  '/privacy': 'Privacy Policy — Digi02',
 }
 
-function App() {
-  const path = window.location.pathname.replace(/\/$/, '') || '/'
-  const insightRoutes = insights.reduce<Record<string, RouteDefinition>>((routes, insight) => {
-    routes[`/insights/${insight.slug}`] = {
-      title: `${insight.title} — Digi02 Insights`,
-      description: insight.summary,
-      content: <InsightDetailPage slug={insight.slug} />,
-    }
-    return routes
-  }, {})
+const DESCRIPTIONS: Record<string, string> = {
+  '/': 'Digi02 builds enterprise systems, payment and payroll infrastructure, e-management platforms and UAV mission software for organisations across Nigeria and beyond.',
+  '/solutions': 'Explore Digi02 solutions across SkyGrid aerial systems, enterprise platforms, e-management, payroll, payments and custom software.',
+  '/company': 'Digi02 Software Solutions, Kaduna Nigeria. Meet the team and standards behind the systems.',
+  '/contact': 'Discuss a project with Digi02 — No. 2, The Hub, Mando, Kaduna. info@digi02.org, +234 816 940 4088.',
+}
 
-  const routes: Record<string, RouteDefinition> = {
-    '/': {
-      title: 'Digi02 — Technology for real operations',
-      description:
-        'Digi02 is a Kaduna-rooted operational technology partner helping organisations turn complex work into dependable systems—from discovery and system design to engineering, rollout and improvement.',
-      content: <HomePage />,
-    },
-    '/solutions': {
-      title: 'Technology solutions — Digi02',
-      description:
-        'Explore Digi02 capabilities across autonomous systems, enterprise platforms, mobility, payments, workflow technology and custom software engineering for complex operations.',
-      content: <SolutionsPage />,
-    },
-    '/solutions/skygrid': {
-      title: 'SkyGrid UAV operations — Digi02',
-      description:
-        'SkyGrid by Digi02 supports UAV mission planning, flight operations and field-intelligence workflows through a purpose-built autonomous-systems experience.',
-      content: <SkyGridPage />,
-    },
-    '/solutions/digivolt': {
-      title: 'DigiVolt electric mobility — Digi02',
-      description:
-        'DigiVolt is Digi02 electric-mobility technology for connected ride requests, vehicle assignment, journey status and operational mobility workflows.',
-      content: <DigiVoltPage />,
-    },
-    '/solutions/enterprise-systems': {
-      title: 'ERP and POS systems — Digi02',
-      description:
-        'Digi02 builds connected ERP and POS systems that link sales, inventory, transaction records and operational reporting in one working environment.',
-      content: <EnterpriseSystemsPage />,
-    },
-    '/solutions/e-management': {
-      title: 'E-management systems — Digi02',
-      description:
-        'Digi02 e-management systems connect requests, review, approval and operational records so organizations can act on information with more control.',
-      content: <EManagementPage />,
-    },
-    '/solutions/payroll-automation': {
-      title: 'Payroll automation — Digi02',
-      description:
-        'Digi02 payroll automation connects employee data, attendance, allowances, deductions, approvals, payroll processing and reporting in one controlled workflow.',
-      content: <PayrollAutomationPage />,
-    },
-    '/solutions/payment-systems': {
-      title: 'Payment systems — Digi02',
-      description:
-        'Digi02 payment systems support secure payment acceptance, transaction processing, reconciliation and operational reporting for organizations.',
-      content: <PaymentSystemsPage />,
-    },
-    '/solutions/custom-software': {
-      title: 'Custom software engineering — Digi02',
-      description:
-        'Digi02 engineers custom software systems across frontend applications, APIs, services, data, cloud, security, monitoring and integrations.',
-      content: <CustomSoftwarePage />,
-    },
-    '/industries': {
-      title: 'Industries — Digi02',
-      description:
-        'Digi02 applies autonomous systems, enterprise technology, mobility, payments and custom software to operational challenges across sectors.',
-      content: <IndustriesPage />,
-    },
-    '/work': {
-      title: 'Selected work — Digi02',
-      description:
-        'Explore selected Digi02 work across autonomous inspection, payments, enterprise platforms, mobility and public-sector operations.',
-      content: <WorkPage />,
-    },
-    '/work/thermal-plant-inspection-automation': {
-      title: 'Thermal Plant Inspection Automation — Digi02',
-      description: 'A connected inspection workflow for mission planning, field capture and operational review.',
-      content: <CaseStudyPage slug="thermal-plant-inspection-automation" />,
-    },
-    '/work/sterling-payment-gateway': {
-      title: 'Sterling Payment Gateway — Digi02',
-      description: 'A secure, scalable payment infrastructure with clear operational visibility.',
-      content: <CaseStudyPage slug="sterling-payment-gateway" />,
-    },
-    '/work/kaduna-state-e-management-system': {
-      title: 'Kaduna State e-Management System — Digi02',
-      description: 'A unified digital platform for workflows, approvals, records and citizen-facing services.',
-      content: <CaseStudyPage slug="kaduna-state-e-management-system" />,
-    },
-    '/company': {
-      title: 'Company — Digi02',
-      description:
-        'Learn about Digi02, a Nigerian technology and engineering company building software, autonomous systems, enterprise platforms and digital infrastructure.',
-      content: <CompanyPage />,
-    },
-    '/insights': {
-      title: 'Insights — Digi02',
-      description:
-        'Explore Digi02 engineering perspectives across autonomous systems, enterprise technology, mobility, software and operational design.',
-      content: <InsightsPage />,
-    },
-    ...insightRoutes,
-    '/contact': {
-      title: 'Contact — Digi02',
-      description:
-        'Discuss a technology project with Digi02 across autonomous systems, enterprise platforms, mobility, payments and custom software engineering.',
-      content: <ContactPage />,
-    },
-    '/privacy': {
-      title: 'Privacy Policy — Digi02',
-      description: 'Read how Digi02 will handle newsletter information when the live subscription service is connected.',
-      content: <PrivacyPolicyPage />,
-    },
-  }
-
-  const activeRoute = routes[path]
-  const route = activeRoute ?? {
-    title: 'Page not found — Digi02',
-    description: 'The requested Digi02 page could not be found.',
-    content: <NotFoundPage />,
-    noIndex: true,
-  }
-
+function PrivacyPage() {
   return (
-    <>
-      <SeoMeta path={path} title={route.title} description={route.description} noIndex={route.noIndex} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }} />
-      <a className="skip-link" href="#main-content">
-        Skip to main content
-      </a>
-      <SiteHeader currentPath={path} />
-      <main id="main-content">{route.content}</main>
-      <SiteFooter />
-    </>
+    <section className="relative overflow-hidden bg-ink pt-[68px] lg:pt-[76px]">
+      <GridBackdrop className="opacity-50" />
+      <Container className="relative">
+        <div className="py-24 lg:py-32">
+          <Reveal>
+            <Eyebrow className="justify-center">Privacy Policy</Eyebrow>
+          </Reveal>
+          <Reveal delay={90}>
+            <h1 className="mt-8 text-center text-[clamp(2rem,5vw,3.5rem)] text-bone">Privacy Policy</h1>
+          </Reveal>
+          <Reveal delay={170}>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-[1.0625rem] leading-[1.8] font-light text-soft">
+              The contact form on this website does not submit, transmit, store, or add email addresses anywhere.
+              Submitting the form opens your own email application with the enquiry prepared and addressed to
+              info@digi02.org — no email was sent or stored by the site itself.
+            </p>
+          </Reveal>
+        </div>
+      </Container>
+    </section>
   )
 }
 
-export default App
+function NotFound() {
+  return (
+    <section className="relative overflow-hidden bg-ink pt-[68px] lg:pt-[76px]">
+      <GridBackdrop className="opacity-50" />
+      <Container className="relative">
+        <div className="flex flex-col items-center py-28 text-center lg:py-40">
+          <Reveal>
+            <Eyebrow className="justify-center">Error 404</Eyebrow>
+          </Reveal>
+          <Reveal delay={90}>
+            <h1 className="mt-8 text-[clamp(2.2rem,6vw,4rem)] leading-[1.05] text-bone">
+              This page is not
+              <span className="display block text-gold italic">part of the system.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="mt-11 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Btn to="/" variant="primary" arrow>
+                Back to home
+              </Btn>
+              <Btn to="/solutions" variant="ghost">
+                View solutions
+              </Btn>
+            </div>
+          </Reveal>
+          <Reveal delay={300}>
+            <div className="mt-14">
+              <a {...linkProps('/contact')} className="label text-mute transition-colors hover:text-gold">
+                Or contact Digi02 →
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </Container>
+    </section>
+  )
+}
+
+function View({ path }: { path: string }) {
+  if (path === '/') return <Home />
+  if (path === '/solutions') return <SolutionsPage />
+  if (path.startsWith('/solutions/')) {
+    return <SolutionDetailPage slug={path.replace('/solutions/', '')} />
+  }
+  if (path === '/industries') return <IndustriesPage />
+  if (path === '/work') return <WorkPage />
+  if (path === '/company') return <CompanyPage />
+  if (path === '/insights') return <InsightsPage />
+  if (path.startsWith('/insights/')) {
+    return <InsightArticlePage slug={path.replace('/insights/', '')} />
+  }
+  if (path === '/contact') return <ContactPage />
+  if (path === '/privacy') return <PrivacyPage />
+  return <NotFound />
+}
+
+export default function App() {
+  const path = useRoute()
+  useScrollTopOnRoute(path)
+
+  useEffect(() => {
+    document.title = TITLES[path] ?? (path.startsWith('/solutions/') ? 'Solution — Digi02' : path.startsWith('/insights/') ? 'Insight — Digi02' : 'Digi02')
+    const desc = DESCRIPTIONS[path]
+    if (desc) {
+      let tag = document.querySelector('meta[name="description"]')
+      if (tag) tag.setAttribute('content', desc)
+    }
+  }, [path])
+
+  return (
+    <div className="min-h-screen bg-ink">
+      <a
+        href="#main"
+        className="label sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-gold focus:px-4 focus:py-3 focus:text-ink"
+      >
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <View path={path} />
+      </main>
+      <Footer />
+    </div>
+  )
+}
