@@ -10,6 +10,7 @@ import {
 import { Breadcrumbs, PageHero } from "@/premium/components/PageHero";
 import { GlobalCTA } from "@/premium/pages/Home";
 import { company, principles, team } from "@/premium/data/content";
+import { telHref } from "@/premium/lib/phone";
 
 function Story() {
   return (
@@ -217,7 +218,7 @@ function Office() {
                     {company.phones.map((p) => (
                       <a
                         key={p}
-                        href={`tel:${p.replace(/[^+\d]/g, "")}`}
+                        href={telHref(p)}
                         className="block text-[0.9375rem] font-light text-bone/90 transition-colors hover:text-gold"
                       >
                         {p}

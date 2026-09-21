@@ -3,6 +3,7 @@ import { cn } from "@/premium/utils/cn";
 import { Accordion, Btn, Container, Eyebrow, Reveal } from "@/premium/components/ui";
 import { Breadcrumbs, PageHero } from "@/premium/components/PageHero";
 import { company, faqs, solutions } from "@/premium/data/content";
+import { telHref } from "@/premium/lib/phone";
 
 type Fields = {
   name: string;
@@ -195,7 +196,7 @@ export default function ContactPage() {
                         {company.phones.map((p) => (
                           <a
                             key={p}
-                            href={`tel:${p.replace(/[^+\d]/g, "")}`}
+                            href={telHref(p)}
                             className="block text-[1.0625rem] font-light text-bone transition-colors hover:text-gold"
                           >
                             {p}

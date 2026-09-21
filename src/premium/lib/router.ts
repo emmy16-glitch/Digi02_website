@@ -37,7 +37,7 @@ export function linkProps(to: string) {
   return {
     href: to.startsWith("/") ? to : "/" + to,
     onClick: (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
       e.preventDefault();
       navigate(to);
     },
