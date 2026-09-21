@@ -104,6 +104,13 @@ export default function ContactPage() {
                   <div className="grid gap-9 sm:grid-cols-2">
                     <Field label="Your name" required>
                       <input
+                        id="contact-name"
+                        name="name"
+                        autoComplete="name"
+                        required
+                        aria-required="true"
+                        aria-invalid={touched && !f.name.trim()}
+                        aria-describedby="contact-error"
                         value={f.name}
                         onChange={set("name")}
                         placeholder="Full name"
@@ -112,6 +119,13 @@ export default function ContactPage() {
                     </Field>
                     <Field label="Email" required>
                       <input
+                        id="contact-email"
+                        name="email"
+                        autoComplete="email"
+                        required
+                        aria-required="true"
+                        aria-invalid={touched && !f.email.includes("@")}
+                        aria-describedby="contact-error"
                         type="email"
                         value={f.email}
                         onChange={set("email")}
@@ -124,6 +138,9 @@ export default function ContactPage() {
                   <div className="grid gap-9 sm:grid-cols-2">
                     <Field label="Organisation">
                       <input
+                        id="contact-org"
+                        name="organization"
+                        autoComplete="organization"
                         value={f.org}
                         onChange={set("org")}
                         placeholder="Company or institution"
@@ -133,6 +150,8 @@ export default function ContactPage() {
                     <Field label="Area of interest">
                       <div className="relative">
                         <select
+                          id="contact-interest"
+                          name="interest"
                           value={f.interest}
                           onChange={set("interest")}
                           className={cn(fieldCls, "border-white/15 appearance-none pr-8")}
@@ -158,6 +177,12 @@ export default function ContactPage() {
 
                   <Field label="What do you need built?" required>
                     <textarea
+                      id="contact-message"
+                      name="message"
+                      required
+                      aria-required="true"
+                      aria-invalid={touched && f.message.trim().length <= 8}
+                      aria-describedby="contact-error"
                       value={f.message}
                       onChange={set("message")}
                       rows={5}
@@ -167,7 +192,7 @@ export default function ContactPage() {
                   </Field>
 
                   {touched && !valid && (
-                    <p className="text-[0.8125rem] text-gold">
+                    <p id="contact-error" role="alert" className="text-[0.8125rem] text-gold">
                       Please add your name, a valid email and a short description.
                     </p>
                   )}
