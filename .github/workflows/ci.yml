@@ -1,22 +1,24 @@
-name: Digi02 CI
+name: Digi02 Production CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
-  group: digi02-ci-${{ github.ref }}
+  group: digi02-production-ci-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   verify:
-    name: Typecheck, lint, build
+    name: Build and production smoke
     runs-on: ubuntu-24.04
+    timeout-minutes: 25
 
     steps:
       - name: Checkout repository
@@ -31,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Unit and repository tests
+        run: npm test
+
       - name: Typecheck
         run: npm run typecheck
 
@@ -39,3 +44,32 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Install browser audit tooling
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1 @axe-core/playwright@4.13.0
+          npx playwright install --with-deps chromium
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 >/tmp/digi02-preview.log 2>&1 &
+          for i in {1..40}; do
+            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/digi02-preview.log
+          exit 1
+
+      - name: Run current-site production matrix
+        run: node .github/scripts/production-smoke.mjs
+
+      - name: Upload production evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: production-evidence
+          path: production-evidence
+          retention-days: 5

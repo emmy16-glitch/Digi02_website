@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/premium/utils/cn";
 import { linkProps, useRoute } from "@/premium/lib/router";
 import { company, nav, solutions } from "@/premium/data/content";
@@ -13,6 +13,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,6 +40,19 @@ export function Header() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   const isActive = (to: string) => path === to || path.startsWith(to + "/");
@@ -97,10 +111,12 @@ export function Header() {
             </div>
 
             <button
+              ref={menuButtonRef}
               onClick={() => setOpen((v) => !v)}
               className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-[6px] lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="mobile-navigation-panel"
             >
               <span
                 className={cn(
@@ -126,6 +142,8 @@ export function Header() {
 
       {/* Mobile menu */}
       <div
+        id="mobile-navigation-panel"
+        aria-hidden={!open}
         className={cn(
           "fixed inset-0 z-40 bg-ink transition-all duration-500 lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
