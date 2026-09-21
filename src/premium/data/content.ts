@@ -495,7 +495,10 @@ export const photos = {
   digivoltSafety: "/images/digivolt/digivolt-safety.jpg",
   digivoltProtection: "/images/digivolt/digivolt-protection.jpg",
   digivoltDriver: "/images/digivolt/digivolt-driver.jpg",
-  /* Real photography, no AI-generated imagery. Pexels-licensed (free to use,
+  /* Homepage flagship panel: passenger following a route on a phone map
+     in a taxi (Pexels 5835455, free to use, no attribution required).
+     Illustrative, not a Digi02 screenshot. */
+  digivoltRiderTaxi: "/images/digivolt/digivolt-rider-taxi.jpg",  /* Real photography, no AI-generated imagery. Pexels-licensed (free to use,
      no attribution required).
      whoWeAre: Kaduna business meeting, documentary photo by mk_photoz (Pexels 38649010).
      standardsReview: operations team monitoring live systems from a control room (Pexels 19317897).

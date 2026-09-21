@@ -192,9 +192,9 @@ function Flagships() {
             <Reveal delay={120}>
               <article className="flex h-full flex-col border border-white/[0.08] bg-ink">
                 <Photo
-                  src={photos.digivoltSafety}
-                  alt="DigiVolt rider app showing a live trip on the map"
-                  caption="DigiVolt rider app screens"
+                  src={photos.digivoltRiderTaxi}
+                  alt="Passenger in a taxi following the route on a phone map"
+                  caption="Rider following the trip on the map"
                   ratio="aspect-[16/9]"
                   className="p-5 pb-0"
                 />
