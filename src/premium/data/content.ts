@@ -505,18 +505,10 @@ export const photos = {
   standardsReview: "/images/home/standards-review.jpg",
   skygridSurveyFlight: "/images/skygrid/skygrid-survey-flight.jpg",
   schoolClassroom: "/images/payments/school-classroom.jpg",
-  /* Hero slider — five documentary frames of African technology in use,
+  /* Hero — one documentary frame of African technology in use,
      sourced online (Pexels-licensed, free to use, no attribution required).
-     heroCodeReview: team reviewing code on a laptop (Pexels 12899153).
-     heroNairaMarket: hands exchanging Naira notes at a Nigerian market (Pexels 35888335).
-     heroDroneCrew: operators preparing an agricultural drone in the field (Pexels 34182309).
-     heroLagosOffice: professionals meeting in a Lagos office (Pexels 30688593).
-     heroPosTap: customer tapping a phone on a POS terminal (Pexels 8475148). */
-  heroCodeReview: "/images/hero/hero-code-review.jpg",
-  heroNairaMarket: "/images/hero/hero-naira-market.jpg",
+     heroDroneCrew: operators preparing an agricultural drone in the field (Pexels 34182309). */
   heroDroneCrew: "/images/hero/hero-drone-crew.jpg",
-  heroLagosOffice: "/images/hero/hero-lagos-office.jpg",
-  heroPosTap: "/images/hero/hero-pos-tap.jpg",
 };
 
 /* ────────────────────────────────────────────────────────────

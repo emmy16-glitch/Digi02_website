@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/premium/utils/cn";
 import { linkProps, useRoute } from "@/premium/lib/router";
+import { telHref } from "@/premium/lib/phone";
 import { company, nav, solutions } from "@/premium/data/content";
 import { Btn, Container, Horizon, LogoLockup, LogoStacked } from "@/premium/components/ui";
 
@@ -39,6 +40,20 @@ export function Header() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   const isActive = (to: string) => path === to || path.startsWith(to + "/");
@@ -97,10 +112,12 @@ export function Header() {
             </div>
 
             <button
+              ref={menuButtonRef}
               onClick={() => setOpen((v) => !v)}
               className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-[6px] lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="mobile-navigation-panel"
             >
               <span
                 className={cn(
@@ -126,6 +143,7 @@ export function Header() {
 
       {/* Mobile menu */}
       <div
+        id="mobile-navigation-panel"
         className={cn(
           "fixed inset-0 z-40 bg-ink transition-all duration-500 lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
@@ -162,7 +180,7 @@ export function Header() {
             </Btn>
             <div className="space-y-1.5">
               {company.phones.map((p) => (
-                <a key={p} href={`tel:${p.replace(/[^+\d]/g, "")}`} className="block text-[0.9375rem] font-light text-soft">
+                <a key={p} href={telHref(p)} className="block text-[0.9375rem] font-light text-soft">
                   {p}
                 </a>
               ))}
@@ -221,7 +239,7 @@ export function Footer() {
               {company.phones.map((p) => (
                 <a
                   key={p}
-                  href={`tel:${p.replace(/[^+\d]/g, "")}`}
+                  href={telHref(p)}
                   className="block text-[0.875rem] font-light text-soft transition-colors hover:text-gold"
                 >
                   {p}
