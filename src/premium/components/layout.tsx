@@ -12,7 +12,8 @@ export function Header() {
   const path = useRoute();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);\n  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const [progress, setProgress] = useState(0);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
