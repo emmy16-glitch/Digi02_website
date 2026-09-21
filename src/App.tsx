@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Footer, Header } from '@/premium/components/layout'
-import { useRoute, useScrollTopOnRoute } from '@/premium/lib/router'
+import { useRoute, useScrollTopOnRoute, linkProps } from '@/premium/lib/router'
+import { getInsight, getSolution } from '@/premium/data/content'
 import CompanyPage from '@/premium/pages/Company'
 import ContactPage from '@/premium/pages/Contact'
 import Home from '@/premium/pages/Home'
@@ -8,24 +9,129 @@ import { IndustriesPage, WorkPage } from '@/premium/pages/Industries'
 import { InsightArticlePage, InsightsPage } from '@/premium/pages/Insights'
 import { SolutionDetailPage, SolutionsPage } from '@/premium/pages/Solutions'
 import { Btn, Container, Eyebrow, GridBackdrop, Reveal } from '@/premium/components/ui'
-import { linkProps } from '@/premium/lib/router'
 
-const TITLES: Record<string, string> = {
-  '/': 'Digi02 — Software Engineered for Operations | Kaduna, Nigeria',
-  '/solutions': 'Solutions — Digi02',
-  '/industries': 'Industries — Digi02',
-  '/work': 'Our Work — Digi02',
-  '/company': 'Company — Digi02',
-  '/insights': 'Insights — Digi02',
-  '/contact': 'Contact — Digi02',
-  '/privacy': 'Privacy Policy — Digi02',
+const SITE_URL = 'https://digi02.org'
+const DEFAULT_DESCRIPTION =
+  'Digi02 builds enterprise systems, payment and payroll infrastructure, e-management platforms and UAV mission software for organisations across Nigeria and beyond.'
+
+type RouteMeta = {
+  title: string
+  description: string
+  noIndex?: boolean
+  type?: 'website' | 'article'
 }
 
-const DESCRIPTIONS: Record<string, string> = {
-  '/': 'Digi02 builds enterprise systems, payment and payroll infrastructure, e-management platforms and UAV mission software for organisations across Nigeria and beyond.',
-  '/solutions': 'Explore Digi02 solutions across SkyGrid aerial systems, enterprise platforms, e-management, payroll, payments and custom software.',
-  '/company': 'Digi02 Software Solutions, Kaduna Nigeria. Meet the team and standards behind the systems.',
-  '/contact': 'Discuss a project with Digi02 — No. 2, The Hub, Mando, Kaduna. info@digi02.org, +234 816 940 4088.',
+const STATIC_META: Record<string, RouteMeta> = {
+  '/': {
+    title: 'Digi02 — Software Engineered for Operations | Kaduna, Nigeria',
+    description: DEFAULT_DESCRIPTION,
+  },
+  '/solutions': {
+    title: 'Solutions — Digi02',
+    description:
+      'Explore Digi02 solutions across SkyGrid aerial systems, DigiVolt mobility, enterprise platforms, e-management, payroll, payments and custom software.',
+  },
+  '/industries': {
+    title: 'Industries — Digi02',
+    description:
+      'See how Digi02 applies operational technology across government, education, retail, hospitality, healthcare, agriculture, security, mobility and energy.',
+  },
+  '/work': {
+    title: 'Our Work — Digi02',
+    description:
+      'Explore Digi02 work across UAV mission operations, payments, payroll and institutional workflow systems.',
+  },
+  '/company': {
+    title: 'Company — Digi02',
+    description:
+      'Digi02 Software Solutions is a Kaduna-based technology company engineering dependable operational systems for organisations in Nigeria and beyond.',
+  },
+  '/insights': {
+    title: 'Insights — Digi02',
+    description:
+      'Practical Digi02 writing on enterprise systems, payroll, payments and aerial operations in Nigeria.',
+  },
+  '/contact': {
+    title: 'Contact — Digi02',
+    description:
+      'Discuss a project with Digi02 at No. 2, The Hub, Industrial Area, Farin Gida, Mando, Kaduna, Nigeria.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy — Digi02',
+    description:
+      'Read how the Digi02 website handles contact enquiries and personal information.',
+  },
+}
+
+function getRouteMeta(path: string): RouteMeta {
+  const staticMeta = STATIC_META[path]
+  if (staticMeta) return staticMeta
+
+  if (path.startsWith('/solutions/')) {
+    const solution = getSolution(path.replace('/solutions/', ''))
+    if (solution) {
+      return {
+        title: `${solution.name} — Digi02`,
+        description: solution.summary,
+      }
+    }
+  }
+
+  if (path.startsWith('/insights/')) {
+    const insight = getInsight(path.replace('/insights/', ''))
+    if (insight) {
+      return {
+        title: `${insight.title} — Digi02 Insights`,
+        description: insight.excerpt,
+        type: 'article',
+      }
+    }
+  }
+
+  return {
+    title: 'Page Not Found — Digi02',
+    description: DEFAULT_DESCRIPTION,
+    noIndex: true,
+  }
+}
+
+function ensureMeta(selector: string, attribute: 'name' | 'property', key: string) {
+  let tag = document.head.querySelector<HTMLMetaElement>(selector)
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.setAttribute(attribute, key)
+    document.head.appendChild(tag)
+  }
+  return tag
+}
+
+function ensureCanonical() {
+  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+  if (!link) {
+    link = document.createElement('link')
+    link.rel = 'canonical'
+    document.head.appendChild(link)
+  }
+  return link
+}
+
+function applyRouteMeta(path: string) {
+  const meta = getRouteMeta(path)
+  const canonical = `${SITE_URL}${path === '/' ? '/' : path}`
+  const robots = meta.noIndex ? 'noindex, nofollow' : 'index, follow'
+
+  document.title = meta.title
+  ensureMeta('meta[name="description"]', 'name', 'description').content = meta.description
+  ensureMeta('meta[name="robots"]', 'name', 'robots').content = robots
+  ensureMeta('meta[property="og:title"]', 'property', 'og:title').content = meta.title
+  ensureMeta('meta[property="og:description"]', 'property', 'og:description').content = meta.description
+  ensureMeta('meta[property="og:type"]', 'property', 'og:type').content = meta.type ?? 'website'
+  ensureMeta('meta[property="og:site_name"]', 'property', 'og:site_name').content = 'Digi02'
+  ensureMeta('meta[property="og:url"]', 'property', 'og:url').content = canonical
+  ensureMeta('meta[name="twitter:card"]', 'name', 'twitter:card').content = 'summary'
+  ensureMeta('meta[name="twitter:title"]', 'name', 'twitter:title').content = meta.title
+  ensureMeta('meta[name="twitter:description"]', 'name', 'twitter:description').content = meta.description
+  ensureCanonical().href = canonical
 }
 
 function PrivacyPage() {
@@ -95,14 +201,16 @@ function View({ path }: { path: string }) {
   if (path === '/') return <Home />
   if (path === '/solutions') return <SolutionsPage />
   if (path.startsWith('/solutions/')) {
-    return <SolutionDetailPage slug={path.replace('/solutions/', '')} />
+    const slug = path.replace('/solutions/', '')
+    return getSolution(slug) ? <SolutionDetailPage slug={slug} /> : <NotFound />
   }
   if (path === '/industries') return <IndustriesPage />
   if (path === '/work') return <WorkPage />
   if (path === '/company') return <CompanyPage />
   if (path === '/insights') return <InsightsPage />
   if (path.startsWith('/insights/')) {
-    return <InsightArticlePage slug={path.replace('/insights/', '')} />
+    const slug = path.replace('/insights/', '')
+    return getInsight(slug) ? <InsightArticlePage slug={slug} /> : <NotFound />
   }
   if (path === '/contact') return <ContactPage />
   if (path === '/privacy') return <PrivacyPage />
@@ -114,12 +222,7 @@ export default function App() {
   useScrollTopOnRoute(path)
 
   useEffect(() => {
-    document.title = TITLES[path] ?? (path.startsWith('/solutions/') ? 'Solution — Digi02' : path.startsWith('/insights/') ? 'Insight — Digi02' : 'Digi02')
-    const desc = DESCRIPTIONS[path]
-    if (desc) {
-      let tag = document.querySelector('meta[name="description"]')
-      if (tag) tag.setAttribute('content', desc)
-    }
+    applyRouteMeta(path)
   }, [path])
 
   return (
