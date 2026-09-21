@@ -178,7 +178,7 @@ export function SkyGridSection() {
             <h2 id="skygrid-title">See more. React earlier. Operate smarter.</h2>
             <p>
               SkyGrid brings mission planning, flight operations and field intelligence into one
-              operational story — before, during and after the aircraft moves.
+              operational story, before, during and after the aircraft moves.
             </p>
             <a href="/solutions/skygrid">
               Explore SkyGrid <span aria-hidden="true">→</span>
@@ -193,7 +193,7 @@ export function SkyGridSection() {
             loading="eager"
             src={skyGridCinematic}
           />
-          <figcaption>SkyGrid concept visualization — illustrative scene, not a photographed Digi02 deployment.</figcaption>
+          <figcaption>SkyGrid concept visualization. Illustrative scene, not a photographed Digi02 deployment.</figcaption>
         </figure>
 
         <div className="skygrid-story__capabilities" aria-label="SkyGrid capabilities">
@@ -254,7 +254,7 @@ export function SkyGridSection() {
 
             <div className="skygrid-stage-panel__visual" key={`visual-${activeStage.id}`}>
               <MissionStageVisual stage={activeStage.id} />
-              <p className="skygrid-stage-panel__note">Capability visualization — not live operational data.</p>
+              <p className="skygrid-stage-panel__note">Capability visualization. Not live operational data.</p>
             </div>
           </article>
 

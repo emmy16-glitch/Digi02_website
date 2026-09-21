@@ -13,7 +13,7 @@ export function InsightsPage() {
         eyebrow="Insights"
         title="Notes from the"
         accent="engineering floor."
-        lead="Practical writing on enterprise systems, payroll, payments and aerial operations in Nigeria — drawn from work we have actually done, not trends we have read about."
+        lead="Practical writing on enterprise systems, payroll, payments and aerial operations in Nigeria. Drawn from work we have actually done, not trends we have read about."
       >
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Insights" }]} />
       </PageHero>
@@ -182,7 +182,7 @@ export function InsightArticlePage({ slug }: { slug: string }) {
                 <div className="mt-16 border-t border-black/10 pt-8">
                   <p className="text-[0.9375rem] leading-[1.8] font-light text-ink/60">
                     Written by the Digi02 team in Kaduna. If your organisation is facing the
-                    problem described here, we are happy to talk it through — no obligation.
+                    problem described here, we are happy to talk it through. No obligation.
                   </p>
                   <div className="mt-8 flex flex-wrap gap-3">
                     <Btn to="/contact" variant="onLight" arrow>

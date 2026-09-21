@@ -36,7 +36,7 @@ export function EManagementPage() {
                 </div>
               ))}
             </div>
-            <p>Illustrative workflow structure — not live organizational data.</p>
+            <p>Illustrative workflow structure. Not live organizational data.</p>
           </div>
         </Container>
       </section>

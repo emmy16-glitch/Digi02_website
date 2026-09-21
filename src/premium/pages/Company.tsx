@@ -45,7 +45,7 @@ function Story() {
             <Reveal>
               <p className="text-[clamp(1.35rem,3vw,2.15rem)] leading-[1.42] tracking-[-0.015em]">
                 Digi02 is a software company based in Kaduna, Nigeria. We engineer systems for
-                organisations whose operations carry real consequence — institutions that
+                organisations whose operations carry real consequence. Institutions that
                 process payments, run payroll, keep records, fly missions and answer for
                 every decision they make.
               </p>
@@ -56,14 +56,14 @@ function Story() {
                   Our expertise spans multi-purpose software development: enterprise
                   e-management, payroll automation, payment platforms, point of sale,
                   unmanned-aerial systems and bespoke engineering. Whatever the brief, the
-                  discipline is the same — understand the operation first, then build the
+                  discipline is the same. Understand the operation first, then build the
                   system around it.
                 </p>
                 <p className="text-[1rem] leading-[1.85] font-light text-ink/70">
                   We have made a strong impact in Nigeria, and our solutions are built to
                   serve organisations globally. But scale is not the point. The point is that
                   when a system we build is used on a Monday morning by someone who did not
-                  write it, it works — quietly, correctly, and on time.
+                  write it, it works. Quietly, correctly, and on time.
                 </p>
               </div>
             </Reveal>
@@ -269,7 +269,7 @@ export default function CompanyPage() {
         eyebrow="Company"
         title="Engineering with"
         accent="accountability."
-        lead="Digi02 builds software for organisations that have to account for what their systems do — and we hold ourselves to the same standard."
+        lead="Digi02 builds software for organisations that have to account for what their systems do. We hold ourselves to the same standard."
       >
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Company" }]} />
       </PageHero>

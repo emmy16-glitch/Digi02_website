@@ -161,7 +161,7 @@ export function SolutionsPage() {
           <div className="solutions-reference-hero__copy">
             <nav className="solutions-reference-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">›</span><span>Solutions</span></nav>
             <h1 id="solutions-reference-title">One delivery partner <br />for <span>complex operations.</span></h1>
-            <p className="solutions-reference-hero__lead">Digi02 turns operational problems into secure, dependable systems—across discovery, product strategy, engineering, integration, rollout and improvement.</p>
+            <p className="solutions-reference-hero__lead">Digi02 turns operational problems into secure, dependable systems, across discovery, product strategy, engineering, integration, rollout and improvement.</p>
             <div className="solutions-reference-hero__principles" aria-label="Solution principles">
               <div><span className="solutions-reference-principle-icon" aria-hidden="true">01</span><p><strong>Start with the operation</strong><small>Make the workflow, constraints and decisions visible before choosing technology.</small></p></div>
               <div><span className="solutions-reference-principle-icon" aria-hidden="true">02</span><p><strong>Build for use</strong><small>Engineer a system teams can adopt, operate and improve with confidence.</small></p></div>

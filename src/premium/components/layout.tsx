@@ -58,7 +58,7 @@ export function Header() {
             <a
               {...linkProps("/")}
               className="flex shrink-0 items-center transition-opacity duration-300 hover:opacity-80"
-              aria-label="Digi02 — home"
+              aria-label="Digi02 home"
             >
               <LogoLockup
                 tone="light"
@@ -194,8 +194,8 @@ export function Footer() {
           <div className="lg:col-span-4">
             <LogoStacked className="h-24 w-auto sm:h-28" />
             <p className="mt-7 max-w-xs text-[0.9375rem] leading-[1.75] font-light text-soft">
-              Empowering organisations with tailored software — engineered for excellence,
-              security and growth across Nigeria and beyond.
+              Empowering organisations with tailored software, built for security
+              and growth across Nigeria and beyond.
             </p>
           </div>
 

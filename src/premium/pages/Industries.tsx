@@ -32,7 +32,7 @@ export function IndustriesPage() {
         eyebrow="Industries"
         title="Sectors where the work"
         accent="has consequences."
-        lead="Retail counters, school bursaries, institutional records, aerial patrols, hospital bills. The sector changes; the requirement does not — the system has to work, and it has to be accountable."
+        lead="Retail counters, school bursaries, institutional records, aerial patrols, hospital bills. The sector changes; the requirement does not. The system has to work, and it has to be accountable."
       >
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Industries" }]} />
       </PageHero>
@@ -108,7 +108,7 @@ export function WorkPage() {
         eyebrow="Our work"
         title="Systems delivered, and systems"
         accent="being built now."
-        lead="A selection of engagements across payments, institutional management, payroll and unmanned-aerial operations — each described as it actually stands."
+        lead="A selection of engagements across payments, institutional management, payroll and unmanned-aerial operations. Each described as it actually stands."
       >
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Work" }]} />
       </PageHero>
@@ -183,7 +183,7 @@ export function WorkPage() {
               {[
                 {
                   t: "Shown as real",
-                  d: "Product interfaces that exist and are used, photographed or captured as they are — never recoloured or regenerated to look better than they are.",
+                  d: "Product interfaces that exist and are used, photographed or captured as they are. Never recoloured or regenerated to look better than they are.",
                 },
                 {
                   t: "Shown as direction",

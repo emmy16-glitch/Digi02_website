@@ -229,7 +229,7 @@ export function DigiVoltSection() {
           </div>
 
           <footer className="digivolt-journey__footer">
-            <span>Illustrative journey state — not live trip data.</span>
+            <span>Illustrative journey state. Not live trip data.</span>
           </footer>
         </Container>
       </section>

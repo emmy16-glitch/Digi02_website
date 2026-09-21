@@ -240,7 +240,7 @@ export function LogoLockup({
   return (
     <img
       src={tone === "light" ? "/images/brand/digi02-logo-light.png" : "/images/brand/digi02-logo-dark.png"}
-      alt="Digi02 — The Digital Life"
+      alt="Digi02 logo"
       className={cn("h-9 w-auto select-none sm:h-10", className)}
       draggable={false}
     />
@@ -251,7 +251,7 @@ export function LogoStacked({ className }: { className?: string }) {
   return (
     <img
       src="/images/brand/digi02-logo-light.png"
-      alt="Digi02 — The Digital Life"
+      alt="Digi02 logo"
       className={cn("h-20 w-auto select-none sm:h-24", className)}
       draggable={false}
     />

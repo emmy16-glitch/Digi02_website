@@ -15,7 +15,7 @@ import {
   SectionHead,
   StatusPill,
 } from "@/premium/components/ui";
-import { company, faqs, getSolution, insights, photos, principles, process, solutions, team, work } from "@/premium/data/content";
+import { company, faqs, getSolution, insights, photos, process, solutions, team, work } from "@/premium/data/content";
 
 /* ═══════════════════════════════════════════════════════════
    Hero
@@ -23,8 +23,15 @@ import { company, faqs, getSolution, insights, photos, principles, process, solu
 
 const HERO_ROTATION_MS = 5000;
 
-/** Faint field-photography backdrop frames. Decorative only — no captions, no controls. */
-const heroFrames = [photos.posMarket, photos.engineeringTeam, photos.posHospitality];
+/** Faint field-photography backdrop frames. Decorative only — no captions, no controls.
+    Five sourced frames of African technology in use, used only here on the homepage. */
+const heroFrames = [
+  photos.heroCodeReview,
+  photos.heroNairaMarket,
+  photos.heroDroneCrew,
+  photos.heroLagosOffice,
+  photos.heroPosTap,
+];
 
 /**
  * Transparent background rotation under the hero copy.
@@ -106,8 +113,9 @@ function Hero() {
 
           <Reveal delay={200}>
             <p className="mt-9 max-w-2xl text-[1.0625rem] leading-[1.8] font-light text-soft sm:text-[1.125rem]">
-              Digi02 helps organisations turn complex work into dependable systems —
-              from discovery and system design to engineering, rollout and improvement.
+              Digi02 designs and builds software for organisations in Nigeria and
+              beyond: ERP, payments, payroll, e-management, mobility and UAV
+              ground control.
             </p>
           </Reveal>
 
@@ -133,7 +141,6 @@ function Hero() {
 
 function SkyGridBand() {
   const sky = getSolution("skygrid")!;
-  const stages = ["Plan", "Prepare", "Operate", "Review"];
 
   return (
     <section className="relative overflow-hidden border-t border-white/[0.08] bg-ink-soft">
@@ -159,16 +166,9 @@ function SkyGridBand() {
             </Reveal>
 
             <Reveal delay={220}>
-              <ol className="mt-10 grid grid-cols-2 gap-px bg-white/[0.08] sm:grid-cols-4">
-                {stages.map((s, i) => (
-                  <li key={s} className="bg-ink-soft px-3 py-4">
-                    <span className="label block text-gold/70">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-2 block text-[0.9375rem] text-bone">{s}</span>
-                  </li>
-                ))}
-              </ol>
+              <p className="label mt-10 text-mute">
+                Mission planning · Route design · Readiness · Command analytics
+              </p>
             </Reveal>
 
             <Reveal delay={280}>
@@ -187,7 +187,7 @@ function SkyGridBand() {
                 <Photo
                   src={photos.skygridFieldOps}
                   alt="SkyGrid mission aircraft prepared for flight in the field"
-                  caption="Field hardware — SkyGrid mission aircraft"
+                  caption="Field hardware: SkyGrid mission aircraft"
                   ratio="aspect-[16/9]"
                   className="relative"
                 />
@@ -195,7 +195,7 @@ function SkyGridBand() {
             </Reveal>
             <Reveal delay={220}>
               <p className="label mt-4 text-mute">
-                Real field hardware — mission aircraft at pre-flight
+                Mission aircraft at pre-flight
               </p>
             </Reveal>
           </div>
@@ -227,7 +227,7 @@ function Intro() {
                 <Photo
                   src={photos.whoWeAre}
                   alt="Northern Nigerian business people in a meeting in Kaduna"
-                  caption="Kaduna business community — the organisations we build for"
+                  caption="Kaduna business community: the organisations we build for"
                   ratio="aspect-[4/3]"
                   className="mt-10"
                 />
@@ -238,30 +238,27 @@ function Intro() {
           <div className="lg:col-span-8">
             <Reveal>
               <p className="text-[clamp(1.35rem,3vw,2.15rem)] leading-[1.42] tracking-[-0.015em]">
-                We have delivered software to organisations of every size — from startups to
-                large enterprises — across multiple industries. Our expertise is
-                multi-purpose software development, and our answer to every brief is the same:
-                {" "}
-                <span className="text-gold-dark">tailored, not templated.</span>
+                We build software for organisations of every size, from startups to
+                large enterprises. Every system is designed around the organisation
+                that will run it.{" "}
+                <span className="text-gold-dark">Nothing templated.</span>
               </p>
             </Reveal>
             <Reveal delay={120}>
               <div className="mt-12 grid gap-10 sm:grid-cols-2">
                 <p className="text-[1rem] leading-[1.85] font-light text-ink/70">
-                  While we have made a strong impact in Nigeria, our solutions are built to
-                  serve organisations globally — engineered for innovation and excellence
-                  beyond borders.
+                  We work from Kaduna, Nigeria, and build for organisations here
+                  and abroad.
                 </p>
                 <p className="text-[1rem] leading-[1.85] font-light text-ink/70">
-                  Every engagement is executed with a deep sense of responsibility: quality,
-                  security and timely delivery, without compromising the values the company
-                  was built on.
+                  Every engagement is scoped in writing, tested before release,
+                  and delivered on the agreed date.
                 </p>
               </div>
             </Reveal>
             <Reveal delay={200}>
               <div className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-black/10 pt-8">
-                {["Custom software", "Efficiency", "Security", "Scalability"].map((t) => (
+                {["Scoped in writing", "Tested before release", "Documented handover", "Post-launch support"].map((t) => (
                   <span key={t} className="label flex items-center gap-2 text-ink/55">
                     <span className="h-[4px] w-[4px] rotate-45 bg-gold-dark" />
                     {t}
@@ -366,7 +363,6 @@ function SolutionsIndex() {
 
 function DigiVoltSpotlight() {
   const dv = getSolution("digivolt")!;
-  const stages = ["Book", "Match", "Ride", "Arrive"];
 
   return (
     <section className="relative overflow-hidden bg-bone text-ink">
@@ -377,17 +373,17 @@ function DigiVoltSpotlight() {
               <div className="grid grid-cols-2 gap-4 sm:gap-6">
                 <Photo
                   src={photos.digivoltBook}
-                  alt="DigiVolt rider app — book a ride in seconds"
+                  alt="DigiVolt rider app: book a ride in seconds"
                   ratio="aspect-[3/4]"
                 />
                 <Photo
                   src={photos.digivoltSafety}
-                  alt="DigiVolt rider app — live trip tracking and safety"
+                  alt="DigiVolt rider app: live trip tracking and safety"
                   ratio="aspect-[3/4]"
                 />
               </div>
               <p className="label mt-4 text-ink/45">
-                Real product screens — DigiVolt rider app
+                DigiVolt rider app screens
               </p>
             </Reveal>
           </div>
@@ -411,16 +407,9 @@ function DigiVoltSpotlight() {
               </p>
             </Reveal>
             <Reveal delay={220}>
-              <ul className="mt-10 grid grid-cols-2 gap-px bg-black/10">
-                {stages.map((s, i) => (
-                  <li key={s} className="bg-bone px-3 py-4">
-                    <span className="label block text-gold-dark">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-2 block text-[0.9375rem]">{s}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="label mt-10 text-ink/55">
+                Booking · Driver matching · Live trip tracking · Arrival
+              </p>
             </Reveal>
             <Reveal delay={280}>
               <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -472,12 +461,12 @@ function FieldEvidence() {
             eyebrow="In the field"
             title={
               <>
-                Payment systems where
+                Tested where
                 <br />
-                <span className="text-soft">transactions actually happen.</span>
+                <span className="text-soft">transactions happen.</span>
               </>
             }
-            lead="Counter, market stall and mobile — the channels Nigerian customers already use, captured as they are."
+            lead="Market stall, hospitality counter, mobile: the channels customers already use."
           />
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {shots.map((s, i) => (
@@ -504,21 +493,12 @@ function Process() {
         <div className="py-20 lg:py-28">
           <SectionHead
             eyebrow="How we work"
-            title={
-              <>
-                Five stages. No shortcuts,
-                <br />
-                <span className="text-soft">no surprises.</span>
-              </>
-            }
+            title="The work, in order."
           />
           <div className="mt-14 grid gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
             {process.map((p, i) => (
               <Reveal key={p.step} delay={i * 80} className="group bg-ink-soft p-6 transition-colors duration-500 hover:bg-raised lg:p-7">
-                <span className="display block text-[2.25rem] leading-none text-gold/45 transition-colors duration-500 group-hover:text-gold">
-                  {p.step}
-                </span>
-                <h3 className="mt-6 text-[1.0625rem] text-bone">{p.title}</h3>
+                <h3 className="text-[1.0625rem] text-bone">{p.title}</h3>
                 <p className="mt-3 text-[0.875rem] leading-[1.75] font-light text-mute">
                   {p.text}
                 </p>
@@ -537,15 +517,15 @@ function Process() {
 
 function SelectedWork() {
   const picks = [work[3], work[0], work[2]];
-  /** Real photography for the work cards — same subjects as their solution pages. */
+  /** One distinct photograph per work card — none repeated elsewhere on this page. */
   const cardMedia: Record<string, { src: string; alt: string }> = {
     "uav-mission-operations": {
-      src: photos.skygridHardware,
-      alt: "Mission UAV hardware — survey and camera payload close-up",
+      src: photos.skygridSurveyFlight,
+      alt: "Agricultural drone in flight over farmland",
     },
     "secondary-school-payments": {
-      src: photos.fieldCardPayment,
-      alt: "Customer paying by card with a mobile phone",
+      src: photos.schoolClassroom,
+      alt: "Secondary-school students in uniforms",
     },
     "company-payroll": {
       src: photos.opsTeam,
@@ -559,13 +539,8 @@ function SelectedWork() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHead
               eyebrow="Selected work"
-              title={
-                <>
-                  Systems delivered, and systems
-                  <br />
-                  <span className="text-soft">being built right now.</span>
-                </>
-              }
+              title="Selected work."
+              lead="A few systems we have shipped or are building now."
             />
             <Reveal delay={200}>
               <Btn to="/work" variant="ghost" arrow>
@@ -635,17 +610,17 @@ function Principles() {
                   eyebrow="Our standards"
                   title={
                     <>
-                      What clients
+                      Built to
                       <br />
-                      <span className="text-ink/45">come back for.</span>
+                      <span className="text-ink/45">be checked.</span>
                     </>
                   }
                 />
                 <Reveal delay={120}>
                   <Photo
                     src={photos.standardsReview}
-                    alt="Professional reviewing a report beside a laptop"
-                    caption="Attention to detail through every stage of the build"
+                    alt="Operations team monitoring live systems from a control room"
+                    caption="Operations floor: systems under watch"
                     ratio="aspect-[4/5]"
                     className="mt-10"
                   />
@@ -653,21 +628,26 @@ function Principles() {
               </div>
             </div>
             <div className="lg:col-span-8">
-              <div className="border-t border-black/10">
-                {principles.map((p, i) => (
-                  <Reveal key={p.title} delay={i * 60}>
-                    <div className="group grid grid-cols-[auto_1fr] gap-6 border-b border-black/10 py-7 sm:grid-cols-[auto_1fr_1.4fr] sm:gap-8">
-                      <span className="label pt-1 text-ink/35 transition-colors group-hover:text-gold-dark">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <h3 className="text-[1.0625rem] leading-snug">{p.title}</h3>
-                      <p className="col-span-2 text-[0.9375rem] leading-[1.8] font-light text-ink/65 sm:col-span-1">
-                        {p.text}
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+              <Reveal>
+                <p className="text-[clamp(1.35rem,3vw,2.15rem)] leading-[1.42] tracking-[-0.015em]">
+                  Every system leaves Digi02 with its scope written down, its
+                  tests run, its handover documented, and a person responsible
+                  for it after launch.
+                </p>
+              </Reveal>
+              <Reveal delay={120}>
+                <p className="mt-8 max-w-xl text-[1rem] leading-[1.85] font-light text-ink/70">
+                  That is the whole standard. If a system cannot be checked, it
+                  is not finished.
+                </p>
+              </Reveal>
+              <Reveal delay={180}>
+                <div className="mt-10">
+                  <Btn to="/company" variant="onLight" arrow>
+                    Meet the team
+                  </Btn>
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -766,11 +746,10 @@ function Faq() {
         <div className="grid gap-12 pt-20 pb-24 lg:grid-cols-12 lg:gap-16 lg:pt-24 lg:pb-32">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
-              <SectionHead tone="light" eyebrow="Questions" title="Answers, in plain terms." />
+              <SectionHead tone="light" eyebrow="Questions" title="Questions." />
               <Reveal delay={200}>
                 <p className="mt-7 text-[0.9375rem] leading-[1.8] font-light text-ink/60">
-                  Still unsure? The full set of questions lives on the contact page, alongside
-                  direct lines to our team.
+                  More answers on the contact page, with direct lines to the team.
                 </p>
                 <div className="mt-7">
                   <Btn to="/contact" variant="onLight" arrow>

@@ -41,7 +41,7 @@ export function PaymentSystemsPage() {
               <span>Operation</span>
               <strong>Transaction context retained</strong>
             </div>
-            <p>Illustrative transaction flow — not a live payment or settlement record.</p>
+            <p>Illustrative transaction flow. Not a live payment or settlement record.</p>
           </div>
         </Container>
       </section>

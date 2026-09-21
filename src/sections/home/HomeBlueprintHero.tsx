@@ -90,7 +90,7 @@ export function HomeBlueprintHero() {
             for <span>real operations.</span>
           </h1>
           <p className="home-blueprint-hero__summary">
-            Digi02 helps organisations turn complex work into dependable systems—from discovery and system design to engineering, rollout and improvement.
+            Digi02 helps organisations turn complex work into dependable systems, from discovery and system design to engineering, rollout and improvement.
           </p>
           <div className="home-blueprint-hero__actions" aria-label="Homepage actions">
             <a className="home-blueprint-button home-blueprint-button--primary" href="/work">

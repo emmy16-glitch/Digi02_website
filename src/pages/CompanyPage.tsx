@@ -80,7 +80,7 @@ const direction = [
   {
     icon: 'vision' as const,
     title: 'Our Vision',
-    body: 'To be Africa’s most trusted technology partner—engineering the systems that power a smarter, more connected continent.',
+    body: 'To be Africa’s most trusted technology partner, engineering the systems that power a smarter, more connected continent.',
   },
   {
     icon: 'values' as const,
@@ -311,7 +311,7 @@ export function CompanyPage() {
             <h2 id="company-team-title">The people behind Digi02.</h2>
             <p className="company-reference-team__intro">
               A cross-functional team spanning ecosystem strategy, software engineering, product design,
-              cybersecurity, and AI/data—working together to build technology for real operations.
+              cybersecurity, and AI/data, working together to build technology for real operations.
             </p>
           </header>
 
@@ -369,7 +369,7 @@ export function CompanyPage() {
       <section className="company-reference-cta" aria-labelledby="company-reference-cta-title">
         <Container className="company-reference-cta__inner">
           <div>
-            <h2 id="company-reference-cta-title">Let’s build what’s next—together.</h2>
+            <h2 id="company-reference-cta-title">Let’s build what’s next, together.</h2>
             <p>Partner with Digi02 to turn ideas into secure, scalable, and impactful solutions.</p>
           </div>
           <div className="company-reference-cta__links">

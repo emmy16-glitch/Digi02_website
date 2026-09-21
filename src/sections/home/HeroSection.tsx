@@ -14,7 +14,7 @@ export function HeroSection() {
           </h1>
 
           <p className="home-hero__summary">
-            Digi02 designs and builds technology around the way organizations actually work —
+            Digi02 designs and builds technology around the way organizations actually work.
             connecting field operations, mobility and business systems into practical tools.
           </p>
 

@@ -11,21 +11,21 @@ import { Btn, Container, Eyebrow, GridBackdrop, Reveal } from '@/premium/compone
 import { linkProps } from '@/premium/lib/router'
 
 const TITLES: Record<string, string> = {
-  '/': 'Digi02 — Software Engineered for Operations | Kaduna, Nigeria',
-  '/solutions': 'Solutions — Digi02',
-  '/industries': 'Industries — Digi02',
-  '/work': 'Our Work — Digi02',
-  '/company': 'Company — Digi02',
-  '/insights': 'Insights — Digi02',
-  '/contact': 'Contact — Digi02',
-  '/privacy': 'Privacy Policy — Digi02',
+  '/': 'Digi02: Software Engineered for Operations | Kaduna, Nigeria',
+  '/solutions': 'Solutions | Digi02',
+  '/industries': 'Industries | Digi02',
+  '/work': 'Our Work | Digi02',
+  '/company': 'Company | Digi02',
+  '/insights': 'Insights | Digi02',
+  '/contact': 'Contact | Digi02',
+  '/privacy': 'Privacy Policy | Digi02',
 }
 
 const DESCRIPTIONS: Record<string, string> = {
   '/': 'Digi02 builds enterprise systems, payment and payroll infrastructure, e-management platforms and UAV mission software for organisations across Nigeria and beyond.',
   '/solutions': 'Explore Digi02 solutions across SkyGrid aerial systems, enterprise platforms, e-management, payroll, payments and custom software.',
   '/company': 'Digi02 Software Solutions, Kaduna Nigeria. Meet the team and standards behind the systems.',
-  '/contact': 'Discuss a project with Digi02 — No. 2, The Hub, Mando, Kaduna. info@digi02.org, +234 816 940 4088.',
+  '/contact': 'Discuss a project with Digi02: No. 2, The Hub, Mando, Kaduna. info@digi02.org, +234 816 940 4088.',
 }
 
 function PrivacyPage() {
@@ -44,7 +44,7 @@ function PrivacyPage() {
             <p className="mx-auto mt-8 max-w-2xl text-center text-[1.0625rem] leading-[1.8] font-light text-soft">
               The contact form on this website does not submit, transmit, store, or add email addresses anywhere.
               Submitting the form opens your own email application with the enquiry prepared and addressed to
-              info@digi02.org — no email was sent or stored by the site itself.
+              info@digi02.org. No email was sent or stored by the site itself.
             </p>
           </Reveal>
         </div>
@@ -114,7 +114,7 @@ export default function App() {
   useScrollTopOnRoute(path)
 
   useEffect(() => {
-    document.title = TITLES[path] ?? (path.startsWith('/solutions/') ? 'Solution — Digi02' : path.startsWith('/insights/') ? 'Insight — Digi02' : 'Digi02')
+    document.title = TITLES[path] ?? (path.startsWith('/solutions/') ? 'Solution | Digi02' : path.startsWith('/insights/') ? 'Insight | Digi02' : 'Digi02')
     const desc = DESCRIPTIONS[path]
     if (desc) {
       let tag = document.querySelector('meta[name="description"]')

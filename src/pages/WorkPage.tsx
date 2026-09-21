@@ -49,7 +49,7 @@ const featuredCase: NamedCase = {
   title: 'Thermal Plant Inspection Automation',
   summary: 'An inspection workflow that brings mission planning, field capture and operational review into one coordinated system.',
   challenge: 'Manual inspection processes created fragmented records, slow review cycles and limited visibility across the operation.',
-  approach: 'Digi02 connected mission planning, autonomous capture, inspection workflows and reporting into one operational flow—so field evidence could be reviewed with the context needed for action.',
+  approach: 'Digi02 connected mission planning, autonomous capture, inspection workflows and reporting into one operational flow, so field evidence could be reviewed with the context needed for action.',
   outcome: 'Faster inspection review. Clearer operational records. Safer field coordination.',
   tags: ['SkyGrid', 'AI / ML', 'Computer Vision', 'IoT', 'Cloud'],
   caseHref: '/work/thermal-plant-inspection-automation',
@@ -124,7 +124,7 @@ export function WorkPage() {
   return (
     <main className="work-reference-page">
       <section className="work-reference-hero" aria-labelledby="work-reference-title" style={{ backgroundImage: `url(${workHeroVisual})` }}>
-        <Container className="work-reference-hero__inner"><p className="work-reference-kicker">Our Work</p><h1 id="work-reference-title">Technology proven where the <span>work is real.</span></h1><p>Digi02 partners with organisations that need clearer operations—not more disconnected tools. These selected engagements show how field intelligence, payments, public-service workflows and enterprise systems can be engineered around the way work actually moves.</p><a className="work-reference-hero__cta" href="#work-filter">Explore selected work <span aria-hidden="true">↓</span></a></Container>
+        <Container className="work-reference-hero__inner"><p className="work-reference-kicker">Our Work</p><h1 id="work-reference-title">Technology proven where the <span>work is real.</span></h1><p>Digi02 partners with organisations that need clearer operations, not more disconnected tools. These selected engagements show how field intelligence, payments, public-service workflows and enterprise systems can be engineered around the way work actually moves.</p><a className="work-reference-hero__cta" href="#work-filter">Explore selected work <span aria-hidden="true">↓</span></a></Container>
       </section>
 
       <section className="work-reference-filter" id="work-filter" aria-label="Filter work by industry"><Container className="work-reference-filter__inner"><div className="work-reference-filter__buttons" role="group" aria-label="Industry categories">{filters.map((filter) => <button className={filter === activeFilter ? 'is-active' : ''} key={filter} type="button" aria-pressed={filter === activeFilter} onClick={() => setActiveFilter(filter)}>{filter}</button>)}</div><p aria-live="polite">{visibleCount} {visibleCount === 1 ? 'item' : 'items'} shown</p></Container></section>

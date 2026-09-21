@@ -139,7 +139,7 @@ const capabilities = [
 ] as const
 
 const operationalCapabilities = [
-  { title: 'Autonomous Systems', label: 'Field orchestration', copy: 'Mission-ready systems for inspection, mapping, surveillance and logistics—connecting planning, field capture and review.', href: '/solutions/skygrid', icon: 'skygrid', visual: 'mission' },
+  { title: 'Autonomous Systems', label: 'Field orchestration', copy: 'Mission-ready systems for inspection, mapping, surveillance and logistics, connecting planning, field capture and review.', href: '/solutions/skygrid', icon: 'skygrid', visual: 'mission' },
   { title: 'Enterprise Platforms', label: 'Core operations', copy: 'ERP, payments, HR and service platforms built around the workflows that keep organisations moving.', href: '/solutions/enterprise-systems', icon: 'enterprise', visual: 'platform' },
   { title: 'Digital Infrastructure', label: 'Secure by design', copy: 'Connected foundations that protect data, sustain service continuity and support reliable growth.', href: '/solutions', icon: 'security', visual: 'infrastructure' },
   { title: 'Operational Intelligence', label: 'Signals to action', copy: 'Decision-ready insight that brings distributed signals, review cycles and teams into one operating picture.', href: '/solutions/custom-software', icon: 'automation', visual: 'intelligence' },
@@ -308,7 +308,7 @@ export function HomeBlueprintPhilosophy() {
     <section className="home-blueprint-philosophy" data-home-section="H05" aria-labelledby="home-philosophy-title">
       <Container className="home-blueprint-philosophy__layout">
         <p className="home-blueprint-eyebrow">Our Approach</p>
-        <h2 id="home-philosophy-title">Technology should fit the operation — not force the operation to fit the technology.</h2>
+        <h2 id="home-philosophy-title">Technology should fit the operation, not force the operation to fit the technology.</h2>
       </Container>
     </section>
   )

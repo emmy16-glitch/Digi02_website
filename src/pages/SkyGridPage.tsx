@@ -33,7 +33,7 @@ export function SkyGridPage() {
         <Container>
           <figure className="product-cinematic">
             <img src={skyGridCinematic} alt="SkyGrid UAV operations concept visualization" />
-            <figcaption>SkyGrid concept visualization — not a photographed Digi02 deployment.</figcaption>
+            <figcaption>SkyGrid concept visualization. Not a photographed Digi02 deployment.</figcaption>
           </figure>
         </Container>
       </section>

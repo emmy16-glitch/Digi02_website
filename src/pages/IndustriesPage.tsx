@@ -123,7 +123,7 @@ const industries: readonly Industry[] = [
     index: '06',
     title: 'Field & autonomous operations',
     eyebrow: 'Technology designed beyond the office.',
-    context: 'Distributed teams need more than a field device—they need a trusted path from capture and planning to evidence, decisions and action.',
+    context: 'Distributed teams need more than a field device. They need a trusted path from capture and planning to evidence, decisions and action.',
     howDigi02Helps: 'Digi02 combines autonomous systems, mobile workflows and operational software for inspection, mapping, monitoring and field coordination.',
     outcome: 'Better evidence from the field and more confident mission decisions.',
     systems: ['SkyGrid', 'Custom Software', 'Enterprise Systems'],
@@ -180,7 +180,7 @@ export function IndustriesPage() {
 
       <section className="industries-reference-landscape" id="industry-landscape" aria-labelledby="industry-landscape-title">
         <Container>
-          <header className="industries-reference-landscape__heading"><p>Where we work</p><h2 id="industry-landscape-title">The system should fit the operation—not force the operation to fit the system.</h2></header>
+          <header className="industries-reference-landscape__heading"><p>Where we work</p><h2 id="industry-landscape-title">The system should fit the operation, not force the operation to fit the system.</h2></header>
           <div className="industries-reference-landscape__grid">
             {industries.map((industry) => (
               <article className={`industries-reference-sector industries-reference-sector--${industry.layout}`} id={industry.id} key={industry.id}>

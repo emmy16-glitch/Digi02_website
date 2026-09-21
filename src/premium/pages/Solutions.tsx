@@ -22,16 +22,16 @@ const STORE_URLS: Record<string, { rider: string; driver: string }> = {
 };
 
 const SOLUTION_PHOTOS: Record<string, { src: string; alt: string; caption: string }> = {
-  digivolt: { src: photos.digivoltDriver, alt: "DigiVolt driver app — trip requests with Naira fares", caption: "Driver app — trip requests, Naira fares and earnings" },
-  "enterprise-systems": { src: photos.engineeringTeam, alt: "Digi02 engineering team at work", caption: "Engineering discipline — operations console" },
+  digivolt: { src: photos.digivoltDriver, alt: "DigiVolt driver app: trip requests with Naira fares", caption: "Driver app: trip requests, Naira fares and earnings" },
+  "enterprise-systems": { src: photos.engineeringTeam, alt: "Digi02 engineering team at work", caption: "Engineering discipline: operations console" },
 };
 
 /** Real photography replacing generated diagrams — each image appears once. */
 const SOLUTION_VISUALS: Record<string, { src: string; alt: string; caption: string; ratio: string }> = {
-  skygrid: { src: photos.skygridUav, alt: "SkyGrid mission aircraft on the field", caption: "Field hardware — SkyGrid mission aircraft", ratio: "aspect-[16/9]" },
-  digivolt: { src: photos.digivoltProtection, alt: "DigiVolt safety tools — live trip protection", caption: "Real product screens — DigiVolt safety tools", ratio: "aspect-[4/5]" },
-  "payment-systems": { src: photos.fieldCardPayment, alt: "Customer paying by card with a mobile phone", caption: "Payer side — card and phone payment", ratio: "aspect-[16/9]" },
-  "payroll-automation": { src: photos.opsTeam, alt: "Operations team running validated payroll systems", caption: "Operations floor — validated runs, people behind them", ratio: "aspect-[16/9]" },
+  skygrid: { src: photos.skygridUav, alt: "SkyGrid mission aircraft on the field", caption: "Field hardware: SkyGrid mission aircraft", ratio: "aspect-[16/9]" },
+  digivolt: { src: photos.digivoltProtection, alt: "DigiVolt safety tools: live trip protection", caption: "DigiVolt safety tools screens", ratio: "aspect-[4/5]" },
+  "payment-systems": { src: photos.fieldCardPayment, alt: "Customer paying by card with a mobile phone", caption: "Payer side: card and phone payment", ratio: "aspect-[16/9]" },
+  "payroll-automation": { src: photos.opsTeam, alt: "Operations team running validated payroll systems", caption: "Operations floor: validated runs, people behind them", ratio: "aspect-[16/9]" },
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -51,7 +51,7 @@ export function SolutionsPage() {
         eyebrow="Solutions"
         title="Seven areas of practice,"
         accent="one standard."
-        lead="From unmanned-aerial mission software to payroll that has to be right every month — each system is engineered around the operation it serves, and labelled honestly for what it is today."
+        lead="From unmanned-aerial mission software to payroll that has to be right every month. Each system is engineered around the operation it serves, and labelled honestly for what it is today."
       >
         <div className="flex flex-wrap gap-3">
           <Btn to="/contact" variant="primary" arrow>
@@ -120,7 +120,7 @@ export function SolutionsPage() {
                   <span className="text-soft">to your organisation.</span>
                 </>
               }
-              lead="These are delivered as tailored systems, configured around how your organisation actually runs — not as one boxed product."
+              lead="These are delivered as tailored systems, configured around how your organisation actually runs. Not as one boxed product."
             />
             <div className="mt-14 grid gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
               {capability.map((s, i) => (

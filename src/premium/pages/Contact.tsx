@@ -33,8 +33,8 @@ export default function ContactPage() {
       [
         `Name: ${f.name}`,
         `Email: ${f.email}`,
-        `Organisation: ${f.org || "—"}`,
-        `Area of interest: ${f.interest || "—"}`,
+        `Organisation: ${f.org || "Not provided"}`,
+        `Area of interest: ${f.interest || "Not provided"}`,
         "",
         "Project enquiry:",
         f.message,
@@ -43,7 +43,7 @@ export default function ContactPage() {
   );
 
   const mailto = `mailto:${company.emails[0]}?subject=${encodeURIComponent(
-    `Project enquiry — ${f.org || f.name || "Digi02 website"}`,
+    `Project enquiry: ${f.org || f.name || "Digi02 website"}`,
   )}&body=${encodeURIComponent(body)}`;
 
   const valid = f.name.trim() && f.email.includes("@") && f.message.trim().length > 8;
@@ -94,7 +94,7 @@ export default function ContactPage() {
                   Submitting this form opens your email application with the enquiry prepared
                   and addressed to{" "}
                   <span className="text-gold">{company.emails[0]}</span>. Nothing is stored on
-                  this website — a server-side endpoint can be connected later.
+                  this website. A server-side endpoint can be connected later.
                 </p>
               </Reveal>
 
@@ -226,7 +226,7 @@ export default function ContactPage() {
                     <div>
                       <p className="label text-mute">Hours</p>
                       <p className="mt-3 text-[0.9375rem] leading-[1.8] font-light text-soft">
-                        Monday – Friday, 9:00 – 17:00 WAT
+                        Monday to Friday, 9:00 to 17:00 WAT
                       </p>
                     </div>
                   </div>
@@ -240,7 +240,7 @@ export default function ContactPage() {
                     {[
                       "We read your enquiry and reply within two working days.",
                       "A short call to understand the operation and the constraint.",
-                      "A written scope with an honest assessment — including if we are not the right team.",
+                      "A written scope with an honest assessment, including when we are not the right team.",
                     ].map((s, i) => (
                       <li key={i} className="flex gap-4">
                         <span className="label shrink-0 pt-1 text-gold/70">
