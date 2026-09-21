@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Footer, Header } from '@/premium/components/layout'
 import { useRoute, useScrollTopOnRoute } from '@/premium/lib/router'
+import { applyRouteMeta, getRouteMeta, isKnownRoute } from '@/premium/lib/seo'
 import CompanyPage from '@/premium/pages/Company'
 import ContactPage from '@/premium/pages/Contact'
 import Home from '@/premium/pages/Home'
@@ -9,24 +10,6 @@ import { InsightArticlePage, InsightsPage } from '@/premium/pages/Insights'
 import { SolutionDetailPage, SolutionsPage } from '@/premium/pages/Solutions'
 import { Btn, Container, Eyebrow, GridBackdrop, Reveal } from '@/premium/components/ui'
 import { linkProps } from '@/premium/lib/router'
-
-const TITLES: Record<string, string> = {
-  '/': 'Digi02: Software Engineered for Operations | Kaduna, Nigeria',
-  '/solutions': 'Solutions | Digi02',
-  '/industries': 'Industries | Digi02',
-  '/work': 'Our Work | Digi02',
-  '/company': 'Company | Digi02',
-  '/insights': 'Insights | Digi02',
-  '/contact': 'Contact | Digi02',
-  '/privacy': 'Privacy Policy | Digi02',
-}
-
-const DESCRIPTIONS: Record<string, string> = {
-  '/': 'Digi02 builds enterprise systems, payment and payroll infrastructure, e-management platforms and UAV mission software for organisations across Nigeria and beyond.',
-  '/solutions': 'Explore Digi02 solutions across SkyGrid aerial systems, enterprise platforms, e-management, payroll, payments and custom software.',
-  '/company': 'Digi02 Software Solutions, Kaduna Nigeria. Meet the team and standards behind the systems.',
-  '/contact': 'Discuss a project with Digi02: No. 2, The Hub, Mando, Kaduna. info@digi02.org, +234 816 940 4088.',
-}
 
 function PrivacyPage() {
   return (
@@ -95,14 +78,22 @@ function View({ path }: { path: string }) {
   if (path === '/') return <Home />
   if (path === '/solutions') return <SolutionsPage />
   if (path.startsWith('/solutions/')) {
-    return <SolutionDetailPage slug={path.replace('/solutions/', '')} />
+    return isKnownRoute(path) ? (
+      <SolutionDetailPage slug={path.replace('/solutions/', '')} />
+    ) : (
+      <NotFound />
+    )
   }
   if (path === '/industries') return <IndustriesPage />
   if (path === '/work') return <WorkPage />
   if (path === '/company') return <CompanyPage />
   if (path === '/insights') return <InsightsPage />
   if (path.startsWith('/insights/')) {
-    return <InsightArticlePage slug={path.replace('/insights/', '')} />
+    return isKnownRoute(path) ? (
+      <InsightArticlePage slug={path.replace('/insights/', '')} />
+    ) : (
+      <NotFound />
+    )
   }
   if (path === '/contact') return <ContactPage />
   if (path === '/privacy') return <PrivacyPage />
@@ -114,12 +105,7 @@ export default function App() {
   useScrollTopOnRoute(path)
 
   useEffect(() => {
-    document.title = TITLES[path] ?? (path.startsWith('/solutions/') ? 'Solution | Digi02' : path.startsWith('/insights/') ? 'Insight | Digi02' : 'Digi02')
-    const desc = DESCRIPTIONS[path]
-    if (desc) {
-      let tag = document.querySelector('meta[name="description"]')
-      if (tag) tag.setAttribute('content', desc)
-    }
+    applyRouteMeta(getRouteMeta(path))
   }, [path])
 
   return (
