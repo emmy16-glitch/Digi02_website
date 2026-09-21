@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/premium/utils/cn";
 import { linkProps } from "@/premium/lib/router";
 import {
@@ -15,44 +15,99 @@ import {
   SectionHead,
   StatusPill,
 } from "@/premium/components/ui";
-import { company, facts, faqs, getSolution, insights, photos, principles, process, solutions, team, work } from "@/premium/data/content";
+import { company, faqs, getSolution, insights, photos, principles, process, solutions, team, work } from "@/premium/data/content";
 
 /* ═══════════════════════════════════════════════════════════
    Hero
    ═══════════════════════════════════════════════════════════ */
 
-function Hero() {
+const HERO_ROTATION_MS = 5000;
+
+/** Faint field-photography backdrop frames. Decorative only — no captions, no controls. */
+const heroFrames = [photos.posMarket, photos.engineeringTeam, photos.posHospitality];
+
+/**
+ * Transparent background rotation under the hero copy.
+ * Crossfades on the old site's 5s cadence with no visible controls;
+ * the parent section pauses it on hover/focus, and it never
+ * auto-advances under prefers-reduced-motion.
+ */
+function HeroFieldBackdrop({ paused }: { paused: boolean }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = window.setTimeout(
+      () => setIndex((i) => (i + 1) % heroFrames.length),
+      HERO_ROTATION_MS,
+    );
+    return () => window.clearTimeout(t);
+  }, [index, paused]);
+
   return (
-    <section className="relative overflow-hidden bg-ink pt-[68px] lg:pt-[76px]">
+    <div aria-hidden className="pointer-events-none absolute inset-0">
+      {heroFrames.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          loading={i === 0 ? "eager" : "lazy"}
+          decoding="async"
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover opacity-40 transition-opacity duration-1000",
+            i === index ? "opacity-40" : "opacity-0",
+          )}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/40 to-ink" />
+    </div>
+  );
+}
+
+function Hero() {
+  const [resting, setResting] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return (
+    <section
+      className="relative overflow-hidden bg-ink pt-[68px] lg:pt-[76px]"
+      onMouseEnter={() => setResting(true)}
+      onMouseLeave={() => setResting(false)}
+      onFocus={() => setResting(true)}
+      onBlur={() => setResting(false)}
+    >
+      <HeroFieldBackdrop paused={resting || reducedMotion} />
       <GridBackdrop className="opacity-70" />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_0%,rgba(201,163,74,0.10),transparent_70%)]"
-        aria-hidden
-      />
 
       <Container className="relative">
         <div className="flex flex-col items-center py-24 text-center sm:py-32 lg:py-40">
           <Reveal>
             <Eyebrow className="justify-center">
-              Software engineering · {company.location}
+              Kaduna-rooted operational technology
             </Eyebrow>
           </Reveal>
 
           <Reveal delay={100}>
             <h1 className="mt-9 max-w-5xl text-[clamp(2.4rem,7.2vw,5.25rem)] leading-[1.02] tracking-[-0.03em]">
-              <span className="block text-bone">Software built for</span>
-              <span className="block text-bone">operations that</span>
+              <span className="block text-bone">Technology built</span>
               <span className="display mt-1 block text-[clamp(2.6rem,8vw,5.75rem)] text-gold italic">
-                cannot fail.
+                for real operations.
               </span>
             </h1>
           </Reveal>
 
           <Reveal delay={200}>
             <p className="mt-9 max-w-2xl text-[1.0625rem] leading-[1.8] font-light text-soft sm:text-[1.125rem]">
-              Digi02 engineers enterprise systems, payment and payroll infrastructure,
-              institutional e-management platforms and unmanned-aerial mission software —
-              for organisations that have to get it right the first time.
+              Digi02 helps organisations turn complex work into dependable systems —
+              from discovery and system design to engineering, rollout and improvement.
             </p>
           </Reveal>
 
@@ -68,31 +123,6 @@ function Hero() {
           </Reveal>
         </div>
       </Container>
-
-      {/* Fact index strip */}
-      <div className="relative border-t border-white/[0.08]">
-        <Container wide>
-          <dl className="grid grid-cols-2 lg:grid-cols-4">
-            {facts.map((f, i) => (
-              <Reveal
-                key={f.label}
-                delay={i * 90}
-                className={cn(
-                  "border-white/[0.08] px-1 py-7 sm:px-5 sm:py-9",
-                  i % 2 === 1 && "border-l",
-                  i >= 2 && "border-t lg:border-t-0",
-                  i > 0 && "lg:border-l",
-                )}
-              >
-                <dt className="display text-[clamp(1.9rem,4vw,2.75rem)] leading-none text-bone">
-                  {f.value}
-                </dt>
-                <dd className="label mt-3 text-mute">{f.label}</dd>
-              </Reveal>
-            ))}
-          </dl>
-        </Container>
-      </div>
     </section>
   );
 }
@@ -154,21 +184,18 @@ function SkyGridBand() {
             <Reveal delay={140}>
               <div className="relative">
                 <div className="absolute -inset-px bg-gradient-to-br from-gold/25 via-transparent to-transparent" aria-hidden />
-                <ProductVisual type="mission" className="relative" />
+                <Photo
+                  src={photos.skygridFieldOps}
+                  alt="SkyGrid mission aircraft prepared for flight in the field"
+                  caption="Field hardware — SkyGrid mission aircraft"
+                  ratio="aspect-[16/9]"
+                  className="relative"
+                />
               </div>
             </Reveal>
             <Reveal delay={220}>
-              <Photo
-                src={photos.skygridUav}
-                alt="SkyGrid unmanned aerial vehicle with mission camera on the field"
-                caption="Field hardware — SkyGrid mission aircraft"
-                ratio="aspect-[16/9]"
-                className="mt-8"
-              />
-            </Reveal>
-            <Reveal delay={260}>
               <p className="label mt-4 text-mute">
-                Real product interface — mission planning console
+                Real field hardware — mission aircraft at pre-flight
               </p>
             </Reveal>
           </div>
@@ -195,6 +222,15 @@ function Intro() {
               </Reveal>
               <Reveal delay={100}>
                 <BrandMark className="mt-10 hidden h-40 w-auto opacity-[0.16] lg:block" />
+              </Reveal>
+              <Reveal delay={180}>
+                <Photo
+                  src={photos.whoWeAre}
+                  alt="Northern Nigerian business people in a meeting in Kaduna"
+                  caption="Kaduna business community — the organisations we build for"
+                  ratio="aspect-[4/3]"
+                  className="mt-10"
+                />
               </Reveal>
             </div>
           </div>
@@ -338,9 +374,20 @@ function DigiVoltSpotlight() {
         <div className="grid items-center gap-12 py-20 lg:grid-cols-12 lg:gap-16 lg:py-28">
           <div className="order-2 lg:order-1 lg:col-span-7">
             <Reveal delay={120}>
-              <ProductVisual type="mobility" />
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                <Photo
+                  src={photos.digivoltBook}
+                  alt="DigiVolt rider app — book a ride in seconds"
+                  ratio="aspect-[3/4]"
+                />
+                <Photo
+                  src={photos.digivoltSafety}
+                  alt="DigiVolt rider app — live trip tracking and safety"
+                  ratio="aspect-[3/4]"
+                />
+              </div>
               <p className="label mt-4 text-ink/45">
-                Product visualisation — not a live deployment
+                Real product screens — DigiVolt rider app
               </p>
             </Reveal>
           </div>
@@ -376,10 +423,28 @@ function DigiVoltSpotlight() {
               </ul>
             </Reveal>
             <Reveal delay={280}>
-              <div className="mt-10">
+              <div className="mt-10 flex flex-wrap items-center gap-3">
                 <Btn to={`/solutions/${dv.slug}`} variant="onLight" arrow>
                   Explore DigiVolt
                 </Btn>
+              </div>
+              <div className="label mt-6 flex flex-wrap gap-x-6 gap-y-2 text-ink/55">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.digi02.digivolt"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition-colors hover:text-gold-dark"
+                >
+                  Get the rider app →
+                </a>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.digi02.digivolt.driver"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition-colors hover:text-gold-dark"
+                >
+                  Get the driver app →
+                </a>
               </div>
             </Reveal>
           </div>
@@ -472,6 +537,21 @@ function Process() {
 
 function SelectedWork() {
   const picks = [work[3], work[0], work[2]];
+  /** Real photography for the work cards — same subjects as their solution pages. */
+  const cardMedia: Record<string, { src: string; alt: string }> = {
+    "uav-mission-operations": {
+      src: photos.skygridHardware,
+      alt: "Mission UAV hardware — survey and camera payload close-up",
+    },
+    "secondary-school-payments": {
+      src: photos.fieldCardPayment,
+      alt: "Customer paying by card with a mobile phone",
+    },
+    "company-payroll": {
+      src: photos.opsTeam,
+      alt: "Operations team running validated payroll systems",
+    },
+  };
   return (
     <section className="relative bg-ink">
       <Container wide>
@@ -502,7 +582,15 @@ function SelectedWork() {
                   className="group flex h-full flex-col border border-white/[0.08] bg-ink-soft transition-all duration-500 hover:-translate-y-1 hover:border-gold/30"
                 >
                   <div className="p-5">
-                    <ProductVisual type={w.visual} />
+                    {cardMedia[w.slug] ? (
+                      <Photo
+                        src={cardMedia[w.slug].src}
+                        alt={cardMedia[w.slug].alt}
+                        ratio="aspect-[16/10]"
+                      />
+                    ) : (
+                      <ProductVisual type={w.visual} />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col p-6 lg:p-7">
                     <div className="flex items-center justify-between gap-3">
@@ -541,17 +629,28 @@ function Principles() {
         <div className="pt-20 pb-4 lg:pt-28 lg:pb-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-4">
-              <SectionHead
-                tone="light"
-                eyebrow="Our standards"
-                title={
-                  <>
-                    What clients
-                    <br />
-                    <span className="text-ink/45">come back for.</span>
-                  </>
-                }
-              />
+              <div className="lg:sticky lg:top-32">
+                <SectionHead
+                  tone="light"
+                  eyebrow="Our standards"
+                  title={
+                    <>
+                      What clients
+                      <br />
+                      <span className="text-ink/45">come back for.</span>
+                    </>
+                  }
+                />
+                <Reveal delay={120}>
+                  <Photo
+                    src={photos.standardsReview}
+                    alt="Professional reviewing a report beside a laptop"
+                    caption="Attention to detail through every stage of the build"
+                    ratio="aspect-[4/5]"
+                    className="mt-10"
+                  />
+                </Reveal>
+              </div>
             </div>
             <div className="lg:col-span-8">
               <div className="border-t border-black/10">

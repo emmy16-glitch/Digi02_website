@@ -63,6 +63,18 @@
   margin-top: var(--space-5);
 }
 
+.product-hero__statement .product-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: center;
+  margin-top: var(--space-5);
+}
+
+.product-hero__statement .product-hero__actions .button {
+  margin-top: 0;
+}
+
 .product-cinematic {
   position: relative;
   width: calc(100% + var(--page-margin));
@@ -109,6 +121,16 @@
 .product-hero--digivolt .product-hero__identity p,
 .product-hero--digivolt .product-hero__statement > p {
   color: #64615b;
+}
+
+.product-hero--digivolt .button--secondary {
+  border-color: rgba(5, 5, 5, 0.28);
+  color: var(--bg-950);
+}
+
+.product-hero--digivolt .button--secondary:hover {
+  border-color: var(--gold-700);
+  color: var(--bg-950);
 }
 
 .product-cinematic--digivolt {
@@ -417,6 +439,18 @@
 
 .product-outcome--light a span {
   color: var(--gold-700);
+}
+
+.product-outcome__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.product-outcome .product-outcome__links a {
+  margin-top: 0;
 }
 
 .enterprise-system-map {

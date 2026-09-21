@@ -13,11 +13,25 @@ import { Breadcrumbs, PageHero } from "@/premium/components/PageHero";
 import { GlobalCTA } from "@/premium/pages/Home";
 import { getSolution, photos, solutions, type Solution } from "@/premium/data/content";
 
+/** Live store listings. Only solutions with an entry here show download actions. */
+const STORE_URLS: Record<string, { rider: string; driver: string }> = {
+  digivolt: {
+    rider: "https://play.google.com/store/apps/details?id=com.digi02.digivolt",
+    driver: "https://play.google.com/store/apps/details?id=com.digi02.digivolt.driver",
+  },
+};
+
 const SOLUTION_PHOTOS: Record<string, { src: string; alt: string; caption: string }> = {
-  skygrid: { src: photos.skygridUav, alt: "SkyGrid mission aircraft on the field", caption: "Field hardware — SkyGrid mission aircraft" },
-  "payment-systems": { src: photos.posMarket, alt: "Market trader accepting POS payment", caption: "In the field — market POS acceptance" },
-  "payroll-automation": { src: photos.cardPhone, alt: "Card payment with mobile phone", caption: "Secure transactions across channels" },
+  digivolt: { src: photos.digivoltDriver, alt: "DigiVolt driver app — trip requests with Naira fares", caption: "Driver app — trip requests, Naira fares and earnings" },
   "enterprise-systems": { src: photos.engineeringTeam, alt: "Digi02 engineering team at work", caption: "Engineering discipline — operations console" },
+};
+
+/** Real photography replacing generated diagrams — each image appears once. */
+const SOLUTION_VISUALS: Record<string, { src: string; alt: string; caption: string; ratio: string }> = {
+  skygrid: { src: photos.skygridUav, alt: "SkyGrid mission aircraft on the field", caption: "Field hardware — SkyGrid mission aircraft", ratio: "aspect-[16/9]" },
+  digivolt: { src: photos.digivoltProtection, alt: "DigiVolt safety tools — live trip protection", caption: "Real product screens — DigiVolt safety tools", ratio: "aspect-[4/5]" },
+  "payment-systems": { src: photos.fieldCardPayment, alt: "Customer paying by card with a mobile phone", caption: "Payer side — card and phone payment", ratio: "aspect-[16/9]" },
+  "payroll-automation": { src: photos.opsTeam, alt: "Operations team running validated payroll systems", caption: "Operations floor — validated runs, people behind them", ratio: "aspect-[16/9]" },
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -174,8 +188,18 @@ export function SolutionDetailPage({ slug }: { slug: string }) {
             <p className="mt-5 text-[0.9375rem] leading-[1.75] font-light text-soft">
               {s.statusNote}
             </p>
-            <div className="mt-7">
-              <Btn to="/contact" variant="primary" arrow className="w-full">
+            <div className="mt-7 space-y-3">
+              {STORE_URLS[s.slug] && (
+                <>
+                  <Btn href={STORE_URLS[s.slug].rider} variant="primary" className="w-full">
+                    Get the rider app
+                  </Btn>
+                  <Btn href={STORE_URLS[s.slug].driver} variant="secondary" className="w-full">
+                    Get the driver app
+                  </Btn>
+                </>
+              )}
+              <Btn to="/contact" variant={STORE_URLS[s.slug] ? "ghost" : "primary"} arrow className="w-full">
                 Discuss this solution
               </Btn>
             </div>
@@ -205,7 +229,16 @@ export function SolutionDetailPage({ slug }: { slug: string }) {
             </div>
             <div className="lg:col-span-7">
               <Reveal delay={120}>
-                <ProductVisual type={s.visual} />
+                {SOLUTION_VISUALS[slug] ? (
+                  <Photo
+                    src={SOLUTION_VISUALS[slug].src}
+                    alt={SOLUTION_VISUALS[slug].alt}
+                    caption={SOLUTION_VISUALS[slug].caption}
+                    ratio={SOLUTION_VISUALS[slug].ratio}
+                  />
+                ) : (
+                  <ProductVisual type={s.visual} />
+                )}
               </Reveal>
               {SOLUTION_PHOTOS[slug] && (
                 <Reveal delay={200}>

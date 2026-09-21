@@ -1,6 +1,10 @@
 import digiVoltShowcase from '../assets/user-provided/operations-centre.png'
 import { Container } from '../components/Container'
 import { PrimaryButton } from '../components/PrimaryButton'
+import { SecondaryButton } from '../components/SecondaryButton'
+
+const RIDER_APP_URL = 'https://play.google.com/store/apps/details?id=com.digi02.digivolt'
+const DRIVER_APP_URL = 'https://play.google.com/store/apps/details?id=com.digi02.digivolt.driver'
 
 const journey = [
   ['Request', 'Create the trip around a clear pickup point and destination.'],
@@ -24,14 +28,17 @@ export function DigiVoltPage() {
               DigiVolt is designed around the complete mobility experience: request, assignment,
               route progress and arrival in one continuous flow.
             </p>
-            <PrimaryButton href="/contact">Discuss mobility technology <span aria-hidden="true">→</span></PrimaryButton>
+            <div className="product-hero__actions">
+              <PrimaryButton href={RIDER_APP_URL} target="_blank" rel="noreferrer">Get the DigiVolt app <span aria-hidden="true">↗</span></PrimaryButton>
+              <SecondaryButton href={DRIVER_APP_URL} target="_blank" rel="noreferrer">DigiVolt Driver app <span aria-hidden="true">↗</span></SecondaryButton>
+            </div>
           </div>
         </Container>
 
         <Container>
           <figure className="product-cinematic product-cinematic--digivolt">
             <img loading="lazy" decoding="async" src={digiVoltShowcase} alt="DigiVolt electric mobility product visualization" />
-            <figcaption>DigiVolt product visualization / in development.</figcaption>
+            <figcaption>DigiVolt product visualization.</figcaption>
           </figure>
         </Container>
       </section>
@@ -78,15 +85,19 @@ export function DigiVoltPage() {
       <section className="product-outcome">
         <Container className="product-outcome__grid">
           <div>
-            <p>Product direction</p>
+            <p>Availability</p>
             <h2>Mobility software should make the journey easier to follow for everyone involved.</h2>
           </div>
           <div>
             <p>
-              DigiVolt is in development. The journey shown here illustrates the intended product
-              flow; final capabilities will reflect operating requirements and deployment scope.
+              DigiVolt is available now on Google Play: a rider app for booking trips
+              and a dedicated driver app for operators.
             </p>
-            <a href="/contact">Talk to Digi02 about DigiVolt <span aria-hidden="true">→</span></a>
+            <div className="product-outcome__links">
+              <a href={RIDER_APP_URL} target="_blank" rel="noreferrer">Get the rider app <span aria-hidden="true">↗</span></a>
+              <a href={DRIVER_APP_URL} target="_blank" rel="noreferrer">Get the driver app <span aria-hidden="true">↗</span></a>
+              <a href="/contact">Talk to Digi02 about fleet deployment <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         </Container>
       </section>

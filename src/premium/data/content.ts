@@ -101,18 +101,18 @@ export const solutions: Solution[] = [
     slug: "digivolt",
     name: "DigiVolt",
     family: "Mobility platform",
-    status: "In development",
-    statusNote: "Product direction shown as a visualisation, not a live system.",
+    status: "Built product",
+    statusNote: "Available now on Google Play — separate rider and driver apps.",
     summary:
-      "A ride-hailing platform that connects riders with nearby drivers for fast, safe and straightforward trips — built for the realities of Nigerian cities.",
+      "DigiVolt connects riders with nearby drivers. Book in seconds, track the trip to arrival — built for Nigerian cities.",
     body: [
       "DigiVolt is Digi02's mobility platform. It connects riders with nearby drivers so a trip can be booked in seconds, tracked in real time and completed without negotiation at the kerb.",
-      "The platform is in active development. What is shown here is product direction — the booking, matching and trip sequence we are building toward — not a production deployment. We would rather say that plainly than imply otherwise.",
+      "DigiVolt is live on Google Play: a rider app for booking and tracking trips, and a driver app for receiving requests, navigating routes and tracking earnings.",
     ],
     capabilities: [
       {
         title: "Instant booking",
-        text: "Set a pickup and destination; the platform handles the rest.",
+        text: "Set a pickup and destination to create the trip.",
       },
       {
         title: "Driver matching",
@@ -120,7 +120,7 @@ export const solutions: Solution[] = [
       },
       {
         title: "Live trip tracking",
-        text: "Riders and operations see the same trip state at the same time.",
+        text: "Riders and operations see the same trip state.",
       },
       {
         title: "Fare handling",
@@ -430,8 +430,8 @@ export const work = [
     slug: "urban-mobility",
     kicker: "DigiVolt",
     title: "Urban mobility platform",
-    status: "In development",
-    text: "Booking, driver matching, live tracking and fare settlement designed for Nigerian city conditions. Currently in active development.",
+    status: "Built product",
+    text: "Booking, driver matching, live tracking and fare settlement designed for Nigerian city conditions. Live on Google Play.",
     solution: "digivolt",
     visual: "mobility" as Visual,
     year: "2026",
@@ -483,10 +483,24 @@ export const team = [
 /* Real photography supplied from device — wired into hero/work/company sections */
 export const photos = {
   skygridUav: "/images/skygrid/uav-field.jpg",
+  skygridFieldOps: "/images/skygrid/skygrid-field-ops.jpg",
+  skygridHardware: "/images/skygrid/skygrid-hardware.jpg",
   posHospitality: "/images/payments/pos-hospitality.jpg",
   posMarket: "/images/payments/pos-market.jpg",
   cardPhone: "/images/payments/card-phone.jpg",
+  fieldCardPayment: "/images/payments/field-card-payment.jpg",
   engineeringTeam: "/images/company/engineering-team.jpg",
+  opsTeam: "/images/company/ops-team.jpg",
+  digivoltBook: "/images/digivolt/digivolt-book.jpg",
+  digivoltSafety: "/images/digivolt/digivolt-safety.jpg",
+  digivoltProtection: "/images/digivolt/digivolt-protection.jpg",
+  digivoltDriver: "/images/digivolt/digivolt-driver.jpg",
+  /* Home editorial — real photography, no AI-generated imagery.
+     whoWeAre: Kaduna business meeting, documentary photo by mk_photoz (Pexels 38649010).
+     standardsReview: professional reviewing a report, photo by Sora Shimazaki (Pexels 5668879).
+     Both Pexels-licensed (free to use, no attribution required). */
+  whoWeAre: "/images/home/who-we-are-kaduna.jpg",
+  standardsReview: "/images/home/standards-review.jpg",
 };
 
 /* ────────────────────────────────────────────────────────────
@@ -699,7 +713,7 @@ export const faqs = [
   },
   {
     q: "What is the status of DigiVolt?",
-    a: "DigiVolt is in active development. Visuals shown on this site are product direction, not a live deployment. We would rather state that plainly than imply general availability.",
+    a: "DigiVolt is live on Google Play, with separate rider and driver apps. The route visuals on this site are illustrative diagrams, not live trip data.",
   },
 ];
 

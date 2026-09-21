@@ -318,12 +318,14 @@
 .digivolt-journey__stages button::before {
   position: absolute;
   top: -1px;
+  right: 0;
   left: 0;
-  width: 0;
   height: 2px;
   background: var(--digivolt-gold);
   content: '';
-  transition: width 420ms var(--ease-emphasized);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-emphasized);
 }
 
 .digivolt-journey__stages button > span:first-child {
@@ -359,7 +361,7 @@
 }
 
 .digivolt-journey__stages button[data-active='true']::before {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 .digivolt-journey__stages button:focus-visible {
