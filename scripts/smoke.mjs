@@ -35,21 +35,6 @@ async function checkValid(browser, route, vp) {
   const resp = await page.goto(BASE + route, { waitUntil: "networkidle", timeout: 30000 }).catch(() => null);
   const status = resp ? resp.status() : -1;
   await page.waitForTimeout(600);
-  await page.evaluate(async () => {
-    await new Promise((r) => {
-      let y = 0;
-      const t = setInterval(() => {
-        y += 600;
-        window.scrollTo(0, y);
-        if (y > document.body.scrollHeight) {
-          clearInterval(t);
-          r();
-        }
-      }, 60);
-    });
-  });
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(400);
   const tag = `desktop route ${route} status=${status}`;
   check(tag, status === 200, ` [${vp.width}x${vp.height}]`);
 
@@ -59,6 +44,13 @@ async function checkValid(browser, route, vp) {
   check(`h1 present on ${route}`, h1 >= 1, ` got=${h1}`);
   check(`no console/page errors on ${route}`, errors.length === 0, errors.length ? ` :: ${errors[0]}` : "");
 
+  const imgCount = await page.locator("img").count();
+  for (let i = 0; i < imgCount; i++) {
+    await page.locator("img").nth(i).evaluate((el) => el.scrollIntoView({ block: "center" })).catch(() => {});
+    await page.waitForTimeout(250);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(400);
   const imgs = await page.locator("img").evaluateAll((els) =>
     els.map((el) => ({ ok: el.complete && el.naturalWidth > 0, alt: el.getAttribute("alt") })),
   );

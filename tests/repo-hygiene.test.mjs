@@ -31,6 +31,7 @@ test("no stale pre-rebuild selectors in active code", async () => {
   const stale = ["main#main-content", ".mobile-navigation__toggle", 'href="#main-content"', "manus-storage"];
   const offenders = [];
   for (const file of files) {
+    if (file === "tests/repo-hygiene.test.mjs") continue;
     const content = await read(`./${file}`);
     for (const pattern of stale) {
       if (content.includes(pattern)) offenders.push(`${file}: ${pattern}`);
